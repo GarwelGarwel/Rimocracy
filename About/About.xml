@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ModMetaData>
+	<name>Rimocracy</name>
+	<author>Garwel</author>
+	<url>https://github.com/GarwelGarwel/Rimocracy</url>
+	<packageId>Garwel.Rimocracy</packageId>
+	<supportedVersions>
+		<li>1.1</li>
+	</supportedVersions>
+	<modDependencies>
+	</modDependencies>
+	<description>RimWorld mod to add politics to the game</description>
+	<loadAfter>
+		<li>Ludeon.RimWorld</li>
+	</loadAfter>
+</ModMetaData>
