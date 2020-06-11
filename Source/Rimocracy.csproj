@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="Rimocracy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StatPart_Authority.cs" />
     <Compile Include="Utility.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
