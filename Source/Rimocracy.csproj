@@ -50,6 +50,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="JobDriver_DoRuling.cs" />
+    <Compile Include="Succession\SuccessionBase.cs" />
+    <Compile Include="Succession\SuccessionLot.cs" />
+    <Compile Include="Succession\SuccessionOldest.cs" />
     <Compile Include="WorkGiver_DoRuling.cs" />
     <Compile Include="Rimocracy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
