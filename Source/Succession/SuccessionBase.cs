@@ -9,10 +9,10 @@ namespace Rimocracy
     {
         public abstract string Title { get; }
 
-        public virtual IEnumerable<Pawn> Candidates => PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonists_NoCryptosleep.Where(p => CanBeLeader(p));
-
         public abstract Pawn ChooseLeader();
 
         public virtual bool CanBeLeader(Pawn pawn) => Rimocracy.CanBeLeader(pawn);
+
+        public virtual IEnumerable<Pawn> Candidates => PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonists_NoCryptosleep.Where(p => CanBeLeader(p));
     }
 }

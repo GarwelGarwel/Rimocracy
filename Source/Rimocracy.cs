@@ -14,6 +14,7 @@ namespace Rimocracy
         Pawn leader;
         SuccessionBase succession;
         float authority;
+        SuccessionBase succession;
 
         public Rimocracy()
             : this(Find.World)
