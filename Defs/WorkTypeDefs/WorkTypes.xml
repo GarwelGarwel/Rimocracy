@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <WorkTypeDef>
+    <defName>Ruling</defName>
+    <labelShort>Rule</labelShort>
+    <pawnLabel>Ruler</pawnLabel>
+    <gerundLabel>ruling</gerundLabel>
+    <description>Govern the nation.</description>
+    <verb>Rule</verb>
+    <naturalPriority>150</naturalPriority>
+    <relevantSkills>
+      <li>Intellectual</li>
+      <li>Social</li>
+    </relevantSkills>
+    <workTags>
+      <li>Intellectual</li>
+      <li>Social</li>
+      <li>Commoner</li>
+      <li>AllWork</li>
+    </workTags>
+  </WorkTypeDef>
+</Defs>

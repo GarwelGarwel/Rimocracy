@@ -1,5 +1,6 @@
 ﻿using RimWorld;
 using RimWorld.Planet;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Verse;
@@ -8,9 +9,10 @@ namespace Rimocracy
 {
     public class Rimocracy : WorldComponent
     {
+        public const float BaseAuthorityBuildPerTick = 0.000004f;
+
         Pawn leader;
-        float authority = 0.1f;
-        bool initialized = false;
+        float authority;
 
         public Rimocracy()
             : base(Find.World)
@@ -34,7 +36,11 @@ namespace Rimocracy
             set => authority = value;
         }
 
-        public static bool CanBeLeader(Pawn p) => p != null && !p.Dead && p.IsFreeColonist;
+        float AuthorityDecayPerTick
+            => (0.1f - 0.2f / PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonists_NoCryptosleep.Count) / 60000;
+
+        public static bool CanBeLeader(Pawn p)
+            => p != null && !p.Dead && p.IsFreeColonist && !p.WorkTypeIsDisabled(DefDatabase<WorkTypeDef>.GetNamed("Ruling"));
 
         public override void ExposeData()
         {
@@ -44,13 +50,19 @@ namespace Rimocracy
 
         public override void WorldComponentTick()
         {
-            if (initialized)
-                return;
-            Utility.Log("WorldComponentTick: initializing...");
+            if (Find.TickManager.TicksAbs % 600 == 0)
+                Utility.Log("Authority: " + authority.ToString("P4"));
+
+            if (Find.TickManager.TicksAbs % 600 == 0)
+            {
+                // Authority decay
+                Utility.Log("Authority decay for " + PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonists_NoCryptosleep.Count + " colonists.");
+                Authority = Math.Max(Authority - AuthorityDecayPerTick * 600, 0);
+            }
+
+            // If no leader, choose a new one
             if (leader == null || !CanBeLeader(leader))
                 ChooseLeader();
-            else Utility.Log("Current leader is " + leader);
-            initialized = true;
         }
 
         void ChooseLeader()
@@ -60,11 +72,16 @@ namespace Rimocracy
             leader = candidates.FirstOrDefault(p => CanBeLeader(p));
             if (leader != null)
             {
+                Messages.Message(leader + " is the new leader of " + Find.FactionManager.OfPlayer.Name + ".", MessageTypeDefOf.NeutralEvent);
                 Utility.Log("New leader is " + leader + " (chosen from " + candidates.Count + " candidates).");
-                authority = (float)(leader.skills.GetSkill(SkillDefOf.Intellectual).Level + leader.skills.GetSkill(SkillDefOf.Social).Level) / 40;
-                Utility.Log("Authority level is " + authority.ToString("P0"));
             }
             else Utility.Log("No suitable leader found. " + candidates.Count + " total candidate pawns:");
+            authority = 0;
+        }
+
+        public void BuildAuthority(float amount)
+        {
+            Authority = Math.Min(Authority + amount, 1);
         }
     }
 }

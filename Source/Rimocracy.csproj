@@ -49,6 +49,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="JobDriver_DoRuling.cs" />
+    <Compile Include="WorkGiver_DoRuling.cs" />
     <Compile Include="Rimocracy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StatPart_Authority.cs" />

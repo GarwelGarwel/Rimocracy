@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+    <WorkGiverDef>
+		<defName>DoRuling</defName>
+		<label>build authority</label>
+		<verb>rule</verb>
+		<gerund>ruling from</gerund>
+		<giverClass>Rimocracy.WorkGiver_DoRuling</giverClass>
+		<scanThings>true</scanThings>
+		<scanCells>false</scanCells>
+		<workType>Ruling</workType>
+		<priorityInType>100</priorityInType>
+		<prioritizeSustains>true</prioritizeSustains>
+		<requiredCapacities>
+			<li>Manipulation</li>
+		</requiredCapacities>
+    </WorkGiverDef>
+</Defs>
