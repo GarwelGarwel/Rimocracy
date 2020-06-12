@@ -10,7 +10,7 @@ namespace Rimocracy
         public override string ExplanationPart(StatRequest req)
         {
             if (AppliesTo(req))
-                return "Aurhority " + Rimocracy.Instance.Authority.ToString("P0") + ": x" + AuthorityMultiplier.ToString("F2");
+                return "Aurhority " + Rimocracy.Instance.AuthorityPercentage.ToString("N0") + "%: x" + AuthorityMultiplier.ToString("F2");
             return "StatPart_Authority doesn't apply to " + (req.Thing?.ToString() ?? "nothing") + ".";
         }
 

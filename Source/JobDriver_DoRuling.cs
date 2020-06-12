@@ -1,27 +1,17 @@
 ﻿using RimWorld;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Verse;
 using Verse.AI;
 
 namespace Rimocracy
 {
     class JobDriver_DoRuling : JobDriver
     {
-        public override bool TryMakePreToilReservations(bool errorOnFailed)
-        {
-            Utility.Log("JobDriver_DoRuling.TryMakePreToilReservations for " + pawn + ". TargetA: " + TargetThingA);
-            return pawn.Reserve(TargetThingA, job);
-        }
+        public override bool TryMakePreToilReservations(bool errorOnFailed) => pawn.Reserve(TargetThingA, job);
 
         protected override IEnumerable<Toil> MakeNewToils()
         {
-			Utility.Log("JobDriver_DoRuling.MakeNewToils for " + pawn + ". TargetA: " + TargetThingA);
-			this.FailOnDespawnedNullOrForbidden(TargetIndex.A);
-			yield return Toils_Goto.GotoThing(TargetIndex.A, PathEndMode.InteractionCell);
+            this.FailOnDespawnedNullOrForbidden(TargetIndex.A);
+            yield return Toils_Goto.GotoThing(TargetIndex.A, PathEndMode.InteractionCell);
             Toil rulingToil = new Toil();
             rulingToil.tickAction = Ruling_TickAction;
             rulingToil.FailOn(() => Rimocracy.Instance.Authority >= 1);
@@ -33,7 +23,7 @@ namespace Rimocracy
             yield return rulingToil;
             yield return Toils_General.Wait(2, TargetIndex.None);
             yield break;
-		}
+        }
 
         void Ruling_TickAction()
         {

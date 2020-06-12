@@ -1,7 +1,7 @@
-﻿using RimWorld;
+﻿using Rimocracy.Succession;
+using RimWorld;
 using RimWorld.Planet;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Verse;
 
@@ -12,15 +12,18 @@ namespace Rimocracy
         public const float BaseAuthorityBuildPerTick = 0.000004f;
 
         Pawn leader;
+        SuccessionBase succession;
         float authority;
 
         public Rimocracy()
-            : base(Find.World)
+            : this(Find.World)
         { }
 
         public Rimocracy(World world)
             : base(world)
-        { }
+        {
+            succession = new SuccessionLot();
+        }
 
         public static Rimocracy Instance => Find.World.GetComponent<Rimocracy>();
 
@@ -35,6 +38,8 @@ namespace Rimocracy
             get => authority;
             set => authority = value;
         }
+
+        public float AuthorityPercentage => 100 * Authority;
 
         float AuthorityDecayPerTick
             => (0.1f - 0.2f / PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonists_NoCryptosleep.Count) / 60000;
@@ -57,31 +62,18 @@ namespace Rimocracy
             {
                 // Authority decay
                 Utility.Log("Authority decay for " + PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonists_NoCryptosleep.Count + " colonists.");
-                Authority = Math.Max(Authority - AuthorityDecayPerTick * 600, 0);
+                authority = Math.Max(authority - AuthorityDecayPerTick * 600, 0);
             }
 
             // If no leader, choose a new one
             if (leader == null || !CanBeLeader(leader))
-                ChooseLeader();
-        }
-
-        void ChooseLeader()
-        {
-            Utility.Log("ChooseLeader");
-            List<Pawn> candidates = PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonists_NoCryptosleep;
-            leader = candidates.FirstOrDefault(p => CanBeLeader(p));
-            if (leader != null)
             {
-                Messages.Message(leader + " is the new leader of " + Find.FactionManager.OfPlayer.Name + ".", MessageTypeDefOf.NeutralEvent);
-                Utility.Log("New leader is " + leader + " (chosen from " + candidates.Count + " candidates).");
+                leader = succession.ChooseLeader();
+                Utility.Log("New leader is " + leader + " (chosen from " + succession.Candidates.Count() + " candidates).");
+                authority = 0;
             }
-            else Utility.Log("No suitable leader found. " + candidates.Count + " total candidate pawns:");
-            authority = 0;
         }
 
-        public void BuildAuthority(float amount)
-        {
-            Authority = Math.Min(Authority + amount, 1);
-        }
+        public void BuildAuthority(float amount) => authority = Math.Min(Authority + amount, 1);
     }
 }

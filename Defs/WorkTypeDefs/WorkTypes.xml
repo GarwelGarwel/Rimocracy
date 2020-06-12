@@ -9,6 +9,7 @@
     <description>Govern the nation.</description>
     <verb>Rule</verb>
     <naturalPriority>150</naturalPriority>
+	<alwaysStartActive>true</alwaysStartActive>
     <relevantSkills>
       <li>Intellectual</li>
       <li>Social</li>

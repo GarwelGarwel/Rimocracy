@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-
-namespace Rimocracy
+﻿namespace Rimocracy
 {
     enum LogLevel { Message = 0, Warning, Error };
 

@@ -18,4 +18,4 @@ namespace Rimocracy
 
         public override Job JobOnThing(Pawn pawn, Thing t, bool forced = false) => JobMaker.MakeJob(DefDatabase<JobDef>.GetNamed("DoRuling"), t);
     }
-}   
+}
