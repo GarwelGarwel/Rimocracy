@@ -5,7 +5,7 @@ namespace Rimocracy
 {
     public class StatPart_Authority : StatPart
     {
-        float AuthorityMultiplier => 1 + Rimocracy.Instance.Authority * 0.1f;
+        float AuthorityMultiplier => 0.9f + Rimocracy.Instance.Authority * 0.2f;
 
         public override string ExplanationPart(StatRequest req)
         {

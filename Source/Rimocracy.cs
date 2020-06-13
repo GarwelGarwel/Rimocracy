@@ -10,16 +10,13 @@ namespace Rimocracy
 {
     public class Rimocracy : WorldComponent
     {
-        // Base amount of authority built while doing Rule job
-        public const float BaseAuthorityBuildPerTick = 0.000004f;
-
         // Default duration of a leader's turn (1 day for testing purposes)
-        public const int DefaultTerm = 60000;
+        public const int DefaultTerm = GenDate.TicksPerDay;
 
         Pawn leader;
         SuccessionBase succession;
         int termExpiration = -1;
-        float authority;
+        float authority = 0.5f;
 
         public Rimocracy()
             : this(Find.World)
@@ -51,10 +48,6 @@ namespace Rimocracy
             set => termExpiration = value;
         }
 
-        //public static List<Pawn> Citizens = PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonists_NoCryptosleep;
-
-        //public static int Population = PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonists_NoCryptosleep.Count;
-
         public float AuthorityPercentage => 100 * Authority;
 
         float AuthorityDecayPerTick => 0.1f - 0.2f / PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonists_NoCryptosleep.Count / 60000;
@@ -68,7 +61,7 @@ namespace Rimocracy
         {
             Scribe_References.Look(ref leader, "leader");
             Scribe_Values.Look(ref termExpiration, "termExpiration", -1);
-            Scribe_Values.Look(ref authority, "authority");
+            Scribe_Values.Look(ref authority, "authority", 0.5f);
         }
 
         public override void WorldComponentTick()
@@ -96,7 +89,7 @@ namespace Rimocracy
             {
                 // Authority decay
                 float oldAuthority = authority;
-                authority = Math.Max(authority - Math.Min(AuthorityDecayPerTick * (leader != null ? leader.GetStatValue(DefDatabase<StatDef>.GetNamed("AuthorityDecay")) : 1) * 600, 0.0003f), 0);
+                authority = Math.Max(authority - Math.Min(AuthorityDecayPerTick * (leader != null ? leader.GetStatValue(DefDatabase<StatDef>.GetNamed("AuthorityDecay")) : 1) * 600, 0.0001f), 0);
                 Utility.Log("Authority decay from " + oldAuthority.ToString("P2") + " to " + authority.ToString("P2") + " for " + PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonists_NoCryptosleep.Count + " colonists.");
             }
         }
