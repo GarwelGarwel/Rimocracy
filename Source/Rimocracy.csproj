@@ -60,6 +60,7 @@
     <Compile Include="JobDriver_DoRuling.cs" />
     <Compile Include="MainTabWindow_Politics.cs" />
     <Compile Include="Succession\SuccessionBase.cs" />
+    <Compile Include="Succession\SuccessionElection.cs" />
     <Compile Include="Succession\SuccessionLot.cs" />
     <Compile Include="Succession\SuccessionOldest.cs" />
     <Compile Include="WorkGiver_DoRuling.cs" />

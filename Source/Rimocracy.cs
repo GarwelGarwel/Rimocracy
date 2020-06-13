@@ -10,7 +10,7 @@ namespace Rimocracy
     public class Rimocracy : WorldComponent
     {
         // Default duration of a leader's turn (1 day for testing purposes)
-        public const int DefaultTerm = GenDate.TicksPerDay;
+        public const int DefaultTerm = GenDate.TicksPerDay / 12;
 
         bool isEnabled = false;
 
@@ -26,7 +26,6 @@ namespace Rimocracy
         public Rimocracy(World world)
             : base(world)
         {
-            succession = new SuccessionLot();
         }
 
         public static Rimocracy Instance => Find.World.GetComponent<Rimocracy>();
@@ -93,8 +92,8 @@ namespace Rimocracy
             {
                 if (succession == null)
                 {
-                    Utility.Log("Succession is null!", LogLevel.Error);
-                    succession = new SuccessionLot();
+                    Utility.Log("Succession is null!");
+                    succession = new SuccessionElection();
                 }
                 leader = succession.ChooseLeader();
                 if (leader != null)
