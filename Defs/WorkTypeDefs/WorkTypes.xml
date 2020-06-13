@@ -11,12 +11,10 @@
     <naturalPriority>150</naturalPriority>
 	<alwaysStartActive>true</alwaysStartActive>
     <relevantSkills>
-      <li>Intellectual</li>
       <li>Social</li>
+      <li>Intellectual</li>
     </relevantSkills>
     <workTags>
-      <li>Intellectual</li>
-      <li>Social</li>
       <li>Commoner</li>
       <li>AllWork</li>
     </workTags>

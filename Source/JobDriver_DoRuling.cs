@@ -1,5 +1,6 @@
 ﻿using RimWorld;
 using System.Collections.Generic;
+using Verse;
 using Verse.AI;
 
 namespace Rimocracy
@@ -27,9 +28,9 @@ namespace Rimocracy
 
         void Ruling_TickAction()
         {
-            Rimocracy.Instance.BuildAuthority(Rimocracy.BaseAuthorityBuildPerTick * pawn.GetStatValue(StatDefOf.WorkSpeedGlobal, true));
-            pawn.skills.Learn(SkillDefOf.Intellectual, 0.05f, false);
-            pawn.skills.Learn(SkillDefOf.Social, 0.05f, false);
+            Rimocracy.Instance.BuildAuthority(pawn.GetStatValue(DefDatabase<StatDef>.GetNamed("RulingEfficiency")) / GenDate.TicksPerHour);
+            pawn.skills.Learn(SkillDefOf.Intellectual, 0.05f);
+            pawn.skills.Learn(SkillDefOf.Social, 0.05f);
             pawn.GainComfortFromCellIfPossible(true);
         }
     }

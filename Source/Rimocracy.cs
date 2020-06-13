@@ -2,6 +2,7 @@
 using RimWorld;
 using RimWorld.Planet;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Verse;
 
@@ -50,13 +51,18 @@ namespace Rimocracy
             set => termExpiration = value;
         }
 
+        //public static List<Pawn> Citizens = PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonists_NoCryptosleep;
+
+        //public static int Population = PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonists_NoCryptosleep.Count;
+
         public float AuthorityPercentage => 100 * Authority;
 
-        float AuthorityDecayPerTick
-            => (0.1f - 0.2f / PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonists_NoCryptosleep.Count) / 60000;
+        float AuthorityDecayPerTick => 0.1f - 0.2f / PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonists_NoCryptosleep.Count / 60000;
 
         public static bool CanBeLeader(Pawn p)
             => p != null && !p.Dead && p.IsFreeColonist && !p.WorkTypeIsDisabled(DefDatabase<WorkTypeDef>.GetNamed("Ruling"));
+
+        public static bool IsEnabled => PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonists_NoCryptosleep.Count >= 3;
 
         public override void ExposeData()
         {
@@ -68,23 +74,30 @@ namespace Rimocracy
         public override void WorldComponentTick()
         {
             int ticks = Find.TickManager.TicksAbs;
-            if (ticks % 600 == 0)
-                Utility.Log("Authority: " + authority.ToString("P4"));
-
-            if (ticks % 600 == 0)
-            {
-                // Authority decay
-                Utility.Log("Authority decay for " + PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonists_NoCryptosleep.Count + " colonists.");
-                authority = Math.Max(authority - AuthorityDecayPerTick * 600, 0);
-            }
 
             // If no leader, choose a new one and reset term
             if (leader == null || !CanBeLeader(leader) || (termExpiration >= 0 && ticks >= termExpiration))
             {
+                if (succession == null)
+                {
+                    Utility.Log("Succession is null!", LogLevel.Error);
+                    succession = new SuccessionLot();
+                }
                 leader = succession.ChooseLeader();
-                termExpiration = ticks + DefaultTerm;
-                Utility.Log("New leader is " + leader + " (chosen from " + succession.Candidates.Count() + " candidates). Their term expires on " + GenDate.DateFullStringAt(termExpiration, Find.WorldGrid.LongLatOf(leader.Tile)));
-                authority = 0;
+                if (leader != null)
+                {
+                    termExpiration = ticks + DefaultTerm;
+                    Utility.Log("New leader is " + leader + " (chosen from " + succession.Candidates.Count() + " candidates). Their term expires on " + GenDate.DateFullStringAt(termExpiration, Find.WorldGrid.LongLatOf(leader.Tile)));
+                }
+                authority /= 2;
+            }
+
+            if (ticks % 600 == 0)
+            {
+                // Authority decay
+                float oldAuthority = authority;
+                authority = Math.Max(authority - Math.Min(AuthorityDecayPerTick * (leader != null ? leader.GetStatValue(DefDatabase<StatDef>.GetNamed("AuthorityDecay")) : 1) * 600, 0.0003f), 0);
+                Utility.Log("Authority decay from " + oldAuthority.ToString("P2") + " to " + authority.ToString("P2") + " for " + PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonists_NoCryptosleep.Count + " colonists.");
             }
         }
 

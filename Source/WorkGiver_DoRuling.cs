@@ -10,11 +10,13 @@ namespace Rimocracy
     {
         public override ThingRequest PotentialWorkThingRequest => ThingRequest.ForGroup(ThingRequestGroup.BuildingArtificial);
 
-        public override IEnumerable<Thing> PotentialWorkThingsGlobal(Pawn pawn) => pawn.Map.listerBuildings.allBuildingsColonist.Where(b => b.def == ThingDefOf.Table1x2c);
+        public override IEnumerable<Thing> PotentialWorkThingsGlobal(Pawn pawn) => pawn.Map.listerBuildings.allBuildingsColonist;
 
         public override bool ShouldSkip(Pawn pawn, bool forced = false) => Rimocracy.Instance.Leader != pawn || Rimocracy.Instance.Authority >= 1;
 
-        public override bool HasJobOnThing(Pawn pawn, Thing t, bool forced = false) => pawn.CanReserve(t, ignoreOtherReservations: forced);
+        public override bool HasJobOnThing(Pawn pawn, Thing t, bool forced = false) 
+            => (t.def == ThingDefOf.Table1x2c || t.def == ThingDefOf.Table2x2c || t.def == ThingDefOf.Table3x3c)
+            && pawn.CanReserve(t, ignoreOtherReservations: forced);
 
         public override Job JobOnThing(Pawn pawn, Thing t, bool forced = false) => JobMaker.MakeJob(DefDatabase<JobDef>.GetNamed("DoRuling"), t);
     }
