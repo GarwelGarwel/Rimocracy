@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<MainButtonDef>
+		<defName>Rimocracy_Politics</defName>
+		<label>politics</label>
+		<description>Overview the political situation in your nation.</description>
+		<tabWindowClass>Rimocracy.MainTabWindow_Politics</tabWindowClass>
+	<order>67</order>
+	</MainButtonDef>
+</Defs>

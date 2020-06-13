@@ -17,7 +17,7 @@ namespace Rimocracy
 
         Pawn leader;
         SuccessionBase succession;
-        long termExpiration = -1;
+        int termExpiration = -1;
         float authority;
 
         public Rimocracy()
@@ -44,7 +44,7 @@ namespace Rimocracy
             set => authority = value;
         }
 
-        public long TermExpiration
+        public int TermExpiration
         {
             get => termExpiration;
             set => termExpiration = value;
