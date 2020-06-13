@@ -6,7 +6,7 @@
 		<label>authority buildup per hour</label>
 		<description>How fast authority is built per hour of ruling.</description>
 		<category>PawnWork</category>
-		<defaultBaseValue>0.01</defaultBaseValue>
+		<defaultBaseValue>0.03</defaultBaseValue>
 		<minValue>0</minValue>
 		<toStringStyle>PercentTwo</toStringStyle>
 		<statFactors>
