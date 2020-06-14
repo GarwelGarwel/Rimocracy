@@ -63,6 +63,8 @@
     <Compile Include="Succession\SuccessionElection.cs" />
     <Compile Include="Succession\SuccessionLot.cs" />
     <Compile Include="Succession\SuccessionOldest.cs" />
+    <Compile Include="ThoughtWorker_Respect.cs" />
+    <Compile Include="Thought_Respect.cs" />
     <Compile Include="WorkGiver_DoRuling.cs" />
     <Compile Include="Rimocracy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

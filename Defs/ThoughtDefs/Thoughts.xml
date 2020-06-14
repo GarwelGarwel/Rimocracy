@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+	<ThoughtDef>
+		<defName>Rimocracy_Respect</defName>
+		<thoughtClass>Rimocracy.Thought_Respect</thoughtClass>
+		<workerClass>Rimocracy.ThoughtWorker_Respect</workerClass>
+		<validWhileDespawned>true</validWhileDespawned>
+		<nullifiedIfNotColonist>true</nullifiedIfNotColonist>
+		<stages>
+			<li>
+				<label>pathetic buffon</label>
+				<baseOpinionOffset>-30</baseOpinionOffset>
+			</li>
+			<li>
+				<label>ineffective manager</label>
+				<baseOpinionOffset>-20</baseOpinionOffset>
+			</li>
+			<li>
+				<label>mediocre leader</label>
+				<baseOpinionOffset>5</baseOpinionOffset>
+			</li>
+			<li>
+				<label>respected leader</label>
+				<baseOpinionOffset>10</baseOpinionOffset>
+			</li>
+			<li>
+				<label>revered leader</label>
+				<baseOpinionOffset>30</baseOpinionOffset>
+			</li>
+		</stages>
+	</ThoughtDef>
+
+</Defs>
