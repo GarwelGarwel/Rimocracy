@@ -65,7 +65,7 @@ namespace Rimocracy
         }
 
         float AuthorityDecayPerTick
-            => (0.05f + authority * 0.1f - (0.1f + authority * 0.2f) / PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonists_NoCryptosleep.Count) / GenDate.TicksPerDay;
+            => (0.03f + authority * 0.06f - (0.1f + authority * 0.25f) / PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonists_NoCryptosleep.Count) / GenDate.TicksPerDay;
 
         public static bool CanBeLeader(Pawn p)
             => p != null && !p.Dead && p.IsFreeColonist && !p.WorkTypeIsDisabled(DefDatabase<WorkTypeDef>.GetNamed("Ruling"));

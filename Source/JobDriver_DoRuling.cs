@@ -19,7 +19,7 @@ namespace Rimocracy
             rulingToil.FailOn(() => Rimocracy.Instance.Leader != pawn);
             rulingToil.FailOnCannotTouch(TargetIndex.A, PathEndMode.InteractionCell);
             rulingToil.defaultCompleteMode = ToilCompleteMode.Delay;
-            rulingToil.defaultDuration = 4000;
+            rulingToil.defaultDuration = GenDate.TicksPerHour * 2;
             rulingToil.activeSkill = () => SkillDefOf.Intellectual;
             yield return rulingToil;
             yield return Toils_General.Wait(2, TargetIndex.None);

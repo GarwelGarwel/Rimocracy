@@ -6,7 +6,7 @@
 		<label>authority buildup per hour</label>
 		<description>How fast authority is built per hour of ruling.</description>
 		<category>PawnWork</category>
-		<defaultBaseValue>0.03</defaultBaseValue>
+		<defaultBaseValue>0.01</defaultBaseValue>
 		<minValue>0</minValue>
 		<toStringStyle>PercentTwo</toStringStyle>
 		<statFactors>
@@ -39,6 +39,7 @@
 		<label>authority decay</label>
 		<description>Relative speed at which authority is reduced when this pawn is the leader.</description>
 		<category>PawnSocial</category>
+		<showOnDefaultValue>false</showOnDefaultValue>
 		<defaultBaseValue>1</defaultBaseValue>
 		<minValue>0.5</minValue>
 		<maxValue>2</maxValue>

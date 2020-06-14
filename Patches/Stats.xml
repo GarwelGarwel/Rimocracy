@@ -4,8 +4,8 @@
 		<xpath>/Defs/StatDef[defName="WorkSpeedGlobal"]/parts</xpath>
 		<value>
 			<li Class="Rimocracy.StatPart_Authority">
-				<minValue>0.9</minValue>
-				<maxValue>1.1</maxValue>
+				<minValue>0.8</minValue>
+				<maxValue>1.2</maxValue>
 			</li>
 		</value>
 	</Operation>
@@ -15,7 +15,7 @@
 		<value>
 			<parts>
 				<li Class="Rimocracy.StatPart_Authority">
-					<maxValue>1.2</maxValue>
+					<maxValue>1.5</maxValue>
 					<focusOnly>true</focusOnly>
 				</li>
 			</parts>
@@ -27,7 +27,7 @@
 		<value>
 			<parts>
 				<li Class="Rimocracy.StatPart_Authority">
-					<maxValue>1.2</maxValue>
+					<maxValue>1.5</maxValue>
 					<focusOnly>true</focusOnly>
 				</li>
 			</parts>
@@ -39,7 +39,7 @@
 		<value>
 			<parts>
 				<li Class="Rimocracy.StatPart_Authority">
-					<maxValue>1.2</maxValue>
+					<maxValue>1.5</maxValue>
 					<focusOnly>true</focusOnly>
 				</li>
 			</parts>
@@ -51,7 +51,7 @@
 		<value>
 			<parts>
 				<li Class="Rimocracy.StatPart_Authority">
-					<maxValue>1.2</maxValue>
+					<maxValue>1.5</maxValue>
 					<focusOnly>true</focusOnly>
 				</li>
 			</parts>
@@ -63,7 +63,7 @@
 		<value>
 			<parts>
 				<li Class="Rimocracy.StatPart_Authority">
-					<maxValue>1.2</maxValue>
+					<maxValue>1.5</maxValue>
 					<focusOnly>true</focusOnly>
 				</li>
 			</parts>
@@ -75,7 +75,7 @@
 		<value>
 			<parts>
 				<li Class="Rimocracy.StatPart_Authority">
-					<maxValue>1.2</maxValue>
+					<maxValue>1.5</maxValue>
 					<focusOnly>true</focusOnly>
 				</li>
 			</parts>
@@ -87,7 +87,7 @@
 		<value>
 			<parts>
 				<li Class="Rimocracy.StatPart_Authority">
-					<maxValue>1.2</maxValue>
+					<maxValue>1.5</maxValue>
 					<focusOnly>true</focusOnly>
 				</li>
 			</parts>
@@ -99,7 +99,7 @@
 		<value>
 			<parts>
 				<li Class="Rimocracy.StatPart_Authority">
-					<maxValue>1.2</maxValue>
+					<maxValue>1.5</maxValue>
 					<focusOnly>true</focusOnly>
 				</li>
 			</parts>
@@ -111,7 +111,7 @@
 		<value>
 			<parts>
 				<li Class="Rimocracy.StatPart_Authority">
-					<maxValue>1.2</maxValue>
+					<maxValue>1.5</maxValue>
 					<focusOnly>true</focusOnly>
 				</li>
 			</parts>
@@ -123,7 +123,7 @@
 		<value>
 			<parts>
 				<li Class="Rimocracy.StatPart_Authority">
-					<maxValue>1.2</maxValue>
+					<maxValue>1.5</maxValue>
 					<focusOnly>true</focusOnly>
 				</li>
 			</parts>
@@ -135,7 +135,7 @@
 		<value>
 			<parts>
 				<li Class="Rimocracy.StatPart_Authority">
-					<maxValue>1.2</maxValue>
+					<maxValue>1.5</maxValue>
 					<focusOnly>true</focusOnly>
 				</li>
 			</parts>
@@ -147,7 +147,7 @@
 		<value>
 			<parts>
 				<li Class="Rimocracy.StatPart_Authority">
-					<maxValue>1.2</maxValue>
+					<maxValue>1.5</maxValue>
 					<focusOnly>true</focusOnly>
 				</li>
 			</parts>
@@ -159,7 +159,7 @@
 		<value>
 			<parts>
 				<li Class="Rimocracy.StatPart_Authority">
-					<maxValue>1.2</maxValue>
+					<maxValue>1.5</maxValue>
 					<focusOnly>true</focusOnly>
 				</li>
 			</parts>
@@ -171,7 +171,7 @@
 		<value>
 			<parts>
 				<li Class="Rimocracy.StatPart_Authority">
-					<maxValue>1.2</maxValue>
+					<maxValue>1.5</maxValue>
 					<focusOnly>true</focusOnly>
 				</li>
 			</parts>

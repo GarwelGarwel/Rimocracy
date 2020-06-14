@@ -22,6 +22,16 @@ namespace Rimocracy
 
         public override void TransformValue(StatRequest req, ref float val) => val *= Multiplier(req);
 
+        static List<SkillDef> GetRelevantSkills(StatDef stat)
+        {
+            List<SkillDef> skills = stat.skillNeedFactors.NullOrEmpty()
+                ? new List<SkillDef>()
+                : stat.skillNeedFactors.Select(sn => sn.skill).ToList();
+            if (!stat.skillNeedOffsets.NullOrEmpty())
+                skills.AddRange(stat.skillNeedOffsets.Select(sn => sn.skill));
+            return skills;
+        }
+
         float Multiplier(StatRequest req)
         {
             // Only applies to free colonists
@@ -32,11 +42,7 @@ namespace Rimocracy
             // If the effect is skill-based, check if the parent stat's skills include the current focus skill
             if (focusOnly)
             {
-                List<SkillDef> skills = parentStat.skillNeedFactors.NullOrEmpty() ? new List<SkillDef>() : parentStat.skillNeedFactors.Select(sn => sn.skill).ToList();
-                if (!parentStat.skillNeedOffsets.NullOrEmpty())
-                    skills.AddRange(parentStat.skillNeedOffsets.Select(sn => sn.skill));
-                if (skills.EnumerableNullOrEmpty())
-                    Utility.Log("Stat " + parentStat + " is not skill-based, but has a skill-based StatPart_Authority.", LogLevel.Warning);
+                List<SkillDef> skills = GetRelevantSkills(parentStat);
                 if (!skills.Contains(Rimocracy.Instance.FocusSkill))
                     return 1;
                 effect /= skills.Count();
