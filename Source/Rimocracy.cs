@@ -3,6 +3,7 @@ using RimWorld;
 using RimWorld.Planet;
 using System;
 using System.Linq;
+using UnityEngine;
 using Verse;
 
 namespace Rimocracy
@@ -18,6 +19,7 @@ namespace Rimocracy
         SuccessionBase succession;
         int termExpiration = -1;
         float authority = 0.5f;
+        SkillDef focusSkill;
 
         public Rimocracy()
             : this(Find.World)
@@ -29,6 +31,12 @@ namespace Rimocracy
         }
 
         public static Rimocracy Instance => Find.World.GetComponent<Rimocracy>();
+
+        public bool IsEnabled
+        {
+            get => isEnabled;
+            set => isEnabled = value;
+        }
 
         public Pawn Leader
         {
@@ -50,10 +58,10 @@ namespace Rimocracy
             set => termExpiration = value;
         }
 
-        public bool IsEnabled
+        public SkillDef FocusSkill
         {
-            get => isEnabled;
-            set => isEnabled = value;
+            get => focusSkill;
+            set => focusSkill = value;
         }
 
         float AuthorityDecayPerTick
@@ -68,6 +76,7 @@ namespace Rimocracy
             Scribe_References.Look(ref leader, "leader");
             Scribe_Values.Look(ref termExpiration, "termExpiration", -1);
             Scribe_Values.Look(ref authority, "authority", 0.5f);
+            Scribe_Defs.Look(ref focusSkill, "focusSkill");
         }
 
         public override void WorldComponentTick()
@@ -95,13 +104,16 @@ namespace Rimocracy
                     Utility.Log("Succession is null!");
                     succession = new SuccessionElection();
                 }
+                Pawn oldLeader = leader;
                 leader = succession.ChooseLeader();
                 if (leader != null)
                 {
                     termExpiration = ticks + DefaultTerm;
-                    Utility.Log("New leader is " + leader + " (chosen from " + succession.Candidates.Count() + " candidates). Their term expires on " + GenDate.DateFullStringAt(termExpiration, Find.WorldGrid.LongLatOf(leader.Tile)));
+                    if (leader != oldLeader)
+                        authority = Mathf.Lerp(0.5f, authority, 0.5f);
+                    focusSkill = leader.skills.skills.MaxBy(sr => sr.Level).def;
+                    Utility.Log("New leader is " + leader + " (chosen from " + succession.Candidates.Count() + " candidates). Their term expires on " + GenDate.DateFullStringAt(termExpiration, Find.WorldGrid.LongLatOf(leader.Tile)) + ". The focus skill is " + focusSkill.defName);
                 }
-                authority = Math.Min(authority, 0.5f);
             }
 
             // Authority decay

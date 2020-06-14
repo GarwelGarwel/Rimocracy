@@ -21,8 +21,6 @@ namespace Rimocracy.Succession
                 else votes[votedFor] = 1;
             }
 
-            Utility.Log("Votes cast.");
-
             // Logging vote tabulation
             foreach (KeyValuePair<Pawn, int> kvp in votes)
                 Utility.Log("- " + kvp.Key + ": " + kvp.Value + " votes");

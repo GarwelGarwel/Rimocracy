@@ -3,7 +3,179 @@
 	<Operation Class="PatchOperationAdd">
 		<xpath>/Defs/StatDef[defName="WorkSpeedGlobal"]/parts</xpath>
 		<value>
-			<li Class="Rimocracy.StatPart_Authority"/>
+			<li Class="Rimocracy.StatPart_Authority">
+				<minValue>0.9</minValue>
+				<maxValue>1.1</maxValue>
+			</li>
 		</value>
 	</Operation>
+	
+	<Operation Class="PatchOperationAdd">
+		<xpath>/Defs/StatDef[defName="MiningSpeed"]</xpath>
+		<value>
+			<parts>
+				<li Class="Rimocracy.StatPart_Authority">
+					<maxValue>1.2</maxValue>
+					<focusOnly>true</focusOnly>
+				</li>
+			</parts>
+		</value>
+	</Operation>
+	
+	<Operation Class="PatchOperationAdd">
+		<xpath>/Defs/StatDef[defName="DeepDrillingSpeed"]</xpath>
+		<value>
+			<parts>
+				<li Class="Rimocracy.StatPart_Authority">
+					<maxValue>1.2</maxValue>
+					<focusOnly>true</focusOnly>
+				</li>
+			</parts>
+		</value>
+	</Operation>
+	
+	<Operation Class="PatchOperationAdd">
+		<xpath>/Defs/StatDef[defName="SmoothingSpeed"]</xpath>
+		<value>
+			<parts>
+				<li Class="Rimocracy.StatPart_Authority">
+					<maxValue>1.2</maxValue>
+					<focusOnly>true</focusOnly>
+				</li>
+			</parts>
+		</value>
+	</Operation>
+	
+	<Operation Class="PatchOperationAdd">
+		<xpath>/Defs/StatDef[defName="ResearchSpeed"]</xpath>
+		<value>
+			<parts>
+				<li Class="Rimocracy.StatPart_Authority">
+					<maxValue>1.2</maxValue>
+					<focusOnly>true</focusOnly>
+				</li>
+			</parts>
+		</value>
+	</Operation>
+	
+	<Operation Class="PatchOperationAdd">
+		<xpath>/Defs/StatDef[defName="AnimalGatherSpeed"]</xpath>
+		<value>
+			<parts>
+				<li Class="Rimocracy.StatPart_Authority">
+					<maxValue>1.2</maxValue>
+					<focusOnly>true</focusOnly>
+				</li>
+			</parts>
+		</value>
+	</Operation>
+	
+	<Operation Class="PatchOperationAdd">
+		<xpath>/Defs/StatDef[defName="PlantWorkSpeed"]</xpath>
+		<value>
+			<parts>
+				<li Class="Rimocracy.StatPart_Authority">
+					<maxValue>1.2</maxValue>
+					<focusOnly>true</focusOnly>
+				</li>
+			</parts>
+		</value>
+	</Operation>
+	
+	<Operation Class="PatchOperationAdd">
+		<xpath>/Defs/StatDef[defName="ConstructionSpeed"]</xpath>
+		<value>
+			<parts>
+				<li Class="Rimocracy.StatPart_Authority">
+					<maxValue>1.2</maxValue>
+					<focusOnly>true</focusOnly>
+				</li>
+			</parts>
+		</value>
+	</Operation>
+	
+	<Operation Class="PatchOperationAdd">
+		<xpath>/Defs/StatDef[defName="MedicalTendSpeed"]</xpath>
+		<value>
+			<parts>
+				<li Class="Rimocracy.StatPart_Authority">
+					<maxValue>1.2</maxValue>
+					<focusOnly>true</focusOnly>
+				</li>
+			</parts>
+		</value>
+	</Operation>
+	
+	<Operation Class="PatchOperationAdd">
+		<xpath>/Defs/StatDef[defName="MedicalOperationSpeed"]</xpath>
+		<value>
+			<parts>
+				<li Class="Rimocracy.StatPart_Authority">
+					<maxValue>1.2</maxValue>
+					<focusOnly>true</focusOnly>
+				</li>
+			</parts>
+		</value>
+	</Operation>
+	
+	<Operation Class="PatchOperationAdd">
+		<xpath>/Defs/StatDef[defName="DrugSynthesisSpeed"]</xpath>
+		<value>
+			<parts>
+				<li Class="Rimocracy.StatPart_Authority">
+					<maxValue>1.2</maxValue>
+					<focusOnly>true</focusOnly>
+				</li>
+			</parts>
+		</value>
+	</Operation>
+	
+	<Operation Class="PatchOperationAdd">
+		<xpath>/Defs/StatDef[defName="CookSpeed"]</xpath>
+		<value>
+			<parts>
+				<li Class="Rimocracy.StatPart_Authority">
+					<maxValue>1.2</maxValue>
+					<focusOnly>true</focusOnly>
+				</li>
+			</parts>
+		</value>
+	</Operation>
+	
+	<Operation Class="PatchOperationAdd">
+		<xpath>/Defs/StatDef[defName="DrugCookingSpeed"]</xpath>
+		<value>
+			<parts>
+				<li Class="Rimocracy.StatPart_Authority">
+					<maxValue>1.2</maxValue>
+					<focusOnly>true</focusOnly>
+				</li>
+			</parts>
+		</value>
+	</Operation>
+	
+	<Operation Class="PatchOperationAdd">
+		<xpath>/Defs/StatDef[defName="ButcheryFleshSpeed"]</xpath>
+		<value>
+			<parts>
+				<li Class="Rimocracy.StatPart_Authority">
+					<maxValue>1.2</maxValue>
+					<focusOnly>true</focusOnly>
+				</li>
+			</parts>
+		</value>
+	</Operation>
+	
+	<Operation Class="PatchOperationAdd">
+		<xpath>/Defs/StatDef[defName="ButcheryMechanoidSpeed"]</xpath>
+		<value>
+			<parts>
+				<li Class="Rimocracy.StatPart_Authority">
+					<maxValue>1.2</maxValue>
+					<focusOnly>true</focusOnly>
+				</li>
+			</parts>
+		</value>
+	</Operation>
+	
 </Patch>
