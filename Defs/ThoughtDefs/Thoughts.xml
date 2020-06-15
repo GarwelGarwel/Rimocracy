@@ -7,6 +7,9 @@
 		<workerClass>Rimocracy.ThoughtWorker_Respect</workerClass>
 		<validWhileDespawned>true</validWhileDespawned>
 		<nullifiedIfNotColonist>true</nullifiedIfNotColonist>
+		<nullifyingTraits>
+			<li>Psychopath</li>
+		</nullifyingTraits>
 		<stages>
 			<li>
 				<label>pathetic buffon</label>
