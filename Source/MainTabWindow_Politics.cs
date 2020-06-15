@@ -18,13 +18,16 @@ namespace Rimocracy
                 if (Rimocracy.Instance.Leader != null)
                 {
                     if (Rimocracy.Instance.TermExpiration >= 0)
-                        label += "\nTerm expires in " + GenDate.ToStringTicksToPeriod(Rimocracy.Instance.TermExpiration - Find.TickManager.TicksAbs, false);
+                        label += "\nTerm expires in " + GenDate.ToStringTicksToPeriod(Rimocracy.Instance.TermExpiration - Find.TickManager.TicksAbs, false) + ".";
                     label += "\nAuthority: " + Rimocracy.Instance.AuthorityPercentage.ToString("N1") + "%";
                     if (Rimocracy.Instance.FocusSkill != null)
                         label += "\nFocus skill: " + Rimocracy.Instance.FocusSkill.LabelCap;
                 }
+                else if (Rimocracy.Instance.ElectionTick > Find.TickManager.TicksAbs)
+                    label += "\nLeader will be elected in " + GenDate.ToStringTicksToPeriod(Rimocracy.Instance.ElectionTick - Find.TickManager.TicksAbs) + ".";
+                else label += "\nChoosing the new leader...";
             }
-            else label = "You need at least 3 free colonists for politics.";
+            else label = "You need at least " + Rimocracy.MinColonistsRequirement + " free colonists for politics.";
             Widgets.Label(inRect, label);
         }
     }

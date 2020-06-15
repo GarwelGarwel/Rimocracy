@@ -10,14 +10,19 @@ namespace Rimocracy
 {
     public class Rimocracy : WorldComponent
     {
-        // Default duration of a leader's turn (1 day for testing purposes)
-        public const int DefaultTerm = GenDate.TicksPerDay / 12;
+        // Default duration of a leader's turn
+        public const int DefaultTerm = GenDate.TicksPerQuadrum;
+        // Delay first election succession by a day to let colonists know each other
+        public const int FirstElectionDelay = GenDate.TicksPerDay;
+        // Min number of colonists to enable the mod
+        public const int MinColonistsRequirement = 3;
 
         bool isEnabled = false;
 
         Pawn leader;
         SuccessionBase succession;
         int termExpiration = -1;
+        int electionTick = -1;
         float authority = 0.5f;
         SkillDef focusSkill;
 
@@ -58,6 +63,12 @@ namespace Rimocracy
             set => termExpiration = value;
         }
 
+        public int ElectionTick
+        {
+            get => electionTick;
+            set => electionTick = value;
+        }
+
         public SkillDef FocusSkill
         {
             get => focusSkill;
@@ -75,6 +86,7 @@ namespace Rimocracy
             Scribe_Values.Look(ref isEnabled, "isEnabled");
             Scribe_References.Look(ref leader, "leader");
             Scribe_Values.Look(ref termExpiration, "termExpiration", -1);
+            Scribe_Values.Look(ref electionTick, "electionTick", -1);
             Scribe_Values.Look(ref authority, "authority", 0.5f);
             Scribe_Defs.Look(ref focusSkill, "focusSkill");
         }
@@ -87,16 +99,17 @@ namespace Rimocracy
                 return;
 
             // If population is less than 3, temporarily disable the mod
-            if (PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonists_NoCryptosleep.Count < 3)
+            if (PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonists_NoCryptosleep.Count < MinColonistsRequirement)
             {
                 isEnabled = false;
                 leader = null;
                 authority = 0.5f;
+                electionTick = -1;
                 return;
             }
             isEnabled = true;
 
-            // If no valid leader, choose a new one and reset term
+            // If no valid leader, initiate succession
             if (!CanBeLeader(leader) || (termExpiration >= 0 && ticks >= termExpiration))
             {
                 if (succession == null)
@@ -104,15 +117,38 @@ namespace Rimocracy
                     Utility.Log("Succession is null!");
                     succession = new SuccessionElection();
                 }
-                Pawn oldLeader = leader;
-                leader = succession.ChooseLeader();
-                if (leader != null)
+
+                // Delay first election
+                if (succession is SuccessionElection && electionTick < 0)
                 {
-                    termExpiration = ticks + DefaultTerm;
-                    if (leader != oldLeader)
-                        authority = Mathf.Lerp(0.5f, authority, 0.5f);
-                    focusSkill = leader.skills.skills.MaxBy(sr => sr.Level).def;
-                    Utility.Log("New leader is " + leader + " (chosen from " + succession.Candidates.Count() + " candidates). Their term expires on " + GenDate.DateFullStringAt(termExpiration, Find.WorldGrid.LongLatOf(leader.Tile)) + ". The focus skill is " + focusSkill.defName);
+                    electionTick = ticks + FirstElectionDelay;
+                    Utility.Log("Election will take place on " + GenDate.DateFullStringWithHourAt(ticks, Find.WorldGrid.LongLatOf(Find.AnyPlayerHomeMap.Tile)));
+                }
+
+                // Choose new leader
+                if (ticks >= electionTick || !(succession is SuccessionElection))
+                {
+                    Pawn oldLeader = leader;
+                    leader = succession.ChooseLeader();
+                    if (leader != null)
+                    {
+                        termExpiration = ticks + DefaultTerm;
+                        if (leader != oldLeader)
+                        {
+                            authority = Mathf.Lerp(0.5f, authority, 0.5f);
+                            Find.LetterStack.ReceiveLetter(
+                                "New Leader",
+                                "Your nation has a new leader: {PAWN_nameFullDef}. Let {PAWN_possessive} reign be long and prosperous!".Formatted(leader.Named("PAWN")),
+                                LetterDefOf.NeutralEvent);
+                        }
+                        else if (succession is SuccessionElection)
+                            Find.LetterStack.ReceiveLetter(
+                                "Leader Reelected",
+                                "{PAWN_nameFullDef} has been reelected as the leader of your nation.".Formatted(leader.Named("PAWN")),
+                                LetterDefOf.NeutralEvent);
+                        focusSkill = leader.skills.skills.MaxBy(sr => sr.Level).def;
+                        Utility.Log("New leader is " + leader + " (chosen from " + succession.Candidates.Count() + " candidates). Their term expires on " + GenDate.DateFullStringAt(termExpiration, Find.WorldGrid.LongLatOf(leader.Tile)) + ". The focus skill is " + focusSkill.defName);
+                    }
                 }
             }
 
