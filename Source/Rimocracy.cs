@@ -19,6 +19,8 @@ namespace Rimocracy
         // Min number of colonists to enable the mod
         public const int MinColonistsRequirement = 3;
 
+        private const int RareTicksPeriod = 600;
+
         bool isEnabled = false;
 
         Pawn leader;
@@ -52,7 +54,7 @@ namespace Rimocracy
 
         public SuccessionBase Succession
         {
-            get => succession;
+            get => succession ?? (succession = new SuccessionElection());
             set => succession = value;
         }
 
@@ -105,7 +107,7 @@ namespace Rimocracy
         {
             int ticks = Find.TickManager.TicksAbs;
 
-            if (ticks % 600 != 0)
+            if (ticks % RareTicksPeriod != 0)
                 return;
 
             // If population is less than 3, temporarily disable the mod
@@ -122,24 +124,24 @@ namespace Rimocracy
             // If no valid leader, initiate succession
             if (!CanBeLeader(leader) || (termExpiration >= 0 && ticks >= termExpiration))
             {
-                if (succession == null)
+                if (Succession == null)
                 {
                     Utility.Log("Succession is null!");
-                    succession = new SuccessionElection();
+                    Succession = new SuccessionElection();
                 }
 
                 // Delay first election
-                if (succession is SuccessionElection && electionTick < 0)
+                if (Succession is SuccessionElection && electionTick < 0)
                 {
                     electionTick = ticks + FirstElectionDelay;
                     Utility.Log("Election will take place on " + GenDate.DateFullStringWithHourAt(ticks, Find.WorldGrid.LongLatOf(Find.AnyPlayerHomeMap.Tile)));
                 }
 
                 // Choose new leader
-                if (ticks >= electionTick || !(succession is SuccessionElection))
+                if (ticks >= electionTick || !(Succession is SuccessionElection))
                 {
                     Pawn oldLeader = leader;
-                    leader = succession.ChooseLeader();
+                    leader = Succession.ChooseLeader();
                     if (leader != null)
                     {
                         termExpiration = ticks + DefaultTerm;
@@ -147,25 +149,23 @@ namespace Rimocracy
                         {
                             authority = Mathf.Lerp(0.5f, authority, 0.5f);
                             Find.LetterStack.ReceiveLetter(
-                                succession.NewLeaderTitle,
-                                succession.NewLeaderMessage(leader),
+                                Succession.NewLeaderTitle,
+                                Succession.NewLeaderMessage(leader),
                                 LetterDefOf.NeutralEvent);
                         }
-                        else if (succession is SuccessionElection)
+                        else if (Succession is SuccessionElection)
                             Find.LetterStack.ReceiveLetter(
-                                succession.SameLeaderTitle,
-                                succession.SameLeaderMessage(leader),
+                                Succession.SameLeaderTitle,
+                                Succession.SameLeaderMessage(leader),
                                 LetterDefOf.NeutralEvent);
                         focusSkill = leader.skills.skills.MaxBy(sr => sr.Level).def;
-                        Utility.Log("New leader is " + leader + " (chosen from " + succession.Candidates.Count() + " candidates). Their term expires on " + GenDate.DateFullStringAt(termExpiration, Find.WorldGrid.LongLatOf(leader.Tile)) + ". The focus skill is " + focusSkill.defName);
+                        Utility.Log("New leader is " + leader + " (chosen from " + Succession.Candidates.Count() + " candidates). Their term expires on " + GenDate.DateFullStringAt(termExpiration, Find.WorldGrid.LongLatOf(leader.Tile)) + ". The focus skill is " + focusSkill.defName);
                     }
                 }
             }
 
             // Authority decay
-            float oldAuthority = authority;
-            authority = Math.Max(authority - AuthorityDecayPerDay / GenDate.TicksPerDay * 600, 0);
-            Utility.Log("Authority decay from " + oldAuthority.ToString("P2") + " to " + authority.ToString("P2") + " for " + PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonists_NoCryptosleep.Count + " colonists.");
+            authority = Math.Max(authority - AuthorityDecayPerDay / GenDate.TicksPerDay * RareTicksPeriod, 0);
         }
 
         public void BuildAuthority(float amount) => authority = Math.Min(authority + amount, 1);

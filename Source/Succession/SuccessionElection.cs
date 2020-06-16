@@ -1,5 +1,6 @@
 ﻿using RimWorld;
 using System.Collections.Generic;
+using System.Linq;
 using Verse;
 
 namespace Rimocracy.Succession
@@ -43,11 +44,26 @@ namespace Rimocracy.Succession
             return winner.Key;
         }
 
+        float VoteWeight(Pawn voter, Pawn candidate)
+        {
+            float weight = voter.relations.OpinionOf(candidate);
+            if (candidate.InAggroMentalState)
+                weight -= 10;
+            else if (candidate.InMentalState)
+                weight -= 5;
+            int sameBackstories = voter.story.AllBackstories.Count(bs => candidate.story.AllBackstories.Contains(bs));
+            if (sameBackstories > 0)
+                Utility.Log(voter.LabelShort + " and " + candidate.LabelShort + " have " + sameBackstories + " backstories in common.");
+            weight += sameBackstories * 5;
+            Utility.Log(voter.LabelShort + " vote weight for " + candidate.LabelShort + ": " + weight);
+            return weight;
+        }
+
         Pawn Vote(Pawn voter)
         {
             Dictionary<Pawn, float> weights = new Dictionary<Pawn, float>();
-            foreach (Pawn p in Candidates)
-                weights[p] = voter.relations.OpinionOf(p);
+            foreach (Pawn p in Candidates.Where(p => voter != p))
+                weights[p] = VoteWeight(voter, p);
             Pawn choice = weights.MaxByWithFallback(kvp => kvp.Value).Key;
             Utility.Log(voter + " votes for " + choice);
             return choice;
