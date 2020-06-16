@@ -15,7 +15,11 @@ namespace Rimocracy
         public override bool ShouldSkip(Pawn pawn, bool forced = false) => Rimocracy.Instance.Leader != pawn || Rimocracy.Instance.Authority >= 1;
 
         public override bool HasJobOnThing(Pawn pawn, Thing t, bool forced = false) 
-            => (t.def == ThingDefOf.Table1x2c || t.def == ThingDefOf.Table2x2c || t.def == ThingDefOf.Table3x3c)
+            => (new string[]
+            {
+                "RimWorld.Building_ResearchBench",
+                "FluffyManager.Building_ManagerStation"
+            }.Contains(t.def.thingClass.FullName))
             && pawn.CanReserve(t, ignoreOtherReservations: forced);
 
         public override Job JobOnThing(Pawn pawn, Thing t, bool forced = false) => JobMaker.MakeJob(DefDatabase<JobDef>.GetNamed("DoRuling"), t);
