@@ -5,9 +5,21 @@ using Verse;
 
 namespace Rimocracy
 {
-    abstract class SuccessionBase
+    public abstract class SuccessionBase
     {
         public abstract string Title { get; }
+
+        public virtual string SuccessionLabel => "succession";
+
+        public virtual string NewLeaderTitle => "New Leader";
+
+        public virtual string NewLeaderMessage(Pawn leader)
+            => "Our nation has a new leader: {PAWN_nameFullDef}. Let {PAWN_possessive} reign be long and prosperous!".Formatted(leader.Named("PAWN"));
+
+        public virtual string SameLeaderTitle => "Leader Stays in Power";
+
+        public virtual string SameLeaderMessage(Pawn leader)
+            => "{PAWN_nameFullDef} remains our nation's leader.".Formatted(leader.Named("PAWN"));
 
         public virtual IEnumerable<Pawn> Candidates
             => PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonists_NoCryptosleep.Where(p => CanBeCandidate(p));

@@ -16,7 +16,7 @@ namespace Rimocracy
         {
             float mult = Multiplier(req);
             return mult != 1
-                ? "Authority " + Rimocracy.Instance.AuthorityPercentage.ToString("N0") + "%: x" + mult.ToString("F2")
+                ? "Authority " + Rimocracy.Instance.AuthorityPercentage.ToString("N0") + "%: x" + mult.ToString("P0")
                 : null;
         }
 

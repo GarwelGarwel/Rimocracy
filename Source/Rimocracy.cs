@@ -12,8 +12,10 @@ namespace Rimocracy
     {
         // Default duration of a leader's turn
         public const int DefaultTerm = GenDate.TicksPerQuadrum;
+
         // Delay first election succession by a day to let colonists know each other
         public const int FirstElectionDelay = GenDate.TicksPerDay;
+
         // Min number of colonists to enable the mod
         public const int MinColonistsRequirement = 3;
 
@@ -32,8 +34,7 @@ namespace Rimocracy
 
         public Rimocracy(World world)
             : base(world)
-        {
-        }
+        { }
 
         public static Rimocracy Instance => Find.World.GetComponent<Rimocracy>();
 
@@ -47,6 +48,12 @@ namespace Rimocracy
         {
             get => leader;
             set => leader = value;
+        }
+
+        public SuccessionBase Succession
+        {
+            get => succession;
+            set => succession = value;
         }
 
         public float Authority
@@ -75,8 +82,11 @@ namespace Rimocracy
             set => focusSkill = value;
         }
 
-        float AuthorityDecayPerTick
-            => (0.03f + authority * 0.1f - (0.06f + authority * 0.25f) / PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonists_NoCryptosleep.Count) / GenDate.TicksPerDay;
+        public float BaseAuthorityDecayPerDay
+            => 0.03f + authority * 0.1f - (0.06f + authority * 0.25f) / PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonists_NoCryptosleep.Count;
+
+        public float AuthorityDecayPerDay
+            => Math.Max(BaseAuthorityDecayPerDay * (leader != null ? leader.GetStatValue(DefDatabase<StatDef>.GetNamed("AuthorityDecay")) : 1), 0);
 
         public static bool CanBeLeader(Pawn p)
             => p != null && !p.Dead && p.IsFreeColonist && !p.WorkTypeIsDisabled(DefDatabase<WorkTypeDef>.GetNamed("Ruling"));
@@ -137,14 +147,14 @@ namespace Rimocracy
                         {
                             authority = Mathf.Lerp(0.5f, authority, 0.5f);
                             Find.LetterStack.ReceiveLetter(
-                                "New Leader",
-                                "Your nation has a new leader: {PAWN_nameFullDef}. Let {PAWN_possessive} reign be long and prosperous!".Formatted(leader.Named("PAWN")),
+                                succession.NewLeaderTitle,
+                                succession.NewLeaderMessage(leader),
                                 LetterDefOf.NeutralEvent);
                         }
                         else if (succession is SuccessionElection)
                             Find.LetterStack.ReceiveLetter(
-                                "Leader Reelected",
-                                "{PAWN_nameFullDef} has been reelected as the leader of your nation.".Formatted(leader.Named("PAWN")),
+                                succession.SameLeaderTitle,
+                                succession.SameLeaderMessage(leader),
                                 LetterDefOf.NeutralEvent);
                         focusSkill = leader.skills.skills.MaxBy(sr => sr.Level).def;
                         Utility.Log("New leader is " + leader + " (chosen from " + succession.Candidates.Count() + " candidates). Their term expires on " + GenDate.DateFullStringAt(termExpiration, Find.WorldGrid.LongLatOf(leader.Tile)) + ". The focus skill is " + focusSkill.defName);
@@ -154,10 +164,10 @@ namespace Rimocracy
 
             // Authority decay
             float oldAuthority = authority;
-            authority = Math.Max(authority - Math.Min(AuthorityDecayPerTick * (leader != null ? leader.GetStatValue(DefDatabase<StatDef>.GetNamed("AuthorityDecay")) : 1) * 600, 0.0001f), 0);
+            authority = Math.Max(authority - AuthorityDecayPerDay / GenDate.TicksPerDay * 600, 0);
             Utility.Log("Authority decay from " + oldAuthority.ToString("P2") + " to " + authority.ToString("P2") + " for " + PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonists_NoCryptosleep.Count + " colonists.");
         }
 
-        public void BuildAuthority(float amount) => authority = Math.Min(Authority + amount, 1);
+        public void BuildAuthority(float amount) => authority = Math.Min(authority + amount, 1);
     }
 }

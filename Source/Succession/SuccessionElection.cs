@@ -4,9 +4,21 @@ using Verse;
 
 namespace Rimocracy.Succession
 {
-    class SuccessionElection : SuccessionBase
+    public class SuccessionElection : SuccessionBase
     {
+        int votesForWinner = 0;
+
         public override string Title => "Election";
+
+        public override string SuccessionLabel => "election";
+
+        public override string NewLeaderMessage(Pawn leader)
+            => ("{PAWN_nameFullDef} has been elected as our new leader" + (votesForWinner > 1 ? " with " + votesForWinner + " votes" : (votesForWinner == 1 ? " with just one vote" : "")) + ". Vox populi, vox dei!").Formatted(leader.Named("PAWN"));
+
+        public override string SameLeaderTitle => "Leader Reelected";
+
+        public override string SameLeaderMessage(Pawn leader)
+            => ("{PAWN_nameFullDef} has been reelected as the leader of our nation" + (votesForWinner > 1 ? " with " + votesForWinner + " votes." : (votesForWinner == 1 ? " with just one vote." : "."))).Formatted(leader.Named("PAWN"));
 
         public override Pawn ChooseLeader()
         {
@@ -26,7 +38,9 @@ namespace Rimocracy.Succession
                 Utility.Log("- " + kvp.Key + ": " + kvp.Value + " votes");
 
             // Returning the winner
-            return votes.MaxByWithFallback(kvp => kvp.Value).Key;
+            KeyValuePair<Pawn, int> winner = votes.MaxByWithFallback(kvp => kvp.Value);
+            votesForWinner = winner.Value;
+            return winner.Key;
         }
 
         Pawn Vote(Pawn voter)
