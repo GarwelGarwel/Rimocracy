@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
+
 <Defs>
 
 	<StatDef>
@@ -19,5 +20,5 @@
 		</parts>
 		<displayPriorityInCategory>1000</displayPriorityInCategory>
 	</StatDef>
-	
+
 </Defs>

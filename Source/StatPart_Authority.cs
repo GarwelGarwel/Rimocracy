@@ -14,35 +14,28 @@ namespace Rimocracy
 
         public override string ExplanationPart(StatRequest req)
         {
-            float mult = Multiplier(req);
-            return mult != 1
-                ? "Authority " + Rimocracy.Instance.AuthorityPercentage.ToString("N0") + "%: x" + mult.ToString("P0")
+            float mult = Multiplier(req) * 100;
+            return mult != 100
+                ? "Authority " + Rimocracy.Instance.AuthorityPercentage.ToString("N0") + "%: x" + mult.ToString("N0") + "%"
                 : null;
         }
 
         public override void TransformValue(StatRequest req, ref float val) => val *= Multiplier(req);
 
-        static List<SkillDef> GetRelevantSkills(StatDef stat)
-        {
-            List<SkillDef> skills = stat.skillNeedFactors.NullOrEmpty()
-                ? new List<SkillDef>()
-                : stat.skillNeedFactors.Select(sn => sn.skill).ToList();
-            if (!stat.skillNeedOffsets.NullOrEmpty())
-                skills.AddRange(stat.skillNeedOffsets.Select(sn => sn.skill));
-            return skills;
-        }
-
         float Multiplier(StatRequest req)
         {
-            // Only applies to free colonists
-            if (!(Rimocracy.Instance.IsEnabled && req.Thing is Pawn p && p.IsFreeColonist))
+            // Only applies to buildings and free colonists
+            if (!req.HasThing || !Rimocracy.IsEnabled || !((req.Thing is Pawn && (req.Thing as Pawn).IsFreeColonist) || (req.Thing is Building && req.Thing.Faction.IsPlayer)))
                 return 1;
             float effect = Rimocracy.Instance.Authority;
 
             // If the effect is skill-based, check if the parent stat's skills include the current focus skill
             if (focusOnly)
             {
-                List<SkillDef> skills = GetRelevantSkills(parentStat);
+                HashSet<SkillDef> skills = new HashSet<SkillDef>(Utility.GetRelevantSkills(parentStat));
+                CompProperties_AffectedByAuthority rs = (req.Thing as ThingWithComps).GetComp<ThingComp_AffectedByAuthority>()?.Props;
+                if (rs?.Skills != null)
+                    skills.AddRange(rs.Skills);
                 if (!skills.Contains(Rimocracy.Instance.FocusSkill))
                     return 1;
                 effect /= skills.Count();

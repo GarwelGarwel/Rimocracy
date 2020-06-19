@@ -16,6 +16,87 @@
 		</value>
 	</Operation>
 
+<!--========================== Relevant Skills for Workbenches ============================-->
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>/Defs/ThingDef[defName="TableSculpting"]/comps</xpath>
+		<value>
+			<li Class="Rimocracy.CompProperties_AffectedByAuthority">
+				<skills>
+					<li>Artistic</li>
+				</skills>
+			</li>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>/Defs/ThingDef[defName="HandTailoringBench"]/comps</xpath>
+		<value>
+			<li Class="Rimocracy.CompProperties_AffectedByAuthority">
+				<skills>
+					<li>Crafting</li>
+				</skills>
+			</li>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>/Defs/ThingDef[defName="ElectricTailoringBench"]/comps</xpath>
+		<value>
+			<li Class="Rimocracy.CompProperties_AffectedByAuthority">
+				<skills>
+					<li>Crafting</li>
+				</skills>
+			</li>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>/Defs/ThingDef[defName="TableMachining"]/comps</xpath>
+		<value>
+			<li Class="Rimocracy.CompProperties_AffectedByAuthority">
+				<skills>
+					<li>Crafting</li>
+				</skills>
+			</li>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>/Defs/ThingDef[defName="TableStonecutter"]/comps</xpath>
+		<value>
+			<li Class="Rimocracy.CompProperties_AffectedByAuthority">
+				<skills>
+					<li>Crafting</li>
+				</skills>
+			</li>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>/Defs/ThingDef[defName="BiofuelRefinery"]/comps</xpath>
+		<value>
+			<li Class="Rimocracy.CompProperties_AffectedByAuthority">
+				<skills>
+					<li>Crafting</li>
+				</skills>
+			</li>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>/Defs/ThingDef[defName="FabricationBench"]/comps</xpath>
+		<value>
+			<li Class="Rimocracy.CompProperties_AffectedByAuthority">
+				<skills>
+					<li>Crafting</li>
+				</skills>
+			</li>
+		</value>
+	</Operation>
+
+<!--========================== Mod: Colony Manager ============================-->
+
 	<Operation Class="PatchOperationAdd">
 		<xpath>/Defs/ThingDef[defName="FM_BasicManagerStation"]/statBases</xpath>
 		<value>

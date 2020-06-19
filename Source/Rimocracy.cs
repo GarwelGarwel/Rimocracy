@@ -14,11 +14,12 @@ namespace Rimocracy
         public const int DefaultTerm = GenDate.TicksPerQuadrum;
 
         // Delay first election succession by a day to let colonists know each other
-        public const int FirstElectionDelay = GenDate.TicksPerDay;
+        public const int FirstElectionDelay = GenDate.TicksPerDay / 12;
 
         // Min number of colonists to enable the mod
         public const int MinColonistsRequirement = 3;
 
+        // How often mod enabled/disabled check, succession, authority decay etc. are updated
         private const int RareTicksPeriod = 600;
 
         bool isEnabled = false;
@@ -38,13 +39,9 @@ namespace Rimocracy
             : base(world)
         { }
 
-        public static Rimocracy Instance => Find.World.GetComponent<Rimocracy>();
+        public static Rimocracy Instance => Find.World?.GetComponent<Rimocracy>();
 
-        public bool IsEnabled
-        {
-            get => isEnabled;
-            set => isEnabled = value;
-        }
+        public static bool IsEnabled => Instance != null && Instance.isEnabled;
 
         public Pawn Leader
         {
@@ -103,6 +100,8 @@ namespace Rimocracy
             Scribe_Defs.Look(ref focusSkill, "focusSkill");
         }
 
+        string FocusSkillMessage => "The focus skill is " + focusSkill.LabelCap + ".";
+
         public override void WorldComponentTick()
         {
             int ticks = Find.TickManager.TicksAbs;
@@ -145,20 +144,15 @@ namespace Rimocracy
                     if (leader != null)
                     {
                         termExpiration = ticks + DefaultTerm;
+                        focusSkill = Utility.GetRandomSkill(leader.skills.skills, leader == oldLeader ? focusSkill : null);
                         if (leader != oldLeader)
                         {
                             authority = Mathf.Lerp(0.5f, authority, 0.5f);
-                            Find.LetterStack.ReceiveLetter(
-                                Succession.NewLeaderTitle,
-                                Succession.NewLeaderMessage(leader),
-                                LetterDefOf.NeutralEvent);
+                            Find.LetterStack.ReceiveLetter(Succession.NewLeaderTitle, Succession.NewLeaderMessage(leader) + "\n\n" + FocusSkillMessage, LetterDefOf.NeutralEvent);
                         }
-                        else if (Succession is SuccessionElection)
-                            Find.LetterStack.ReceiveLetter(
-                                Succession.SameLeaderTitle,
-                                Succession.SameLeaderMessage(leader),
-                                LetterDefOf.NeutralEvent);
-                        focusSkill = leader.skills.skills.MaxBy(sr => sr.Level).def;
+                        else Find.LetterStack.ReceiveLetter(Succession.SameLeaderTitle, Succession.SameLeaderMessage(leader) + "\n\n" + FocusSkillMessage, LetterDefOf.NeutralEvent);
+
+                        // Selecting focus skill
                         Utility.Log("New leader is " + leader + " (chosen from " + Succession.Candidates.Count() + " candidates). Their term expires on " + GenDate.DateFullStringAt(termExpiration, Find.WorldGrid.LongLatOf(leader.Tile)) + ". The focus skill is " + focusSkill.defName);
                     }
                 }

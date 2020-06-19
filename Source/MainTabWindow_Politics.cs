@@ -12,7 +12,7 @@ namespace Rimocracy
         {
             base.DoWindowContents(inRect);
             string label = "";
-            if (Rimocracy.Instance.IsEnabled)
+            if (Rimocracy.IsEnabled)
             {
                 label += "Leader: " + (Rimocracy.Instance.Leader?.NameFullColored ?? "none");
                 if (Rimocracy.Instance.Leader != null)
