@@ -13,10 +13,10 @@ namespace Rimocracy.Succession
 
         public override string SuccessionLabel => "election";
 
-        public override string NewLeaderMessage(Pawn leader)
-            => ("{PAWN_nameFullDef} has been elected as our new leader" + (votesForWinner > 1 ? " with " + votesForWinner + " votes" : (votesForWinner == 1 ? " with just one vote" : "")) + ". Vox populi, vox dei!").Formatted(leader.Named("PAWN"));
-
         public override string SameLeaderTitle => "Leader Reelected";
+
+        public override string NewLeaderMessage(Pawn leader)
+                    => ("{PAWN_nameFullDef} has been elected as our new leader" + (votesForWinner > 1 ? " with " + votesForWinner + " votes" : (votesForWinner == 1 ? " with just one vote" : "")) + ". Vox populi, vox dei!").Formatted(leader.Named("PAWN"));
 
         public override string SameLeaderMessage(Pawn leader)
             => ("{PAWN_nameFullDef} has been reelected as the leader of our nation" + (votesForWinner > 1 ? " with " + votesForWinner + " votes." : (votesForWinner == 1 ? " with just one vote." : "."))).Formatted(leader.Named("PAWN"));
@@ -40,6 +40,7 @@ namespace Rimocracy.Succession
 
             // Returning the winner
             KeyValuePair<Pawn, int> winner = votes.MaxByWithFallback(kvp => kvp.Value);
+            winner.Key.records.Increment(DefDatabase<RecordDef>.GetNamed("TimesElected"));
             votesForWinner = winner.Value;
             return winner.Key;
         }
@@ -54,7 +55,7 @@ namespace Rimocracy.Succession
             int sameBackstories = voter.story.AllBackstories.Count(bs => candidate.story.AllBackstories.Contains(bs));
             if (sameBackstories > 0)
                 Utility.Log(voter.LabelShort + " and " + candidate.LabelShort + " have " + sameBackstories + " backstories in common.");
-            weight += sameBackstories * 5;
+            weight += sameBackstories * 10;
             Utility.Log(voter.LabelShort + " vote weight for " + candidate.LabelShort + ": " + weight);
             return weight;
         }

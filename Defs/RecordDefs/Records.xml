@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+ 
+  <RecordDef>
+    <defName>TimeAsLeader</defName>
+    <label>time as a leader</label>
+    <description>Total time spent leading your nation.</description>
+    <type>Time</type>
+    <workerClass>Rimocracy.RecordWorker_TimeAsLeader</workerClass>
+  </RecordDef>
+
+  <RecordDef>
+    <defName>TimeRuling</defName>
+    <label>time ruling</label>
+    <description>Total time spent ruling.</description>
+    <type>Time</type>
+    <measuredTimeJobs>
+      <li>DoRuling</li>
+    </measuredTimeJobs>
+  </RecordDef>
+  
+  <RecordDef>
+    <defName>TimesElected</defName>
+    <label>times elected</label>
+    <description>The number of times this pawn has been elected a leader.</description>
+    <type>Int</type>
+  </RecordDef>
+  
+</Defs>
