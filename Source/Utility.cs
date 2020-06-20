@@ -37,6 +37,8 @@ namespace Rimocracy
             .MaxBy(kvp => kvp.Value)
             .Key;
 
+        public static bool IsLeader(this Pawn p) => Rimocracy.IsEnabled && Rimocracy.Instance.Leader == p;
+
         public static void Log(string message, LogLevel logLevel = LogLevel.Message)
         {
             message = "[Rimocracy] " + message;

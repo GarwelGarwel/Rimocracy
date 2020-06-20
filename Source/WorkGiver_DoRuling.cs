@@ -1,6 +1,5 @@
 ﻿using RimWorld;
 using System.Collections.Generic;
-using System.Linq;
 using Verse;
 using Verse.AI;
 
@@ -12,16 +11,15 @@ namespace Rimocracy
 
         public override IEnumerable<Thing> PotentialWorkThingsGlobal(Pawn pawn) => pawn.Map.listerBuildings.allBuildingsColonist;
 
-        public override bool ShouldSkip(Pawn pawn, bool forced = false) => Rimocracy.Instance.Leader != pawn || Rimocracy.Instance.Authority >= 1;
+        // Don't start Ruling job if authority is already 99%+
+        public override bool ShouldSkip(Pawn pawn, bool forced = false) => !pawn.IsLeader() || Rimocracy.Instance.Authority >= 0.99f;
 
-        public override bool HasJobOnThing(Pawn pawn, Thing t, bool forced = false) 
-            => (new string[]
-            {
-                "RimWorld.Building_ResearchBench",
-                "FluffyManager.Building_ManagerStation"
-            }.Contains(t.def.thingClass.FullName))
-            && pawn.CanReserve(t, ignoreOtherReservations: forced);
+        // Prefer more efficient stations
+        public override float GetPriority(Pawn pawn, TargetInfo t) => t.Thing.GetStatValue(DefOf.RulingEfficiencyFactor);
 
-        public override Job JobOnThing(Pawn pawn, Thing t, bool forced = false) => JobMaker.MakeJob(DefDatabase<JobDef>.GetNamed("DoRuling"), t);
+        public override bool HasJobOnThing(Pawn pawn, Thing t, bool forced = false)
+            => t.def.StatBaseDefined(DefOf.RulingEfficiencyFactor) && pawn.CanReserve(t, ignoreOtherReservations: forced);
+
+        public override Job JobOnThing(Pawn pawn, Thing t, bool forced = false) => JobMaker.MakeJob(DefOf.DoRuling, t);
     }
 }

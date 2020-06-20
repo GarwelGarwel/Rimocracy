@@ -19,7 +19,7 @@ namespace Rimocracy
             => PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonists_NoCryptosleep.Where(p => CanBeCandidate(p));
 
         public virtual string NewLeaderMessage(Pawn leader)
-                            => "Our nation has a new leader: {PAWN_nameFullDef}. Let {PAWN_possessive} reign be long and prosperous!".Formatted(leader.Named("PAWN"));
+            => "Our nation has a new leader: {PAWN_nameFullDef}. Let {PAWN_possessive} reign be long and prosperous!".Formatted(leader.Named("PAWN"));
 
         public virtual string SameLeaderMessage(Pawn leader)
             => "{PAWN_nameFullDef} remains our nation's leader.".Formatted(leader.Named("PAWN"));

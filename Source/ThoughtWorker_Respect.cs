@@ -6,6 +6,6 @@ namespace Rimocracy
     public class ThoughtWorker_Respect : ThoughtWorker
     {
         protected override ThoughtState CurrentSocialStateInternal(Pawn p, Pawn otherPawn)
-            => otherPawn == Rimocracy.Instance.Leader && p.ageTracker.AgeBiologicalYears >= 16;
+            => otherPawn.IsLeader() && p.ageTracker.AgeBiologicalYears >= 16;
     }
 }

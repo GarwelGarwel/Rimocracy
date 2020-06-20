@@ -16,7 +16,7 @@ namespace Rimocracy
             Toil rulingToil = new Toil();
             rulingToil.tickAction = Ruling_TickAction;
             rulingToil.FailOn(() => Rimocracy.Instance.Authority >= 1);
-            rulingToil.FailOn(() => Rimocracy.Instance.Leader != pawn);
+            rulingToil.FailOn(() => !pawn.IsLeader());
             rulingToil.FailOnCannotTouch(TargetIndex.A, PathEndMode.InteractionCell);
             rulingToil.defaultCompleteMode = ToilCompleteMode.Delay;
             rulingToil.defaultDuration = GenDate.TicksPerHour * 2;
@@ -29,8 +29,8 @@ namespace Rimocracy
         void Ruling_TickAction()
         {
             Rimocracy.Instance.BuildAuthority(
-                pawn.GetStatValue(DefDatabase<StatDef>.GetNamed("RulingEfficiency"))
-                * TargetA.Thing.GetStatValue(DefDatabase<StatDef>.GetNamed("RulingEfficiencyFactor"))
+                pawn.GetStatValue(DefOf.RulingEfficiency)
+                * TargetA.Thing.GetStatValue(DefOf.RulingEfficiencyFactor)
                 / GenDate.TicksPerHour);
             pawn.skills.Learn(SkillDefOf.Intellectual, 0.05f);
             pawn.skills.Learn(SkillDefOf.Social, 0.05f);
