@@ -6,8 +6,8 @@
 		<xpath>/Defs/StatDef[defName="WorkSpeedGlobal"]/parts</xpath>
 		<value>
 			<li Class="Rimocracy.StatPart_Authority">
-				<minValue>0.8</minValue>
-				<maxValue>1.2</maxValue>
+				<minValue>0.75</minValue>
+				<maxValue>1.25</maxValue>
 			</li>
 		</value>
 	</Operation>

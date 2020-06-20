@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
+
 <Defs>
 
 	<RoomStatDef>
@@ -7,20 +8,20 @@
 		<workerClass>RoomStatWorker_FromStatByCurve</workerClass>
 		<updatePriority>0</updatePriority>
 		<isHidden>true</isHidden>
-		<roomlessScore>0.75</roomlessScore>
+		<roomlessScore>0.6</roomlessScore>
 		<inputStat>Impressiveness</inputStat>
 		<curve>
 			<points>
-				<li>(0, 0.90)</li>
-				<li>(20, 0.94)</li>
-				<li>(30, 0.96)</li>
-				<li>(40, 0.98)</li>
+				<li>(0, 0.80)</li>
+				<li>(20, 0.88)</li>
+				<li>(30, 0.92)</li>
+				<li>(40, 0.96)</li>
 				<li>(50, 1.00)</li>
-				<li>(65, 1.02)</li>
-				<li>(85, 1.04)</li>
-				<li>(120, 1.06)</li>
-				<li>(170, 1.08)</li>
-				<li>(240, 1.10)</li>
+				<li>(65, 1.04)</li>
+				<li>(85, 1.08)</li>
+				<li>(120, 1.12)</li>
+				<li>(170, 1.16)</li>
+				<li>(240, 1.20)</li>
 			</points>
 		</curve>
 	</RoomStatDef>

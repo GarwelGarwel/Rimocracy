@@ -2,6 +2,8 @@
 
 <Patch>
 
+<!--========================== Ruling Efficiency ============================-->
+
 	<Operation Class="PatchOperationAdd">
 		<xpath>/Defs/ThingDef[defName="SimpleResearchBench"]/statBases</xpath>
 		<value>
