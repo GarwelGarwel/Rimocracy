@@ -1,12 +1,13 @@
 ﻿using RimWorld;
+using Verse;
 
 namespace Rimocracy
 {
-    class Thought_Respect : Thought_SituationalSocial
+    public class ThoughtWorker_Respect : ThoughtWorker
     {
-        protected override ThoughtState CurrentStateInternal()
+        protected override ThoughtState CurrentSocialStateInternal(Pawn p, Pawn otherPawn)
         {
-            if (otherPawn.IsLeader() && pawn.ageTracker.AgeBiologicalYears >= 16)
+            if (otherPawn.IsLeader() && p.ageTracker.AgeBiologicalYears >= 16)
             {
                 if (Rimocracy.Instance.Authority < 0.10)
                     return ThoughtState.ActiveAtStage(0);

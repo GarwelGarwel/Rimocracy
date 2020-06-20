@@ -73,8 +73,8 @@
     <Compile Include="Succession\SuccessionLot.cs" />
     <Compile Include="Succession\SuccessionOldest.cs" />
     <Compile Include="ThingComp_AffectedByAuthority.cs" />
-    <Compile Include="ThoughtWorker_Respect.cs" />
-    <Compile Include="Thought_Respect.cs" />
+    <Compile Include="Thoughts\ThoughtWorker_Competitor.cs" />
+    <Compile Include="Thoughts\ThoughtWorker_Respect.cs" />
     <Compile Include="WorkGiver_DoRuling.cs" />
     <Compile Include="Rimocracy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

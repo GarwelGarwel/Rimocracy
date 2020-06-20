@@ -123,7 +123,7 @@ namespace Rimocracy
         {
             Scribe_Values.Look(ref isEnabled, "isEnabled");
             Scribe_References.Look(ref leader, "leader");
-            Scribe_Deep.Look(ref campaigns, "campaigns");
+            Scribe_Collections.Look(ref campaigns, "campaigns", LookMode.Deep);
             Scribe_Values.Look(ref termExpiration, "termExpiration", int.MaxValue);
             Scribe_Values.Look(ref electionTick, "electionTick", int.MaxValue);
             Scribe_Values.Look(ref authority, "authority", 0.5f);
@@ -183,6 +183,12 @@ namespace Rimocracy
         void CallElection()
         {
             electionTick = Find.TickManager.TicksAbs + ElectionDelay;
+
+            // Adjust term expiration to the time of election
+            if (termExpiration < int.MaxValue)
+                termExpiration = electionTick;
+
+            // Launch campaigns
             if (CampaigningEnabled)
             {
                 Candidates = ((SuccessionElection)Succession).ChooseLeaders();
@@ -197,11 +203,19 @@ namespace Rimocracy
         {
             Pawn oldLeader = leader;
             leader = Succession.ChooseLeader();
+
             if (leader != null)
             {
+                // Election was successful
                 termExpiration = Find.TickManager.TicksAbs + DefaultTerm;
                 electionTick = int.MaxValue;
                 focusSkill = GetCampaignOf(leader)?.FocusSkill ?? Utility.GetRandomSkill(leader.skills.skills, leader == oldLeader ? focusSkill : null);
+
+                // Candidates gain positive or negative thoughts of the election outcome
+                foreach (Pawn p in Candidates)
+                    p.needs.mood.thoughts.memories.TryGainMemory(ThoughtMaker.MakeThought(DefOf.ElectionOutcome, p.IsLeader() ? 1 : 0));
+
+                // If the leader has changed, partially reset Authority; show message
                 if (leader != oldLeader)
                 {
                     authority = Mathf.Lerp(0.5f, authority, 0.5f);

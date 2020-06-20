@@ -1,9 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
+
 <Defs>
 
 	<ThoughtDef>
 		<defName>Rimocracy_Respect</defName>
-		<thoughtClass>Rimocracy.Thought_Respect</thoughtClass>
+		<thoughtClass>Thought_SituationalSocial</thoughtClass>
 		<workerClass>Rimocracy.ThoughtWorker_Respect</workerClass>
 		<validWhileDespawned>true</validWhileDespawned>
 		<nullifiedIfNotColonist>true</nullifiedIfNotColonist>
@@ -30,6 +31,40 @@
 			<li>
 				<label>revered leader</label>
 				<baseOpinionOffset>30</baseOpinionOffset>
+			</li>
+		</stages>
+	</ThoughtDef>
+
+	<ThoughtDef>
+		<defName>Rimocracy_Competitor</defName>
+		<thoughtClass>Thought_SituationalSocial</thoughtClass>
+		<workerClass>Rimocracy.ThoughtWorker_Competitor</workerClass>
+		<validWhileDespawned>true</validWhileDespawned>
+		<nullifiedIfNotColonist>true</nullifiedIfNotColonist>
+		<nullifyingTraits>
+			<li>Kind</li>
+		</nullifyingTraits>
+		<stages>
+			<li>
+				<label>my competitor</label>
+				<baseOpinionOffset>-20</baseOpinionOffset>
+			</li>
+		</stages>
+	</ThoughtDef>
+
+	<ThoughtDef>
+		<defName>Rimocracy_ElectionOutcome</defName>
+		<durationDays>5</durationDays>
+		<stages>
+			<li>
+				<label>i lost election</label>
+				<description>What a disappointment!</description>
+				<baseMoodEffect>-5</baseMoodEffect>
+			</li>
+			<li>
+				<label>i won election</label>
+				<description>People have trusted me to lead this nation!</description>
+				<baseMoodEffect>10</baseMoodEffect>
 			</li>
 		</stages>
 	</ThoughtDef>
