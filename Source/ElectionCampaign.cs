@@ -1,9 +1,7 @@
 ﻿using Rimocracy.Succession;
 using RimWorld;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 using Verse;
 
 namespace Rimocracy
@@ -67,7 +65,7 @@ namespace Rimocracy
                 if (pawn != candidate)
                 {
                     float defectionChance = 1 - SuccessionElection.VoteWeight(pawn, candidate) / 100;
-                    if (Rand.Chance(defectionChance) || Rimocracy.Instance.Candidates.MaxBy(p => SuccessionElection.VoteWeight(pawn, p)) != candidate)
+                    if (!pawn.IsCitizen() || Rand.Chance(defectionChance) || Rimocracy.Instance.Candidates.MaxBy(p => SuccessionElection.VoteWeight(pawn, p)) != candidate)
                     {
                         Utility.Log(pawn + " is no longer a core supporter for " + candidate + ". Their defection chance was " + defectionChance.ToString("P1"));
                         defectors.Add(pawn);
@@ -90,7 +88,7 @@ namespace Rimocracy
                 if (Rand.Chance(swayChance))
                 {
                     Utility.Log("Sway successful!");
-                    targetPawn.needs.mood.thoughts.memories.TryGainMemory(DefOf.PoliticalSympathy, candidate);
+                    targetPawn.needs.mood.thoughts.memories.TryGainMemory(RimocracyDefOf.PoliticalSympathy, candidate);
 
                     if (!Rimocracy.Instance.Campaigns.Any(ec => ec.Supporters.Contains(targetPawn)))
                     {

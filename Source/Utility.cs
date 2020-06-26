@@ -7,7 +7,7 @@ namespace Rimocracy
 {
     enum LogLevel { Message = 0, Warning, Error };
 
-    static class Utility
+    public static class Utility
     {
         /// <summary>
         /// Returns a list of skills that affect the given stat
@@ -51,14 +51,14 @@ namespace Rimocracy
         public static IEnumerable<Pawn> Citizens => PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonists_NoCryptosleep
             .Where(p => p.IsCitizen());
 
-        public static bool CanBeLeader(this Pawn p) => p.IsCitizen() && !p.WorkTypeIsDisabled(DefOf.Ruling);
+        public static bool CanBeLeader(this Pawn p) => p.IsCitizen() && !p.WorkTypeIsDisabled(RimocracyDefOf.Ruling);
 
         public static bool IsLeader(this Pawn p) => Rimocracy.IsEnabled && Rimocracy.Instance.Leader == p;
 
         public static ElectionCampaign SupportsCampaign(this Pawn p)
             => Rimocracy.Instance.Campaigns?.FirstOrDefault(ec => ec.Supporters.Contains(p));
 
-        public static void Log(string message, LogLevel logLevel = LogLevel.Message)
+        internal static void Log(string message, LogLevel logLevel = LogLevel.Message)
         {
             message = "[Rimocracy] " + message;
             switch (logLevel)

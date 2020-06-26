@@ -25,7 +25,7 @@ namespace Rimocracy
         float Multiplier(StatRequest req)
         {
             // Only applies to buildings and free colonists
-            if (!req.HasThing || !Rimocracy.IsEnabled || !((req.Thing is Pawn && (req.Thing as Pawn).IsFreeColonist) || (req.Thing is Building && req.Thing.Faction.IsPlayer)))
+            if (!req.HasThing || !Rimocracy.IsEnabled || !((req.Thing is Pawn && (req.Thing as Pawn).IsCitizen()) || (req.Thing is Building && req.Thing.Faction.IsPlayer)))
                 return 1;
             float effect = Rimocracy.Instance.Authority;
 

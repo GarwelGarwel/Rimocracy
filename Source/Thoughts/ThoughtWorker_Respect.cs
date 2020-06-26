@@ -7,7 +7,7 @@ namespace Rimocracy
     {
         protected override ThoughtState CurrentSocialStateInternal(Pawn p, Pawn otherPawn)
         {
-            if (otherPawn.IsLeader() && p.ageTracker.AgeBiologicalYears >= 16)
+            if (otherPawn.IsLeader() && p.IsCitizen())
             {
                 if (Rimocracy.Instance.Authority < 0.10)
                     return ThoughtState.ActiveAtStage(0);

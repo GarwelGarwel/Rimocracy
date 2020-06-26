@@ -3,7 +3,7 @@
 <Defs>
 
 	<ThoughtDef>
-		<defName>Rimocracy_Respect</defName>
+		<defName>Respect</defName>
 		<thoughtClass>Thought_SituationalSocial</thoughtClass>
 		<workerClass>Rimocracy.ThoughtWorker_Respect</workerClass>
 		<validWhileDespawned>true</validWhileDespawned>
@@ -36,7 +36,7 @@
 	</ThoughtDef>
 
 	<ThoughtDef>
-		<defName>Rimocracy_Competitor</defName>
+		<defName>ElectionCompetitor</defName>
 		<thoughtClass>Thought_SituationalSocial</thoughtClass>
 		<workerClass>Rimocracy.ThoughtWorker_Competitor</workerClass>
 		<validWhileDespawned>true</validWhileDespawned>
@@ -53,7 +53,7 @@
 	</ThoughtDef>
 
 	<ThoughtDef>
-		<defName>Rimocracy_ElectionOutcome</defName>
+		<defName>ElectionOutcome</defName>
 		<stages>
 			<li>
 				<label>i lost election</label>
@@ -70,7 +70,7 @@
 	</ThoughtDef>
 
 	<ThoughtDef>
-		<defName>Rimocracy_PoliticalSympathy</defName>
+		<defName>PoliticalSympathy</defName>
 		<thoughtClass>Thought_MemorySocial</thoughtClass>
 		<stages>
 			<li>

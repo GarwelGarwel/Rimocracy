@@ -29,8 +29,8 @@ namespace Rimocracy
         void Ruling_TickAction()
         {
             Rimocracy.Instance.BuildAuthority(
-                pawn.GetStatValue(DefOf.RulingEfficiency)
-                * TargetA.Thing.GetStatValue(DefOf.RulingEfficiencyFactor)
+                pawn.GetStatValue(RimocracyDefOf.RulingEfficiency)
+                * TargetA.Thing.GetStatValue(RimocracyDefOf.RulingEfficiencyFactor)
                 / GenDate.TicksPerHour);
             pawn.skills.Learn(SkillDefOf.Intellectual, 0.05f);
             pawn.skills.Learn(SkillDefOf.Social, 0.05f);

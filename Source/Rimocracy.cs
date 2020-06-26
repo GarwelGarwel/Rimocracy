@@ -80,8 +80,6 @@ namespace Rimocracy
             }
         }
 
-        public ElectionCampaign GetCampaignOf(Pawn candidate) => campaigns?.FirstOrDefault(ec => ec.Candidate == candidate);
-
         public float Authority
         {
             get => authority;
@@ -112,11 +110,13 @@ namespace Rimocracy
             => 0.03f + authority * 0.1f - (0.06f + authority * 0.25f) / Utility.Citizens.Count();
 
         public float AuthorityDecayPerDay
-            => Math.Max(BaseAuthorityDecayPerDay * (leader != null ? leader.GetStatValue(DefOf.AuthorityDecay) : 1), 0);
+            => Math.Max(BaseAuthorityDecayPerDay * (leader != null ? leader.GetStatValue(RimocracyDefOf.AuthorityDecay) : 1), 0);
+
+        public bool ElectionCalled => electionTick != int.MaxValue;
 
         string FocusSkillMessage => "The focus skill is " + focusSkill.LabelCap + ".";
 
-        public bool ElectionCalled => electionTick != int.MaxValue;
+        public ElectionCampaign GetCampaignOf(Pawn candidate) => Campaigns?.FirstOrDefault(ec => ec.Candidate == candidate);
 
         public override void ExposeData()
         {
@@ -217,7 +217,7 @@ namespace Rimocracy
                 // Candidates gain positive or negative thoughts of the election outcome
                 if (Candidates != null)
                     foreach (Pawn p in Candidates)
-                        p.needs.mood.thoughts.memories.TryGainMemory(ThoughtMaker.MakeThought(DefOf.ElectionOutcome, p.IsLeader() ? 1 : 0));
+                        p.needs.mood.thoughts.memories.TryGainMemory(ThoughtMaker.MakeThought(RimocracyDefOf.ElectionOutcome, p.IsLeader() ? 1 : 0));
 
                 // If the leader has changed, partially reset Authority; show message
                 if (leader != oldLeader)

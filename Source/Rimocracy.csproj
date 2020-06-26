@@ -62,7 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ThingComps\CompProperties_AffectedByAuthority.cs" />
-    <Compile Include="DefOf.cs" />
+    <Compile Include="RimocracyDefOf.cs" />
     <Compile Include="ElectionCampaign.cs" />
     <Compile Include="HarmonyManager.cs" />
     <Compile Include="JobDriver_DoRuling.cs" />

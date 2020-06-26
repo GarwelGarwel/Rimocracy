@@ -15,11 +15,11 @@ namespace Rimocracy
         public override bool ShouldSkip(Pawn pawn, bool forced = false) => !pawn.IsLeader() || Rimocracy.Instance.Authority >= 0.99f;
 
         // Prefer more efficient stations
-        public override float GetPriority(Pawn pawn, TargetInfo t) => t.Thing.GetStatValue(DefOf.RulingEfficiencyFactor);
+        public override float GetPriority(Pawn pawn, TargetInfo t) => t.Thing.GetStatValue(RimocracyDefOf.RulingEfficiencyFactor);
 
         public override bool HasJobOnThing(Pawn pawn, Thing t, bool forced = false)
-            => t.def.StatBaseDefined(DefOf.RulingEfficiencyFactor) && pawn.CanReserve(t, ignoreOtherReservations: forced);
+            => t.def.StatBaseDefined(RimocracyDefOf.RulingEfficiencyFactor) && pawn.CanReserve(t, ignoreOtherReservations: forced);
 
-        public override Job JobOnThing(Pawn pawn, Thing t, bool forced = false) => JobMaker.MakeJob(DefOf.DoRuling, t);
+        public override Job JobOnThing(Pawn pawn, Thing t, bool forced = false) => JobMaker.MakeJob(RimocracyDefOf.DoRuling, t);
     }
 }
