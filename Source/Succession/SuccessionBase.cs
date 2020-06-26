@@ -16,7 +16,7 @@ namespace Rimocracy
         public virtual string SameLeaderTitle => "Leader Stays in Power";
 
         public virtual IEnumerable<Pawn> Candidates
-            => PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonists_NoCryptosleep.Where(p => CanBeCandidate(p));
+            => Utility.Citizens.Where(p => CanBeCandidate(p));
 
         public virtual string NewLeaderMessage(Pawn leader)
             => "Our nation has a new leader: {PAWN_nameFullDef}. Let {PAWN_possessive} reign be long and prosperous!".Formatted(leader.Named("PAWN"));
@@ -27,6 +27,6 @@ namespace Rimocracy
         public abstract Pawn ChooseLeader();
 
         public virtual bool CanBeCandidate(Pawn pawn)
-            => Rimocracy.CanBeLeader(pawn) && pawn.ageTracker.AgeBiologicalYears >= 16 && pawn.health.capacities.CanBeAwake;
+            => pawn.CanBeLeader() && pawn.health.capacities.CanBeAwake;
     }
 }

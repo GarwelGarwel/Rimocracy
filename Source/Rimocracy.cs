@@ -21,7 +21,7 @@ namespace Rimocracy
         public const int MinColonistsRequirement = 3;
 
         // How often mod enabled/disabled check, succession, authority decay etc. are updated
-        private const int RareTicksPeriod = 600;
+        private const int UpdateInterval = 500;
 
         bool isEnabled = false;
 
@@ -45,7 +45,7 @@ namespace Rimocracy
 
         public static bool IsEnabled => Instance != null && Instance.isEnabled;
 
-        public bool CampaigningEnabled => true;
+        public bool CampaigningEnabled => Utility.Citizens.Count() >= 6;
 
         public Pawn Leader
         {
@@ -74,7 +74,7 @@ namespace Rimocracy
                 {
                     campaigns = new List<ElectionCampaign>();
                     foreach (Pawn p in value)
-                        campaigns.Add(new ElectionCampaign(p, Utility.GetRandomSkill(p.skills.skills, p.IsLeader() ? focusSkill : null)));
+                        campaigns.Add(new ElectionCampaign(p, Utility.GetRandomSkill(p.skills.skills, p.IsLeader() ? FocusSkill : null)));
                 }
                 else campaigns = null;
             }
@@ -109,15 +109,14 @@ namespace Rimocracy
         }
 
         public float BaseAuthorityDecayPerDay
-            => 0.03f + authority * 0.1f - (0.06f + authority * 0.25f) / PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonists_NoCryptosleep.Count;
+            => 0.03f + authority * 0.1f - (0.06f + authority * 0.25f) / Utility.Citizens.Count();
 
         public float AuthorityDecayPerDay
             => Math.Max(BaseAuthorityDecayPerDay * (leader != null ? leader.GetStatValue(DefOf.AuthorityDecay) : 1), 0);
 
         string FocusSkillMessage => "The focus skill is " + focusSkill.LabelCap + ".";
 
-        public static bool CanBeLeader(Pawn p) =>
-            p != null && !p.Dead && p.IsFreeColonist && !p.WorkTypeIsDisabled(DefOf.Ruling);
+        public bool ElectionCalled => electionTick != int.MaxValue;
 
         public override void ExposeData()
         {
@@ -134,11 +133,11 @@ namespace Rimocracy
         {
             int ticks = Find.TickManager.TicksAbs;
 
-            if (ticks % RareTicksPeriod != 0)
+            if (ticks % UpdateInterval != 0)
                 return;
 
             // If population is less than 3, temporarily disable the mod
-            if (PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonists_NoCryptosleep.Count < MinColonistsRequirement)
+            if (Utility.Citizens.Count() < MinColonistsRequirement)
             {
                 isEnabled = false;
                 leader = null;
@@ -150,11 +149,11 @@ namespace Rimocracy
 
             if (Succession is SuccessionElection)
             {
-                if (ticks >= termExpiration - ElectionDelay || !CanBeLeader(leader))
+                if (ticks >= termExpiration - ElectionDelay || !leader.CanBeLeader())
                     // If term is about to expire or there is no (valid) leader, call a new election
-                    if (campaigns.NullOrEmpty())
+                    if (!ElectionCalled)
                         CallElection();
-                    else
+                    else if (!campaigns.NullOrEmpty())
                     {
                         // If at least one of the candidates is no longer eligible, campaign starts over
                         if (campaigns.Any(p => !Succession.CanBeCandidate(p.Candidate)))
@@ -162,7 +161,9 @@ namespace Rimocracy
                             Utility.Log("Campaign restarted because one of the candidates is ineligible.");
                             CallElection();
                         }
-                        // Do campaigning stuff
+
+                        foreach (ElectionCampaign campaign in campaigns.InRandomOrder())
+                            campaign.RareTick();
                     }
 
                 // If election is due, choose new leader
@@ -171,11 +172,11 @@ namespace Rimocracy
             }
 
             // If no valid leader, initiate succession (non-electoral)
-            else if (ticks >= termExpiration || !CanBeLeader(leader))
+            else if (ticks >= termExpiration || !leader.CanBeLeader())
                 ChooseLeader();
 
             // Authority decay
-            authority = Math.Max(authority - AuthorityDecayPerDay / GenDate.TicksPerDay * RareTicksPeriod, 0);
+            authority = Math.Max(authority - AuthorityDecayPerDay / GenDate.TicksPerDay * UpdateInterval, 0);
         }
 
         public void BuildAuthority(float amount) => authority = Math.Min(authority + amount, 1);
@@ -206,14 +207,17 @@ namespace Rimocracy
 
             if (leader != null)
             {
+                Utility.Log(leader + " was chosen to be the leader.");
+
                 // Election was successful
                 termExpiration = Find.TickManager.TicksAbs + DefaultTerm;
                 electionTick = int.MaxValue;
                 focusSkill = GetCampaignOf(leader)?.FocusSkill ?? Utility.GetRandomSkill(leader.skills.skills, leader == oldLeader ? focusSkill : null);
 
                 // Candidates gain positive or negative thoughts of the election outcome
-                foreach (Pawn p in Candidates)
-                    p.needs.mood.thoughts.memories.TryGainMemory(ThoughtMaker.MakeThought(DefOf.ElectionOutcome, p.IsLeader() ? 1 : 0));
+                if (Candidates != null)
+                    foreach (Pawn p in Candidates)
+                        p.needs.mood.thoughts.memories.TryGainMemory(ThoughtMaker.MakeThought(DefOf.ElectionOutcome, p.IsLeader() ? 1 : 0));
 
                 // If the leader has changed, partially reset Authority; show message
                 if (leader != oldLeader)

@@ -30,7 +30,7 @@ namespace Rimocracy
 
                 if (!Rimocracy.Instance.Campaigns.NullOrEmpty())
                 {
-                    label += "\nCampaign in progress. Candidates:";
+                    label += "\nCandidates:";
                     foreach (ElectionCampaign ec in Rimocracy.Instance.Campaigns)
                         label += "\n" + ec;
                 }

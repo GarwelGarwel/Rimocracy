@@ -9,6 +9,8 @@ namespace Rimocracy.Succession
     {
         int votesForWinner = 0;
 
+        const float PoliticalSympathyWeightFactor = 25;
+
         public override string Title => "Election";
 
         public override string SuccessionLabel => "election";
@@ -44,7 +46,7 @@ namespace Rimocracy.Succession
         /// <param name="num"></param>
         /// <returns></returns>
         public IEnumerable<Pawn> ChooseLeaders(int num = 2)
-            => (IEnumerable<Pawn>)GetVotes()
+            => GetVotes()
             .OrderByDescending(kvp => kvp.Value)
             .Take(num)
             .Select(kvp => kvp.Key);
@@ -53,7 +55,7 @@ namespace Rimocracy.Succession
         {
             Dictionary<Pawn, int> votes = new Dictionary<Pawn, int>();
 
-            foreach (Pawn p in PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonists_NoCryptosleep.FindAll(p => p.ageTracker.AgeBiologicalYears >= 16))
+            foreach (Pawn p in Utility.Citizens.Where(p => !p.Dead).ToList())
             {
                 Pawn votedFor = Vote(p);
                 if (votes.ContainsKey(votedFor))
@@ -73,7 +75,7 @@ namespace Rimocracy.Succession
             return choice;
         }
 
-        float VoteWeight(Pawn voter, Pawn candidate)
+        public static float VoteWeight(Pawn voter, Pawn candidate)
         {
             float weight = voter.relations.OpinionOf(candidate);
             
@@ -86,10 +88,20 @@ namespace Rimocracy.Succession
             // For every backstory the two pawns have in common, 10 points are added
             int sameBackstories = voter.story.AllBackstories.Count(bs => candidate.story.AllBackstories.Contains(bs));
             if (sameBackstories > 0)
-                Utility.Log(voter.LabelShort + " and " + candidate.LabelShort + " have " + sameBackstories + " backstories in common.");
+                Utility.Log(voter + " and " + candidate + " have " + sameBackstories + " backstories in common.");
             weight += sameBackstories * 10;
-            
-            Utility.Log(voter.LabelShort + " vote weight for " + candidate.LabelShort + ": " + weight);
+
+            float sympathy = voter.needs.mood.thoughts.memories.Memories
+                .OfType<Thought_MemorySocial>()
+                .Where(m => m.def == DefOf.PoliticalSympathy && m.otherPawn == candidate)
+                .Sum(m => m.OpinionOffset())
+                * PoliticalSympathyWeightFactor;
+
+            if (sympathy != 0)
+                Utility.Log(voter + " has " + sympathy.ToString("N1") + " of sympathy for " + candidate);
+            weight += sympathy;
+
+            Utility.Log(voter + " vote weight for " + candidate + ": " + weight);
             return weight;
         }
     }

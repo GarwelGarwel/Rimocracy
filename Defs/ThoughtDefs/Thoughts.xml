@@ -54,7 +54,6 @@
 
 	<ThoughtDef>
 		<defName>Rimocracy_ElectionOutcome</defName>
-		<durationDays>5</durationDays>
 		<stages>
 			<li>
 				<label>i lost election</label>
@@ -67,6 +66,25 @@
 				<baseMoodEffect>10</baseMoodEffect>
 			</li>
 		</stages>
+		<durationDays>5</durationDays>
+	</ThoughtDef>
+
+	<ThoughtDef>
+		<defName>Rimocracy_PoliticalSympathy</defName>
+		<thoughtClass>Thought_MemorySocial</thoughtClass>
+		<stages>
+			<li>
+				<label>political sympathy</label>
+				<baseOpinionOffset>1</baseOpinionOffset>
+			</li>
+		</stages>
+		<stackLimit>4</stackLimit>
+		<stackedEffectMultiplier>1</stackedEffectMultiplier>
+		<durationDays>3</durationDays>
+		<validWhileDespawned>true</validWhileDespawned>
+		<nullifiedIfNotColonist>true</nullifiedIfNotColonist>
+		<stackLimitForSameOtherPawn>4</stackLimitForSameOtherPawn>
+		<lerpOpinionToZeroAfterDurationPct>0</lerpOpinionToZeroAfterDurationPct>
 	</ThoughtDef>
 
 </Defs>

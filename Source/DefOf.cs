@@ -12,6 +12,7 @@ namespace Rimocracy
         public static StatDef RulingEfficiencyFactor = DefDatabase<StatDef>.GetNamed("RulingEfficiencyFactor");
 
         public static ThoughtDef ElectionOutcome = DefDatabase<ThoughtDef>.GetNamed("Rimocracy_ElectionOutcome");
+        public static ThoughtDef PoliticalSympathy = DefDatabase<ThoughtDef>.GetNamed("Rimocracy_PoliticalSympathy");
 
         public static WorkTypeDef Ruling = DefDatabase<WorkTypeDef>.GetNamed("Ruling");
     }

@@ -37,7 +37,26 @@ namespace Rimocracy
             .MaxBy(kvp => kvp.Value)
             .Key;
 
+        static bool? simpleSlaveryInstalled = null;
+
+        public static bool IsSimpleSlaveryInstalled => (bool)(simpleSlaveryInstalled ?? (simpleSlaveryInstalled = DefDatabase<HediffDef>.GetNamedSilentFail("Enslaved") != null));
+
+        public static bool IsCitizen(this Pawn pawn)
+            => pawn != null
+            && !pawn.Dead
+            && pawn.IsFreeColonist
+            && pawn.ageTracker.AgeBiologicalYears >= 16
+            && (!IsSimpleSlaveryInstalled || !pawn.health.hediffSet.hediffs.Any(hediff => hediff.def.defName == "Enslaved"));
+
+        public static IEnumerable<Pawn> Citizens => PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonists_NoCryptosleep
+            .Where(p => p.IsCitizen());
+
+        public static bool CanBeLeader(this Pawn p) => p.IsCitizen() && !p.WorkTypeIsDisabled(DefOf.Ruling);
+
         public static bool IsLeader(this Pawn p) => Rimocracy.IsEnabled && Rimocracy.Instance.Leader == p;
+
+        public static ElectionCampaign SupportsCampaign(this Pawn p)
+            => Rimocracy.Instance.Campaigns?.FirstOrDefault(ec => ec.Supporters.Contains(p));
 
         public static void Log(string message, LogLevel logLevel = LogLevel.Message)
         {

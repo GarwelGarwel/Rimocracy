@@ -61,7 +61,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CompProperties_AffectedByAuthority.cs" />
+    <Compile Include="ThingComps\CompProperties_AffectedByAuthority.cs" />
     <Compile Include="DefOf.cs" />
     <Compile Include="ElectionCampaign.cs" />
     <Compile Include="HarmonyManager.cs" />
@@ -72,7 +72,7 @@
     <Compile Include="Succession\SuccessionElection.cs" />
     <Compile Include="Succession\SuccessionLot.cs" />
     <Compile Include="Succession\SuccessionOldest.cs" />
-    <Compile Include="ThingComp_AffectedByAuthority.cs" />
+    <Compile Include="ThingComps\ThingComp_AffectedByAuthority.cs" />
     <Compile Include="Thoughts\ThoughtWorker_Competitor.cs" />
     <Compile Include="Thoughts\ThoughtWorker_Respect.cs" />
     <Compile Include="WorkGiver_DoRuling.cs" />
