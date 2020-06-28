@@ -7,6 +7,6 @@ namespace Rimocracy
     public class ThoughtWorker_Competitor : ThoughtWorker
     {
         protected override ThoughtState CurrentSocialStateInternal(Pawn p, Pawn otherPawn)
-            => Rimocracy.Instance?.Candidates != null && Rimocracy.Instance.Candidates.Contains(p) && Rimocracy.Instance.Candidates.Contains(otherPawn);
+            => Utility.Rimocracy?.Candidates != null && Utility.Rimocracy.Candidates.Contains(p) && Utility.Rimocracy.Candidates.Contains(otherPawn);
     }
 }

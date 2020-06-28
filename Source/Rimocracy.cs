@@ -17,9 +17,6 @@ namespace Rimocracy
         // Campaign duration (also applies to first elections)
         public const int ElectionDelay = GenDate.TicksPerDay * 3;
 
-        // Min number of colonists to enable the mod
-        public const int MinColonistsRequirement = 3;
-
         // How often mod enabled/disabled check, succession, authority decay etc. are updated
         private const int UpdateInterval = 500;
 
@@ -41,11 +38,7 @@ namespace Rimocracy
             : base(world)
         { }
 
-        public static Rimocracy Instance => Find.World?.GetComponent<Rimocracy>();
-
-        public static bool IsEnabled => Instance != null && Instance.isEnabled;
-
-        public bool CampaigningEnabled => Utility.Citizens.Count() >= 6;
+        public bool IsEnabled => isEnabled;
 
         public Pawn Leader
         {
@@ -137,7 +130,7 @@ namespace Rimocracy
                 return;
 
             // If population is less than 3, temporarily disable the mod
-            if (Utility.Citizens.Count() < MinColonistsRequirement)
+            if (Utility.Citizens.Count() < Utility.MinColonistsRequirement)
             {
                 isEnabled = false;
                 leader = null;
@@ -190,7 +183,7 @@ namespace Rimocracy
                 termExpiration = electionTick;
 
             // Launch campaigns
-            if (CampaigningEnabled)
+            if (Utility.CampaigningEnabled)
             {
                 Candidates = ((SuccessionElection)Succession).ChooseLeaders();
                 Utility.Log("Candidates in the campaign: ");

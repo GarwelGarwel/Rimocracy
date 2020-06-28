@@ -1,5 +1,4 @@
-﻿using Rimocracy.Succession;
-using RimWorld;
+﻿using RimWorld;
 using System.Collections.Generic;
 using System.Linq;
 using Verse;
@@ -64,8 +63,8 @@ namespace Rimocracy
                 // Checking if this pawn should become a defector
                 if (pawn != candidate)
                 {
-                    float defectionChance = 1 - SuccessionElection.VoteWeight(pawn, candidate) / 100;
-                    if (!pawn.IsCitizen() || Rand.Chance(defectionChance) || Rimocracy.Instance.Candidates.MaxBy(p => SuccessionElection.VoteWeight(pawn, p)) != candidate)
+                    float defectionChance = 1 - Utility.VoteWeight(pawn, candidate) / 100;
+                    if (!pawn.IsCitizen() || Rand.Chance(defectionChance) || Utility.Rimocracy.Candidates.MaxBy(p => Utility.VoteWeight(pawn, p)) != candidate)
                     {
                         Utility.Log(pawn + " is no longer a core supporter for " + candidate + ". Their defection chance was " + defectionChance.ToString("P1"));
                         defectors.Add(pawn);
@@ -75,7 +74,7 @@ namespace Rimocracy
 
                 // Picking a random target pawn to sway
                 Pawn targetPawn = Utility.Citizens
-                    .Where(p => p != pawn && !Rimocracy.Instance.Candidates.Contains(p) && !p.InMentalState && !p.Downed && p.MapHeld == pawn.MapHeld)
+                    .Where(p => p != pawn && !Utility.Rimocracy.Candidates.Contains(p) && !p.InMentalState && !p.Downed && p.MapHeld == pawn.MapHeld)
                     .RandomElementWithFallback();
                 if (targetPawn == null)
                 {
@@ -90,10 +89,10 @@ namespace Rimocracy
                     Utility.Log("Sway successful!");
                     targetPawn.needs.mood.thoughts.memories.TryGainMemory(RimocracyDefOf.PoliticalSympathy, candidate);
 
-                    if (!Rimocracy.Instance.Campaigns.Any(ec => ec.Supporters.Contains(targetPawn)))
+                    if (!Utility.Rimocracy.Campaigns.Any(ec => ec.Supporters.Contains(targetPawn)))
                     {
                         // If the target pawn is not already a core supporter of any candidate, try to recruit them to the campaign
-                        float recruitChance = (SuccessionElection.VoteWeight(targetPawn, candidate) / 100 - 1) * pawn.GetStatValue(StatDefOf.NegotiationAbility);
+                        float recruitChance = (Utility.VoteWeight(targetPawn, candidate) / 100 - 1) * pawn.GetStatValue(StatDefOf.NegotiationAbility);
                         Utility.Log("Chance of recruitment: " + recruitChance.ToString("P1"));
                         if (Rand.Chance(recruitChance))
                         {

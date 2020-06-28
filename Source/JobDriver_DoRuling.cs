@@ -15,7 +15,7 @@ namespace Rimocracy
             yield return Toils_Goto.GotoThing(TargetIndex.A, PathEndMode.InteractionCell);
             Toil rulingToil = new Toil();
             rulingToil.tickAction = Ruling_TickAction;
-            rulingToil.FailOn(() => Rimocracy.Instance.Authority >= 1);
+            rulingToil.FailOn(() => Utility.Rimocracy.Authority >= 1);
             rulingToil.FailOn(() => !pawn.IsLeader());
             rulingToil.FailOnCannotTouch(TargetIndex.A, PathEndMode.InteractionCell);
             rulingToil.defaultCompleteMode = ToilCompleteMode.Delay;
@@ -28,7 +28,7 @@ namespace Rimocracy
 
         void Ruling_TickAction()
         {
-            Rimocracy.Instance.BuildAuthority(
+            Utility.Rimocracy.BuildAuthority(
                 pawn.GetStatValue(RimocracyDefOf.RulingEfficiency)
                 * TargetA.Thing.GetStatValue(RimocracyDefOf.RulingEfficiencyFactor)
                 / GenDate.TicksPerHour);
