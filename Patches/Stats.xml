@@ -180,6 +180,8 @@
 		</value>
 	</Operation>
 
+<!-- ========================= Melee ==========================-->
+
 	<Operation Class="PatchOperationAdd">
 		<xpath>/Defs/StatDef[defName="MeleeHitChance"]</xpath>
 		<value>
@@ -204,8 +206,62 @@
 		</value>
 	</Operation>
 
+<!-- ========================= Shooting ==========================-->
+
 	<Operation Class="PatchOperationAdd">
 		<xpath>/Defs/StatDef[defName="ShootingAccuracyPawn"]</xpath>
+		<value>
+			<parts>
+				<li Class="Rimocracy.StatPart_Authority">
+					<maxValue>1.5</maxValue>
+					<focusOnly>true</focusOnly>
+				</li>
+			</parts>
+		</value>
+	</Operation>
+
+<!-- ========================= Social ==========================-->
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>/Defs/StatDef[defName="ArrestSuccessChance"]</xpath>
+		<value>
+			<parts>
+				<li Class="Rimocracy.StatPart_Authority">
+					<maxValue>1.5</maxValue>
+					<focusOnly>true</focusOnly>
+				</li>
+			</parts>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>/Defs/StatDef[defName="TradePriceImprovement"]</xpath>
+		<value>
+			<parts>
+				<li Class="Rimocracy.StatPart_Authority">
+					<maxValue>1.25</maxValue>
+					<focusOnly>true</focusOnly>
+				</li>
+			</parts>
+		</value>
+	</Operation>
+
+<!-- ========================= Animals ==========================-->
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>/Defs/StatDef[defName="TameAnimalChance"]</xpath>
+		<value>
+			<parts>
+				<li Class="Rimocracy.StatPart_Authority">
+					<maxValue>1.5</maxValue>
+					<focusOnly>true</focusOnly>
+				</li>
+			</parts>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>/Defs/StatDef[defName="TrainAnimalChance"]</xpath>
 		<value>
 			<parts>
 				<li Class="Rimocracy.StatPart_Authority">

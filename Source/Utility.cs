@@ -63,7 +63,7 @@ namespace Rimocracy
             && pawn.ageTracker.AgeBiologicalYears >= 16
             && (!IsSimpleSlaveryInstalled || !pawn.health.hediffSet.hediffs.Any(hediff => hediff.def.defName == "Enslaved"));
 
-        public static bool CanBeLeader(this Pawn p) => p.IsCitizen() && !p.WorkTypeIsDisabled(RimocracyDefOf.Ruling);
+        public static bool CanBeLeader(this Pawn p) => p.IsCitizen() && !p.GetDisabledWorkTypes(true).Contains(RimocracyDefOf.Ruling);
 
         public static bool IsLeader(this Pawn p) => PoliticsEnabled && Rimocracy.Leader == p;
 
@@ -86,15 +86,18 @@ namespace Rimocracy
                 Log(voter + " and " + candidate + " have " + sameBackstories + " backstories in common.");
             weight += sameBackstories * 10;
 
+            // Taking into account political sympathy (built during campaigning)
             float sympathy = voter.needs.mood.thoughts.memories.Memories
                 .OfType<Thought_MemorySocial>()
                 .Where(m => m.def == RimocracyDefOf.PoliticalSympathy && m.otherPawn == candidate)
                 .Sum(m => m.OpinionOffset())
                 * PoliticalSympathyWeightFactor;
-
             if (sympathy != 0)
                 Log(voter + " has " + sympathy.ToString("N1") + " of sympathy for " + candidate);
             weight += sympathy;
+
+            // Adding a random factor of -5 to +5
+            weight += Rand.Range(-5, 5);
 
             Log(voter + " vote weight for " + candidate + ": " + weight);
             return weight;

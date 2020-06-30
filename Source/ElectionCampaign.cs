@@ -45,7 +45,7 @@ namespace Rimocracy
         {
             Scribe_References.Look(ref candidate, "candidate");
             Scribe_Defs.Look(ref focusSkill, "focusSkill");
-            Scribe_Collections.Look(ref supporters, "supporters");
+            Scribe_Collections.Look(ref supporters, "supporters", LookMode.Reference);
         }
 
         public void RareTick()

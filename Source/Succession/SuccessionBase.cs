@@ -26,6 +26,6 @@ namespace Rimocracy
         public abstract Pawn ChooseLeader();
 
         public virtual bool CanBeCandidate(Pawn pawn)
-            => pawn.CanBeLeader() && pawn.health.capacities.CanBeAwake;
+            => pawn.CanBeLeader();
     }
 }
