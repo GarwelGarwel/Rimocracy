@@ -53,6 +53,23 @@
 	</ThoughtDef>
 
 	<ThoughtDef>
+		<defName>ElectionCompetitorMemory</defName>
+		<thoughtClass>Thought_MemorySocial</thoughtClass>
+		<validWhileDespawned>true</validWhileDespawned>
+		<nullifiedIfNotColonist>true</nullifiedIfNotColonist>
+		<nullifyingTraits>
+			<li>Kind</li>
+		</nullifyingTraits>
+		<stages>
+			<li>
+				<label>ran against me</label>
+				<baseOpinionOffset>-10</baseOpinionOffset>
+			</li>
+		</stages>
+		<durationDays>3</durationDays>
+	</ThoughtDef>
+
+	<ThoughtDef>
 		<defName>ElectionOutcome</defName>
 		<stages>
 			<li>

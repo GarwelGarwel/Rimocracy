@@ -152,6 +152,7 @@ namespace Rimocracy
                         if (campaigns.Any(p => !Succession.CanBeCandidate(p.Candidate)))
                         {
                             Utility.Log("Campaign restarted because one of the candidates is ineligible.");
+                            campaigns = null;
                             CallElection();
                         }
 
@@ -207,10 +208,14 @@ namespace Rimocracy
                 electionTick = int.MaxValue;
                 focusSkill = GetCampaignOf(leader)?.FocusSkill ?? Utility.GetRandomSkill(leader.skills.skills, leader == oldLeader ? focusSkill : null);
 
-                // Candidates gain positive or negative thoughts of the election outcome
+                // Candidates gain positive or negative thoughts of the election outcome + opinion memories of each other
                 if (Candidates != null)
                     foreach (Pawn p in Candidates)
+                    {
                         p.needs.mood.thoughts.memories.TryGainMemory(ThoughtMaker.MakeThought(RimocracyDefOf.ElectionOutcome, p.IsLeader() ? 1 : 0));
+                        foreach (Pawn p2 in Candidates.Where(p2 => p2 != p))
+                            p.needs.mood.thoughts.memories.TryGainMemory(RimocracyDefOf.ElectionCompetitorMemory, p2);
+                    }
 
                 // If the leader has changed, partially reset Authority; show message
                 if (leader != oldLeader)

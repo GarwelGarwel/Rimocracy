@@ -13,6 +13,7 @@ namespace Rimocracy
         public static StatDef RulingEfficiencyFactor;
 
         public static ThoughtDef ElectionOutcome;
+        public static ThoughtDef ElectionCompetitorMemory;
         public static ThoughtDef PoliticalSympathy;
 
         public static WorkTypeDef Ruling;
