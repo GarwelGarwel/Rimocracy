@@ -8,6 +8,10 @@ namespace Rimocracy
     {
         public static JobDef DoRuling;
 
+        public static RecordDef TimesElected;
+        public static RecordDef VotersSwayed;
+        public static RecordDef SupportersRecruited;
+
         public static StatDef AuthorityDecay;
         public static StatDef RulingEfficiency;
         public static StatDef RulingEfficiencyFactor;

@@ -13,15 +13,15 @@
 		</nullifyingTraits>
 		<stages>
 			<li>
-				<label>pathetic buffon</label>
+				<label>useless "leader"</label>
 				<baseOpinionOffset>-30</baseOpinionOffset>
 			</li>
 			<li>
-				<label>ineffective manager</label>
+				<label>poor leader</label>
 				<baseOpinionOffset>-20</baseOpinionOffset>
 			</li>
 			<li>
-				<label>mediocre leader</label>
+				<label>our leader</label>
 				<baseOpinionOffset>5</baseOpinionOffset>
 			</li>
 			<li>

@@ -190,6 +190,7 @@ namespace Rimocracy
                 Utility.Log("Candidates in the campaign: ");
                 foreach (ElectionCampaign ec in campaigns)
                     Utility.Log("- " + ec);
+                Messages.Message("The election campaign is on! " + Utility.ListString(Candidates.Select(p => p.LabelShortCap).ToList()) + " are competing to be the leader of the nation.", new LookTargets(Candidates), MessageTypeDefOf.NeutralEvent);
             }
             Utility.Log("Election has been called on " + GenDate.DateFullStringWithHourAt(electionTick, Find.WorldGrid.LongLatOf(Find.AnyPlayerHomeMap.Tile)));
         }

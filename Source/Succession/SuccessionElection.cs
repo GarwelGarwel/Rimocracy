@@ -33,7 +33,7 @@ namespace Rimocracy.Succession
 
             // Returning the winner
             KeyValuePair<Pawn, int> winner = votes.MaxByWithFallback(kvp => kvp.Value);
-            winner.Key.records.Increment(DefDatabase<RecordDef>.GetNamed("TimesElected"));
+            winner.Key.records.Increment(RimocracyDefOf.TimesElected);
             votesForWinner = winner.Value;
             return winner.Key;
         }

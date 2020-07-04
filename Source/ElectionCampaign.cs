@@ -58,10 +58,23 @@ namespace Rimocracy
             // List of pawns that will join the campaign
             HashSet<Pawn> recruits = new HashSet<Pawn>();
 
+            // Preparing a list of potential targets for swaying with randomized weights
+            Dictionary<Pawn, float> potentialTargets = Utility.Citizens
+                    .Where(p =>
+                    !Utility.Rimocracy.Candidates.Contains(p)
+                    && !p.InMentalState
+                    && !p.Downed
+                    && p.needs.mood.thoughts.memories.NumMemoriesOfDef(RimocracyDefOf.PoliticalSympathy) < RimocracyDefOf.PoliticalSympathy.stackLimit)
+                    .ToDictionary(p => p, p => Rand.Range(0, 100 + Utility.VoteWeight(p, Candidate)));
+
+            Utility.Log("Potential targets for " + Candidate + ":");
+            foreach (KeyValuePair<Pawn, float> kvp in potentialTargets)
+                Utility.Log("- " + kvp.Key + "\t" + kvp.Value.ToString("N0"));
+
             foreach (Pawn pawn in Supporters.Where(pawn => !pawn.InMentalState && !pawn.Downed))
             {
                 // Checking if this pawn should become a defector
-                if (pawn != candidate)
+                if (pawn != Candidate)
                 {
                     float defectionChance = 1 - Utility.VoteWeight(pawn, candidate) / 100;
                     if (!pawn.IsCitizen() || Rand.Chance(defectionChance) || Utility.Rimocracy.Candidates.MaxBy(p => Utility.VoteWeight(pawn, p)) != candidate)
@@ -72,10 +85,12 @@ namespace Rimocracy
                     }
                 }
 
-                // Picking a random target pawn to sway
-                Pawn targetPawn = Utility.Citizens
-                    .Where(p => p != pawn && !Utility.Rimocracy.Candidates.Contains(p) && !p.InMentalState && !p.Downed && p.MapHeld == pawn.MapHeld)
-                    .RandomElementWithFallback();
+                // Picking a target pawn to sway
+                Pawn targetPawn = potentialTargets
+                    .Where(kvp => kvp.Key != pawn && kvp.Key.MapHeld == pawn.MapHeld)
+                    .MaxByWithFallback(kvp => kvp.Value)
+                    .Key;
+
                 if (targetPawn == null)
                 {
                     Utility.Log("No one left to sway.");
@@ -87,17 +102,21 @@ namespace Rimocracy
                 if (Rand.Chance(swayChance))
                 {
                     Utility.Log("Sway successful!");
-                    targetPawn.needs.mood.thoughts.memories.TryGainMemory(RimocracyDefOf.PoliticalSympathy, candidate);
+                    targetPawn.needs.mood.thoughts.memories.TryGainMemory(RimocracyDefOf.PoliticalSympathy, Candidate);
+                    pawn.records.Increment(RimocracyDefOf.VotersSwayed);
+                    Messages.Message(pawn + " swayed " + targetPawn + " in favor of " + Candidate, new LookTargets(targetPawn), MessageTypeDefOf.NeutralEvent);
 
                     if (!Utility.Rimocracy.Campaigns.Any(ec => ec.Supporters.Contains(targetPawn)))
                     {
                         // If the target pawn is not already a core supporter of any candidate, try to recruit them to the campaign
-                        float recruitChance = (Utility.VoteWeight(targetPawn, candidate) / 100 - 1) * pawn.GetStatValue(StatDefOf.NegotiationAbility);
+                        float recruitChance = (Utility.VoteWeight(targetPawn, Candidate) / 100 - 1) * pawn.GetStatValue(StatDefOf.NegotiationAbility);
                         Utility.Log("Chance of recruitment: " + recruitChance.ToString("P1"));
                         if (Rand.Chance(recruitChance))
                         {
-                            Utility.Log(pawn + " successfully recruited " + targetPawn + " to support " + candidate);
+                            Utility.Log(pawn + " successfully recruited " + targetPawn + " to support " + Candidate);
                             recruits.Add(targetPawn);
+                            pawn.records.Increment(RimocracyDefOf.SupportersRecruited);
+                            Messages.Message(pawn + " recruited " + targetPawn + " as a supporter of " + Candidate, new LookTargets(targetPawn), MessageTypeDefOf.NeutralEvent);
                         }
                     }
                 }

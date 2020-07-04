@@ -76,15 +76,15 @@ namespace Rimocracy
 
             // If the candidate is currently in a mental state, it's not good for an election
             if (candidate.InAggroMentalState)
-                weight -= 10;
+                weight -= 20;
             else if (candidate.InMentalState)
-                weight -= 5;
+                weight -= 10;
 
             // For every backstory the two pawns have in common, 10 points are added
             int sameBackstories = voter.story.AllBackstories.Count(bs => candidate.story.AllBackstories.Contains(bs));
             if (sameBackstories > 0)
                 Log(voter + " and " + candidate + " have " + sameBackstories + " backstories in common.");
-            weight += sameBackstories * 10;
+            weight += sameBackstories * 20;
 
             // Taking into account political sympathy (built during campaigning)
             float sympathy = voter.needs.mood.thoughts.memories.Memories
@@ -101,6 +101,18 @@ namespace Rimocracy
 
             Log(voter + " vote weight for " + candidate + ": " + weight);
             return weight;
+        }
+
+        public static string ListString(List<string> list)
+        {
+            if (list.NullOrEmpty())
+                return "";
+            if (list.Count == 2)
+                return list[0] + " and " + list[1];
+            string res = list[0];
+            for (int i = 1; i < list.Count; i++)
+                res += (list.Count == i + 1 ? ", and " : ", ") + list[i];
+            return res;
         }
 
         internal static void Log(string message, LogLevel logLevel = LogLevel.Message)
