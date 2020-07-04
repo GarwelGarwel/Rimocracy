@@ -32,7 +32,7 @@ namespace Rimocracy
             // If the effect is skill-based, check if the parent stat's skills include the current focus skill
             if (focusOnly)
             {
-                HashSet<SkillDef> skills = new HashSet<SkillDef>(Utility.GetSkills(parentStat));
+                HashSet<SkillDef> skills = new HashSet<SkillDef>(SkillsUtility.GetSkills(parentStat));
                 CompProperties_AffectedByAuthority rs = (req.Thing as ThingWithComps).GetComp<ThingComp_AffectedByAuthority>()?.Props;
                 if (rs?.Skills != null)
                     skills.AddRange(rs.Skills);

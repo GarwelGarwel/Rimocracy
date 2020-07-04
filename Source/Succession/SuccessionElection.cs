@@ -1,5 +1,4 @@
-﻿using RimWorld;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Verse;
 
@@ -17,11 +16,11 @@ namespace Rimocracy.Succession
 
         public override IEnumerable<Pawn> Candidates => Utility.Rimocracy.Candidates ?? base.Candidates;
 
-        public override string NewLeaderMessage(Pawn leader)
-                    => ("{PAWN_nameFullDef} has been elected as our new leader" + (votesForWinner > 1 ? " with " + votesForWinner + " votes" : (votesForWinner == 1 ? " with just one vote" : "")) + ". Vox populi, vox dei!").Formatted(leader.Named("PAWN"));
+        public override string NewLeaderMessage(Pawn leader) => 
+            ("{PAWN_nameFullDef} has been elected as our new leader" + (votesForWinner > 1 ? " with " + votesForWinner + " votes" : (votesForWinner == 1 ? " with just one vote" : "")) + ". Vox populi, vox dei!").Formatted(leader.Named("PAWN"));
 
-        public override string SameLeaderMessage(Pawn leader)
-            => ("{PAWN_nameFullDef} has been reelected as the leader of our nation" + (votesForWinner > 1 ? " with " + votesForWinner + " votes." : (votesForWinner == 1 ? " with just one vote." : "."))).Formatted(leader.Named("PAWN"));
+        public override string SameLeaderMessage(Pawn leader) => 
+            ("{PAWN_nameFullDef} has been reelected as the leader of our nation" + (votesForWinner > 1 ? " with " + votesForWinner + " votes." : (votesForWinner == 1 ? " with just one vote." : "."))).Formatted(leader.Named("PAWN"));
 
         public override Pawn ChooseLeader()
         {
@@ -43,11 +42,7 @@ namespace Rimocracy.Succession
         /// </summary>
         /// <param name="num"></param>
         /// <returns></returns>
-        public IEnumerable<Pawn> ChooseLeaders(int num = 2)
-            => GetVotes()
-            .OrderByDescending(kvp => kvp.Value)
-            .Take(num)
-            .Select(kvp => kvp.Key);
+        public IEnumerable<Pawn> ChooseLeaders(int num = 2) => GetVotes().OrderByDescending(kvp => kvp.Value).Take(num).Select(kvp => kvp.Key);
 
         Dictionary<Pawn, int> GetVotes()
         {
@@ -67,7 +62,7 @@ namespace Rimocracy.Succession
         {
             Dictionary<Pawn, float> weights = new Dictionary<Pawn, float>();
             foreach (Pawn p in Candidates.Where(p => voter != p))
-                weights[p] = Utility.VoteWeight(voter, p);
+                weights[p] = ElectionUtility.VoteWeight(voter, p);
             Pawn choice = weights.MaxByWithFallback(kvp => kvp.Value).Key;
             Utility.Log(voter + " votes for " + choice);
             return choice;

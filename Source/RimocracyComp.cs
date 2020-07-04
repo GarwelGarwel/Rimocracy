@@ -9,7 +9,7 @@ using Verse;
 
 namespace Rimocracy
 {
-    public class Rimocracy : WorldComponent
+    public class RimocracyComp : WorldComponent
     {
         // Default duration of a leader's turn
         public const int DefaultTerm = GenDate.TicksPerQuadrum;
@@ -30,11 +30,11 @@ namespace Rimocracy
         float authority = 0.5f;
         SkillDef focusSkill;
 
-        public Rimocracy()
+        public RimocracyComp()
             : this(Find.World)
         { }
 
-        public Rimocracy(World world)
+        public RimocracyComp(World world)
             : base(world)
         { }
 
@@ -67,7 +67,7 @@ namespace Rimocracy
                 {
                     campaigns = new List<ElectionCampaign>();
                     foreach (Pawn p in value)
-                        campaigns.Add(new ElectionCampaign(p, Utility.GetRandomSkill(p.skills.skills, p.IsLeader() ? FocusSkill : null)));
+                        campaigns.Add(new ElectionCampaign(p, SkillsUtility.GetRandomSkill(p.skills.skills, p.IsLeader() ? FocusSkill : null)));
                 }
                 else campaigns = null;
             }
@@ -184,7 +184,7 @@ namespace Rimocracy
                 termExpiration = electionTick;
 
             // Launch campaigns
-            if (Utility.CampaigningEnabled)
+            if (ElectionUtility.CampaigningEnabled)
             {
                 Candidates = ((SuccessionElection)Succession).ChooseLeaders();
                 Utility.Log("Candidates in the campaign: ");
@@ -207,7 +207,7 @@ namespace Rimocracy
                 // Election was successful
                 termExpiration = Find.TickManager.TicksAbs + DefaultTerm;
                 electionTick = int.MaxValue;
-                focusSkill = GetCampaignOf(leader)?.FocusSkill ?? Utility.GetRandomSkill(leader.skills.skills, leader == oldLeader ? focusSkill : null);
+                focusSkill = GetCampaignOf(leader)?.FocusSkill ?? SkillsUtility.GetRandomSkill(leader.skills.skills, leader == oldLeader ? focusSkill : null);
 
                 // Candidates gain positive or negative thoughts of the election outcome + opinion memories of each other
                 if (Candidates != null)

@@ -61,6 +61,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ElectionUtility.cs" />
+    <Compile Include="SkillsUtility.cs" />
     <Compile Include="ThingComps\CompProperties_AffectedByAuthority.cs" />
     <Compile Include="RimocracyDefOf.cs" />
     <Compile Include="ElectionCampaign.cs" />
@@ -76,7 +78,7 @@
     <Compile Include="Thoughts\ThoughtWorker_Competitor.cs" />
     <Compile Include="Thoughts\ThoughtWorker_Respect.cs" />
     <Compile Include="WorkGiver_DoRuling.cs" />
-    <Compile Include="Rimocracy.cs" />
+    <Compile Include="RimocracyComp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StatPart_Authority.cs" />
     <Compile Include="Utility.cs" />
