@@ -14,10 +14,10 @@ namespace Rimocracy.Succession
         public override string SuccessionLabel => "lottery";
 
         public override string NewLeaderMessage(Pawn leader)
-            => "{PAWN_nameFullDef} drew the short straw and will rule our nation from now on!".Formatted(leader.Named("PAWN"));
+            => ("{PAWN_nameFullDef} drew the short straw and will rule " + Utility.NationName + " from now on!").Formatted(leader.Named("PAWN"));
 
         public override string SameLeaderMessage(Pawn leader)
-            => "{PAWN_nameFullDef} has a lucky hand! {PAWN_pronoun} won the leadership lottery again.".Formatted(leader.Named("PAWN"));
+            => ("{PAWN_nameFullDef} has a lucky hand! {PAWN_pronoun} won the " + Utility.LeaderTitle + " lottery again.").Formatted(leader.Named("PAWN"));
 
         public override Pawn ChooseLeader() => Candidates.RandomElementWithFallback();
     }

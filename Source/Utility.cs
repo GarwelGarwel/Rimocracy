@@ -32,6 +32,10 @@ namespace Rimocracy
 
         public static bool IsLeader(this Pawn p) => PoliticsEnabled && RimocracyComp.Leader == p;
 
+        public static string NationName => Find.FactionManager.OfPlayer.Name;
+
+        public static string LeaderTitle => Find.FactionManager.OfPlayer.LeaderTitle;
+
         public static string ListString(List<string> list)
         {
             if (list.NullOrEmpty())

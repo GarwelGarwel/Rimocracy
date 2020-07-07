@@ -14,7 +14,7 @@ namespace Rimocracy
             string label = "";
             if (Utility.PoliticsEnabled)
             {
-                label += "Leader: " + (Utility.RimocracyComp.Leader?.NameFullColored ?? "none");
+                label += Utility.LeaderTitle.CapitalizeFirst() + ": " + (Utility.RimocracyComp.Leader?.NameFullColored ?? "none");
                 if (Utility.RimocracyComp.Leader != null)
                 {
                     label += "\nGovernance quality: " + Utility.RimocracyComp.GovernancePercentage.ToString("N1") + "%. Decays at " + (100 * Utility.RimocracyComp.GovernanceDecayPerDay).ToString("N1") + "% per day.";
@@ -25,7 +25,7 @@ namespace Rimocracy
                 }
                 else if (Utility.RimocracyComp.ElectionTick > Find.TickManager.TicksAbs)
                     label += "\nLeader will be elected in " + GenDate.ToStringTicksToPeriod(Utility.RimocracyComp.ElectionTick - Find.TickManager.TicksAbs) + ".";
-                else label += "\nChoosing the new leader...";
+                else label += "\nChoosing the new " + Utility.LeaderTitle + "...";
 
                 if (!Utility.RimocracyComp.Campaigns.NullOrEmpty())
                 {

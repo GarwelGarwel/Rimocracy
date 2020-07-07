@@ -14,18 +14,18 @@ namespace Rimocracy
 
         public abstract SuccessionType SuccessionType { get; }
 
-        public virtual string NewLeaderTitle => "New Leader";
+        public virtual string NewLeaderTitle => "New " + Utility.LeaderTitle.CapitalizeFirst();
 
-        public virtual string SameLeaderTitle => "Leader Stays in Power";
+        public virtual string SameLeaderTitle => Utility.LeaderTitle.CapitalizeFirst() + " Stays in Power";
 
         public virtual IEnumerable<Pawn> Candidates
             => Utility.Citizens.Where(p => CanBeCandidate(p));
 
         public virtual string NewLeaderMessage(Pawn leader)
-            => "Our nation has a new leader: {PAWN_nameFullDef}. Let {PAWN_possessive} reign be long and prosperous!".Formatted(leader.Named("PAWN"));
+            => (Utility.NationName + " has a new " + Utility.LeaderTitle + ": {PAWN_nameFullDef}. Let {PAWN_possessive} reign be long and prosperous!").Formatted(leader.Named("PAWN"));
 
         public virtual string SameLeaderMessage(Pawn leader)
-            => "{PAWN_nameFullDef} remains our nation's leader.".Formatted(leader.Named("PAWN"));
+            => ("{PAWN_nameFullDef} remains the " + Utility.LeaderTitle + " of " + Utility.NationName + ".").Formatted(leader.Named("PAWN"));
 
         public abstract Pawn ChooseLeader();
 
