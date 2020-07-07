@@ -4,11 +4,15 @@ using Verse;
 
 namespace Rimocracy
 {
+    public enum SuccessionType { Undefined = 0, Election, Lot, Seniority };
+
     public abstract class SuccessionBase
     {
         public abstract string Title { get; }
 
         public virtual string SuccessionLabel => "succession";
+
+        public abstract SuccessionType SuccessionType { get; }
 
         public virtual string NewLeaderTitle => "New Leader";
 

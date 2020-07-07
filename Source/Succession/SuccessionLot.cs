@@ -9,6 +9,8 @@ namespace Rimocracy.Succession
     {
         public override string Title => "Lot";
 
+        public override SuccessionType SuccessionType => SuccessionType.Lot;
+
         public override string SuccessionLabel => "lottery";
 
         public override string NewLeaderMessage(Pawn leader)

@@ -9,9 +9,6 @@ namespace Rimocracy
 
     public static class Utility
     {
-        // Min number of colonists to enable the mod
-        public const int MinColonistsRequirement = 3;
-
         static bool? simpleSlaveryInstalled = null;
 
         public static RimocracyComp Rimocracy => Find.World?.GetComponent<RimocracyComp>();
@@ -19,7 +16,7 @@ namespace Rimocracy
         public static bool PoliticsEnabled => Rimocracy != null && Rimocracy.IsEnabled;
 
         public static bool IsSimpleSlaveryInstalled =>
-            (bool)(simpleSlaveryInstalled ?? (simpleSlaveryInstalled = DefDatabase<HediffDef>.GetNamedSilentFail("Enslaved") != null));
+            (bool)(simpleSlaveryInstalled ?? (simpleSlaveryInstalled = RimocracyDefOf.Enslaved != null));
 
         public static IEnumerable<Pawn> Citizens =>
             PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonists_NoCryptosleep.Where(p => p.IsCitizen());
@@ -28,8 +25,8 @@ namespace Rimocracy
             => pawn != null
             && !pawn.Dead
             && pawn.IsFreeColonist
-            && pawn.ageTracker.AgeBiologicalYears >= 16
-            && (!IsSimpleSlaveryInstalled || !pawn.health.hediffSet.hediffs.Any(hediff => hediff.def.defName == "Enslaved"));
+            && pawn.ageTracker.AgeBiologicalYears >= Settings.CitizenshipAge
+            && (!IsSimpleSlaveryInstalled || !pawn.health.hediffSet.hediffs.Any(hediff => hediff.def == RimocracyDefOf.Enslaved));
 
         public static bool CanBeLeader(this Pawn p) => p.IsCitizen() && !p.GetDisabledWorkTypes(true).Contains(RimocracyDefOf.Ruling);
 
@@ -53,7 +50,8 @@ namespace Rimocracy
             switch (logLevel)
             {
                 case LogLevel.Message:
-                    Verse.Log.Message(message);
+                    if (Settings.DebugLogging)
+                        Verse.Log.Message(message);
                     break;
 
                 case LogLevel.Warning:

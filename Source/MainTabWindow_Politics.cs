@@ -34,7 +34,7 @@ namespace Rimocracy
                         label += "\n- " + ec;
                 }
             }
-            else label = "You need at least " + Utility.MinColonistsRequirement + " free colonists for politics.";
+            else label = "You need at least " + Settings.MinPopulation + " free colonists for politics.";
             Widgets.Label(inRect, label);
         }
     }

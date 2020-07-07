@@ -11,12 +11,6 @@ namespace Rimocracy
 {
     public class RimocracyComp : WorldComponent
     {
-        // Default duration of a leader's turn
-        public const int DefaultTerm = GenDate.TicksPerQuadrum;
-
-        // Campaign duration (also applies to first elections)
-        public const int ElectionDelay = GenDate.TicksPerDay * 3;
-
         // How often mod enabled/disabled check, succession, authority decay etc. are updated
         private const int UpdateInterval = 500;
 
@@ -48,7 +42,30 @@ namespace Rimocracy
 
         public SuccessionBase Succession
         {
-            get => succession ?? (succession = new SuccessionElection());
+            get
+            {
+                switch (Settings.SuccessionType)
+                {
+                    case SuccessionType.Election:
+                        if (!(succession is SuccessionElection))
+                            succession = new SuccessionElection();
+                        break;
+                    case SuccessionType.Lot:
+                        if (!(succession is SuccessionLot))
+                            succession = new SuccessionLot();
+                        break;
+                    case SuccessionType.Seniority:
+                        if (!(succession is SuccessionOldest))
+                            succession = new SuccessionOldest();
+                        break;
+                    default:
+                        Utility.Log("Succession type not set! Reverting to election.", LogLevel.Error);
+                        Settings.SuccessionType = SuccessionType.Election;
+                        succession = new SuccessionElection();
+                        break;
+                }
+                return succession;
+            }
             set => succession = value;
         }
 
@@ -100,7 +117,7 @@ namespace Rimocracy
         }
 
         public float BaseAuthorityDecayPerDay
-            => 0.03f + authority * 0.1f - (0.06f + authority * 0.25f) / Utility.Citizens.Count();
+            => (0.03f + authority * 0.1f - (0.06f + authority * 0.25f) / Utility.Citizens.Count()) * Settings.AuthorityDecaySpeed;
 
         public float AuthorityDecayPerDay
             => Math.Max(BaseAuthorityDecayPerDay * (leader != null ? leader.GetStatValue(RimocracyDefOf.AuthorityDecay) : 1), 0);
@@ -130,19 +147,19 @@ namespace Rimocracy
                 return;
 
             // If population is less than 3, temporarily disable the mod
-            if (Utility.Citizens.Count() < Utility.MinColonistsRequirement)
+            if (Utility.Citizens.Count() < Settings.MinPopulation)
             {
                 isEnabled = false;
                 leader = null;
                 authority = 0.5f;
-                electionTick = -1;
+                electionTick = int.MaxValue;
                 return;
             }
             isEnabled = true;
 
             if (Succession is SuccessionElection)
             {
-                if (ticks >= termExpiration - ElectionDelay || !leader.CanBeLeader())
+                if (ticks >= termExpiration - Settings.CampaignDurationTicks || !leader.CanBeLeader())
                     // If term is about to expire or there is no (valid) leader, call a new election
                     if (!ElectionCalled)
                         CallElection();
@@ -177,7 +194,7 @@ namespace Rimocracy
 
         void CallElection()
         {
-            electionTick = Find.TickManager.TicksAbs + ElectionDelay;
+            electionTick = Find.TickManager.TicksAbs + Settings.CampaignDurationTicks;
 
             // Adjust term expiration to the time of election
             if (termExpiration < int.MaxValue)
@@ -205,7 +222,9 @@ namespace Rimocracy
                 Utility.Log(leader + " was chosen to be the leader.");
 
                 // Election was successful
-                termExpiration = Find.TickManager.TicksAbs + DefaultTerm;
+                if (Settings.TermDuration != TermDuration.Indefinite)
+                    termExpiration = Find.TickManager.TicksAbs + Settings.TermDurationTicks;
+                else termExpiration = int.MaxValue;
                 electionTick = int.MaxValue;
                 focusSkill = GetCampaignOf(leader)?.FocusSkill ?? SkillsUtility.GetRandomSkill(leader.skills.skills, leader == oldLeader ? focusSkill : null);
 

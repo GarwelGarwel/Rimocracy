@@ -9,6 +9,8 @@ namespace Rimocracy.Succession
     {
         public override string Title => "Seniority";
 
+        public override SuccessionType SuccessionType => SuccessionType.Seniority;
+
         public override string NewLeaderMessage(Pawn leader)
             => "{PAWN_nameFullDef} will rule our nation now as the oldest colonist.".Formatted(leader.Named("PAWN"));
 
