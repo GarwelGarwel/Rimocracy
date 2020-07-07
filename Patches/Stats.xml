@@ -13,6 +13,18 @@
 	</Operation>
 	
 	<Operation Class="PatchOperationAdd">
+		<xpath>/Defs/StatDef[defName="NegotiationAbility"]/parts</xpath>
+		<value>
+			<li Class="Rimocracy.StatPart_Authority">
+				<minValue>0.75</minValue>
+				<maxValue>1.25</maxValue>
+			</li>
+		</value>
+	</Operation>
+	
+	<!-- ========================= Focus Skill Effects ==========================-->
+	
+	<Operation Class="PatchOperationAdd">
 		<xpath>/Defs/StatDef[defName="MiningSpeed"]</xpath>
 		<value>
 			<parts>
@@ -180,8 +192,6 @@
 		</value>
 	</Operation>
 
-<!-- ========================= Melee ==========================-->
-
 	<Operation Class="PatchOperationAdd">
 		<xpath>/Defs/StatDef[defName="MeleeHitChance"]</xpath>
 		<value>
@@ -206,8 +216,6 @@
 		</value>
 	</Operation>
 
-<!-- ========================= Shooting ==========================-->
-
 	<Operation Class="PatchOperationAdd">
 		<xpath>/Defs/StatDef[defName="ShootingAccuracyPawn"]</xpath>
 		<value>
@@ -219,8 +227,6 @@
 			</parts>
 		</value>
 	</Operation>
-
-<!-- ========================= Social ==========================-->
 
 	<Operation Class="PatchOperationAdd">
 		<xpath>/Defs/StatDef[defName="ArrestSuccessChance"]</xpath>
@@ -245,8 +251,6 @@
 			</parts>
 		</value>
 	</Operation>
-
-<!-- ========================= Animals ==========================-->
 
 	<Operation Class="PatchOperationAdd">
 		<xpath>/Defs/StatDef[defName="TameAnimalChance"]</xpath>
