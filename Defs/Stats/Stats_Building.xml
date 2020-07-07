@@ -3,9 +3,9 @@
 <Defs>
 
 	<StatDef>
-		<defName>RulingEfficiencyFactor</defName>
-		<label>ruling efficiency factor</label>
-		<description>The speed at which the leader will build authority is multiplied by this value.</description>
+		<defName>GovernEfficiencyFactor</defName>
+		<label>govern efficiency factor</label>
+		<description>The speed at which the leader will improve governance is multiplied by this value.</description>
 		<category>Building</category>
 		<defaultBaseValue>1</defaultBaseValue>
 		<minValue>0.5</minValue>
@@ -14,7 +14,7 @@
 		<parts>
 			<li Class="StatPart_WorkTableTemperature" />
 			<li Class="StatPart_RoomStat">
-				<roomStat>RulingEfficiencyFactor</roomStat>
+				<roomStat>GovernEfficiencyFactor</roomStat>
 				<customLabel>Room impressiveness</customLabel>
 			</li>
 		</parts>

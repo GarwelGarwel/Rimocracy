@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using Verse;
 
@@ -28,8 +24,8 @@ namespace Rimocracy
             listingStandard.Label("Citizenship Age: " + Settings.CitizenshipAge, tooltip: "Biological age for a colonist to have citizenship rights");
             Settings.CitizenshipAge = (int)listingStandard.Slider(Settings.CitizenshipAge, 0, 18);
 
-            listingStandard.Label("Authority Decay Speed: " + Settings.AuthorityDecaySpeed.ToString("P0"), tooltip: "Relative speed of authority reduction over time");
-            Settings.AuthorityDecaySpeed = (float)Math.Round(listingStandard.Slider(Settings.AuthorityDecaySpeed, 0, 2), 2);
+            listingStandard.Label("Governance Decay Speed: " + Settings.GovernanceDecaySpeed.ToString("P0"), tooltip: "Relative speed of governance deterioration over time");
+            Settings.GovernanceDecaySpeed = (float)Math.Round(listingStandard.Slider(Settings.GovernanceDecaySpeed, 0, 2), 2);
 
             listingStandard.Label("Term Duration:", tooltip: "How long a leader's term lasts until election/succession");
             foreach (TermDuration td in Enum.GetValues(typeof(TermDuration)))

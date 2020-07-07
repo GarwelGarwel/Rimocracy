@@ -4,18 +4,18 @@
 	<RecordDef>
 		<defName>TimeAsLeader</defName>
 		<label>time as a leader</label>
-		<description>Total time spent leading your nation.</description>
+		<description>Total time spent leading the nation.</description>
 		<type>Time</type>
 		<workerClass>Rimocracy.RecordWorker_TimeAsLeader</workerClass>
 	</RecordDef>
 
 	<RecordDef>
-		<defName>TimeRuling</defName>
-		<label>time ruling</label>
-		<description>Total time spent ruling.</description>
+		<defName>TimeGoverning</defName>
+		<label>time governing</label>
+		<description>Total time spent governing.</description>
 		<type>Time</type>
 		<measuredTimeJobs>
-			<li>DoRuling</li>
+			<li>Govern</li>
 		</measuredTimeJobs>
 	</RecordDef>
 

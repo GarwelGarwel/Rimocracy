@@ -6,12 +6,9 @@ namespace Rimocracy
 {
     public static class ElectionUtility
     {
-        // How much vote weight every point of political sympathy translates to
-        //public const float PoliticalSympathyWeightFactor = 25;
-
         public static bool CampaigningEnabled => Utility.Citizens.Count() >= Settings.MinPopulationForCampaigning;
 
-        public static ElectionCampaign SupportsCampaign(this Pawn p) => Utility.Rimocracy.Campaigns?.FirstOrDefault(ec => ec.Supporters.Contains(p));
+        public static ElectionCampaign SupportsCampaign(this Pawn p) => Utility.RimocracyComp.Campaigns?.FirstOrDefault(ec => ec.Supporters.Contains(p));
 
         public static float VoteWeight(Pawn voter, Pawn candidate)
         {

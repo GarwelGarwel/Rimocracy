@@ -11,9 +11,9 @@ namespace Rimocracy
     {
         static bool? simpleSlaveryInstalled = null;
 
-        public static RimocracyComp Rimocracy => Find.World?.GetComponent<RimocracyComp>();
+        public static RimocracyComp RimocracyComp => Find.World?.GetComponent<RimocracyComp>();
 
-        public static bool PoliticsEnabled => Rimocracy != null && Rimocracy.IsEnabled;
+        public static bool PoliticsEnabled => RimocracyComp != null && RimocracyComp.IsEnabled;
 
         public static bool IsSimpleSlaveryInstalled =>
             (bool)(simpleSlaveryInstalled ?? (simpleSlaveryInstalled = RimocracyDefOf.Enslaved != null));
@@ -28,9 +28,9 @@ namespace Rimocracy
             && pawn.ageTracker.AgeBiologicalYears >= Settings.CitizenshipAge
             && (!IsSimpleSlaveryInstalled || !pawn.health.hediffSet.hediffs.Any(hediff => hediff.def == RimocracyDefOf.Enslaved));
 
-        public static bool CanBeLeader(this Pawn p) => p.IsCitizen() && !p.GetDisabledWorkTypes(true).Contains(RimocracyDefOf.Ruling);
+        public static bool CanBeLeader(this Pawn p) => p.IsCitizen() && !p.GetDisabledWorkTypes(true).Contains(RimocracyDefOf.Politics);
 
-        public static bool IsLeader(this Pawn p) => PoliticsEnabled && Rimocracy.Leader == p;
+        public static bool IsLeader(this Pawn p) => PoliticsEnabled && RimocracyComp.Leader == p;
 
         public static string ListString(List<string> list)
         {

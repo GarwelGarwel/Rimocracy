@@ -3,8 +3,8 @@
 <Defs>
 
 	<RoomStatDef>
-		<defName>RulingEfficiencyFactor</defName>
-		<label>ruling efficiency factor</label>
+		<defName>GovernEfficiencyFactor</defName>
+		<label>govern efficiency factor</label>
 		<workerClass>RoomStatWorker_FromStatByCurve</workerClass>
 		<updatePriority>0</updatePriority>
 		<isHidden>true</isHidden>

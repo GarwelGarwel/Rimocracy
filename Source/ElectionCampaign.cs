@@ -61,7 +61,7 @@ namespace Rimocracy
             // Preparing a list of potential targets for swaying with randomized weights
             Dictionary<Pawn, float> potentialTargets = Utility.Citizens
                     .Where(p =>
-                    !Utility.Rimocracy.Candidates.Contains(p)
+                    !Utility.RimocracyComp.Candidates.Contains(p)
                     && !p.InMentalState
                     && !p.Downed
                     && p.needs.mood.thoughts.memories.NumMemoriesOfDef(RimocracyDefOf.PoliticalSympathy) < RimocracyDefOf.PoliticalSympathy.stackLimit)
@@ -77,7 +77,7 @@ namespace Rimocracy
                 if (pawn != Candidate)
                 {
                     float defectionChance = 1 - ElectionUtility.VoteWeight(pawn, candidate) / 100;
-                    if (!pawn.IsCitizen() || Rand.Chance(defectionChance) || Utility.Rimocracy.Candidates.MaxBy(p => ElectionUtility.VoteWeight(pawn, p)) != candidate)
+                    if (!pawn.IsCitizen() || Rand.Chance(defectionChance) || Utility.RimocracyComp.Candidates.MaxBy(p => ElectionUtility.VoteWeight(pawn, p)) != candidate)
                     {
                         Utility.Log(pawn + " is no longer a core supporter for " + candidate + ". Their defection chance was " + defectionChance.ToString("P1"));
                         defectors.Add(pawn);
@@ -106,7 +106,7 @@ namespace Rimocracy
                     pawn.records.Increment(RimocracyDefOf.VotersSwayed);
                     Messages.Message(pawn + " swayed " + targetPawn + " in favor of " + Candidate, new LookTargets(targetPawn), MessageTypeDefOf.NeutralEvent);
 
-                    if (!Utility.Rimocracy.Campaigns.Any(ec => ec.Supporters.Contains(targetPawn)))
+                    if (!Utility.RimocracyComp.Campaigns.Any(ec => ec.Supporters.Contains(targetPawn)))
                     {
                         // If the target pawn is not already a core supporter of any candidate, try to recruit them to the campaign
                         float recruitChance = (ElectionUtility.VoteWeight(targetPawn, Candidate) / 100 - 1) * pawn.GetStatValue(StatDefOf.NegotiationAbility) * Settings.RecruitmentChanceFactor;

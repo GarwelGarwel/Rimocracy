@@ -3,9 +3,9 @@
 <Defs>
 
 	<StatDef>
-		<defName>RulingEfficiency</defName>
-		<label>authority buildup per hour</label>
-		<description>How fast authority is built per hour of ruling.</description>
+		<defName>GovernEfficiency</defName>
+		<label>governance improvement per hour</label>
+		<description>How fast governance quality is built per hour of governing.</description>
 		<category>PawnWork</category>
 		<defaultBaseValue>0.01</defaultBaseValue>
 		<minValue>0</minValue>
@@ -28,7 +28,6 @@
 		<capacityFactors>
 			<li>
 				<capacity>Consciousness</capacity>
-				<allowedDefect>0.05</allowedDefect>
 				<max>1.1</max>
 			</li>
 		</capacityFactors>
@@ -36,9 +35,9 @@
 	</StatDef>
 
 	<StatDef>
-		<defName>AuthorityDecay</defName>
-		<label>authority decay</label>
-		<description>Relative speed at which authority is reduced when this pawn is the leader.</description>
+		<defName>GovernanceDecay</defName>
+		<label>governance decay</label>
+		<description>Relative speed at which governance deteriorates while this pawn is the leader.</description>
 		<category>PawnSocial</category>
 		<showOnDefaultValue>false</showOnDefaultValue>
 		<defaultBaseValue>1</defaultBaseValue>

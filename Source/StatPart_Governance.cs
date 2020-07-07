@@ -6,7 +6,7 @@ using Verse;
 
 namespace Rimocracy
 {
-    public class StatPart_Authority : StatPart
+    public class StatPart_Governance : StatPart
     {
         public float minValue = 1;
         public float maxValue = 1;
@@ -16,7 +16,7 @@ namespace Rimocracy
         {
             float mult = Multiplier(req) * 100;
             return mult != 100
-                ? "Authority " + Utility.Rimocracy.AuthorityPercentage.ToString("N0") + "%: x" + mult.ToString("N0") + "%"
+                ? "Governance " + Utility.RimocracyComp.GovernancePercentage.ToString("N0") + "%: x" + mult.ToString("N0") + "%"
                 : null;
         }
 
@@ -27,16 +27,16 @@ namespace Rimocracy
             // Only applies to buildings and free colonists
             if (!req.HasThing || !Utility.PoliticsEnabled || !((req.Thing is Pawn && (req.Thing as Pawn).IsCitizen()) || (req.Thing is Building && req.Thing.Faction.IsPlayer)))
                 return 1;
-            float effect = Utility.Rimocracy.Authority;
+            float effect = Utility.RimocracyComp.Governance;
 
             // If the effect is skill-based, check if the parent stat's skills include the current focus skill
             if (focusOnly)
             {
                 HashSet<SkillDef> skills = new HashSet<SkillDef>(SkillsUtility.GetSkills(parentStat));
-                CompProperties_AffectedByAuthority rs = (req.Thing as ThingWithComps).GetComp<ThingComp_AffectedByAuthority>()?.Props;
+                CompProperties_AffectedByGovernance rs = (req.Thing as ThingWithComps).GetComp<ThingComp_AffectedByGovernance>()?.Props;
                 if (rs?.Skills != null)
                     skills.AddRange(rs.Skills);
-                if (!skills.Contains(Utility.Rimocracy.FocusSkill))
+                if (!skills.Contains(Utility.RimocracyComp.FocusSkill))
                     return 1;
                 effect /= skills.Count();
             }

@@ -2,12 +2,12 @@
 <Defs>
 
   <WorkTypeDef>
-    <defName>Ruling</defName>
-    <labelShort>Rule</labelShort>
-    <pawnLabel>Ruler</pawnLabel>
-    <gerundLabel>ruling</gerundLabel>
-    <description>Govern the nation.</description>
-    <verb>Rule</verb>
+    <defName>Politics</defName>
+    <labelShort>Politics</labelShort>
+    <pawnLabel>Politician</pawnLabel>
+    <gerundLabel>governing</gerundLabel>
+    <description>Rule the nation.</description>
+    <verb>Govern</verb>
     <naturalPriority>150</naturalPriority>
 	<alwaysStartActive>true</alwaysStartActive>
     <relevantSkills>

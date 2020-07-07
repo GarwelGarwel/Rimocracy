@@ -4,11 +4,11 @@ using Verse;
 
 namespace Rimocracy
 {
-    public class CompProperties_AffectedByAuthority : CompProperties
+    public class CompProperties_AffectedByGovernance : CompProperties
     {
         List<SkillDef> skills;
 
-        public CompProperties_AffectedByAuthority() => compClass = typeof(ThingComp_AffectedByAuthority);
+        public CompProperties_AffectedByGovernance() => compClass = typeof(ThingComp_AffectedByGovernance);
 
         public List<SkillDef> Skills
         {

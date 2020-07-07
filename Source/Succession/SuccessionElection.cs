@@ -16,13 +16,13 @@ namespace Rimocracy.Succession
 
         public override string SameLeaderTitle => "Leader Reelected";
 
-        public override IEnumerable<Pawn> Candidates => Utility.Rimocracy.Candidates ?? base.Candidates;
+        public override IEnumerable<Pawn> Candidates => Utility.RimocracyComp.Candidates ?? base.Candidates;
 
         public override string NewLeaderMessage(Pawn leader) => 
             ("{PAWN_nameFullDef} has been elected as our new leader with " + (votesForWinner != 1 ? votesForWinner + " votes" : "just one vote") + ". Vox populi, vox dei!").Formatted(leader.Named("PAWN"));
 
         public override string SameLeaderMessage(Pawn leader) => 
-            ("{PAWN_nameFullDef} has been reelected as the leader of our nation" + (votesForWinner > 1 ? " with " + votesForWinner + " votes." : (votesForWinner == 1 ? " with just one vote." : "."))).Formatted(leader.Named("PAWN"));
+            ("{PAWN_nameFullDef} has been reelected as the leader of our nation with " + (votesForWinner != 1 ? votesForWinner + " votes." : "just one vote.")).Formatted(leader.Named("PAWN"));
 
         public override Pawn ChooseLeader()
         {

@@ -11,18 +11,18 @@ namespace Rimocracy
 {
     public class RimocracyComp : WorldComponent
     {
-        // How often mod enabled/disabled check, succession, authority decay etc. are updated
+        // How often mod enabled/disabled check, succession, governance decay etc. are updated
         private const int UpdateInterval = 500;
 
         bool isEnabled = false;
 
         Pawn leader;
+        float governance = 0.5f;
+        SkillDef focusSkill;
         SuccessionBase succession;
         List<ElectionCampaign> campaigns;
         int termExpiration = int.MaxValue;
         int electionTick = int.MaxValue;
-        float authority = 0.5f;
-        SkillDef focusSkill;
 
         public RimocracyComp()
             : this(Find.World)
@@ -50,14 +50,17 @@ namespace Rimocracy
                         if (!(succession is SuccessionElection))
                             succession = new SuccessionElection();
                         break;
+
                     case SuccessionType.Lot:
                         if (!(succession is SuccessionLot))
                             succession = new SuccessionLot();
                         break;
+
                     case SuccessionType.Seniority:
                         if (!(succession is SuccessionOldest))
                             succession = new SuccessionOldest();
                         break;
+
                     default:
                         Utility.Log("Succession type not set! Reverting to election.", LogLevel.Error);
                         Settings.SuccessionType = SuccessionType.Election;
@@ -90,13 +93,13 @@ namespace Rimocracy
             }
         }
 
-        public float Authority
+        public float Governance
         {
-            get => authority;
-            set => authority = value;
+            get => governance;
+            set => governance = value;
         }
 
-        public float AuthorityPercentage => 100 * Authority;
+        public float GovernancePercentage => 100 * Governance;
 
         public int TermExpiration
         {
@@ -116,11 +119,11 @@ namespace Rimocracy
             set => focusSkill = value;
         }
 
-        public float BaseAuthorityDecayPerDay
-            => (0.03f + authority * 0.1f - (0.06f + authority * 0.25f) / Utility.Citizens.Count()) * Settings.AuthorityDecaySpeed;
+        public float BaseGovernanceDecayPerDay
+            => (0.03f + governance * 0.1f - (0.06f + governance * 0.25f) / Utility.Citizens.Count()) * Settings.GovernanceDecaySpeed;
 
-        public float AuthorityDecayPerDay
-            => Math.Max(BaseAuthorityDecayPerDay * (leader != null ? leader.GetStatValue(RimocracyDefOf.AuthorityDecay) : 1), 0);
+        public float GovernanceDecayPerDay
+            => Math.Max(BaseGovernanceDecayPerDay * (leader != null ? leader.GetStatValue(RimocracyDefOf.GovernanceDecay) : 1), 0);
 
         public bool ElectionCalled => electionTick != int.MaxValue;
 
@@ -135,7 +138,7 @@ namespace Rimocracy
             Scribe_Collections.Look(ref campaigns, "campaigns", LookMode.Deep);
             Scribe_Values.Look(ref termExpiration, "termExpiration", int.MaxValue);
             Scribe_Values.Look(ref electionTick, "electionTick", int.MaxValue);
-            Scribe_Values.Look(ref authority, "authority", 0.5f);
+            Scribe_Values.Look(ref governance, "governance", 0.5f);
             Scribe_Defs.Look(ref focusSkill, "focusSkill");
         }
 
@@ -151,7 +154,7 @@ namespace Rimocracy
             {
                 isEnabled = false;
                 leader = null;
-                authority = 0.5f;
+                governance = 0.5f;
                 electionTick = int.MaxValue;
                 return;
             }
@@ -186,11 +189,11 @@ namespace Rimocracy
             else if (ticks >= termExpiration || !leader.CanBeLeader())
                 ChooseLeader();
 
-            // Authority decay
-            authority = Math.Max(authority - AuthorityDecayPerDay / GenDate.TicksPerDay * UpdateInterval, 0);
+            // Governance decay
+            governance = Math.Max(governance - GovernanceDecayPerDay / GenDate.TicksPerDay * UpdateInterval, 0);
         }
 
-        public void BuildAuthority(float amount) => authority = Math.Min(authority + amount, 1);
+        public void ImproveGovernance(float amount) => governance = Math.Min(governance + amount, 1);
 
         void CallElection()
         {
@@ -237,10 +240,10 @@ namespace Rimocracy
                             p.needs.mood.thoughts.memories.TryGainMemory(RimocracyDefOf.ElectionCompetitorMemory, p2);
                     }
 
-                // If the leader has changed, partially reset Authority; show message
+                // If the leader has changed, partially reset Governance; show message
                 if (leader != oldLeader)
                 {
-                    authority = Mathf.Lerp(0.5f, authority, 0.5f);
+                    governance = Mathf.Lerp(0.5f, governance, 0.5f);
                     Find.LetterStack.ReceiveLetter(Succession.NewLeaderTitle, Succession.NewLeaderMessage(leader) + "\n\n" + FocusSkillMessage, LetterDefOf.NeutralEvent);
                 }
                 else Find.LetterStack.ReceiveLetter(Succession.SameLeaderTitle, Succession.SameLeaderMessage(leader) + "\n\n" + FocusSkillMessage, LetterDefOf.NeutralEvent);

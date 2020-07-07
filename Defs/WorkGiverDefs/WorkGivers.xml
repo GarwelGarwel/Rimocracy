@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
     <WorkGiverDef>
-		<defName>DoRuling</defName>
-		<label>build authority</label>
-		<verb>rule</verb>
-		<gerund>ruling from</gerund>
-		<giverClass>Rimocracy.WorkGiver_DoRuling</giverClass>
+		<defName>Govern</defName>
+		<label>improve governance</label>
+		<verb>govern</verb>
+		<gerund>governing from</gerund>
+		<giverClass>Rimocracy.WorkGiver_Govern</giverClass>
 		<scanThings>true</scanThings>
 		<scanCells>false</scanCells>
-		<workType>Ruling</workType>
+		<workType>Politics</workType>
 		<priorityInType>100</priorityInType>
 		<prioritizeSustains>true</prioritizeSustains>
 		<requiredCapacities>

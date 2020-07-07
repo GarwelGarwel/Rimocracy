@@ -3,7 +3,7 @@
 	<MainButtonDef>
 		<defName>Rimocracy_Politics</defName>
 		<label>politics</label>
-		<description>Overview the political situation in your nation.</description>
+		<description>Overview the political situation in our nation.</description>
 		<tabWindowClass>Rimocracy.MainTabWindow_Politics</tabWindowClass>
 	<order>67</order>
 	</MainButtonDef>

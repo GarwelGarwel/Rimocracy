@@ -5,7 +5,7 @@
 	<Operation Class="PatchOperationAdd">
 		<xpath>/Defs/StatDef[defName="WorkSpeedGlobal"]/parts</xpath>
 		<value>
-			<li Class="Rimocracy.StatPart_Authority">
+			<li Class="Rimocracy.StatPart_Governance">
 				<minValue>0.75</minValue>
 				<maxValue>1.25</maxValue>
 			</li>
@@ -13,12 +13,14 @@
 	</Operation>
 	
 	<Operation Class="PatchOperationAdd">
-		<xpath>/Defs/StatDef[defName="NegotiationAbility"]/parts</xpath>
+		<xpath>/Defs/StatDef[defName="NegotiationAbility"]</xpath>
 		<value>
-			<li Class="Rimocracy.StatPart_Authority">
-				<minValue>0.75</minValue>
-				<maxValue>1.25</maxValue>
-			</li>
+			<parts>
+				<li Class="Rimocracy.StatPart_Governance">
+					<minValue>0.75</minValue>
+					<maxValue>1.25</maxValue>
+				</li>
+			</parts>
 		</value>
 	</Operation>
 	
@@ -28,7 +30,7 @@
 		<xpath>/Defs/StatDef[defName="MiningSpeed"]</xpath>
 		<value>
 			<parts>
-				<li Class="Rimocracy.StatPart_Authority">
+				<li Class="Rimocracy.StatPart_Governance">
 					<maxValue>1.5</maxValue>
 					<focusOnly>true</focusOnly>
 				</li>
@@ -40,7 +42,7 @@
 		<xpath>/Defs/StatDef[defName="DeepDrillingSpeed"]</xpath>
 		<value>
 			<parts>
-				<li Class="Rimocracy.StatPart_Authority">
+				<li Class="Rimocracy.StatPart_Governance">
 					<maxValue>1.5</maxValue>
 					<focusOnly>true</focusOnly>
 				</li>
@@ -52,7 +54,7 @@
 		<xpath>/Defs/StatDef[defName="SmoothingSpeed"]</xpath>
 		<value>
 			<parts>
-				<li Class="Rimocracy.StatPart_Authority">
+				<li Class="Rimocracy.StatPart_Governance">
 					<maxValue>1.5</maxValue>
 					<focusOnly>true</focusOnly>
 				</li>
@@ -64,7 +66,7 @@
 		<xpath>/Defs/StatDef[defName="ResearchSpeed"]</xpath>
 		<value>
 			<parts>
-				<li Class="Rimocracy.StatPart_Authority">
+				<li Class="Rimocracy.StatPart_Governance">
 					<maxValue>1.5</maxValue>
 					<focusOnly>true</focusOnly>
 				</li>
@@ -76,7 +78,7 @@
 		<xpath>/Defs/StatDef[defName="AnimalGatherSpeed"]</xpath>
 		<value>
 			<parts>
-				<li Class="Rimocracy.StatPart_Authority">
+				<li Class="Rimocracy.StatPart_Governance">
 					<maxValue>1.5</maxValue>
 					<focusOnly>true</focusOnly>
 				</li>
@@ -88,7 +90,7 @@
 		<xpath>/Defs/StatDef[defName="PlantWorkSpeed"]</xpath>
 		<value>
 			<parts>
-				<li Class="Rimocracy.StatPart_Authority">
+				<li Class="Rimocracy.StatPart_Governance">
 					<maxValue>1.5</maxValue>
 					<focusOnly>true</focusOnly>
 				</li>
@@ -100,7 +102,7 @@
 		<xpath>/Defs/StatDef[defName="ConstructionSpeed"]</xpath>
 		<value>
 			<parts>
-				<li Class="Rimocracy.StatPart_Authority">
+				<li Class="Rimocracy.StatPart_Governance">
 					<maxValue>1.5</maxValue>
 					<focusOnly>true</focusOnly>
 				</li>
@@ -112,7 +114,7 @@
 		<xpath>/Defs/StatDef[defName="MedicalTendSpeed"]</xpath>
 		<value>
 			<parts>
-				<li Class="Rimocracy.StatPart_Authority">
+				<li Class="Rimocracy.StatPart_Governance">
 					<maxValue>1.5</maxValue>
 					<focusOnly>true</focusOnly>
 				</li>
@@ -124,7 +126,7 @@
 		<xpath>/Defs/StatDef[defName="MedicalOperationSpeed"]</xpath>
 		<value>
 			<parts>
-				<li Class="Rimocracy.StatPart_Authority">
+				<li Class="Rimocracy.StatPart_Governance">
 					<maxValue>1.5</maxValue>
 					<focusOnly>true</focusOnly>
 				</li>
@@ -136,7 +138,7 @@
 		<xpath>/Defs/StatDef[defName="DrugSynthesisSpeed"]</xpath>
 		<value>
 			<parts>
-				<li Class="Rimocracy.StatPart_Authority">
+				<li Class="Rimocracy.StatPart_Governance">
 					<maxValue>1.5</maxValue>
 					<focusOnly>true</focusOnly>
 				</li>
@@ -148,7 +150,7 @@
 		<xpath>/Defs/StatDef[defName="CookSpeed"]</xpath>
 		<value>
 			<parts>
-				<li Class="Rimocracy.StatPart_Authority">
+				<li Class="Rimocracy.StatPart_Governance">
 					<maxValue>1.5</maxValue>
 					<focusOnly>true</focusOnly>
 				</li>
@@ -160,7 +162,7 @@
 		<xpath>/Defs/StatDef[defName="DrugCookingSpeed"]</xpath>
 		<value>
 			<parts>
-				<li Class="Rimocracy.StatPart_Authority">
+				<li Class="Rimocracy.StatPart_Governance">
 					<maxValue>1.5</maxValue>
 					<focusOnly>true</focusOnly>
 				</li>
@@ -172,7 +174,7 @@
 		<xpath>/Defs/StatDef[defName="ButcheryFleshSpeed"]</xpath>
 		<value>
 			<parts>
-				<li Class="Rimocracy.StatPart_Authority">
+				<li Class="Rimocracy.StatPart_Governance">
 					<maxValue>1.5</maxValue>
 					<focusOnly>true</focusOnly>
 				</li>
@@ -184,7 +186,7 @@
 		<xpath>/Defs/StatDef[defName="ButcheryMechanoidSpeed"]</xpath>
 		<value>
 			<parts>
-				<li Class="Rimocracy.StatPart_Authority">
+				<li Class="Rimocracy.StatPart_Governance">
 					<maxValue>1.5</maxValue>
 					<focusOnly>true</focusOnly>
 				</li>
@@ -196,7 +198,7 @@
 		<xpath>/Defs/StatDef[defName="MeleeHitChance"]</xpath>
 		<value>
 			<parts>
-				<li Class="Rimocracy.StatPart_Authority">
+				<li Class="Rimocracy.StatPart_Governance">
 					<maxValue>1.5</maxValue>
 					<focusOnly>true</focusOnly>
 				</li>
@@ -208,7 +210,7 @@
 		<xpath>/Defs/StatDef[defName="MeleeDodgeChance"]</xpath>
 		<value>
 			<parts>
-				<li Class="Rimocracy.StatPart_Authority">
+				<li Class="Rimocracy.StatPart_Governance">
 					<maxValue>1.5</maxValue>
 					<focusOnly>true</focusOnly>
 				</li>
@@ -220,7 +222,7 @@
 		<xpath>/Defs/StatDef[defName="ShootingAccuracyPawn"]</xpath>
 		<value>
 			<parts>
-				<li Class="Rimocracy.StatPart_Authority">
+				<li Class="Rimocracy.StatPart_Governance">
 					<maxValue>1.5</maxValue>
 					<focusOnly>true</focusOnly>
 				</li>
@@ -232,7 +234,7 @@
 		<xpath>/Defs/StatDef[defName="ArrestSuccessChance"]</xpath>
 		<value>
 			<parts>
-				<li Class="Rimocracy.StatPart_Authority">
+				<li Class="Rimocracy.StatPart_Governance">
 					<maxValue>1.5</maxValue>
 					<focusOnly>true</focusOnly>
 				</li>
@@ -244,7 +246,7 @@
 		<xpath>/Defs/StatDef[defName="TradePriceImprovement"]</xpath>
 		<value>
 			<parts>
-				<li Class="Rimocracy.StatPart_Authority">
+				<li Class="Rimocracy.StatPart_Governance">
 					<maxValue>1.25</maxValue>
 					<focusOnly>true</focusOnly>
 				</li>
@@ -256,7 +258,7 @@
 		<xpath>/Defs/StatDef[defName="TameAnimalChance"]</xpath>
 		<value>
 			<parts>
-				<li Class="Rimocracy.StatPart_Authority">
+				<li Class="Rimocracy.StatPart_Governance">
 					<maxValue>1.5</maxValue>
 					<focusOnly>true</focusOnly>
 				</li>
@@ -268,7 +270,7 @@
 		<xpath>/Defs/StatDef[defName="TrainAnimalChance"]</xpath>
 		<value>
 			<parts>
-				<li Class="Rimocracy.StatPart_Authority">
+				<li Class="Rimocracy.StatPart_Governance">
 					<maxValue>1.5</maxValue>
 					<focusOnly>true</focusOnly>
 				</li>
@@ -281,7 +283,7 @@
 	<Operation Class="PatchOperationAdd">
 		<xpath>/Defs/StatDef[defName="WorkTableWorkSpeedFactor"]/parts</xpath>
 		<value>
-			<li Class="Rimocracy.StatPart_Authority">
+			<li Class="Rimocracy.StatPart_Governance">
 				<maxValue>1.5</maxValue>
 				<focusOnly>true</focusOnly>
 			</li>
