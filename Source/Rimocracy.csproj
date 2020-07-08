@@ -68,7 +68,6 @@
     <Compile Include="ThingComps\CompProperties_AffectedByGovernance.cs" />
     <Compile Include="RimocracyDefOf.cs" />
     <Compile Include="ElectionCampaign.cs" />
-    <Compile Include="HarmonyManager.cs" />
     <Compile Include="JobDriver_Govern.cs" />
     <Compile Include="MainTabWindow_Politics.cs" />
     <Compile Include="RecordWorker_TimeAsLeader.cs" />
