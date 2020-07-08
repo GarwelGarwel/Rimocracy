@@ -8,7 +8,7 @@
 		<giverClass>Rimocracy.WorkGiver_Govern</giverClass>
 		<scanThings>true</scanThings>
 		<scanCells>false</scanCells>
-		<workType>Politics</workType>
+		<workType>Governing</workType>
 		<priorityInType>100</priorityInType>
 		<prioritizeSustains>true</prioritizeSustains>
 		<requiredCapacities>

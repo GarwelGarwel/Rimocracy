@@ -22,6 +22,6 @@ namespace Rimocracy
         public static ThoughtDef ElectionCompetitorMemory;
         public static ThoughtDef PoliticalSympathy;
 
-        public static WorkTypeDef Politics;
+        public static WorkTypeDef Governing;
     }
 }

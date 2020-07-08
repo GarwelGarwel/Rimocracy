@@ -24,7 +24,7 @@ namespace Rimocracy
 
         const int MinPopulation_Default = 3;
         const int CitizenshipAge_Default = 16;
-        const int MinPopulationForCampaigning_Default = 6;
+        const int MinPopulationForCampaigning_Default = 8;
         const float CampaignDurationDays_Default = 3;
         const int MentalStateVoteWeightPenalty_Default = 10;
         const int SameBackstoryVoteWeightBonus_Default = 20;

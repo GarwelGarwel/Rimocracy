@@ -46,8 +46,41 @@
 		</nullifyingTraits>
 		<stages>
 			<li>
+				<label>supports different candidate</label>
+				<baseOpinionOffset>-5</baseOpinionOffset>
+			</li>
+			<li>
+				<label>not my candidate</label>
+				<baseOpinionOffset>-10</baseOpinionOffset>
+			</li>
+			<li>
 				<label>my competitor</label>
 				<baseOpinionOffset>-20</baseOpinionOffset>
+			</li>
+		</stages>
+	</ThoughtDef>
+
+	<ThoughtDef>
+		<defName>ElectionSupporter</defName>
+		<thoughtClass>Thought_SituationalSocial</thoughtClass>
+		<workerClass>Rimocracy.ThoughtWorker_Supporter</workerClass>
+		<validWhileDespawned>true</validWhileDespawned>
+		<nullifiedIfNotColonist>true</nullifiedIfNotColonist>
+		<nullifyingTraits>
+			<li>Psychopath</li>
+		</nullifyingTraits>
+		<stages>
+			<li>
+				<label>supports same candidate</label>
+				<baseOpinionOffset>5</baseOpinionOffset>
+			</li>
+			<li>
+				<label>supports me</label>
+				<baseOpinionOffset>10</baseOpinionOffset>
+			</li>
+			<li>
+				<label>my candidate</label>
+				<baseOpinionOffset>15</baseOpinionOffset>
 			</li>
 		</stages>
 	</ThoughtDef>
@@ -101,7 +134,7 @@
 		<validWhileDespawned>true</validWhileDespawned>
 		<nullifiedIfNotColonist>true</nullifiedIfNotColonist>
 		<stackLimitForSameOtherPawn>4</stackLimitForSameOtherPawn>
-		<lerpOpinionToZeroAfterDurationPct>0</lerpOpinionToZeroAfterDurationPct>
+		<lerpOpinionToZeroAfterDurationPct>0.5</lerpOpinionToZeroAfterDurationPct>
 	</ThoughtDef>
 
 </Defs>

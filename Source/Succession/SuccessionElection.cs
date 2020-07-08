@@ -18,7 +18,7 @@ namespace Rimocracy.Succession
 
         public override IEnumerable<Pawn> Candidates => Utility.RimocracyComp.Candidates ?? base.Candidates;
 
-        public override string NewLeaderMessage(Pawn leader) => 
+        public override string NewLeaderMessage(Pawn leader) =>
             ("{PAWN_nameFullDef} has been elected as the new " + Utility.LeaderTitle + " of " + Utility.NationName + " with "
             + (votesForWinner != 1 ? votesForWinner + " votes" : "just one vote") + ". Vox populi, vox dei!").Formatted(leader.Named("PAWN"));
 

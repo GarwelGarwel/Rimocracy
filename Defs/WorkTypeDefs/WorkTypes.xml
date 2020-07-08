@@ -2,9 +2,9 @@
 <Defs>
 
   <WorkTypeDef>
-    <defName>Politics</defName>
-    <labelShort>Politics</labelShort>
-    <pawnLabel>Politician</pawnLabel>
+    <defName>Governing</defName>
+    <labelShort>Govern</labelShort>
+    <pawnLabel>Leader</pawnLabel>
     <gerundLabel>governing</gerundLabel>
     <description>Rule the nation.</description>
     <verb>Govern</verb>

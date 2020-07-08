@@ -19,7 +19,7 @@ namespace Rimocracy
             governToil.FailOnCannotTouch(TargetIndex.A, PathEndMode.InteractionCell);
             governToil.defaultCompleteMode = ToilCompleteMode.Delay;
             governToil.defaultDuration = GenDate.TicksPerHour * 2;
-            governToil.activeSkill = () => SkillDefOf.Intellectual;
+            governToil.activeSkill = () => SkillDefOf.Social;
             yield return governToil;
             yield return Toils_General.Wait(2, TargetIndex.None);
             yield break;

@@ -14,7 +14,7 @@ namespace Rimocracy
         public override void DoSettingsWindowContents(Rect inRect)
         {
             Listing_Standard listingStandard = new Listing_Standard();
-            Rect viewRect = new Rect(0, 0, inRect.width - 50, 800);
+            Rect viewRect = new Rect(0, 0, inRect.width - 50, 1000);
             listingStandard.BeginScrollView(inRect, ref scrollPosition, ref viewRect);
             listingStandard.Begin(viewRect);
 

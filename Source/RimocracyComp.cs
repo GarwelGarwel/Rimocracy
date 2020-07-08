@@ -131,6 +131,8 @@ namespace Rimocracy
 
         public ElectionCampaign GetCampaignOf(Pawn candidate) => Campaigns?.FirstOrDefault(ec => ec.Candidate == candidate);
 
+        public ElectionCampaign GetSupportedCampaign(Pawn pawn) => Campaigns?.FirstOrDefault(ec => ec.Supporters.Contains(pawn));
+
         public override void ExposeData()
         {
             Scribe_Values.Look(ref isEnabled, "isEnabled");

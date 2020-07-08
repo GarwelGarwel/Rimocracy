@@ -21,20 +21,20 @@ namespace Rimocracy
         public static IEnumerable<Pawn> Citizens =>
             PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonists_NoCryptosleep.Where(p => p.IsCitizen());
 
-        public static bool IsCitizen(this Pawn pawn)
-            => pawn != null
+        public static string NationName => Find.FactionManager.OfPlayer.Name;
+
+        public static string LeaderTitle => Find.FactionManager.OfPlayer.LeaderTitle;
+
+        public static bool IsCitizen(this Pawn pawn) =>
+            pawn != null
             && !pawn.Dead
             && pawn.IsFreeColonist
             && pawn.ageTracker.AgeBiologicalYears >= Settings.CitizenshipAge
             && (!IsSimpleSlaveryInstalled || !pawn.health.hediffSet.hediffs.Any(hediff => hediff.def == RimocracyDefOf.Enslaved));
 
-        public static bool CanBeLeader(this Pawn p) => p.IsCitizen() && !p.GetDisabledWorkTypes(true).Contains(RimocracyDefOf.Politics);
+        public static bool CanBeLeader(this Pawn p) => p.IsCitizen() && !p.GetDisabledWorkTypes(true).Contains(RimocracyDefOf.Governing);
 
         public static bool IsLeader(this Pawn p) => PoliticsEnabled && RimocracyComp.Leader == p;
-
-        public static string NationName => Find.FactionManager.OfPlayer.Name;
-
-        public static string LeaderTitle => Find.FactionManager.OfPlayer.LeaderTitle;
 
         public static string ListString(List<string> list)
         {
@@ -43,8 +43,9 @@ namespace Rimocracy
             if (list.Count == 2)
                 return list[0] + " and " + list[1];
             string res = list[0];
-            for (int i = 1; i < list.Count; i++)
-                res += (list.Count == i + 1 ? ", and " : ", ") + list[i];
+            for (int i = 1; i < list.Count - 1; i++)
+                res += ", " + list[i];
+            res += " and " + list.Last();
             return res;
         }
 
