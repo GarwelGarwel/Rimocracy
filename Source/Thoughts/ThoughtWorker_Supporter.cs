@@ -9,8 +9,8 @@ namespace Rimocracy
         {
             if (Utility.RimocracyComp?.Candidates == null)
                 return false;
-            Pawn myCandidate = Utility.RimocracyComp.GetSupportedCampaign(p).Candidate;
-            if (myCandidate == null || myCandidate != Utility.RimocracyComp.GetSupportedCampaign(otherPawn).Candidate)
+            Pawn myCandidate = Utility.RimocracyComp.GetSupportedCampaign(p)?.Candidate;
+            if (myCandidate == null || myCandidate != Utility.RimocracyComp.GetSupportedCampaign(otherPawn)?.Candidate)
                 return false;
 
             if (p == myCandidate)
