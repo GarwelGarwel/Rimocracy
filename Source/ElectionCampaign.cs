@@ -67,9 +67,12 @@ namespace Rimocracy
                     && p.needs.mood.thoughts.memories.NumMemoriesOfDef(RimocracyDefOf.PoliticalSympathy) < RimocracyDefOf.PoliticalSympathy.stackLimit)
                     .ToDictionary(p => p, p => Rand.Range(0, ElectionUtility.VoteWeight(p, Candidate) + 100));
 
-            Utility.Log("Potential targets for " + Candidate + ":");
-            foreach (KeyValuePair<Pawn, float> kvp in potentialTargets)
-                Utility.Log("- " + kvp.Key + "\t" + kvp.Value.ToString("N0"));
+            if (potentialTargets.Count > 0)
+            {
+                Utility.Log("Potential targets for " + Candidate + ":");
+                foreach (KeyValuePair<Pawn, float> kvp in potentialTargets)
+                    Utility.Log("- " + kvp.Key + "\t" + kvp.Value.ToString("N0"));
+            }
 
             foreach (Pawn pawn in Supporters.Where(pawn => !pawn.InMentalState && !pawn.Downed))
             {
@@ -92,10 +95,7 @@ namespace Rimocracy
                     .Key;
 
                 if (targetPawn == null)
-                {
-                    Utility.Log("No one left to sway.");
-                    break;
-                }
+                    continue;
                 Utility.Log(pawn + " is trying to sway " + targetPawn);
                 float swayChance = pawn.GetStatValue(StatDefOf.SocialImpact) * 0.1f * Settings.SwayChanceFactor;
                 Utility.Log("Sway chance: " + swayChance.ToString("P1"));
