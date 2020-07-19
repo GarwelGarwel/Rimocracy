@@ -100,6 +100,7 @@
 <!--========================== Mod: Colony Manager ============================-->
 
 	<Operation Class="PatchOperationAdd">
+		<success>Always</success>
 		<xpath>/Defs/ThingDef[defName="FM_BasicManagerStation"]/statBases</xpath>
 		<value>
 			<GovernEfficiencyFactor>1.05</GovernEfficiencyFactor>
