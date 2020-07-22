@@ -17,6 +17,7 @@ namespace Rimocracy
         bool isEnabled = false;
 
         Pawn leader;
+        LeaderTitleDef leaderTitle;
         float governance = 0.5f;
         SkillDef focusSkill;
         SuccessionBase succession;
@@ -38,6 +39,12 @@ namespace Rimocracy
         {
             get => leader;
             set => leader = value;
+        }
+
+        public LeaderTitleDef LeaderTitleDef
+        {
+            get => leaderTitle;
+            set => leaderTitle = value;
         }
 
         public SuccessionBase Succession
@@ -120,7 +127,7 @@ namespace Rimocracy
         }
 
         public float BaseGovernanceDecayPerDay
-            => (0.03f + governance * 0.1f - (0.06f + governance * 0.25f) / Utility.Citizens.Count()) * Settings.GovernanceDecaySpeed;
+            => (0.03f + governance * 0.1f - (0.06f + governance * 0.25f) / Utility.CitizensCount) * Settings.GovernanceDecaySpeed;
 
         public float GovernanceDecayPerDay
             => Math.Max(BaseGovernanceDecayPerDay * (leader != null ? leader.GetStatValue(RimocracyDefOf.GovernanceDecay) : 1), 0);
@@ -137,6 +144,7 @@ namespace Rimocracy
         {
             Scribe_Values.Look(ref isEnabled, "isEnabled");
             Scribe_References.Look(ref leader, "leader");
+            Scribe_Defs.Look(ref leaderTitle, "leader");
             Scribe_Collections.Look(ref campaigns, "campaigns", LookMode.Deep);
             Scribe_Values.Look(ref termExpiration, "termExpiration", int.MaxValue);
             Scribe_Values.Look(ref electionTick, "electionTick", int.MaxValue);
@@ -151,8 +159,18 @@ namespace Rimocracy
             if (ticks % UpdateInterval != 0)
                 return;
 
+            if (leaderTitle == null)
+                ChooseLeaderTitle();
+
+            // TEST
+            //DefDatabase<LeaderTitleDef>.AddAllInMods();
+            //if (DefDatabase<LeaderTitleDef>.DefCount == 0)
+            //    Utility.Log("No LeaderTitleDefs loaded.", LogLevel.Error);
+            //else foreach (LeaderTitleDef def in DefDatabase<LeaderTitleDef>.AllDefs)
+            //        Utility.Log("Leader title def:\n" + def + (def.IsApplicable ? "\nApplicable now\n" : "\nNot applicable now\n"));
+
             // If population is less than 3, temporarily disable the mod
-            if (Utility.Citizens.Count() < Settings.MinPopulation)
+            if (Utility.CitizensCount < Settings.MinPopulation)
             {
                 isEnabled = false;
                 leader = null;
@@ -197,6 +215,12 @@ namespace Rimocracy
 
         public void ImproveGovernance(float amount) => governance = Math.Min(governance + amount, 1);
 
+        void ChooseLeaderTitle()
+        {
+            leaderTitle = Utility.ApplicableLeaderTitles.RandomElement();
+            Utility.Log("Selected leader title: " + leaderTitle?.defName);
+        }
+
         void CallElection()
         {
             electionTick = Find.TickManager.TicksAbs + Settings.CampaignDurationTicks;
@@ -221,6 +245,9 @@ namespace Rimocracy
         {
             Pawn oldLeader = leader;
             leader = Succession.ChooseLeader();
+
+            if (leaderTitle == null || !leaderTitle.IsApplicable)
+                ChooseLeaderTitle();
 
             if (leader != null)
             {
