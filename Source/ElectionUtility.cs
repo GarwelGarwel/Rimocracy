@@ -6,7 +6,7 @@ namespace Rimocracy
 {
     public static class ElectionUtility
     {
-        public static bool CampaigningEnabled => Utility.Citizens.Count() >= Settings.MinPopulationForCampaigning;
+        public static bool CampaigningEnabled => Utility.CitizensCount >= Settings.MinPopulationForCampaigning;
 
         public static ElectionCampaign SupportsCampaign(this Pawn p) => Utility.RimocracyComp.Campaigns?.FirstOrDefault(ec => ec.Supporters.Contains(p));
 
