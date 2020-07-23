@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<Defs>
+
+	<!-- Succession Laws -->
+	
+	<Rimocracy.DecisionDef>
+		<defName>SuccessionElection</defName>
+		<label>Election Succession</label>
+		<description>The leader shall be elected by all free, adult colonists.</description>
+		<requirements>
+			<succession>Election</succession>
+			<inverted>true</inverted>
+		</requirements>
+		<governanceCost>0.01</governanceCost>
+		<setSuccession>Election</setSuccession>
+	</Rimocracy.DecisionDef>
+
+	<Rimocracy.DecisionDef>
+		<defName>SuccessionSeniority</defName>
+		<label>Seniority Succession</label>
+		<description>The oldest, and most experienced, colonist shall be the leader.</description>
+		<requirements>
+			<succession>Seniority</succession>
+			<inverted>true</inverted>
+		</requirements>
+		<governanceCost>0.01</governanceCost>
+		<setSuccession>Seniority</setSuccession>
+	</Rimocracy.DecisionDef>
+
+	<Rimocracy.DecisionDef>
+		<defName>SuccessionLot</defName>
+		<label>Lot Succession</label>
+		<description>The leader shall be chosen randomly from all citizens.</description>
+		<requirements>
+			<succession>Lot</succession>
+			<inverted>true</inverted>
+		</requirements>
+		<governanceCost>0.01</governanceCost>
+		<setSuccession>Lot</setSuccession>
+	</Rimocracy.DecisionDef>
+	
+	<!-- Term Duration -->
+	
+	<Rimocracy.DecisionDef>
+		<defName>TermQuadrum</defName>
+		<label>Quadrum-Long Term</label>
+		<description>Set term of a leader to one quadrum (15 days).</description>
+		<requirements>
+			<termDuration>Halfyear</termDuration>
+			<notCampaigning>true</notCampaigning>
+		</requirements>
+		<governanceCost>0.01</governanceCost>
+		<setTermDuration>Quadrum</setTermDuration>
+	</Rimocracy.DecisionDef>
+
+	<Rimocracy.DecisionDef>
+		<defName>TermHalfYear</defName>
+		<label>Half-Year Long Term</label>
+		<description>Set term of a leader to half a year (30 days).</description>
+		<requirements>
+			<notCampaigning>true</notCampaigning>
+			<any>
+				<li>
+					<termDuration>Quadrum</termDuration>
+				</li>
+				<li>
+					<termDuration>Year</termDuration>
+				</li>
+			</any>
+		</requirements>
+		<governanceCost>0.01</governanceCost>
+		<setTermDuration>Halfyear</setTermDuration>
+	</Rimocracy.DecisionDef>
+
+	<Rimocracy.DecisionDef>
+		<defName>TermYear</defName>
+		<label>Year-Long Term</label>
+		<description>Set term of a leader to one year (60 days).</description>
+		<requirements>
+			<notCampaigning>true</notCampaigning>
+			<any>
+				<li>
+					<termDuration>Halfyear</termDuration>
+				</li>
+				<li>
+					<termDuration>Indefinite</termDuration>
+				</li>
+			</any>
+		</requirements>
+		<governanceCost>0.01</governanceCost>
+		<setTermDuration>Year</setTermDuration>
+	</Rimocracy.DecisionDef>
+
+	<Rimocracy.DecisionDef>
+		<defName>TermIndefinite</defName>
+		<label>Indefinite Term</label>
+		<description>Leaders will rule till their death.</description>
+		<requirements>
+			<termDuration>Year</termDuration>
+			<notCampaigning>true</notCampaigning>
+		</requirements>
+		<governanceCost>0.01</governanceCost>
+		<setTermDuration>Indefinite</setTermDuration>
+	</Rimocracy.DecisionDef>
+
+</Defs>

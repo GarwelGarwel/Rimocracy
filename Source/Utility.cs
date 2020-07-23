@@ -7,6 +7,8 @@ namespace Rimocracy
 {
     enum LogLevel { Message = 0, Warning, Error };
 
+    public enum TermDuration { Undefined = 0, Quadrum, Halfyear, Year, Indefinite };
+
     public static class Utility
     {
         static bool? simpleSlaveryInstalled = null;
@@ -39,6 +41,28 @@ namespace Rimocracy
         public static bool CanBeLeader(this Pawn p) => p.IsCitizen() && !p.GetDisabledWorkTypes(true).Contains(RimocracyDefOf.Governing);
 
         public static bool IsLeader(this Pawn p) => PoliticsEnabled && RimocracyComp.Leader == p;
+
+        public static int GetTermDurationTicks(TermDuration termDuration)
+        {
+            switch (termDuration)
+            {
+                case TermDuration.Quadrum:
+                    return GenDate.TicksPerQuadrum;
+
+                case TermDuration.Halfyear:
+                    return GenDate.TicksPerYear / 2;
+
+                case TermDuration.Year:
+                    return GenDate.TicksPerYear;
+
+                default:
+                    return int.MaxValue;
+            }
+        }
+
+        public static int TermDurationTicks => GetTermDurationTicks(RimocracyComp.TermDuration);
+
+        public static IEnumerable<DecisionDef> DecisionDefsAll => DefDatabase<DecisionDef>.AllDefs;
 
         public static string ListString(List<string> list)
         {

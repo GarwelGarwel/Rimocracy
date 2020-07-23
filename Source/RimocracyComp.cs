@@ -20,7 +20,9 @@ namespace Rimocracy
         LeaderTitleDef leaderTitle;
         float governance = 0.5f;
         SkillDef focusSkill;
+        SuccessionType successionType = SuccessionType.Election;
         SuccessionBase succession;
+        TermDuration termDuration = TermDuration.Quadrum;
         List<ElectionCampaign> campaigns;
         int termExpiration = int.MaxValue;
         int electionTick = int.MaxValue;
@@ -47,11 +49,17 @@ namespace Rimocracy
             set => leaderTitle = value;
         }
 
+        public SuccessionType SuccessionType
+        {
+            get => successionType;
+            set => successionType = value;
+        }
+
         public SuccessionBase Succession
         {
             get
             {
-                switch (Settings.SuccessionType)
+                switch (successionType)
                 {
                     case SuccessionType.Election:
                         if (!(succession is SuccessionElection))
@@ -70,7 +78,7 @@ namespace Rimocracy
 
                     default:
                         Utility.Log("Succession type not set! Reverting to election.", LogLevel.Error);
-                        Settings.SuccessionType = SuccessionType.Election;
+                        successionType = SuccessionType.Election;
                         succession = new SuccessionElection();
                         break;
                 }
@@ -107,6 +115,21 @@ namespace Rimocracy
         }
 
         public float GovernancePercentage => 100 * Governance;
+
+        public TermDuration TermDuration
+        {
+            get => termDuration;
+            set
+            {
+                if (termDuration != value)
+                {
+                    termDuration = value;
+                    if (termDuration == TermDuration.Indefinite)
+                        TermExpiration = int.MaxValue;
+                    else TermExpiration = Math.Min(TermExpiration, Find.TickManager.TicksAbs + Utility.TermDurationTicks);
+                }
+            }
+        }
 
         public int TermExpiration
         {
@@ -145,6 +168,8 @@ namespace Rimocracy
             Scribe_Values.Look(ref isEnabled, "isEnabled");
             Scribe_References.Look(ref leader, "leader");
             Scribe_Defs.Look(ref leaderTitle, "leaderTitle");
+            Scribe_Values.Look(ref successionType, "successionType", SuccessionType.Election);
+            Scribe_Values.Look(ref termDuration, "termDuration", TermDuration.Quadrum, true);
             Scribe_Collections.Look(ref campaigns, "campaigns", LookMode.Deep);
             Scribe_Values.Look(ref termExpiration, "termExpiration", int.MaxValue);
             Scribe_Values.Look(ref electionTick, "electionTick", int.MaxValue);
@@ -172,7 +197,9 @@ namespace Rimocracy
             }
             isEnabled = true;
 
-            if (Succession is SuccessionElection)
+            //Utility.Log("Term duration: " + TermDuration + " (" + Utility.TermDurationTicks.TicksToDays() + " days). Term expires in " + (termExpiration - Find.TickManager.TicksAbs).TicksToDays() + " d");
+
+            if (successionType == SuccessionType.Election)
             {
                 if (ticks >= termExpiration - Settings.CampaignDurationTicks || !leader.CanBeLeader())
                     // If term is about to expire or there is no (valid) leader, call a new election
@@ -209,8 +236,11 @@ namespace Rimocracy
 
         void ChooseLeaderTitle()
         {
+            string oldLeaderTitle = leaderTitle?.defName;
             leaderTitle = Utility.ApplicableLeaderTitles.RandomElement();
             Utility.Log("Selected leader title: " + leaderTitle?.defName);
+            if (oldLeaderTitle != leaderTitle.defName)
+                Messages.Message("Our leader is now called " + leaderTitle.GetTitle(leader) + ".", MessageTypeDefOf.NeutralEvent);
         }
 
         void CallElection()
@@ -238,16 +268,15 @@ namespace Rimocracy
             Pawn oldLeader = leader;
             leader = Succession.ChooseLeader();
 
-            if (leaderTitle == null || !leaderTitle.IsApplicable || Rand.Chance(0.1f))
-                ChooseLeaderTitle();
-
             if (leader != null)
             {
                 Utility.Log(leader + " was chosen to be the leader.");
 
-                // Election was successful
-                if (Settings.TermDuration != TermDuration.Indefinite)
-                    termExpiration = Find.TickManager.TicksAbs + Settings.TermDurationTicks;
+                if (leaderTitle == null || !leaderTitle.IsApplicable || (leader != oldLeader && Rand.Chance(0.2f)))
+                    ChooseLeaderTitle();
+
+                if (TermDuration != TermDuration.Indefinite)
+                    termExpiration = Find.TickManager.TicksAbs + Utility.TermDurationTicks;
                 else termExpiration = int.MaxValue;
                 electionTick = int.MaxValue;
                 focusSkill = GetCampaignOf(leader)?.FocusSkill ?? SkillsUtility.GetRandomSkill(leader.skills.skills, leader == oldLeader ? focusSkill : null);

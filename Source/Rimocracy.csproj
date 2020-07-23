@@ -61,8 +61,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DecisionDef.cs" />
+    <Compile Include="Dialog_Decision.cs" />
     <Compile Include="ElectionUtility.cs" />
     <Compile Include="LeaderTitleDef.cs" />
+    <Compile Include="Requirements\Requirement.cs" />
+    <Compile Include="Requirements\Requirement_Always.cs" />
+    <Compile Include="Requirements\Requirement_Succession.cs" />
     <Compile Include="RimocracyDefOf.cs" />
     <Compile Include="RimocracyMod.cs" />
     <Compile Include="Settings.cs" />
@@ -86,5 +91,6 @@
     <Compile Include="StatPart_Governance.cs" />
     <Compile Include="Utility.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

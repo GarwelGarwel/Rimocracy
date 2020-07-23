@@ -1,7 +1,5 @@
 ﻿using RimWorld;
-using System;
 using System.Collections.Generic;
-using UnityEngine;
 using Verse;
 
 namespace Rimocracy
@@ -25,9 +23,9 @@ namespace Rimocracy
         public List<TechLevel> techLevels;
 
         public bool IsApplicable =>
-            ((Settings.TermDuration == TermDuration.Indefinite && appliesToIndefiniteTerm)
-            || (Settings.TermDuration != TermDuration.Indefinite && appliesToFixedTerm))
-            && (successionTypes.NullOrEmpty() || successionTypes.Contains(Settings.SuccessionType))
+            ((Utility.RimocracyComp.TermDuration == TermDuration.Indefinite && appliesToIndefiniteTerm)
+            || (Utility.RimocracyComp.TermDuration != TermDuration.Indefinite && appliesToFixedTerm))
+            && (successionTypes.NullOrEmpty() || successionTypes.Contains(Utility.RimocracyComp.SuccessionType))
             && (techLevels.NullOrEmpty() || techLevels.Contains(Find.FactionManager.OfPlayer.def.techLevel))
             && Utility.CitizensCount >= minPopulation
             && Utility.CitizensCount <= maxPopulation;
