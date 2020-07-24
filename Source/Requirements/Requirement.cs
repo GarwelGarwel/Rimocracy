@@ -21,26 +21,16 @@ namespace Rimocracy
         public bool GetValue()
         {
             bool res = true;
-            Utility.Log("\n" + indent + "Calculating value for this requirement:\n" + this);
             if (!all.NullOrEmpty())
-            {
-                indent += "\t";
                 res &= all.All(r => r);
-                indent = indent.Remove(0, 1);
-            }
             if (res && !any.NullOrEmpty())
-            {
-                indent += "\t";
                 res &= any.Any(r => r);
-                indent = indent.Remove(0, 1);
-            }
             if (res && succession != SuccessionType.Undefined)
                 res &= Utility.RimocracyComp.SuccessionType == succession;
             if (res && termDuration != TermDuration.Undefined)
                 res &= Utility.RimocracyComp.TermDuration == termDuration;
             if (res && notCampaigning)
                 res &= Utility.RimocracyComp.Campaigns.NullOrEmpty();
-            Utility.Log("\n" + indent + "The condition is " + res + " (inverted: " + inverted + ")");
             return res ^ inverted;
         }
 

@@ -8,6 +8,8 @@
 		<defName>SuccessionElection</defName>
 		<label>Election Succession</label>
 		<description>The leader shall be elected by all free, adult colonists.</description>
+		<tag>Succession</tag>
+		<durationTicks>1000</durationTicks>
 		<requirements>
 			<succession>Election</succession>
 			<inverted>true</inverted>
@@ -20,6 +22,8 @@
 		<defName>SuccessionSeniority</defName>
 		<label>Seniority Succession</label>
 		<description>The oldest, and most experienced, colonist shall be the leader.</description>
+		<tag>Succession</tag>
+		<durationTicks>1000</durationTicks>
 		<requirements>
 			<succession>Seniority</succession>
 			<inverted>true</inverted>
@@ -32,6 +36,8 @@
 		<defName>SuccessionLot</defName>
 		<label>Lot Succession</label>
 		<description>The leader shall be chosen randomly from all citizens.</description>
+		<tag>Succession</tag>
+		<durationTicks>1000</durationTicks>
 		<requirements>
 			<succession>Lot</succession>
 			<inverted>true</inverted>
@@ -46,6 +52,8 @@
 		<defName>TermQuadrum</defName>
 		<label>Quadrum-Long Term</label>
 		<description>Set term of a leader to one quadrum (15 days).</description>
+		<tag>TermDuration</tag>
+		<durationTicks>1000</durationTicks>
 		<requirements>
 			<termDuration>Halfyear</termDuration>
 			<notCampaigning>true</notCampaigning>
@@ -58,6 +66,8 @@
 		<defName>TermHalfYear</defName>
 		<label>Half-Year Long Term</label>
 		<description>Set term of a leader to half a year (30 days).</description>
+		<tag>TermDuration</tag>
+		<durationTicks>1000</durationTicks>
 		<requirements>
 			<notCampaigning>true</notCampaigning>
 			<any>
@@ -77,6 +87,8 @@
 		<defName>TermYear</defName>
 		<label>Year-Long Term</label>
 		<description>Set term of a leader to one year (60 days).</description>
+		<tag>TermDuration</tag>
+		<durationTicks>1000</durationTicks>
 		<requirements>
 			<notCampaigning>true</notCampaigning>
 			<any>
@@ -96,6 +108,8 @@
 		<defName>TermIndefinite</defName>
 		<label>Indefinite Term</label>
 		<description>Leaders will rule till their death.</description>
+		<tag>TermDuration</tag>
+		<durationTicks>1000</durationTicks>
 		<requirements>
 			<termDuration>Year</termDuration>
 			<notCampaigning>true</notCampaigning>

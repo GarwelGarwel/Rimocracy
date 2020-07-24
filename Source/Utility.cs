@@ -62,8 +62,6 @@ namespace Rimocracy
 
         public static int TermDurationTicks => GetTermDurationTicks(RimocracyComp.TermDuration);
 
-        public static IEnumerable<DecisionDef> DecisionDefsAll => DefDatabase<DecisionDef>.AllDefs;
-
         public static string ListString(List<string> list)
         {
             if (list.NullOrEmpty())

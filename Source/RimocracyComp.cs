@@ -26,6 +26,7 @@ namespace Rimocracy
         List<ElectionCampaign> campaigns;
         int termExpiration = int.MaxValue;
         int electionTick = int.MaxValue;
+        List<Decision> decisions = new List<Decision>();
 
         public RimocracyComp()
             : this(Find.World)
@@ -149,6 +150,12 @@ namespace Rimocracy
             set => focusSkill = value;
         }
 
+        internal List<Decision> Decisions
+        { 
+            get => decisions; 
+            set => decisions = value; 
+        }
+
         public float BaseGovernanceDecayPerDay
             => (0.03f + governance * 0.1f - (0.06f + governance * 0.25f) / Utility.CitizensCount) * Settings.GovernanceDecaySpeed;
 
@@ -163,6 +170,8 @@ namespace Rimocracy
 
         public ElectionCampaign GetSupportedCampaign(Pawn pawn) => Campaigns?.FirstOrDefault(ec => ec.Supporters.Contains(pawn));
 
+        public bool DecisionActive(string tag) => decisions.Any(d => d.tag == tag);
+
         public override void ExposeData()
         {
             Scribe_Values.Look(ref isEnabled, "isEnabled");
@@ -175,6 +184,7 @@ namespace Rimocracy
             Scribe_Values.Look(ref electionTick, "electionTick", int.MaxValue);
             Scribe_Values.Look(ref governance, "governance", 0.5f);
             Scribe_Defs.Look(ref focusSkill, "focusSkill");
+            Scribe_Collections.Look(ref decisions, "decisions", LookMode.Deep);
         }
 
         public override void WorldComponentTick()
@@ -197,7 +207,12 @@ namespace Rimocracy
             }
             isEnabled = true;
 
-            //Utility.Log("Term duration: " + TermDuration + " (" + Utility.TermDurationTicks.TicksToDays() + " days). Term expires in " + (termExpiration - Find.TickManager.TicksAbs).TicksToDays() + " d");
+            int n = decisions.RemoveAll(d => d.HasExpired);
+            if (n != 0)
+                Utility.Log(n + " expired decision(s) removed.");
+            if (decisions.Count > 0)
+                foreach (Decision d in decisions)
+                    Utility.Log("Decision tag '" + d.tag + "', expires in " + (d.expiration - ticks).ToStringTicksToPeriod());
 
             if (successionType == SuccessionType.Election)
             {

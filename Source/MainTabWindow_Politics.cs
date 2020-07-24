@@ -50,7 +50,7 @@ namespace Rimocracy
             // Decisions
             content.GapLine();
             content.Label("Decisions:");
-            foreach (DecisionDef def in Utility.DecisionDefsAll.Where(def => def.IsValid))
+            foreach (DecisionDef def in DefDatabase<DecisionDef>.AllDefs.Where(def => def.IsValid))
                 if (content.ButtonText(def.label))
                     Find.WindowStack.Add(new Dialog_Decision(def));
 
