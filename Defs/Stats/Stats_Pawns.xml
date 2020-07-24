@@ -32,6 +32,16 @@
 			</li>
 		</capacityFactors>
 		<displayPriorityInCategory>1000</displayPriorityInCategory>
+		<parts>
+			<li Class="Rimocracy.StatPart_Elitism">
+				<factorFromMoodCurve>
+					<points>
+						<li>(0, 0.5)</li>
+						<li>(1, 1.5)</li>
+					</points>
+				</factorFromMoodCurve>
+			</li>
+		</parts>
 	</StatDef>
 
 	<StatDef>

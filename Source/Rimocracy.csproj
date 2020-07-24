@@ -73,6 +73,7 @@
     <Compile Include="RimocracyMod.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="SkillsUtility.cs" />
+    <Compile Include="Stats\StatPart_Elitism.cs" />
     <Compile Include="ThingComps\CompProperties_AffectedByGovernance.cs" />
     <Compile Include="ElectionCampaign.cs" />
     <Compile Include="JobDriver_Govern.cs" />
@@ -89,7 +90,7 @@
     <Compile Include="WorkGiver_Govern.cs" />
     <Compile Include="RimocracyComp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StatPart_Governance.cs" />
+    <Compile Include="Stats\StatPart_Governance.cs" />
     <Compile Include="Utility.cs" />
   </ItemGroup>
   <ItemGroup />

@@ -117,5 +117,55 @@
 		<governanceCost>0.01</governanceCost>
 		<setTermDuration>Indefinite</setTermDuration>
 	</Rimocracy.DecisionDef>
+	
+	<!-- Egalitarianism -->
+
+	<Rimocracy.DecisionDef>
+		<defName>Egalitarianism</defName>
+		<label>Happyness for All</label>
+		<description>The goal of every government is the happyness of its people. With this doctrine, the higher the median mood of your citizens, the slower the Governance decay.</description>
+		<requirements>
+			<decision>Elitism</decision>
+			<inverted>true</inverted>
+		</requirements>
+		<tag/>
+		<governanceCost>0.10</governanceCost>
+	</Rimocracy.DecisionDef>
+
+	<Rimocracy.DecisionDef>
+		<defName>Egalitarianism_Cancel</defName>
+		<label>Cancel Happyness for All</label>
+		<description>We are no longer interested in egalitarianism.</description>
+		<requirements>
+			<decision>Egalitarianism</decision>
+		</requirements>
+		<governanceCost>0.10</governanceCost>
+		<cancelDecision>Egalitarianism</cancelDecision>
+	</Rimocracy.DecisionDef>
+
+	<!-- Elitism -->
+
+	<Rimocracy.DecisionDef>
+		<defName>Elitism</defName>
+		<label>L'État, c'est moi</label>
+		<description>A happy leader is a productive leader. When the ruler is in a good mood, he, or she, will improve governance better.</description>
+		<requirements>
+			<decision>Egalitarianism</decision>
+			<inverted>true</inverted>
+		</requirements>
+		<tag/>
+		<governanceCost>0.10</governanceCost>
+	</Rimocracy.DecisionDef>
+
+	<Rimocracy.DecisionDef>
+		<defName>Elitism_Cancel</defName>
+		<label>Cancel "L'État, c'est moi"</label>
+		<description>Elitism was a mistake, let us abolish it.</description>
+		<requirements>
+			<decision>Elitism</decision>
+		</requirements>
+		<governanceCost>0.10</governanceCost>
+		<cancelDecision>Elitism</cancelDecision>
+	</Rimocracy.DecisionDef>
 
 </Defs>

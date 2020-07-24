@@ -5,13 +5,15 @@ namespace Rimocracy
 {
     public class DecisionDef : Def
     {
+        public Requirement requirements = new Requirement();
         public string tag;
         public int durationTicks;
         public int durationDays;
-        public Requirement requirements = new Requirement();
+
         public float governanceCost;
         public SuccessionType setSuccession = SuccessionType.Undefined;
         public TermDuration setTermDuration = TermDuration.Undefined;
+        public string cancelDecision;
 
         public bool IsValid =>
             (!IsUnique || !Utility.RimocracyComp.DecisionActive(Tag))
@@ -57,6 +59,13 @@ namespace Rimocracy
             {
                 Utility.Log("Setting term duration to " + setTermDuration);
                 Utility.RimocracyComp.TermDuration = setTermDuration;
+            }
+
+            if (!cancelDecision.NullOrEmpty())
+            {
+                Utility.Log("Canceling decision tag " + cancelDecision);
+                if (Utility.RimocracyComp.Decisions.RemoveAll(decision => decision.tag == cancelDecision) == 0)
+                    Utility.Log("Decision not found.", LogLevel.Warning);
             }
 
             return true;

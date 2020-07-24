@@ -1,5 +1,4 @@
-﻿using System.CodeDom.Compiler;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Verse;
 
@@ -17,6 +16,9 @@ namespace Rimocracy
         SuccessionType succession = SuccessionType.Undefined;
         TermDuration termDuration = TermDuration.Undefined;
         bool notCampaigning;
+        string decision;
+
+        public static implicit operator bool(Requirement requirement) => requirement.GetValue();
 
         public bool GetValue()
         {
@@ -31,10 +33,10 @@ namespace Rimocracy
                 res &= Utility.RimocracyComp.TermDuration == termDuration;
             if (res && notCampaigning)
                 res &= Utility.RimocracyComp.Campaigns.NullOrEmpty();
+            if (res && !decision.NullOrEmpty())
+                res &= Utility.RimocracyComp.DecisionActive(decision);
             return res ^ inverted;
         }
-
-        public static implicit operator bool(Requirement requirement) => requirement.GetValue();
 
         public override string ToString()
         {
@@ -47,6 +49,8 @@ namespace Rimocracy
                 res += indent + "Term duration: " + termDuration + "\n";
             if (notCampaigning)
                 res += indent + "Not campaigning\n";
+            if (!decision.NullOrEmpty())
+                res += indent + "Decision " + decision + " is active.";
             if (!all.NullOrEmpty())
             {
                 res += indent + "All of the following:\n";

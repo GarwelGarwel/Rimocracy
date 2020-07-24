@@ -156,11 +156,13 @@ namespace Rimocracy
             set => decisions = value; 
         }
 
+        float MedianMood => Utility.Citizens.Select(pawn => pawn.needs.mood.CurLevelPercentage).OrderBy(mood => mood).ToList().Median();
+
         public float BaseGovernanceDecayPerDay
             => (0.03f + governance * 0.1f - (0.06f + governance * 0.25f) / Utility.CitizensCount) * Settings.GovernanceDecaySpeed;
 
         public float GovernanceDecayPerDay
-            => Math.Max(BaseGovernanceDecayPerDay * (leader != null ? leader.GetStatValue(RimocracyDefOf.GovernanceDecay) : 1), 0);
+            => Math.Max(BaseGovernanceDecayPerDay * (leader != null ? leader.GetStatValue(RimocracyDefOf.GovernanceDecay) : 1) * (DecisionActive("Egalitarianism") ? 1.5f - MedianMood : 1), 0);
 
         public bool ElectionCalled => electionTick != int.MaxValue;
 
@@ -213,6 +215,7 @@ namespace Rimocracy
             if (decisions.Count > 0)
                 foreach (Decision d in decisions)
                     Utility.Log("Decision tag '" + d.tag + "', expires in " + (d.expiration - ticks).ToStringTicksToPeriod());
+            Utility.Log("Median mood: " + MedianMood.ToString("P1") + "; egalitarianism is " + DecisionActive("Egalitarianism"));
 
             if (successionType == SuccessionType.Election)
             {

@@ -1,4 +1,5 @@
 ﻿using RimWorld;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Verse;
@@ -61,6 +62,14 @@ namespace Rimocracy
         }
 
         public static int TermDurationTicks => GetTermDurationTicks(RimocracyComp.TermDuration);
+
+        public static float Median(this List<float> list)
+        {
+            if (list.NullOrEmpty())
+                return 0;
+            int count = list.Count;
+            return count % 2 == 0 ? (list[count / 2 - 1] + list[count / 2]) / 2 : list[count / 2];
+        }
 
         public static string ListString(List<string> list)
         {
