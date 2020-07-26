@@ -104,7 +104,6 @@ namespace Rimocracy
                     Utility.Log("Sway successful!");
                     targetPawn.needs.mood.thoughts.memories.TryGainMemory(RimocracyDefOf.PoliticalSympathy, Candidate);
                     pawn.records.Increment(RimocracyDefOf.VotersSwayed);
-                    Messages.Message(pawn + " swayed " + targetPawn + " in favor of " + Candidate, new LookTargets(targetPawn), MessageTypeDefOf.NeutralEvent);
 
                     if (!Utility.RimocracyComp.Campaigns.Any(ec => ec.Supporters.Contains(targetPawn)))
                     {
@@ -119,6 +118,7 @@ namespace Rimocracy
                             Messages.Message(pawn + " recruited " + targetPawn + " as a supporter of " + Candidate, new LookTargets(targetPawn), MessageTypeDefOf.NeutralEvent);
                         }
                     }
+                    else Messages.Message(pawn + " swayed " + targetPawn + " in favor of " + Candidate, new LookTargets(targetPawn), MessageTypeDefOf.NeutralEvent);
                 }
             }
 
