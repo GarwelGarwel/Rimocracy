@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<Patch>
+
+<!-- Ruling Efficiency -->
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>/Defs/ThingDef[defName="SimpleResearchBench"]/statBases</xpath>
+		<value>
+			<GovernEfficiencyFactor>1</GovernEfficiencyFactor>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>/Defs/ThingDef[defName="HiTechResearchBench"]/statBases</xpath>
+		<value>
+			<GovernEfficiencyFactor>1.1</GovernEfficiencyFactor>
+		</value>
+	</Operation>
+
+<!-- Royalty -->
+
+	<Operation Class="PatchOperationAdd">
+		<success>Always</success>
+		<xpath>/Defs/ThingDef[defName="Throne"]/statBases</xpath>
+		<value>
+			<GovernEfficiencyFactor>1.2</GovernEfficiencyFactor>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<success>Always</success>
+		<xpath>/Defs/ThingDef[defName="GrandThrone"]/statBases</xpath>
+		<value>
+			<GovernEfficiencyFactor>1.3</GovernEfficiencyFactor>
+		</value>
+	</Operation>
+
+<!-- Mod: Colony Manager -->
+
+	<Operation Class="PatchOperationAdd">
+		<success>Always</success>
+		<xpath>/Defs/ThingDef[defName="FM_BasicManagerStation"]/statBases</xpath>
+		<value>
+			<GovernEfficiencyFactor>1.05</GovernEfficiencyFactor>
+		</value>
+	</Operation>
+
+</Patch>
