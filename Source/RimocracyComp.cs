@@ -174,6 +174,13 @@ namespace Rimocracy
 
         public bool DecisionActive(string tag) => decisions.Any(d => d.tag == tag);
 
+        public override void FinalizeInit()
+        {
+            base.FinalizeInit();
+            if (decisions == null)
+                decisions = new List<Decision>();
+        }
+
         public override void ExposeData()
         {
             Scribe_Values.Look(ref isEnabled, "isEnabled");
@@ -215,7 +222,6 @@ namespace Rimocracy
             if (decisions.Count > 0)
                 foreach (Decision d in decisions)
                     Utility.Log("Decision tag '" + d.tag + "', expires in " + (d.expiration - ticks).ToStringTicksToPeriod());
-            Utility.Log("Median mood: " + MedianMood.ToString("P1") + "; egalitarianism is " + DecisionActive("Egalitarianism"));
 
             if (successionType == SuccessionType.Election)
             {

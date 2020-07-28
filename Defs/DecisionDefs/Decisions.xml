@@ -4,70 +4,68 @@
 
 	<!-- Succession Laws -->
 	
-	<Rimocracy.DecisionDef>
+	<Rimocracy.DecisionDef Abstract="True" Name="BaseSuccessionDecision">
+		<tag>Succession</tag>
+		<durationTicks>1000</durationTicks>
+		<governanceCost>0.01</governanceCost>
+	</Rimocracy.DecisionDef>
+	
+	<Rimocracy.DecisionDef ParentName="BaseSuccessionDecision">
 		<defName>SuccessionElection</defName>
 		<label>Election Succession</label>
 		<description>The leader shall be elected by all free, adult colonists.</description>
-		<tag>Succession</tag>
-		<durationTicks>1000</durationTicks>
 		<requirements>
 			<succession>Election</succession>
 			<inverted>true</inverted>
 		</requirements>
-		<governanceCost>0.01</governanceCost>
 		<setSuccession>Election</setSuccession>
 	</Rimocracy.DecisionDef>
 
-	<Rimocracy.DecisionDef>
+	<Rimocracy.DecisionDef ParentName="BaseSuccessionDecision">
 		<defName>SuccessionSeniority</defName>
 		<label>Seniority Succession</label>
 		<description>The oldest, and most experienced, colonist shall be the leader.</description>
-		<tag>Succession</tag>
-		<durationTicks>1000</durationTicks>
 		<requirements>
 			<succession>Seniority</succession>
 			<inverted>true</inverted>
 		</requirements>
-		<governanceCost>0.01</governanceCost>
 		<setSuccession>Seniority</setSuccession>
 	</Rimocracy.DecisionDef>
 
-	<Rimocracy.DecisionDef>
+	<Rimocracy.DecisionDef ParentName="BaseSuccessionDecision">
 		<defName>SuccessionLot</defName>
 		<label>Lot Succession</label>
 		<description>The leader shall be chosen randomly from all citizens.</description>
-		<tag>Succession</tag>
-		<durationTicks>1000</durationTicks>
 		<requirements>
 			<succession>Lot</succession>
 			<inverted>true</inverted>
 		</requirements>
-		<governanceCost>0.01</governanceCost>
 		<setSuccession>Lot</setSuccession>
 	</Rimocracy.DecisionDef>
 	
 	<!-- Term Duration -->
 	
-	<Rimocracy.DecisionDef>
+	<Rimocracy.DecisionDef Abstract="True" Name="BaseTermDurationDecision">
+		<tag>TermDuration</tag>
+		<durationTicks>1000</durationTicks>
+		<governanceCost>0.01</governanceCost>
+	</Rimocracy.DecisionDef>
+
+	<Rimocracy.DecisionDef ParentName="BaseTermDurationDecision">
 		<defName>TermQuadrum</defName>
 		<label>Quadrum-Long Term</label>
 		<description>Set term of a leader to one quadrum (15 days).</description>
-		<tag>TermDuration</tag>
-		<durationTicks>1000</durationTicks>
 		<requirements>
 			<termDuration>Halfyear</termDuration>
 			<notCampaigning>true</notCampaigning>
 		</requirements>
-		<governanceCost>0.01</governanceCost>
 		<setTermDuration>Quadrum</setTermDuration>
 	</Rimocracy.DecisionDef>
 
-	<Rimocracy.DecisionDef>
+	<Rimocracy.DecisionDef ParentName="BaseTermDurationDecision">
 		<defName>TermHalfYear</defName>
 		<label>Half-Year Long Term</label>
 		<description>Set term of a leader to half a year (30 days).</description>
-		<tag>TermDuration</tag>
-		<durationTicks>1000</durationTicks>
 		<requirements>
 			<notCampaigning>true</notCampaigning>
 			<any>
@@ -79,16 +77,13 @@
 				</li>
 			</any>
 		</requirements>
-		<governanceCost>0.01</governanceCost>
 		<setTermDuration>Halfyear</setTermDuration>
 	</Rimocracy.DecisionDef>
 
-	<Rimocracy.DecisionDef>
+	<Rimocracy.DecisionDef ParentName="BaseTermDurationDecision">
 		<defName>TermYear</defName>
 		<label>Year-Long Term</label>
 		<description>Set term of a leader to one year (60 days).</description>
-		<tag>TermDuration</tag>
-		<durationTicks>1000</durationTicks>
 		<requirements>
 			<notCampaigning>true</notCampaigning>
 			<any>
@@ -100,21 +95,17 @@
 				</li>
 			</any>
 		</requirements>
-		<governanceCost>0.01</governanceCost>
 		<setTermDuration>Year</setTermDuration>
 	</Rimocracy.DecisionDef>
 
-	<Rimocracy.DecisionDef>
+	<Rimocracy.DecisionDef ParentName="BaseTermDurationDecision">
 		<defName>TermIndefinite</defName>
 		<label>Indefinite Term</label>
 		<description>Leaders will rule till their death.</description>
-		<tag>TermDuration</tag>
-		<durationTicks>1000</durationTicks>
 		<requirements>
 			<termDuration>Year</termDuration>
 			<notCampaigning>true</notCampaigning>
 		</requirements>
-		<governanceCost>0.01</governanceCost>
 		<setTermDuration>Indefinite</setTermDuration>
 	</Rimocracy.DecisionDef>
 	

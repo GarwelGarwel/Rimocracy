@@ -21,7 +21,7 @@ namespace Rimocracy
             }
 
             Listing_Standard content = new Listing_Standard();
-            Rect viewRect = new Rect(0, 0, inRect.width - 40, 360);
+            Rect viewRect = new Rect(0, 0, inRect.width, 360);
             content.BeginScrollView(inRect, ref scrollPosition, ref viewRect);
             content.Begin(viewRect);
 
@@ -37,7 +37,7 @@ namespace Rimocracy
             }
             else if (Utility.RimocracyComp.ElectionTick > Find.TickManager.TicksAbs)
                 content.Label(Utility.LeaderTitle.CapitalizeFirst(Utility.RimocracyComp.LeaderTitleDef) + " will be elected in " + GenDate.ToStringTicksToPeriod(Utility.RimocracyComp.ElectionTick - Find.TickManager.TicksAbs) + ".");
-            else content.Label("Choosing the new " + Utility.LeaderTitle + "...");
+            else content.Label("Choosing a new " + Utility.LeaderTitle + "...");
 
             if (!Utility.RimocracyComp.Campaigns.NullOrEmpty())
             {
