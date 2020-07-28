@@ -8,7 +8,7 @@ Rimocracy introduces the concept of Governance Quality (or simply Governance). I
 - Governance directly affects global work speed (which influences many other work-related stats) and negotiation ability. Governance of 0% slows your colonists down and reduces their negotiation powers by 25% while 100% Governance increases these values by the same percentage. It is always better to have high Governance.
 - Governance also affects boosts stats that use the so-called Focus Skill, which is semi-randomly selected based on your leader's skills. For instance, Intellectual focus skill will improve research speed. The effect usually ranges from nothing for zero Governance to 50% for maximum Governance. So if you have 100% governance and Intellectual focus skill, your research speed will be increased by 125% (because of Global Work Speed bonus) x 150% (because of the Focus Skill) = 187.5%.
 - However, Governance always tends to deteriorate, the faster the higher it currently is and the more citizens your nation has. For instance, if you only have three citizens and 50% of Governance, it will decay at 1.8% per day, but if you have 15 and 100% Governance, you will lose 10.9% of it every day.
-- To improve Governance, your leader needs to do Govern job. It is done at a Research Station, either basic or high tech, or the Management Desk from the Colony Manager mod. By default, they increase Governance by 1% every hour, but it is affected by their Intellectual and Social stats and other factors, most importantly the impressiveness of the room. So better give them a good place to govern from.
+- To improve Governance, your leader needs to do Govern job. It is done at a Research Station, a throne (if you own Royalty DLC), or the Management Desk from the Colony Manager mod. By default, doing this job increases Governance by 1% every hour, but it is affected by the workstation (thrones are better than research stations, for isntance), leader's Intellectual and Social stats and other factors, most importantly the impressiveness of the room. So better give them a good place to govern from.
 - When your leader changes (see more about it below), your Governance is partially reset to the mid-point between its old value and 50%. So, if you had 70% Governance, your new leader will inherit only 60%.
 
 ## Leaders and Succession
@@ -25,7 +25,7 @@ There are several succession types that you can choose from in the settings:
 
 ## Elections
 
-If your succession type is set to election, all citizens (i.e. free colonists aged 16+) vote for their preferred candidate. Whoever gets the most votes, wins. Voters take into account their opinion of the candidates, any backstories they have in common (they prefer to vote for candidates of a similar background) and other factors. A colonist can't vote for themselves.
+If your succession type is set to election, all citizens (i.e. free colonists aged 16+) vote for their preferred candidate. Whoever gets the most votes, wins. Voters take into account their opinion of the candidates, any backstories they have in common (they prefer to vote for candidates of a similar background) and other factors. Royalty titles also make candidates more attractive to voters. A colonist can't vote for themselves.
 
 If your nation is relatively small, every voter is also a candidate. But if you have at least 8 citizens, elections are preceded by *campaigns*.
 
@@ -47,7 +47,7 @@ Candidates and their supporters usually hang together and dislike their competit
 
 **Q:** My Goverance is falling. How do I increase it?
 
-**A:** You need a Research Desk or a Management Desk. Preferably, put it into an impressive room. You also need a leader of your colony and he/she must have Governing enabled in Work Tab. I recommend to enable this work type for everyone: only the leader can use it anyway, so there is no problem if other colonists also have it. If your leader is too busy with other things, you can manually order them to "prioritize governing".
+**A:** You need a Research Desk, a throne or a Management Desk. Preferably, put it into an impressive room. You also need a leader of your colony and he/she must have Governing enabled in Work Tab. I recommend to enable this work type for everyone: only the leader can use it anyway, so there is no problem if other colonists also have it. If your leader is too busy with other things, you can manually order them to "prioritize governing".
 
 **Q:** How can I change the focus skill?
 
