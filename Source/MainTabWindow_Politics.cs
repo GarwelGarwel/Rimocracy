@@ -24,7 +24,7 @@ namespace Rimocracy
                         label += "\nNext " + Utility.RimocracyComp.Succession.SuccessionLabel + " in " + GenDate.ToStringTicksToPeriod(Utility.RimocracyComp.TermExpiration - Find.TickManager.TicksAbs, false) + ".";
                 }
                 else if (Utility.RimocracyComp.ElectionTick > Find.TickManager.TicksAbs)
-                    label += "\nLeader will be elected in " + GenDate.ToStringTicksToPeriod(Utility.RimocracyComp.ElectionTick - Find.TickManager.TicksAbs) + ".";
+                    label += "\n" + Utility.LeaderTitle.CapitalizeFirst(Utility.RimocracyComp.LeaderTitleDef) + " will be elected in " + GenDate.ToStringTicksToPeriod(Utility.RimocracyComp.ElectionTick - Find.TickManager.TicksAbs) + ".";
                 else label += "\nChoosing the new " + Utility.LeaderTitle + "...";
 
                 if (!Utility.RimocracyComp.Campaigns.NullOrEmpty())
