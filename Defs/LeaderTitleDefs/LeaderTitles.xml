@@ -17,7 +17,8 @@
 
 	<Rimocracy.LeaderTitleDef>
 		<defName>chieftain</defName>
-		<label>chieftain</label>
+		<labelMale>chieftain</labelMale>
+		<labelFemale>chieftainess</labelFemale>
 		<techLevels>
 			<li>Neolithic</li>
 		</techLevels>
@@ -60,17 +61,6 @@
 	</Rimocracy.LeaderTitleDef>
 
 	<Rimocracy.LeaderTitleDef>
-		<defName>baron</defName>
-		<labelMale>baron</labelMale>
-		<labelFemale>baroness</labelFemale>
-		<appliesToFixedTerm>false</appliesToFixedTerm>
-		<maxPopulation>7</maxPopulation>
-		<techLevels>
-			<li>Medieval</li>
-		</techLevels>
-	</Rimocracy.LeaderTitleDef>
-
-	<Rimocracy.LeaderTitleDef>
 		<defName>doge</defName>
 		<label>doge</label>
 		<appliesToFixedTerm>false</appliesToFixedTerm>
@@ -81,14 +71,13 @@
 			<li>Medieval</li>
 		</techLevels>
 	</Rimocracy.LeaderTitleDef>
-	
+
 	<Rimocracy.LeaderTitleDef>
-		<defName>prince</defName>
-		<labelMale>prince</labelMale>
-		<labelFemale>princess</labelFemale>
-		<appliesToFixedTerm>false</appliesToFixedTerm>
+		<defName>magistrate</defName>
+		<label>magistrate</label>
 		<techLevels>
 			<li>Medieval</li>
+			<li>Industrial</li>
 		</techLevels>
 	</Rimocracy.LeaderTitleDef>
 
