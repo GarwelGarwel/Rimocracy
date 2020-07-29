@@ -4,7 +4,7 @@ using Verse;
 
 namespace Rimocracy
 {
-    public enum SuccessionType { Undefined = 0, Election, Lot, Seniority };
+    public enum SuccessionType { Undefined = 0, Election, Lot, Seniority, Nobility };
 
     public abstract class SuccessionBase
     {
@@ -31,5 +31,7 @@ namespace Rimocracy
 
         public virtual bool CanBeCandidate(Pawn pawn)
             => pawn.CanBeLeader();
+
+        public virtual bool IsValid => true;
     }
 }

@@ -66,14 +66,13 @@
     <Compile Include="Dialog_Decision.cs" />
     <Compile Include="ElectionUtility.cs" />
     <Compile Include="LeaderTitleDef.cs" />
-    <Compile Include="Requirements\Requirement.cs" />
-    <Compile Include="Requirements\Requirement_Always.cs" />
-    <Compile Include="Requirements\Requirement_Succession.cs" />
+    <Compile Include="Requirement.cs" />
     <Compile Include="RimocracyDefOf.cs" />
     <Compile Include="RimocracyMod.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="SkillsUtility.cs" />
     <Compile Include="Stats\StatPart_Elitism.cs" />
+    <Compile Include="Succession\SuccessionNobility.cs" />
     <Compile Include="ThingComps\CompProperties_AffectedByGovernance.cs" />
     <Compile Include="ElectionCampaign.cs" />
     <Compile Include="JobDriver_Govern.cs" />

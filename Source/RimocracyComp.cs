@@ -77,6 +77,11 @@ namespace Rimocracy
                             succession = new SuccessionOldest();
                         break;
 
+                    case SuccessionType.Nobility:
+                        if (!(succession is SuccessionNobility))
+                            succession = new SuccessionNobility();
+                        break;
+
                     default:
                         Utility.Log("Succession type not set! Reverting to election.", LogLevel.Error);
                         successionType = SuccessionType.Election;
@@ -223,7 +228,10 @@ namespace Rimocracy
                 foreach (Decision d in decisions)
                     Utility.Log("Decision tag '" + d.tag + "', expires in " + (d.expiration - ticks).ToStringTicksToPeriod());
 
-            if (successionType == SuccessionType.Election)
+            if (Succession == null || !succession.IsValid)
+                SuccessionType = SuccessionType.Election;
+
+            if (SuccessionType == SuccessionType.Election)
             {
                 if (ticks >= termExpiration - Settings.CampaignDurationTicks || !leader.CanBeLeader())
                     // If term is about to expire or there is no (valid) leader, call a new election

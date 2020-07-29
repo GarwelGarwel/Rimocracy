@@ -15,6 +15,7 @@ namespace Rimocracy
 
         SuccessionType succession = SuccessionType.Undefined;
         TermDuration termDuration = TermDuration.Undefined;
+        bool leaderExists;
         bool notCampaigning;
         string decision;
 
@@ -31,6 +32,8 @@ namespace Rimocracy
                 res &= Utility.RimocracyComp.SuccessionType == succession;
             if (res && termDuration != TermDuration.Undefined)
                 res &= Utility.RimocracyComp.TermDuration == termDuration;
+            if (res && leaderExists)
+                res &= Utility.RimocracyComp.Leader != null;
             if (res && notCampaigning)
                 res &= Utility.RimocracyComp.Campaigns.NullOrEmpty();
             if (res && !decision.NullOrEmpty())
