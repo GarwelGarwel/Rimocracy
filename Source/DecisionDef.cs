@@ -22,7 +22,7 @@ namespace Rimocracy
             && Utility.RimocracyComp.Governance >= governanceCost;
 
         /// <summary>
-        /// Tells if this decision should be recorded
+        /// Tells if this decision tag should be stored
         /// </summary>
         public bool IsUnique => Duration != 0 || tag != null;
 

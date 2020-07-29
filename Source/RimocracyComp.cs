@@ -82,6 +82,11 @@ namespace Rimocracy
                             succession = new SuccessionNobility();
                         break;
 
+                    case SuccessionType.Martial:
+                        if (!(succession is SuccessionMartial))
+                            succession = new SuccessionMartial();
+                        break;
+
                     default:
                         Utility.Log("Succession type not set! Reverting to election.", LogLevel.Error);
                         successionType = SuccessionType.Election;

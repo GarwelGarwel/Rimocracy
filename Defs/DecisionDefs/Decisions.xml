@@ -54,6 +54,17 @@
 		<setSuccession>Nobility</setSuccession>
 	</Rimocracy.DecisionDef>
 
+	<Rimocracy.DecisionDef ParentName="BaseSuccessionDecision">
+		<defName>SuccessionMartial</defName>
+		<label>Martial Succession</label>
+		<description>The most accomplished warrior will become our leader.</description>
+		<requirements>
+			<succession>Martial</succession>
+			<inverted>true</inverted>
+		</requirements>
+		<setSuccession>Martial</setSuccession>
+	</Rimocracy.DecisionDef>
+
 	<!-- Term Duration -->
 	
 	<Rimocracy.DecisionDef Abstract="True" Name="BaseTermDurationDecision">

@@ -4,7 +4,7 @@ using Verse;
 
 namespace Rimocracy
 {
-    public enum SuccessionType { Undefined = 0, Election, Lot, Seniority, Nobility };
+    public enum SuccessionType { Undefined = 0, Election, Lot, Seniority, Nobility, Martial };
 
     public abstract class SuccessionBase
     {

@@ -36,6 +36,68 @@
 	</Rimocracy.LeaderTitleDef>
 
 	<Rimocracy.LeaderTitleDef>
+		<defName>lord</defName>
+		<labelMale>lord</labelMale>
+		<labelFemale>lady</labelFemale>
+		<techLevels>
+			<li>Medieval</li>
+			<li>Industrial</li>
+			<li>Spacer</li>
+		</techLevels>
+		<successionTypes>
+			<li>Nobility</li>
+		</successionTypes>
+	</Rimocracy.LeaderTitleDef>
+
+	<Rimocracy.LeaderTitleDef>
+		<defName>suzerain</defName>
+		<label>suzerain</label>
+		<techLevels>
+			<li>Medieval</li>
+		</techLevels>
+		<successionTypes>
+			<li>Nobility</li>
+		</successionTypes>
+	</Rimocracy.LeaderTitleDef>
+
+	<Rimocracy.LeaderTitleDef>
+		<defName>warlord</defName>
+		<labelMale>warlord</labelMale>
+		<labelFemale>warlady</labelFemale>
+		<techLevels>
+			<li>Neolithic</li>
+			<li>Medieval</li>
+		</techLevels>
+		<successionTypes>
+			<li>Martial</li>
+		</successionTypes>
+	</Rimocracy.LeaderTitleDef>
+
+	<Rimocracy.LeaderTitleDef>
+		<defName>captain</defName>
+		<label>captain</label>
+		<techLevels>
+			<li>Medieval</li>
+			<li>Industrial</li>
+		</techLevels>
+		<successionTypes>
+			<li>Martial</li>
+		</successionTypes>
+	</Rimocracy.LeaderTitleDef>
+
+	<Rimocracy.LeaderTitleDef>
+		<defName>commander</defName>
+		<label>commander</label>
+		<techLevels>
+			<li>Industrial</li>
+			<li>Spacer</li>
+		</techLevels>
+		<successionTypes>
+			<li>Martial</li>
+		</successionTypes>
+	</Rimocracy.LeaderTitleDef>
+
+	<Rimocracy.LeaderTitleDef>
 		<defName>elder</defName>
 		<label>elder</label>
 		<successionTypes>
