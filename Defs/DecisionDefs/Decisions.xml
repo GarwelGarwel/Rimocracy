@@ -42,7 +42,18 @@
 		</requirements>
 		<setSuccession>Lot</setSuccession>
 	</Rimocracy.DecisionDef>
-	
+
+	<Rimocracy.DecisionDef ParentName="BaseSuccessionDecision">
+		<defName>SuccessionNobility</defName>
+		<label>Nobility Succession</label>
+		<description>The pawn with the highest, and oldest, nobility title will be the leader.</description>
+		<requirements>
+			<succession>Nobility</succession>
+			<inverted>true</inverted>
+		</requirements>
+		<setSuccession>Nobility</setSuccession>
+	</Rimocracy.DecisionDef>
+
 	<!-- Term Duration -->
 	
 	<Rimocracy.DecisionDef Abstract="True" Name="BaseTermDurationDecision">
@@ -109,6 +120,25 @@
 		<setTermDuration>Indefinite</setTermDuration>
 	</Rimocracy.DecisionDef>
 	
+	<!-- Impeachment -->
+	
+	<Rimocracy.DecisionDef>
+		<defName>Impeachment</defName>
+		<label>Impeach Leader</label>
+		<description>Immediately relieve the current leader of his or her duties and initiate a new succession.</description>
+		<requirements>
+			<leaderExists>true</leaderExists>
+			<all>
+				<li>
+					<succession>Seniority</succession>
+					<inverted>true</inverted>
+				</li>
+			</all>
+		</requirements>
+		<governanceCost>0.01</governanceCost>
+		<impeachLeader>true</impeachLeader>
+	</Rimocracy.DecisionDef>
+
 	<!-- Egalitarianism -->
 
 	<Rimocracy.DecisionDef>
