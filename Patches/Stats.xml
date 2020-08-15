@@ -12,269 +12,555 @@
 		</value>
 	</Operation>
 	
+	<Operation Class="PatchOperationSequence">
+		<success>Always</success>
+		<operations>
+			<li Class="PatchOperationTest">
+				<xpath>/Defs/StatDef[defName="NegotiationAbility"]/parts</xpath>
+				<success>Invert</success>
+			</li>
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/StatDef[defName="NegotiationAbility"]</xpath>
+				<value>
+					<parts/>
+				</value>
+			</li>
+		</operations>
+	</Operation>
 	<Operation Class="PatchOperationAdd">
-		<xpath>/Defs/StatDef[defName="NegotiationAbility"]</xpath>
+		<xpath>/Defs/StatDef[defName="NegotiationAbility"]/parts</xpath>
 		<value>
-			<parts>
-				<li Class="Rimocracy.StatPart_Governance">
-					<minValue>0.75</minValue>
-					<maxValue>1.25</maxValue>
-				</li>
-			</parts>
+			<li Class="Rimocracy.StatPart_Governance">
+				<minValue>0.75</minValue>
+				<maxValue>1.25</maxValue>
+			</li>
 		</value>
 	</Operation>
 	
 	<!-- ========================= Focus Skill Effects ==========================-->
 	
+	<Operation Class="PatchOperationSequence">
+		<success>Always</success>
+		<operations>
+			<li Class="PatchOperationTest">
+				<xpath>/Defs/StatDef[defName="MiningSpeed"]/parts</xpath>
+				<success>Invert</success>
+			</li>
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/StatDef[defName="MiningSpeed"]</xpath>
+				<value>
+					<parts/>
+				</value>
+			</li>
+		</operations>
+	</Operation>
 	<Operation Class="PatchOperationAdd">
-		<xpath>/Defs/StatDef[defName="MiningSpeed"]</xpath>
+		<xpath>/Defs/StatDef[defName="MiningSpeed"]/parts</xpath>
 		<value>
-			<parts>
-				<li Class="Rimocracy.StatPart_Governance">
-					<maxValue>1.5</maxValue>
-					<focusOnly>true</focusOnly>
-				</li>
-			</parts>
+			<li Class="Rimocracy.StatPart_Governance">
+				<maxValue>1.5</maxValue>
+				<focusOnly>true</focusOnly>
+			</li>
 		</value>
 	</Operation>
 	
+	<Operation Class="PatchOperationSequence">
+		<success>Always</success>
+		<operations>
+			<li Class="PatchOperationTest">
+				<xpath>/Defs/StatDef[defName="DeepDrillingSpeed"]/parts</xpath>
+				<success>Invert</success>
+			</li>
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/StatDef[defName="DeepDrillingSpeed"]</xpath>
+				<value>
+					<parts/>
+				</value>
+			</li>
+		</operations>
+	</Operation>
 	<Operation Class="PatchOperationAdd">
-		<xpath>/Defs/StatDef[defName="DeepDrillingSpeed"]</xpath>
+		<xpath>/Defs/StatDef[defName="DeepDrillingSpeed"]/parts</xpath>
 		<value>
-			<parts>
-				<li Class="Rimocracy.StatPart_Governance">
-					<maxValue>1.5</maxValue>
-					<focusOnly>true</focusOnly>
-				</li>
-			</parts>
+			<li Class="Rimocracy.StatPart_Governance">
+				<maxValue>1.5</maxValue>
+				<focusOnly>true</focusOnly>
+			</li>
 		</value>
 	</Operation>
 	
+	<Operation Class="PatchOperationSequence">
+		<success>Always</success>
+		<operations>
+			<li Class="PatchOperationTest">
+				<xpath>/Defs/StatDef[defName="SmoothingSpeed"]/parts</xpath>
+				<success>Invert</success>
+			</li>
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/StatDef[defName="SmoothingSpeed"]</xpath>
+				<value>
+					<parts/>
+				</value>
+			</li>
+		</operations>
+	</Operation>
 	<Operation Class="PatchOperationAdd">
-		<xpath>/Defs/StatDef[defName="SmoothingSpeed"]</xpath>
+		<xpath>/Defs/StatDef[defName="SmoothingSpeed"]/parts</xpath>
 		<value>
-			<parts>
-				<li Class="Rimocracy.StatPart_Governance">
-					<maxValue>1.5</maxValue>
-					<focusOnly>true</focusOnly>
-				</li>
-			</parts>
+			<li Class="Rimocracy.StatPart_Governance">
+				<maxValue>1.5</maxValue>
+				<focusOnly>true</focusOnly>
+			</li>
 		</value>
 	</Operation>
 	
+	<Operation Class="PatchOperationSequence">
+		<success>Always</success>
+		<operations>
+			<li Class="PatchOperationTest">
+				<xpath>/Defs/StatDef[defName="ResearchSpeed"]/parts</xpath>
+				<success>Invert</success>
+			</li>
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/StatDef[defName="ResearchSpeed"]</xpath>
+				<value>
+					<parts/>
+				</value>
+			</li>
+		</operations>
+	</Operation>
 	<Operation Class="PatchOperationAdd">
-		<xpath>/Defs/StatDef[defName="ResearchSpeed"]</xpath>
+		<xpath>/Defs/StatDef[defName="ResearchSpeed"]/parts</xpath>
 		<value>
-			<parts>
-				<li Class="Rimocracy.StatPart_Governance">
-					<maxValue>1.5</maxValue>
-					<focusOnly>true</focusOnly>
-				</li>
-			</parts>
+			<li Class="Rimocracy.StatPart_Governance">
+				<maxValue>1.5</maxValue>
+				<focusOnly>true</focusOnly>
+			</li>
 		</value>
 	</Operation>
 	
+	<Operation Class="PatchOperationSequence">
+		<success>Always</success>
+		<operations>
+			<li Class="PatchOperationTest">
+				<xpath>/Defs/StatDef[defName="AnimalGatherSpeed"]/parts</xpath>
+				<success>Invert</success>
+			</li>
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/StatDef[defName="AnimalGatherSpeed"]</xpath>
+				<value>
+					<parts/>
+				</value>
+			</li>
+		</operations>
+	</Operation>
 	<Operation Class="PatchOperationAdd">
-		<xpath>/Defs/StatDef[defName="AnimalGatherSpeed"]</xpath>
+		<xpath>/Defs/StatDef[defName="AnimalGatherSpeed"]/parts</xpath>
 		<value>
-			<parts>
-				<li Class="Rimocracy.StatPart_Governance">
-					<maxValue>1.5</maxValue>
-					<focusOnly>true</focusOnly>
-				</li>
-			</parts>
+			<li Class="Rimocracy.StatPart_Governance">
+				<maxValue>1.5</maxValue>
+				<focusOnly>true</focusOnly>
+			</li>
 		</value>
 	</Operation>
 	
+	<Operation Class="PatchOperationSequence">
+		<success>Always</success>
+		<operations>
+			<li Class="PatchOperationTest">
+				<xpath>/Defs/StatDef[defName="PlantWorkSpeed"]/parts</xpath>
+				<success>Invert</success>
+			</li>
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/StatDef[defName="PlantWorkSpeed"]</xpath>
+				<value>
+					<parts/>
+				</value>
+			</li>
+		</operations>
+	</Operation>
 	<Operation Class="PatchOperationAdd">
-		<xpath>/Defs/StatDef[defName="PlantWorkSpeed"]</xpath>
+		<xpath>/Defs/StatDef[defName="PlantWorkSpeed"]/parts</xpath>
 		<value>
-			<parts>
-				<li Class="Rimocracy.StatPart_Governance">
-					<maxValue>1.5</maxValue>
-					<focusOnly>true</focusOnly>
-				</li>
-			</parts>
+			<li Class="Rimocracy.StatPart_Governance">
+				<maxValue>1.5</maxValue>
+				<focusOnly>true</focusOnly>
+			</li>
 		</value>
 	</Operation>
 
+	<Operation Class="PatchOperationSequence">
+		<success>Always</success>
+		<operations>
+			<li Class="PatchOperationTest">
+				<xpath>/Defs/StatDef[defName="ConstructionSpeed"]/parts</xpath>
+				<success>Invert</success>
+			</li>
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/StatDef[defName="ConstructionSpeed"]</xpath>
+				<value>
+					<parts/>
+				</value>
+			</li>
+		</operations>
+	</Operation>
 	<Operation Class="PatchOperationAdd">
-		<xpath>/Defs/StatDef[defName="ConstructionSpeed"]</xpath>
+		<xpath>/Defs/StatDef[defName="ConstructionSpeed"]/parts</xpath>
 		<value>
-			<parts>
-				<li Class="Rimocracy.StatPart_Governance">
-					<maxValue>1.5</maxValue>
-					<focusOnly>true</focusOnly>
-				</li>
-			</parts>
+			<li Class="Rimocracy.StatPart_Governance">
+				<maxValue>1.5</maxValue>
+				<focusOnly>true</focusOnly>
+			</li>
 		</value>
 	</Operation>
 
+	<Operation Class="PatchOperationSequence">
+		<success>Always</success>
+		<operations>
+			<li Class="PatchOperationTest">
+				<xpath>/Defs/StatDef[defName="MedicalTendSpeed"]/parts</xpath>
+				<success>Invert</success>
+			</li>
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/StatDef[defName="MedicalTendSpeed"]</xpath>
+				<value>
+					<parts/>
+				</value>
+			</li>
+		</operations>
+	</Operation>
 	<Operation Class="PatchOperationAdd">
-		<xpath>/Defs/StatDef[defName="MedicalTendSpeed"]</xpath>
+		<xpath>/Defs/StatDef[defName="MedicalTendSpeed"]/parts</xpath>
 		<value>
-			<parts>
-				<li Class="Rimocracy.StatPart_Governance">
-					<maxValue>1.5</maxValue>
-					<focusOnly>true</focusOnly>
-				</li>
-			</parts>
+			<li Class="Rimocracy.StatPart_Governance">
+				<maxValue>1.5</maxValue>
+				<focusOnly>true</focusOnly>
+			</li>
 		</value>
 	</Operation>
 
+	<Operation Class="PatchOperationSequence">
+		<success>Always</success>
+		<operations>
+			<li Class="PatchOperationTest">
+				<xpath>/Defs/StatDef[defName="MedicalOperationSpeed"]/parts</xpath>
+				<success>Invert</success>
+			</li>
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/StatDef[defName="MedicalOperationSpeed"]</xpath>
+				<value>
+					<parts/>
+				</value>
+			</li>
+		</operations>
+	</Operation>
 	<Operation Class="PatchOperationAdd">
-		<xpath>/Defs/StatDef[defName="MedicalOperationSpeed"]</xpath>
+		<xpath>/Defs/StatDef[defName="MedicalOperationSpeed"]/parts</xpath>
 		<value>
-			<parts>
-				<li Class="Rimocracy.StatPart_Governance">
-					<maxValue>1.5</maxValue>
-					<focusOnly>true</focusOnly>
-				</li>
-			</parts>
+			<li Class="Rimocracy.StatPart_Governance">
+				<maxValue>1.5</maxValue>
+				<focusOnly>true</focusOnly>
+			</li>
 		</value>
 	</Operation>
 
+	<Operation Class="PatchOperationSequence">
+		<success>Always</success>
+		<operations>
+			<li Class="PatchOperationTest">
+				<xpath>/Defs/StatDef[defName="DrugSynthesisSpeed"]/parts</xpath>
+				<success>Invert</success>
+			</li>
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/StatDef[defName="DrugSynthesisSpeed"]</xpath>
+				<value>
+					<parts/>
+				</value>
+			</li>
+		</operations>
+	</Operation>
 	<Operation Class="PatchOperationAdd">
-		<xpath>/Defs/StatDef[defName="DrugSynthesisSpeed"]</xpath>
+		<xpath>/Defs/StatDef[defName="DrugSynthesisSpeed"]/parts</xpath>
 		<value>
-			<parts>
-				<li Class="Rimocracy.StatPart_Governance">
-					<maxValue>1.5</maxValue>
-					<focusOnly>true</focusOnly>
-				</li>
-			</parts>
+			<li Class="Rimocracy.StatPart_Governance">
+				<maxValue>1.5</maxValue>
+				<focusOnly>true</focusOnly>
+			</li>
 		</value>
 	</Operation>
 
+	<Operation Class="PatchOperationSequence">
+		<success>Always</success>
+		<operations>
+			<li Class="PatchOperationTest">
+				<xpath>/Defs/StatDef[defName="CookSpeed"]/parts</xpath>
+				<success>Invert</success>
+			</li>
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/StatDef[defName="CookSpeed"]</xpath>
+				<value>
+					<parts/>
+				</value>
+			</li>
+		</operations>
+	</Operation>
 	<Operation Class="PatchOperationAdd">
-		<xpath>/Defs/StatDef[defName="CookSpeed"]</xpath>
+		<xpath>/Defs/StatDef[defName="CookSpeed"]/parts</xpath>
 		<value>
-			<parts>
-				<li Class="Rimocracy.StatPart_Governance">
-					<maxValue>1.5</maxValue>
-					<focusOnly>true</focusOnly>
-				</li>
-			</parts>
+			<li Class="Rimocracy.StatPart_Governance">
+				<maxValue>1.5</maxValue>
+				<focusOnly>true</focusOnly>
+			</li>
 		</value>
 	</Operation>
 
+	<Operation Class="PatchOperationSequence">
+		<success>Always</success>
+		<operations>
+			<li Class="PatchOperationTest">
+				<xpath>/Defs/StatDef[defName="DrugCookingSpeed"]/parts</xpath>
+				<success>Invert</success>
+			</li>
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/StatDef[defName="DrugCookingSpeed"]</xpath>
+				<value>
+					<parts/>
+				</value>
+			</li>
+		</operations>
+	</Operation>
 	<Operation Class="PatchOperationAdd">
-		<xpath>/Defs/StatDef[defName="DrugCookingSpeed"]</xpath>
+		<xpath>/Defs/StatDef[defName="DrugCookingSpeed"]/parts</xpath>
 		<value>
-			<parts>
-				<li Class="Rimocracy.StatPart_Governance">
-					<maxValue>1.5</maxValue>
-					<focusOnly>true</focusOnly>
-				</li>
-			</parts>
+			<li Class="Rimocracy.StatPart_Governance">
+				<maxValue>1.5</maxValue>
+				<focusOnly>true</focusOnly>
+			</li>
 		</value>
 	</Operation>
 
+	<Operation Class="PatchOperationSequence">
+		<success>Always</success>
+		<operations>
+			<li Class="PatchOperationTest">
+				<xpath>/Defs/StatDef[defName="ButcheryFleshSpeed"]/parts</xpath>
+				<success>Invert</success>
+			</li>
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/StatDef[defName="ButcheryFleshSpeed"]</xpath>
+				<value>
+					<parts/>
+				</value>
+			</li>
+		</operations>
+	</Operation>
 	<Operation Class="PatchOperationAdd">
-		<xpath>/Defs/StatDef[defName="ButcheryFleshSpeed"]</xpath>
+		<xpath>/Defs/StatDef[defName="ButcheryFleshSpeed"]/parts</xpath>
 		<value>
-			<parts>
-				<li Class="Rimocracy.StatPart_Governance">
-					<maxValue>1.5</maxValue>
-					<focusOnly>true</focusOnly>
-				</li>
-			</parts>
+			<li Class="Rimocracy.StatPart_Governance">
+				<maxValue>1.5</maxValue>
+				<focusOnly>true</focusOnly>
+			</li>
 		</value>
 	</Operation>
 
+	<Operation Class="PatchOperationSequence">
+		<success>Always</success>
+		<operations>
+			<li Class="PatchOperationTest">
+				<xpath>/Defs/StatDef[defName="ButcheryMechanoidSpeed"]/parts</xpath>
+				<success>Invert</success>
+			</li>
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/StatDef[defName="ButcheryMechanoidSpeed"]</xpath>
+				<value>
+					<parts/>
+				</value>
+			</li>
+		</operations>
+	</Operation>
 	<Operation Class="PatchOperationAdd">
-		<xpath>/Defs/StatDef[defName="ButcheryMechanoidSpeed"]</xpath>
+		<xpath>/Defs/StatDef[defName="ButcheryMechanoidSpeed"]/parts</xpath>
 		<value>
-			<parts>
-				<li Class="Rimocracy.StatPart_Governance">
-					<maxValue>1.5</maxValue>
-					<focusOnly>true</focusOnly>
-				</li>
-			</parts>
+			<li Class="Rimocracy.StatPart_Governance">
+				<maxValue>1.5</maxValue>
+				<focusOnly>true</focusOnly>
+			</li>
 		</value>
 	</Operation>
 
+	<Operation Class="PatchOperationSequence">
+		<success>Always</success>
+		<operations>
+			<li Class="PatchOperationTest">
+				<xpath>/Defs/StatDef[defName="MeleeHitChance"]/parts</xpath>
+				<success>Invert</success>
+			</li>
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/StatDef[defName="MeleeHitChance"]</xpath>
+				<value>
+					<parts/>
+				</value>
+			</li>
+		</operations>
+	</Operation>
 	<Operation Class="PatchOperationAdd">
-		<xpath>/Defs/StatDef[defName="MeleeHitChance"]</xpath>
+		<xpath>/Defs/StatDef[defName="MeleeHitChance"]/parts</xpath>
 		<value>
-			<parts>
-				<li Class="Rimocracy.StatPart_Governance">
-					<maxValue>1.5</maxValue>
-					<focusOnly>true</focusOnly>
-				</li>
-			</parts>
+			<li Class="Rimocracy.StatPart_Governance">
+				<maxValue>1.5</maxValue>
+				<focusOnly>true</focusOnly>
+			</li>
 		</value>
 	</Operation>
 
+	<Operation Class="PatchOperationSequence">
+		<success>Always</success>
+		<operations>
+			<li Class="PatchOperationTest">
+				<xpath>/Defs/StatDef[defName="MeleeDodgeChance"]/parts</xpath>
+				<success>Invert</success>
+			</li>
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/StatDef[defName="MeleeDodgeChance"]</xpath>
+				<value>
+					<parts/>
+				</value>
+			</li>
+		</operations>
+	</Operation>
 	<Operation Class="PatchOperationAdd">
-		<xpath>/Defs/StatDef[defName="MeleeDodgeChance"]</xpath>
+		<xpath>/Defs/StatDef[defName="MeleeDodgeChance"]/parts</xpath>
 		<value>
-			<parts>
-				<li Class="Rimocracy.StatPart_Governance">
-					<maxValue>1.5</maxValue>
-					<focusOnly>true</focusOnly>
-				</li>
-			</parts>
+			<li Class="Rimocracy.StatPart_Governance">
+				<maxValue>1.5</maxValue>
+				<focusOnly>true</focusOnly>
+			</li>
 		</value>
 	</Operation>
 
+	<Operation Class="PatchOperationSequence">
+		<success>Always</success>
+		<operations>
+			<li Class="PatchOperationTest">
+				<xpath>/Defs/StatDef[defName="ShootingAccuracyPawn"]/parts</xpath>
+				<success>Invert</success>
+			</li>
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/StatDef[defName="ShootingAccuracyPawn"]</xpath>
+				<value>
+					<parts/>
+				</value>
+			</li>
+		</operations>
+	</Operation>
 	<Operation Class="PatchOperationAdd">
-		<xpath>/Defs/StatDef[defName="ShootingAccuracyPawn"]</xpath>
+		<xpath>/Defs/StatDef[defName="ShootingAccuracyPawn"]/parts</xpath>
 		<value>
-			<parts>
-				<li Class="Rimocracy.StatPart_Governance">
-					<maxValue>1.5</maxValue>
-					<focusOnly>true</focusOnly>
-				</li>
-			</parts>
+			<li Class="Rimocracy.StatPart_Governance">
+				<maxValue>1.5</maxValue>
+				<focusOnly>true</focusOnly>
+			</li>
 		</value>
 	</Operation>
 
+	<Operation Class="PatchOperationSequence">
+		<success>Always</success>
+		<operations>
+			<li Class="PatchOperationTest">
+				<xpath>/Defs/StatDef[defName="ArrestSuccessChance"]/parts</xpath>
+				<success>Invert</success>
+			</li>
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/StatDef[defName="ArrestSuccessChance"]</xpath>
+				<value>
+					<parts/>
+				</value>
+			</li>
+		</operations>
+	</Operation>
 	<Operation Class="PatchOperationAdd">
-		<xpath>/Defs/StatDef[defName="ArrestSuccessChance"]</xpath>
+		<xpath>/Defs/StatDef[defName="ArrestSuccessChance"]/parts</xpath>
 		<value>
-			<parts>
-				<li Class="Rimocracy.StatPart_Governance">
-					<maxValue>1.5</maxValue>
-					<focusOnly>true</focusOnly>
-				</li>
-			</parts>
+			<li Class="Rimocracy.StatPart_Governance">
+				<maxValue>1.5</maxValue>
+				<focusOnly>true</focusOnly>
+			</li>
 		</value>
 	</Operation>
 
+	<Operation Class="PatchOperationSequence">
+		<success>Always</success>
+		<operations>
+			<li Class="PatchOperationTest">
+				<xpath>/Defs/StatDef[defName="TradePriceImprovement"]/parts</xpath>
+				<success>Invert</success>
+			</li>
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/StatDef[defName="TradePriceImprovement"]</xpath>
+				<value>
+					<parts/>
+				</value>
+			</li>
+		</operations>
+	</Operation>
 	<Operation Class="PatchOperationAdd">
-		<xpath>/Defs/StatDef[defName="TradePriceImprovement"]</xpath>
+		<xpath>/Defs/StatDef[defName="TradePriceImprovement"]/parts</xpath>
 		<value>
-			<parts>
-				<li Class="Rimocracy.StatPart_Governance">
-					<maxValue>1.25</maxValue>
-					<focusOnly>true</focusOnly>
-				</li>
-			</parts>
+			<li Class="Rimocracy.StatPart_Governance">
+				<maxValue>1.25</maxValue>
+				<focusOnly>true</focusOnly>
+			</li>
 		</value>
 	</Operation>
 
+	<Operation Class="PatchOperationSequence">
+		<success>Always</success>
+		<operations>
+			<li Class="PatchOperationTest">
+				<xpath>/Defs/StatDef[defName="TameAnimalChance"]/parts</xpath>
+				<success>Invert</success>
+			</li>
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/StatDef[defName="TameAnimalChance"]</xpath>
+				<value>
+					<parts/>
+				</value>
+			</li>
+		</operations>
+	</Operation>
 	<Operation Class="PatchOperationAdd">
-		<xpath>/Defs/StatDef[defName="TameAnimalChance"]</xpath>
+		<xpath>/Defs/StatDef[defName="TameAnimalChance"]/parts</xpath>
 		<value>
-			<parts>
-				<li Class="Rimocracy.StatPart_Governance">
-					<maxValue>1.5</maxValue>
-					<focusOnly>true</focusOnly>
-				</li>
-			</parts>
+			<li Class="Rimocracy.StatPart_Governance">
+				<maxValue>1.5</maxValue>
+				<focusOnly>true</focusOnly>
+			</li>
 		</value>
 	</Operation>
 
+	<Operation Class="PatchOperationSequence">
+		<success>Always</success>
+		<operations>
+			<li Class="PatchOperationTest">
+				<xpath>/Defs/StatDef[defName="TrainAnimalChance"]/parts</xpath>
+				<success>Invert</success>
+			</li>
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/StatDef[defName="TrainAnimalChance"]</xpath>
+				<value>
+					<parts/>
+				</value>
+			</li>
+		</operations>
+	</Operation>
 	<Operation Class="PatchOperationAdd">
-		<xpath>/Defs/StatDef[defName="TrainAnimalChance"]</xpath>
+		<xpath>/Defs/StatDef[defName="TrainAnimalChance"]/parts</xpath>
 		<value>
-			<parts>
-				<li Class="Rimocracy.StatPart_Governance">
-					<maxValue>1.5</maxValue>
-					<focusOnly>true</focusOnly>
-				</li>
-			</parts>
+			<li Class="Rimocracy.StatPart_Governance">
+				<maxValue>1.5</maxValue>
+				<focusOnly>true</focusOnly>
+			</li>
 		</value>
 	</Operation>
 

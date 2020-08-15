@@ -21,9 +21,13 @@ namespace Rimocracy
         public static IEnumerable<Pawn> Citizens =>
             PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonists_NoCryptosleep.Where(p => p.IsCitizen());
 
+        public static int CitizensCount => Citizens.Count();
+
         public static string NationName => Find.FactionManager.OfPlayer.Name;
 
-        public static string LeaderTitle => Find.FactionManager.OfPlayer.LeaderTitle;
+        public static IEnumerable<LeaderTitleDef> ApplicableLeaderTitles => DefDatabase<LeaderTitleDef>.AllDefs.Where(def => def.IsApplicable);
+
+        public static string LeaderTitle => RimocracyComp?.LeaderTitleDef?.GetTitle(RimocracyComp.Leader) ?? "leader";
 
         public static bool IsCitizen(this Pawn pawn) =>
             pawn != null

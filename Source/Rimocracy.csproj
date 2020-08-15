@@ -62,11 +62,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ElectionUtility.cs" />
+    <Compile Include="LeaderTitleDef.cs" />
+    <Compile Include="RimocracyDefOf.cs" />
     <Compile Include="RimocracyMod.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="SkillsUtility.cs" />
     <Compile Include="ThingComps\CompProperties_AffectedByGovernance.cs" />
-    <Compile Include="RimocracyDefOf.cs" />
     <Compile Include="ElectionCampaign.cs" />
     <Compile Include="JobDriver_Govern.cs" />
     <Compile Include="MainTabWindow_Politics.cs" />

@@ -2,24 +2,6 @@
 
 <Patch>
 
-<!--========================== Ruling Efficiency ============================-->
-
-	<Operation Class="PatchOperationAdd">
-		<xpath>/Defs/ThingDef[defName="SimpleResearchBench"]/statBases</xpath>
-		<value>
-			<GovernEfficiencyFactor>1</GovernEfficiencyFactor>
-		</value>
-	</Operation>
-
-	<Operation Class="PatchOperationAdd">
-		<xpath>/Defs/ThingDef[defName="HiTechResearchBench"]/statBases</xpath>
-		<value>
-			<GovernEfficiencyFactor>1.1</GovernEfficiencyFactor>
-		</value>
-	</Operation>
-
-<!--========================== Relevant Skills for Workbenches ============================-->
-
 	<Operation Class="PatchOperationAdd">
 		<xpath>/Defs/ThingDef[defName="TableSculpting"]/comps</xpath>
 		<value>
@@ -94,15 +76,6 @@
 					<li>Crafting</li>
 				</skills>
 			</li>
-		</value>
-	</Operation>
-
-<!--========================== Mod: Colony Manager ============================-->
-
-	<Operation Class="PatchOperationAdd">
-		<xpath>/Defs/ThingDef[defName="FM_BasicManagerStation"]/statBases</xpath>
-		<value>
-			<GovernEfficiencyFactor>1.05</GovernEfficiencyFactor>
 		</value>
 	</Operation>
 
