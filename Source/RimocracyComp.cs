@@ -332,6 +332,9 @@ namespace Rimocracy
                 {
                     governance = Mathf.Lerp(0.5f, governance, 0.5f);
                     Find.LetterStack.ReceiveLetter(Succession.NewLeaderTitle, Succession.NewLeaderMessage(leader) + "\n\n" + FocusSkillMessage, LetterDefOf.NeutralEvent);
+                    Tale tale = TaleRecorder.RecordTale(RimocracyDefOf.BecameLeader, leader, leaderTitle);
+                    if (tale != null)
+                        Utility.Log("Tale recorded: " + tale);
                 }
                 else Find.LetterStack.ReceiveLetter(Succession.SameLeaderTitle, Succession.SameLeaderMessage(leader) + "\n\n" + FocusSkillMessage, LetterDefOf.NeutralEvent);
                 Utility.Log("New leader is " + leader + " (chosen from " + Succession.Candidates.Count() + " candidates). Their term expires on " + GenDate.DateFullStringAt(termExpiration, Find.WorldGrid.LongLatOf(leader.Tile)) + ". The focus skill is " + focusSkill.defName);
