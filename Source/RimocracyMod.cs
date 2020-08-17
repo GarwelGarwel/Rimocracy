@@ -27,16 +27,6 @@ namespace Rimocracy
             listingStandard.Label("Governance Decay Speed: " + Settings.GovernanceDecaySpeed.ToString("P0"), tooltip: "Relative speed of governance deterioration over time");
             Settings.GovernanceDecaySpeed = (float)Math.Round(listingStandard.Slider(Settings.GovernanceDecaySpeed, 0, 2), 2);
 
-            //listingStandard.Label("Term Duration:", tooltip: "How long a leader's term lasts until election/succession");
-            //foreach (TermDuration td in Enum.GetValues(typeof(TermDuration)))
-            //    Settings.TermDuration = listingStandard.RadioButton_NewTemp(td.ToString(), Settings.TermDuration == td, (int)td) ? td : Settings.TermDuration;
-
-            //listingStandard.Gap();
-            //listingStandard.Label("Succession Type:", tooltip: "How a leader is chosen");
-            //foreach (SuccessionType st in Enum.GetValues(typeof(SuccessionType)))
-            //    if (st != SuccessionType.Undefined)
-            //        Settings.SuccessionType = listingStandard.RadioButton_NewTemp(st.ToString(), Settings.SuccessionType == st) ? st : Settings.SuccessionType;
-
             listingStandard.Label("Min Population for Campaigning: " + Settings.MinPopulationForCampaigning, tooltip: "Min number of voters to have elections between only two candidates, who actively seek supporters");
             Settings.MinPopulationForCampaigning = (int)listingStandard.Slider(Settings.MinPopulationForCampaigning, Settings.MinPopulation, 20);
 

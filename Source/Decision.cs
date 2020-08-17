@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Verse;
+﻿using Verse;
 
 namespace Rimocracy
 {
@@ -11,6 +6,8 @@ namespace Rimocracy
     {
         public string tag;
         public int expiration;
+
+        public bool HasExpired => Find.TickManager.TicksAbs >= expiration;
 
         public Decision(DecisionDef decisionDef)
             : this(decisionDef.Tag, decisionDef.Expiration)
@@ -21,8 +18,6 @@ namespace Rimocracy
             this.tag = tag;
             this.expiration = expiration;
         }
-
-        public bool HasExpired => Find.TickManager.TicksAbs >= expiration;
 
         public void ExposeData()
         {

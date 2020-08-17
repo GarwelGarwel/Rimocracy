@@ -14,19 +14,6 @@ namespace Rimocracy
         SkillDef focusSkill;
         List<Pawn> supporters;
 
-        public ElectionCampaign()
-            : this(null)
-        { }
-
-        public ElectionCampaign(Pawn candidate, SkillDef focusSkill = null)
-        {
-            this.candidate = candidate;
-            this.focusSkill = focusSkill;
-            supporters = new List<Pawn>();
-            if (candidate != null)
-                supporters.Add(candidate);
-        }
-
         public Pawn Candidate => candidate;
 
         public SkillDef FocusSkill
@@ -39,6 +26,19 @@ namespace Rimocracy
         {
             get => supporters;
             set => supporters = value;
+        }
+
+        public ElectionCampaign()
+            : this(null)
+        { }
+
+        public ElectionCampaign(Pawn candidate, SkillDef focusSkill = null)
+        {
+            this.candidate = candidate;
+            this.focusSkill = focusSkill;
+            supporters = new List<Pawn>();
+            if (candidate != null)
+                supporters.Add(candidate);
         }
 
         public void ExposeData()

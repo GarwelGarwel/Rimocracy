@@ -1,14 +1,13 @@
 ﻿using RimWorld;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Verse;
 
 namespace Rimocracy
 {
-    enum LogLevel { Message = 0, Warning, Error };
-
     public enum TermDuration { Undefined = 0, Quadrum, Halfyear, Year, Indefinite };
+
+    enum LogLevel { Message = 0, Warning, Error };
 
     public static class Utility
     {
@@ -31,6 +30,8 @@ namespace Rimocracy
         public static IEnumerable<LeaderTitleDef> ApplicableLeaderTitles => DefDatabase<LeaderTitleDef>.AllDefs.Where(def => def.IsApplicable);
 
         public static string LeaderTitle => RimocracyComp?.LeaderTitleDef?.GetTitle(RimocracyComp.Leader) ?? "leader";
+
+        public static int TermDurationTicks => GetTermDurationTicks(RimocracyComp.TermDuration);
 
         public static bool IsCitizen(this Pawn pawn) =>
             pawn != null
@@ -60,8 +61,6 @@ namespace Rimocracy
                     return int.MaxValue;
             }
         }
-
-        public static int TermDurationTicks => GetTermDurationTicks(RimocracyComp.TermDuration);
 
         public static float Median(this List<float> list)
         {

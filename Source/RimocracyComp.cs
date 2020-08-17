@@ -28,14 +28,6 @@ namespace Rimocracy
         int electionTick = int.MaxValue;
         List<Decision> decisions = new List<Decision>();
 
-        public RimocracyComp()
-            : this(Find.World)
-        { }
-
-        public RimocracyComp(World world)
-            : base(world)
-        { }
-
         public bool IsEnabled => isEnabled;
 
         public Pawn Leader
@@ -160,14 +152,6 @@ namespace Rimocracy
             set => focusSkill = value;
         }
 
-        internal List<Decision> Decisions
-        { 
-            get => decisions; 
-            set => decisions = value; 
-        }
-
-        float MedianMood => Utility.Citizens.Select(pawn => pawn.needs.mood.CurLevelPercentage).OrderBy(mood => mood).ToList().Median();
-
         public float BaseGovernanceDecayPerDay
             => (0.03f + governance * 0.1f - (0.06f + governance * 0.25f) / Utility.CitizensCount) * Settings.GovernanceDecaySpeed;
 
@@ -176,7 +160,23 @@ namespace Rimocracy
 
         public bool ElectionCalled => electionTick != int.MaxValue;
 
+        internal List<Decision> Decisions
+        {
+            get => decisions;
+            set => decisions = value;
+        }
+
+        float MedianMood => Utility.Citizens.Select(pawn => pawn.needs.mood.CurLevelPercentage).OrderBy(mood => mood).ToList().Median();
+
         string FocusSkillMessage => "The focus skill is " + focusSkill.LabelCap + ".";
+
+        public RimocracyComp()
+                                                                                                                                                                    : this(Find.World)
+        { }
+
+        public RimocracyComp(World world)
+            : base(world)
+        { }
 
         public ElectionCampaign GetCampaignOf(Pawn candidate) => Campaigns?.FirstOrDefault(ec => ec.Candidate == candidate);
 

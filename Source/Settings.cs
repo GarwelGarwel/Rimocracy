@@ -8,8 +8,6 @@ namespace Rimocracy
         public static int MinPopulation = MinPopulation_Default;
         public static int CitizenshipAge = CitizenshipAge_Default;
         public static float GovernanceDecaySpeed = 1;
-        //public static TermDuration TermDuration = TermDuration.Quadrum;
-        //public static SuccessionType SuccessionType = SuccessionType.Election;
         public static int MinPopulationForCampaigning = MinPopulationForCampaigning_Default;
         public static float CampaignDurationDays = CampaignDurationDays_Default;
         public static int MentalStateVoteWeightPenalty = MentalStateVoteWeightPenalty_Default;
@@ -37,8 +35,6 @@ namespace Rimocracy
             Scribe_Values.Look(ref MinPopulation, "MinPopulation", MinPopulation_Default);
             Scribe_Values.Look(ref CitizenshipAge, "CitizenshipAge", CitizenshipAge_Default);
             Scribe_Values.Look(ref GovernanceDecaySpeed, "GovernanceDecaySpeed", 1);
-            //Scribe_Values.Look(ref TermDuration, "TermDuration", TermDuration.Quadrum);
-            //Scribe_Values.Look(ref SuccessionType, "SuccessionType");
             Scribe_Values.Look(ref MinPopulationForCampaigning, "MinPopulationForCampaigning", MinPopulationForCampaigning_Default);
             Scribe_Values.Look(ref CampaignDurationDays, "CampaignDurationDays", CampaignDurationDays_Default);
             Scribe_Values.Look(ref MentalStateVoteWeightPenalty, "MentalStateVoteWeightPenalty", MentalStateVoteWeightPenalty_Default);
