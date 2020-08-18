@@ -75,17 +75,17 @@ namespace Rimocracy
             if (list.NullOrEmpty())
                 return "";
             if (list.Count == 2)
-                return list[0] + " and " + list[1];
+                return $"{list[0]} and {list[1]}";
             string res = list[0];
             for (int i = 1; i < list.Count - 1; i++)
-                res += ", " + list[i];
-            res += " and " + list.Last();
+                res += $", {list[i]}";
+            res += $" and {list.Last()}";
             return res;
         }
 
         internal static void Log(string message, LogLevel logLevel = LogLevel.Message)
         {
-            message = "[Rimocracy] " + message;
+            message = $"[Rimocracy] {message}";
             switch (logLevel)
             {
                 case LogLevel.Message:

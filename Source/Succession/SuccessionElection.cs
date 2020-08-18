@@ -14,17 +14,15 @@ namespace Rimocracy.Succession
 
         public override string SuccessionLabel => "election";
 
-        public override string SameLeaderTitle => Utility.LeaderTitle.CapitalizeFirst() + " Reelected";
+        public override string SameLeaderTitle => $"{Utility.LeaderTitle.CapitalizeFirst()} Reelected";
 
         public override IEnumerable<Pawn> Candidates => Utility.RimocracyComp.Candidates ?? base.Candidates;
 
         public override string NewLeaderMessage(Pawn leader) =>
-            ("{PAWN_nameFullDef} has been elected as the new " + Utility.LeaderTitle + " of " + Utility.NationName + " with "
-            + (votesForWinner != 1 ? votesForWinner + " votes" : "just one vote") + ". Vox populi, vox dei!").Formatted(leader.Named("PAWN"));
+            $"{{PAWN_nameFullDef}} has been elected as the new {Utility.LeaderTitle} of {Utility.NationName} with {(votesForWinner != 1 ? votesForWinner + " votes" : "just one vote")}. Vox populi, vox dei!".Formatted(leader.Named("PAWN"));
 
         public override string SameLeaderMessage(Pawn leader) =>
-            ("{PAWN_nameFullDef} has been reelected as the " + Utility.LeaderTitle + " of " + Utility.NationName + " with "
-            + (votesForWinner != 1 ? votesForWinner + " votes." : "just one vote.")).Formatted(leader.Named("PAWN"));
+            $"{{PAWN_nameFullDef}} has been reelected as the {Utility.LeaderTitle} of {Utility.NationName} with {(votesForWinner != 1 ? votesForWinner + " votes." : "just one vote.")}".Formatted(leader.Named("PAWN"));
 
         public override Pawn ChooseLeader()
         {
@@ -32,7 +30,7 @@ namespace Rimocracy.Succession
 
             // Logging votes
             foreach (KeyValuePair<Pawn, int> kvp in votes)
-                Utility.Log("- " + kvp.Key + ": " + kvp.Value + " votes");
+                Utility.Log($"- {kvp.Key}: {kvp.Value} votes");
 
             // Returning the winner
             KeyValuePair<Pawn, int> winner = votes.MaxByWithFallback(kvp => kvp.Value);
@@ -68,7 +66,7 @@ namespace Rimocracy.Succession
             foreach (Pawn p in Candidates.Where(p => voter != p))
                 weights[p] = ElectionUtility.VoteWeight(voter, p);
             Pawn choice = weights.MaxByWithFallback(kvp => kvp.Value).Key;
-            Utility.Log(voter + " votes for " + choice);
+            Utility.Log($"{voter} votes for {choice}.");
             return choice;
         }
     }

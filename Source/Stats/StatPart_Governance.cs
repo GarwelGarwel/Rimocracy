@@ -16,7 +16,7 @@ namespace Rimocracy
         {
             float mult = Multiplier(req) * 100;
             return mult != 100
-                ? "Governance " + Utility.RimocracyComp.GovernancePercentage.ToString("N0") + "%: x" + mult.ToString("N0") + "%"
+                ? $"Governance {Utility.RimocracyComp.GovernancePercentage:N0}%: x{mult:N0}%"
                 : null;
         }
 

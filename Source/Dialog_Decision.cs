@@ -10,7 +10,7 @@ namespace Rimocracy
         public Dialog_Decision(DecisionDef decisionDef)
         {
             this.decisionDef = decisionDef;
-            doCloseButton = true;
+            doCloseButton = false;
             doCloseX = true;
         }
 
@@ -21,10 +21,10 @@ namespace Rimocracy
 
             Listing_Standard content = new Listing_Standard();
             content.Begin(inRect);
-            content.Label("Activate " + decisionDef.LabelCap + "?");
+            content.Label($"Activate {decisionDef.LabelCap}?");
             content.Label(decisionDef.description);
             if (decisionDef.governanceCost != 0)
-                content.Label("Will reduce Governance Quality by " + decisionDef.governanceCost.ToString("P0") + ".");
+                content.Label($"Will reduce Governance Quality by {decisionDef.governanceCost:P0}.");
             content.Gap();
             if (content.ButtonText("Accept"))
                 OnAcceptKeyPressed();
@@ -36,7 +36,7 @@ namespace Rimocracy
         public override void OnAcceptKeyPressed()
         {
             base.OnAcceptKeyPressed();
-            Utility.Log("Activating " + decisionDef?.defName);
+            Utility.Log($"Activating {decisionDef?.defName}.");
             if (decisionDef == null)
                 return;
             decisionDef.Activate();

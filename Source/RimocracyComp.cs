@@ -168,10 +168,9 @@ namespace Rimocracy
 
         float MedianMood => Utility.Citizens.Select(pawn => pawn.needs.mood.CurLevelPercentage).OrderBy(mood => mood).ToList().Median();
 
-        string FocusSkillMessage => "The focus skill is " + focusSkill.LabelCap + ".";
+        string FocusSkillMessage => $"The focus skill is {focusSkill.LabelCap}.";
 
-        public RimocracyComp()
-                                                                                                                                                                    : this(Find.World)
+        public RimocracyComp() : this(Find.World)
         { }
 
         public RimocracyComp(World world)
@@ -228,10 +227,10 @@ namespace Rimocracy
 
             int n = decisions.RemoveAll(d => d.HasExpired);
             if (n != 0)
-                Utility.Log(n + " expired decision(s) removed.");
+                Utility.Log($"{n} expired decision(s) removed.");
             if (decisions.Count > 0)
                 foreach (Decision d in decisions)
-                    Utility.Log("Decision tag '" + d.tag + "', expires in " + (d.expiration - ticks).ToStringTicksToPeriod());
+                    Utility.Log($"Decision tag '{d.tag}', expires in {(d.expiration - ticks).ToStringTicksToPeriod()}");
 
             if (Succession == null || !succession.IsValid)
                 SuccessionType = SuccessionType.Election;
@@ -275,9 +274,9 @@ namespace Rimocracy
         {
             string oldLeaderTitle = leaderTitle?.defName;
             leaderTitle = Utility.ApplicableLeaderTitles.RandomElement();
-            Utility.Log("Selected leader title: " + leaderTitle?.defName);
+            Utility.Log($"Selected leader title: {leaderTitle?.defName}.");
             if (oldLeaderTitle != leaderTitle.defName)
-                Messages.Message("Our leader is now called " + leaderTitle.GetTitle(leader) + ".", MessageTypeDefOf.NeutralEvent);
+                Messages.Message($"Our leader is now called {leaderTitle.GetTitle(leader)}.", MessageTypeDefOf.NeutralEvent);
         }
 
         void CallElection()
@@ -294,10 +293,10 @@ namespace Rimocracy
                 Candidates = ((SuccessionElection)Succession).ChooseLeaders();
                 Utility.Log("Candidates in the campaign: ");
                 foreach (ElectionCampaign ec in campaigns)
-                    Utility.Log("- " + ec);
-                Messages.Message("The election campaign is on! " + Utility.ListString(Candidates.Select(p => p.LabelShortCap).ToList()) + " are competing to be the " + Utility.LeaderTitle + " of " + Utility.NationName + ".", new LookTargets(Candidates), MessageTypeDefOf.NeutralEvent);
+                    Utility.Log($"- {ec}");
+                Messages.Message($"The election campaign is on! {Utility.ListString(Candidates.Select(p => p.LabelShortCap).ToList())} are competing to be the {Utility.LeaderTitle} of {Utility.NationName}.", new LookTargets(Candidates), MessageTypeDefOf.NeutralEvent);
             }
-            Utility.Log("Election has been called on " + GenDate.DateFullStringWithHourAt(electionTick, Find.WorldGrid.LongLatOf(Find.AnyPlayerHomeMap.Tile)));
+            Utility.Log($"Election has been called on {GenDate.DateFullStringWithHourAt(electionTick, Find.WorldGrid.LongLatOf(Find.AnyPlayerHomeMap.Tile))}");
         }
 
         void ChooseLeader()
@@ -307,7 +306,7 @@ namespace Rimocracy
 
             if (leader != null)
             {
-                Utility.Log(leader + " was chosen to be the leader.");
+                Utility.Log($"{leader} was chosen to be the leader.");
 
                 if (leaderTitle == null || !leaderTitle.IsApplicable || (leader != oldLeader && Rand.Chance(0.2f)))
                     ChooseLeaderTitle();
@@ -331,13 +330,13 @@ namespace Rimocracy
                 if (leader != oldLeader)
                 {
                     governance = Mathf.Lerp(0.5f, governance, 0.5f);
-                    Find.LetterStack.ReceiveLetter(Succession.NewLeaderTitle, Succession.NewLeaderMessage(leader) + "\n\n" + FocusSkillMessage, LetterDefOf.NeutralEvent);
+                    Find.LetterStack.ReceiveLetter(Succession.NewLeaderTitle, $"{Succession.NewLeaderMessage(leader)}\n\n{FocusSkillMessage}", LetterDefOf.NeutralEvent);
                     Tale tale = TaleRecorder.RecordTale(RimocracyDefOf.BecameLeader, leader, leaderTitle);
                     if (tale != null)
-                        Utility.Log("Tale recorded: " + tale);
+                        Utility.Log($"Tale recorded: {tale}");
                 }
-                else Find.LetterStack.ReceiveLetter(Succession.SameLeaderTitle, Succession.SameLeaderMessage(leader) + "\n\n" + FocusSkillMessage, LetterDefOf.NeutralEvent);
-                Utility.Log("New leader is " + leader + " (chosen from " + Succession.Candidates.Count() + " candidates). Their term expires on " + GenDate.DateFullStringAt(termExpiration, Find.WorldGrid.LongLatOf(leader.Tile)) + ". The focus skill is " + focusSkill.defName);
+                else Find.LetterStack.ReceiveLetter(Succession.SameLeaderTitle, $"{Succession.SameLeaderMessage(leader)}\n\n{FocusSkillMessage}", LetterDefOf.NeutralEvent);
+                Utility.Log($"New leader is {leader} (chosen from {Succession.Candidates.Count()} candidates). Their term expires on {GenDate.DateFullStringAt(termExpiration, Find.WorldGrid.LongLatOf(leader.Tile))}. The focus skill is {focusSkill.defName}.");
             }
             campaigns = null;
         }

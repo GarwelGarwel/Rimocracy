@@ -42,7 +42,7 @@ namespace Rimocracy
         {
             if (!IsValid)
             {
-                Utility.Log(defName + " decision is invalid.", LogLevel.Warning);
+                Utility.Log($"{defName} decision is invalid.", LogLevel.Warning);
                 return false;
             }
 
@@ -52,25 +52,25 @@ namespace Rimocracy
             Utility.RimocracyComp.Governance -= governanceCost;
             if (setSuccession != SuccessionType.Undefined)
             {
-                Utility.Log("Setting succession to " + setSuccession);
+                Utility.Log($"Setting succession to {setSuccession}.");
                 Utility.RimocracyComp.SuccessionType = setSuccession;
             }
 
             if (setTermDuration != TermDuration.Undefined)
             {
-                Utility.Log("Setting term duration to " + setTermDuration);
+                Utility.Log($"Setting term duration to {setTermDuration}.");
                 Utility.RimocracyComp.TermDuration = setTermDuration;
             }
 
             if (impeachLeader && Utility.RimocracyComp.Leader != null)
             {
-                Utility.Log("Impeaching " + Utility.RimocracyComp.Leader);
+                Utility.Log($"Impeaching {Utility.RimocracyComp.Leader}.");
                 Utility.RimocracyComp.Leader = null;
             }
 
             if (!cancelDecision.NullOrEmpty())
             {
-                Utility.Log("Canceling decision tag " + cancelDecision);
+                Utility.Log($"Canceling decision tag {cancelDecision}.");
                 if (Utility.RimocracyComp.Decisions.RemoveAll(decision => decision.tag == cancelDecision) == 0)
                     Utility.Log("Decision not found.", LogLevel.Warning);
             }

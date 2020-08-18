@@ -26,14 +26,14 @@ namespace Rimocracy
             // For every backstory the two pawns have in common, a bonus is added
             int sameBackstories = voter.story.AllBackstories.Count(bs => candidate.story.AllBackstories.Contains(bs));
             if (sameBackstories > 0)
-                Utility.Log(voter + " and " + candidate + " have " + sameBackstories + " backstories in common.");
+                Utility.Log($"{voter} and {candidate} have {sameBackstories} backstories in common.");
             weight += sameBackstories * Settings.SameBackstoryVoteWeightBonus;
 
             // If the candidate has a royal title, their vote weight is increased according to seniority
             RoyalTitleDef title = candidate.royalty?.MostSeniorTitle?.def;
             if (title != null)
             {
-                Utility.Log(candidate + " has royal title " + title.label + " (seniority " + title.seniority + ")");
+                Utility.Log($"{candidate} has royal title {title.label} (seniority {title.seniority}).");
                 weight += 5 + title.seniority / 10;
             }
 
@@ -44,13 +44,13 @@ namespace Rimocracy
                 .Sum(m => m.OpinionOffset())
                 * Settings.PoliticalSympathyWeightFactor;
             if (sympathy != 0)
-                Utility.Log(voter + " has " + sympathy.ToString("N1") + " of sympathy for " + candidate);
+                Utility.Log($"{voter} has {sympathy:N1} of sympathy for {candidate}.");
             weight += sympathy;
 
             // Adding a random factor of -5 to +5
             weight += Rand.Range(-Settings.RandomVoteWeightRadius, Settings.RandomVoteWeightRadius);
 
-            Utility.Log(voter + " vote weight for " + candidate + ": " + weight);
+            Utility.Log($"{voter} vote weight for {candidate}: {weight:N0}.");
             return weight;
         }
     }

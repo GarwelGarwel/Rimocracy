@@ -47,27 +47,27 @@ namespace Rimocracy
             if (inverted)
                 res += "The following must be FALSE:\n";
             if (succession != SuccessionType.Undefined)
-                res += indent + "Succession law: " + succession + "\n";
+                res += $"{indent}Succession law: {succession}\n";
             if (termDuration != TermDuration.Undefined)
-                res += indent + "Term duration: " + termDuration + "\n";
+                res += $"{indent}Term duration: {termDuration}\n";
             if (notCampaigning)
-                res += indent + "Not campaigning\n";
+                res += $"{indent}Not campaigning\n";
             if (!decision.NullOrEmpty())
-                res += indent + "Decision " + decision + " is active.";
+                res += $"{indent}Decision {decision} is active.";
             if (!all.NullOrEmpty())
             {
-                res += indent + "All of the following:\n";
+                res += $"{indent}All of the following:\n";
                 indent += "\t";
                 foreach (Requirement r in all)
-                    res += r + "\n";
+                    res += $"{r}\n";
                 indent = indent.Remove(0, 1);
             }
             if (!any.NullOrEmpty())
             {
-                res += indent + "Any of the following:\n";
+                res += $"{indent}Any of the following:\n";
                 indent += "\t";
                 foreach (Requirement r in any)
-                    res += r + "\n";
+                    res += $"{r}\n";
                 indent = indent.Remove(0, 1);
             }
             return res;
