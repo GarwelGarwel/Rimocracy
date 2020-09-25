@@ -128,7 +128,7 @@ namespace Rimocracy
             Supporters.AddRange(recruits);
         }
 
-        public override string ToString()
-            => $"{Candidate}, {focusSkill?.LabelCap.RawText ?? "no"} focus{(Supporters.Count > 1 ? ", {Supporters.Count - 1} core supporters" : "")}";
+        public override string ToString() =>
+            $"{Candidate}, {focusSkill?.LabelCap.RawText ?? "no"} focus{(Supporters.Count > 1 ? $", {Supporters.Count - 1} core supporters" : "")}";
     }
 }
