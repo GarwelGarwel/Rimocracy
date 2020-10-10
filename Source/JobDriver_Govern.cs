@@ -35,14 +35,17 @@ namespace Rimocracy
             yield break;
         }
 
+        public override string GetReport() => $"{base.GetReport()}\r\nImproving governance at {GovernanceImprovementSpeed * 100:N1}% per hour.";
+
+        float GovernanceImprovementSpeed =>
+            pawn.GetStatValue(RimocracyDefOf.GovernEfficiency) * TargetA.Thing.GetStatValue(RimocracyDefOf.GovernEfficiencyFactor);
+
+
         void Govern_TickAction()
         {
             if (isSitting)
                 rotateToFace = TargetIndex.B;
-            Utility.RimocracyComp.ImproveGovernance(
-                pawn.GetStatValue(RimocracyDefOf.GovernEfficiency)
-                * TargetA.Thing.GetStatValue(RimocracyDefOf.GovernEfficiencyFactor)
-                / GenDate.TicksPerHour);
+            Utility.RimocracyComp.ImproveGovernance(GovernanceImprovementSpeed / GenDate.TicksPerHour);
             pawn.skills.Learn(SkillDefOf.Intellectual, 0.05f);
             pawn.skills.Learn(SkillDefOf.Social, 0.05f);
             pawn.GainComfortFromCellIfPossible(true);
