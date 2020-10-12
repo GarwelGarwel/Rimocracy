@@ -93,6 +93,10 @@
     <Compile Include="Stats\StatPart_Governance.cs" />
     <Compile Include="Utility.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="..\Languages\English\Keyed\Rimocracy_keys.xml">
+      <Link>Rimocracy_keys.xml</Link>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

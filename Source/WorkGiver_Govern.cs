@@ -11,14 +11,31 @@ namespace Rimocracy
 
         public override IEnumerable<Thing> PotentialWorkThingsGlobal(Pawn pawn) => pawn.Map.listerBuildings.allBuildingsColonist;
 
-        // Don't start Govern job if governance is already 99%+
-        public override bool ShouldSkip(Pawn pawn, bool forced = false) => !pawn.IsLeader() || Utility.RimocracyComp.Governance >= 0.99f;
+        public override bool ShouldSkip(Pawn pawn, bool forced = false) => !pawn.IsLeader();
 
         // Prefer more efficient stations
         public override float GetPriority(Pawn pawn, TargetInfo t) => t.Thing.GetStatValue(RimocracyDefOf.GovernEfficiencyFactor);
 
         public override bool HasJobOnThing(Pawn pawn, Thing t, bool forced = false)
-            => t.def.StatBaseDefined(RimocracyDefOf.GovernEfficiencyFactor) && pawn.CanReserve(t, ignoreOtherReservations: forced);
+        {
+            if (!t.def.StatBaseDefined(RimocracyDefOf.GovernEfficiencyFactor) || !pawn.CanReserve(t, ignoreOtherReservations: forced))
+                return false;
+
+            RimocracyComp comp = Utility.RimocracyComp;
+            if (comp.Governance >= comp.GovernanceTarget.TrueMin && !forced)
+            {
+                JobFailReason.Is("Governance already within target range.");
+                return false;
+            }
+
+            if (comp.Governance >= comp.GovernanceTarget.TrueMax && forced)
+            {
+                JobFailReason.Is("Governance already at maximum of target range.");
+                return false;
+            }
+
+            return true;
+        }
 
         public override Job JobOnThing(Pawn pawn, Thing t, bool forced = false) => JobMaker.MakeJob(RimocracyDefOf.Govern, t);
     }
