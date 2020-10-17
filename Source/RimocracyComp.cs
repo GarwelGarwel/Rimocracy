@@ -27,6 +27,7 @@ namespace Rimocracy
         int termExpiration = int.MaxValue;
         int electionTick = int.MaxValue;
         List<Decision> decisions = new List<Decision>();
+        public FloatRange GovernanceTarget = new FloatRange(0.9f, 1);
 
         public bool IsEnabled => isEnabled;
 
@@ -203,6 +204,7 @@ namespace Rimocracy
             Scribe_Values.Look(ref governance, "governance", 0.5f);
             Scribe_Defs.Look(ref focusSkill, "focusSkill");
             Scribe_Collections.Look(ref decisions, "decisions", LookMode.Deep);
+            Scribe_Values.Look(ref GovernanceTarget, "governanceTarget", new FloatRange(0.9f, 1));
         }
 
         public override void WorldComponentTick()
