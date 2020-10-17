@@ -44,6 +44,12 @@ namespace Rimocracy
 
         public static bool IsLeader(this Pawn p) => PoliticsEnabled && RimocracyComp.Leader == p;
 
+        public static bool IsPowered(this Building building)
+        {
+            CompPowerTrader comp = building?.GetComp<CompPowerTrader>();
+            return comp == null || comp.PowerOn;
+        }
+
         public static int GetTermDurationTicks(TermDuration termDuration)
         {
             switch (termDuration)

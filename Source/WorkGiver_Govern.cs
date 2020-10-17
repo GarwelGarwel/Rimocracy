@@ -17,8 +17,8 @@ namespace Rimocracy
         // Prefer more efficient stations
         public override float GetPriority(Pawn pawn, TargetInfo t) => t.Thing.GetStatValue(RimocracyDefOf.GovernEfficiencyFactor);
 
-        public override bool HasJobOnThing(Pawn pawn, Thing t, bool forced = false)
-            => t.def.StatBaseDefined(RimocracyDefOf.GovernEfficiencyFactor) && pawn.CanReserve(t, ignoreOtherReservations: forced);
+        public override bool HasJobOnThing(Pawn pawn, Thing t, bool forced = false) =>
+            t.def.StatBaseDefined(RimocracyDefOf.GovernEfficiencyFactor) && Utility.IsPowered(t as Building) && pawn.CanReserve(t, ignoreOtherReservations: forced);
 
         public override Job JobOnThing(Pawn pawn, Thing t, bool forced = false) => JobMaker.MakeJob(RimocracyDefOf.Govern, t);
     }
