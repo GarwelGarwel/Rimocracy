@@ -63,7 +63,6 @@ namespace Rimocracy
                     Find.WindowStack.Add(new Dialog_Decision(def));
 
             content.EndScrollView(ref viewRect);
-            content.End();
         }
     }
 }
