@@ -1,4 +1,5 @@
-﻿using Rimocracy.Succession;
+﻿using HarmonyLib;
+using Rimocracy.Succession;
 using RimWorld;
 using RimWorld.Planet;
 using System;
@@ -20,6 +21,9 @@ namespace Rimocracy
         LeaderTitleDef leaderTitle;
         float governance = 0.5f;
         float governanceTarget = 1;
+
+        float regime;
+
         SkillDef focusSkill;
         SuccessionType successionType = SuccessionType.Election;
         SuccessionBase succession;
@@ -159,11 +163,11 @@ namespace Rimocracy
             set => focusSkill = value;
         }
 
-        public float BaseGovernanceDecayPerDay
-            => (0.03f + governance * 0.1f - (0.06f + governance * 0.25f) / Utility.CitizensCount) * Settings.GovernanceDecaySpeed;
+        public float BaseGovernanceDecayPerDay =>
+            (0.03f + governance * 0.1f - (0.06f + governance * 0.25f) / Utility.CitizensCount) * Settings.GovernanceDecaySpeed;
 
-        public float GovernanceDecayPerDay
-            => Math.Max(BaseGovernanceDecayPerDay * (leader != null ? leader.GetStatValue(RimocracyDefOf.GovernanceDecay) : 1) * (DecisionActive("Egalitarianism") ? 1.5f - MedianMood : 1), 0);
+        public float GovernanceDecayPerDay =>
+            Math.Max(BaseGovernanceDecayPerDay * (leader != null ? leader.GetStatValue(RimocracyDefOf.GovernanceDecay) : 1) * (DecisionActive("Egalitarianism") ? 1.5f - MedianMood : 1), 0);
 
         public bool ElectionCalled => electionTick != int.MaxValue;
 
@@ -173,11 +177,25 @@ namespace Rimocracy
             set => decisions = value;
         }
 
+        internal void CancelDecision(string tag)
+        {
+            foreach (Decision d in Decisions.Where(decision => decision.Tag == tag || decision.def.defName == tag))
+                d.def.Cancel();
+            Decisions.RemoveAll(decision => decision.Tag == tag || decision.def.defName == tag);
+        }
+
+        public float Regime
+        {
+            get => regime;
+            set => regime = value;
+        }
+
         float MedianMood => Utility.Citizens.Select(pawn => pawn.needs.mood.CurLevelPercentage).OrderBy(mood => mood).ToList().Median();
 
         string FocusSkillMessage => $"The focus skill is {focusSkill.LabelCap}.";
 
-        public RimocracyComp() : this(Find.World)
+        public RimocracyComp()
+            : this(Find.World)
         { }
 
         public RimocracyComp(World world)
@@ -208,6 +226,7 @@ namespace Rimocracy
             Scribe_Values.Look(ref termExpiration, "termExpiration", int.MaxValue);
             Scribe_Values.Look(ref electionTick, "electionTick", int.MaxValue);
             Scribe_Values.Look(ref governance, "governance", 0.5f);
+            Scribe_Values.Look(ref regime, "regime");
             Scribe_Defs.Look(ref focusSkill, "focusSkill");
             Scribe_Collections.Look(ref decisions, "decisions", LookMode.Deep);
             Scribe_Values.Look(ref governanceTarget, "governanceTarget", 1);
@@ -233,9 +252,22 @@ namespace Rimocracy
             }
             isEnabled = true;
 
-            int n = decisions.RemoveAll(d => d.HasExpired || !d.def.effectRequirements);
-            if (n != 0)
-                Utility.Log($"{n} expired decision(s) removed.");
+            // Remove expired or invalid decisions
+            for (int i = Decisions.Count - 1; i >= 0; i--)
+                if (Decisions[i].ShouldBeRemoved)
+                {
+                    Utility.Log($"Canceling expired or invalid decision '{Decisions[i].def.label}'.");
+                    Decisions[i].def.Cancel();
+                    Decisions.RemoveAt(i);
+                }
+            //foreach (Decision decision in Decisions.Where(d => d.ShouldBeRemoved))
+            //{
+            //    Utility.Log($"Canceling expired or invalid decision '{decision.def.label}'.");
+            //    decision.def.Cancel();
+            //}
+            //int n = decisions.RemoveAll(d => d.HasExpired || !d.def.effectRequirements);
+            //if (n != 0)
+            //    Utility.Log($"{n} expired decision(s) removed.");
             if (Settings.DebugLogging && decisions.Count > 0)
                 foreach (Decision d in decisions)
                     Utility.Log($"Decision '{d.def.label}' expires in {(d.expiration - ticks).ToStringTicksToPeriod()}");

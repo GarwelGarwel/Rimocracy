@@ -20,6 +20,9 @@ namespace Rimocracy
         TermDuration termDuration = TermDuration.Undefined;
         bool leaderExists;
         bool notCampaigning;
+        float minGovernance;
+        float minRegime = -1;
+        float maxRegime = 1;
         string decision;
 
         public static implicit operator bool(Requirement requirement) => requirement.GetValue();
@@ -39,6 +42,12 @@ namespace Rimocracy
                 res &= Utility.RimocracyComp.Leader != null;
             if (res && notCampaigning)
                 res &= Utility.RimocracyComp.Campaigns.NullOrEmpty();
+            if (res && minGovernance > 0)
+                res &= Utility.RimocracyComp.Governance >= minGovernance;
+            if (res && minRegime > -1)
+                res &= Utility.RimocracyComp.Regime >= minRegime;
+            if (res && maxRegime < 1)
+                res &= Utility.RimocracyComp.Regime <= maxRegime;
             if (res && !decision.NullOrEmpty())
                 res &= Utility.RimocracyComp.DecisionActive(decision);
             return res ^ inverted;
@@ -55,6 +64,16 @@ namespace Rimocracy
                 res += $"{indent}Term duration: {termDuration}\n";
             if (notCampaigning)
                 res += $"{indent}Not campaigning\n";
+            if (minGovernance > 0)
+                res += $"{indent}Governance is at least {minGovernance * 100}%\n";
+            if (minRegime > -1)
+                if (minRegime > 0)
+                    res += $"{indent}Democracy level is at least {minRegime * 100}%\n";
+                else res += $"{indent}Authoritarianism level is at most {-minGovernance * 100}%\n";
+            if (maxRegime < 1)
+                if (maxRegime > 0)
+                    res += $"{indent}Democracy level is at most {maxRegime * 100}%\n";
+                else res += $"{indent}Authoritarianism level is at most {-minGovernance * 100}%\n";
             if (!decision.NullOrEmpty())
                 res += $"{indent}Decision {decision} is active.";
             if (!all.NullOrEmpty())

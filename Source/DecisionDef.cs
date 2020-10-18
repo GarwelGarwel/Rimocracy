@@ -16,6 +16,7 @@ namespace Rimocracy
         public TermDuration setTermDuration = TermDuration.Undefined;
         public bool impeachLeader;
         public string cancelDecision;
+        public float regimeEffect;
 
         public bool IsDisplayable =>
             (!IsUnique || !Utility.RimocracyComp.DecisionActive(Tag))
@@ -55,6 +56,7 @@ namespace Rimocracy
                 Utility.RimocracyComp.Decisions.Add(new Decision(this));
 
             Utility.RimocracyComp.Governance -= governanceCost;
+
             if (setSuccession != SuccessionType.Undefined)
             {
                 Utility.Log($"Setting succession to {setSuccession}.");
@@ -76,11 +78,27 @@ namespace Rimocracy
             if (!cancelDecision.NullOrEmpty())
             {
                 Utility.Log($"Canceling decision tag {cancelDecision}.");
-                if (Utility.RimocracyComp.Decisions.RemoveAll(decision => decision.Tag == cancelDecision || decision.def.defName == cancelDecision) == 0)
-                    Utility.Log("Decision not found.", LogLevel.Warning);
+                Utility.RimocracyComp.CancelDecision(cancelDecision);
+                //if (Utility.RimocracyComp.Decisions.RemoveAll(decision => decision.Tag == cancelDecision || decision.def.defName == cancelDecision) == 0)
+                //    Utility.Log("Decision not found.", LogLevel.Warning);
+            }
+
+            if (regimeEffect != 0)
+            {
+                Utility.Log($"Changing regime by {regimeEffect}.");
+                Utility.RimocracyComp.Regime += regimeEffect;
             }
 
             return true;
+        }
+
+        public void Cancel()
+        {
+            if (regimeEffect != 0)
+            {
+                Utility.Log($"Changing regime by {-regimeEffect}.");
+                Utility.RimocracyComp.Regime -= regimeEffect;
+            }
         }
     }
 }

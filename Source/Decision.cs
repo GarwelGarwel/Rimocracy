@@ -7,9 +7,11 @@ namespace Rimocracy
         public DecisionDef def;
         public int expiration;
 
+        public string Tag => def.Tag;
+
         public bool HasExpired => Find.TickManager.TicksAbs >= expiration;
 
-        public string Tag => def.Tag;
+        public bool ShouldBeRemoved => HasExpired || !def.effectRequirements;
 
         public Decision(DecisionDef def)
         {
