@@ -12,13 +12,14 @@ namespace Rimocracy
     public class RimocracyComp : WorldComponent
     {
         // How often mod enabled/disabled check, succession, governance decay etc. are updated
-        private const int UpdateInterval = 500;
+        const int UpdateInterval = 500;
 
         bool isEnabled = false;
 
         Pawn leader;
         LeaderTitleDef leaderTitle;
         float governance = 0.5f;
+        float governanceTarget = 1;
         SkillDef focusSkill;
         SuccessionType successionType = SuccessionType.Election;
         SuccessionBase succession;
@@ -27,7 +28,6 @@ namespace Rimocracy
         int termExpiration = int.MaxValue;
         int electionTick = int.MaxValue;
         List<Decision> decisions = new List<Decision>();
-        public FloatRange GovernanceTarget = new FloatRange(0.9f, 1);
 
         public bool IsEnabled => isEnabled;
 
@@ -120,6 +120,12 @@ namespace Rimocracy
 
         public float GovernancePercentage => 100 * Governance;
 
+        public float GovernanceTarget
+        {
+            get => governanceTarget;
+            set => governanceTarget = value;
+        }
+
         public TermDuration TermDuration
         {
             get => termDuration;
@@ -204,7 +210,7 @@ namespace Rimocracy
             Scribe_Values.Look(ref governance, "governance", 0.5f);
             Scribe_Defs.Look(ref focusSkill, "focusSkill");
             Scribe_Collections.Look(ref decisions, "decisions", LookMode.Deep);
-            Scribe_Values.Look(ref GovernanceTarget, "governanceTarget", new FloatRange(0.9f, 1));
+            Scribe_Values.Look(ref governanceTarget, "governanceTarget", 1);
         }
 
         public override void WorldComponentTick()

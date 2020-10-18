@@ -28,10 +28,14 @@ namespace Rimocracy
             // Current Leader
             content.Label($"{Utility.LeaderTitle.CapitalizeFirst(Utility.RimocracyComp.LeaderTitleDef)}: {(Utility.RimocracyComp.Leader?.Name?.ToStringFull ?? "none")}");
 
-            // Leader Skills and next leader
+            // Governance target, leader skills and next succession
             if (Utility.RimocracyComp.Leader != null)
             {
-                content.Label($"Governance quality: {Utility.RimocracyComp.GovernancePercentage:N1}%. Decays at {100 * Utility.RimocracyComp.GovernanceDecayPerDay:N1}% per day.");
+                content.Label($"Governance quality: {Utility.RimocracyComp.GovernancePercentage:N1}%. Decays at {Utility.RimocracyComp.GovernanceDecayPerDay * 100:N1}% per day.");
+
+                content.Label($"Governance target: {Utility.RimocracyComp.GovernanceTarget * 100:N0}%");
+                Utility.RimocracyComp.GovernanceTarget = content.Slider(Utility.RimocracyComp.GovernanceTarget, 0, 1);
+
                 if (Utility.RimocracyComp.FocusSkill != null)
                     content.Label($"Focus skill: {Utility.RimocracyComp.FocusSkill.LabelCap}.");
                 if (Utility.RimocracyComp.TermDuration != TermDuration.Indefinite)
@@ -50,10 +54,6 @@ namespace Rimocracy
                 foreach (ElectionCampaign ec in Utility.RimocracyComp.Campaigns)
                     content.Label($"- {ec}");
             }
-
-            // Governance Target
-            content.GapLine();
-            Widgets.FloatRange(content.GetRect(28f), 975643279, ref Utility.RimocracyComp.GovernanceTarget, 0f, 1f, "Rimocracy_GovernanceTargetLabel", ToStringStyle.PercentZero);
 
             // Decisions
             content.GapLine();

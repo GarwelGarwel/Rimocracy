@@ -24,7 +24,7 @@ namespace Rimocracy
             }
             Toil governToil = new Toil();
             governToil.tickAction = Govern_TickAction;
-            governToil.FailOn(() => Utility.RimocracyComp.Governance >= Utility.RimocracyComp.GovernanceTarget.TrueMax);
+            governToil.FailOn(() => Utility.RimocracyComp.Governance >= Utility.RimocracyComp.GovernanceTarget);
             governToil.FailOn(() => !pawn.IsLeader());
             governToil.FailOnCannotTouch(TargetIndex.A, PathEndMode.InteractionCell);
             governToil.defaultCompleteMode = ToilCompleteMode.Delay;
@@ -36,9 +36,7 @@ namespace Rimocracy
 
         public override string GetReport() => $"{base.GetReport()}\r\nImproving governance at {GovernanceImprovementSpeed * 100:N1}% per hour.";
 
-        float GovernanceImprovementSpeed =>
-            pawn.GetStatValue(RimocracyDefOf.GovernEfficiency) * TargetA.Thing.GetStatValue(RimocracyDefOf.GovernEfficiencyFactor);
-
+        float GovernanceImprovementSpeed => Utility.GovernanceImprovementSpeed(pawn, TargetA.Thing);
 
         void Govern_TickAction()
         {

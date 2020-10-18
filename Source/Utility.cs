@@ -50,6 +50,9 @@ namespace Rimocracy
             return comp == null || comp.PowerOn;
         }
 
+        public static float GovernanceImprovementSpeed(Pawn pawn, Thing worktable) =>
+            pawn.GetStatValue(RimocracyDefOf.GovernEfficiency) * worktable.GetStatValue(RimocracyDefOf.GovernEfficiencyFactor);
+
         public static int GetTermDurationTicks(TermDuration termDuration)
         {
             switch (termDuration)

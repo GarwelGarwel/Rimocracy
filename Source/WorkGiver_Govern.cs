@@ -18,19 +18,12 @@ namespace Rimocracy
 
         public override bool HasJobOnThing(Pawn pawn, Thing t, bool forced = false)
         {
-            if (!t.def.StatBaseDefined(RimocracyDefOf.GovernEfficiencyFactor) || !pawn.CanReserve(t, ignoreOtherReservations: forced))
+            if (!t.def.StatBaseDefined(RimocracyDefOf.GovernEfficiencyFactor) || !pawn.CanReserve(t, ignoreOtherReservations: forced) || !Utility.IsPowered(t as Building))
                 return false;
 
-            RimocracyComp comp = Utility.RimocracyComp;
-            if (comp.Governance >= comp.GovernanceTarget.TrueMin && !forced)
+            if (Utility.RimocracyComp.Governance >= (Utility.RimocracyComp.GovernanceTarget - Utility.GovernanceImprovementSpeed(pawn, t)) && !forced)
             {
-                JobFailReason.Is("Governance already within target range.");
-                return false;
-            }
-
-            if (comp.Governance >= comp.GovernanceTarget.TrueMax && forced)
-            {
-                JobFailReason.Is("Governance already at maximum of target range.");
+                JobFailReason.Is("Governance is already high enough.");
                 return false;
             }
 
