@@ -71,6 +71,9 @@ namespace Rimocracy
             }
         }
 
+        public static float MedianCitizensOpinion(this Pawn pawn) =>
+             Citizens.Where(p => p != pawn).Select(p => (float)p.needs.mood.thoughts.TotalOpinionOffset(pawn)).ToList().Median();
+
         public static float Median(this List<float> list)
         {
             if (list.NullOrEmpty())

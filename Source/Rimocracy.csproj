@@ -72,6 +72,8 @@
     <Compile Include="Settings.cs" />
     <Compile Include="SkillsUtility.cs" />
     <Compile Include="Stats\StatPart_Elitism.cs" />
+    <Compile Include="Stats\StatPart_Populism.cs" />
+    <Compile Include="Stats\StatPart_StateOfEmergency.cs" />
     <Compile Include="Succession\SuccessionMartial.cs" />
     <Compile Include="Succession\SuccessionNobility.cs" />
     <Compile Include="ThingComps\CompProperties_AffectedByGovernance.cs" />
@@ -85,6 +87,7 @@
     <Compile Include="Succession\SuccessionOldest.cs" />
     <Compile Include="ThingComps\ThingComp_AffectedByGovernance.cs" />
     <Compile Include="Thoughts\ThoughtWorker_Competitor.cs" />
+    <Compile Include="Thoughts\ThoughtWorker_ResPublica.cs" />
     <Compile Include="Thoughts\ThoughtWorker_Respect.cs" />
     <Compile Include="Thoughts\ThoughtWorker_Supporter.cs" />
     <Compile Include="WorkGiver_Govern.cs" />

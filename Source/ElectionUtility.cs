@@ -47,6 +47,14 @@ namespace Rimocracy
                 Utility.Log($"{voter} has {sympathy:N1} of sympathy for {candidate}.");
             weight += sympathy;
 
+            // If Meritocracy is in effect, sum of candidate's skills is taken into account
+            if (Utility.RimocracyComp.DecisionActive("Meritocracy"))
+            {
+                float sumSkills = candidate.skills.skills.Sum(sr => sr.Level);
+                Utility.Log($"{candidate} has a total level of skills of {sumSkills}, affecting Meritocracy.");
+                weight += sumSkills * 0.25f;
+            }
+
             // Adding a random factor of -5 to +5
             weight += Rand.Range(-Settings.RandomVoteWeightRadius, Settings.RandomVoteWeightRadius);
 

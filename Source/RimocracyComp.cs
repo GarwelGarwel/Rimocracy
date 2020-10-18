@@ -167,7 +167,11 @@ namespace Rimocracy
             (0.03f + governance * 0.1f - (0.06f + governance * 0.25f) / Utility.CitizensCount) * Settings.GovernanceDecaySpeed;
 
         public float GovernanceDecayPerDay =>
-            Math.Max(BaseGovernanceDecayPerDay * (leader != null ? leader.GetStatValue(RimocracyDefOf.GovernanceDecay) : 1) * (DecisionActive("Egalitarianism") ? 1.5f - MedianMood : 1), 0);
+            Math.Max(0, 
+                BaseGovernanceDecayPerDay
+                * (leader != null ? leader.GetStatValue(RimocracyDefOf.GovernanceDecay) : 1)
+                * (DecisionActive("Egalitarianism") ? 1.5f - MedianMood : 1)
+                * (DecisionActive("Stability") ? 0.75f : 1));
 
         public bool ElectionCalled => electionTick != int.MaxValue;
 
@@ -260,14 +264,6 @@ namespace Rimocracy
                     Decisions[i].def.Cancel();
                     Decisions.RemoveAt(i);
                 }
-            //foreach (Decision decision in Decisions.Where(d => d.ShouldBeRemoved))
-            //{
-            //    Utility.Log($"Canceling expired or invalid decision '{decision.def.label}'.");
-            //    decision.def.Cancel();
-            //}
-            //int n = decisions.RemoveAll(d => d.HasExpired || !d.def.effectRequirements);
-            //if (n != 0)
-            //    Utility.Log($"{n} expired decision(s) removed.");
             if (Settings.DebugLogging && decisions.Count > 0)
                 foreach (Decision d in decisions)
                     Utility.Log($"Decision '{d.def.label}' expires in {(d.expiration - ticks).ToStringTicksToPeriod()}");
@@ -369,7 +365,7 @@ namespace Rimocracy
                 // If the leader has changed, partially reset Governance; show message
                 if (leader != oldLeader)
                 {
-                    governance = Mathf.Lerp(0.5f, governance, 0.5f);
+                    governance = Mathf.Lerp(DecisionActive("Stability") ? 0 : 0.5f, governance, 0.5f);
                     Find.LetterStack.ReceiveLetter(Succession.NewLeaderTitle, $"{Succession.NewLeaderMessage(leader)}\n\n{FocusSkillMessage}", LetterDefOf.NeutralEvent);
                     Tale tale = TaleRecorder.RecordTale(RimocracyDefOf.BecameLeader, leader, leaderTitle);
                     if (tale != null)

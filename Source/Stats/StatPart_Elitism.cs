@@ -14,6 +14,6 @@ namespace Rimocracy
         }
 
         bool AppliesTo(StatRequest req) =>
-            Utility.PoliticsEnabled && (req.Thing is Pawn && (req.Thing as Pawn).IsLeader()) && Utility.RimocracyComp.DecisionActive("Elitism");
+            Utility.PoliticsEnabled && (req.Thing as Pawn).IsLeader() && Utility.RimocracyComp.DecisionActive("Elitism");
     }
 }

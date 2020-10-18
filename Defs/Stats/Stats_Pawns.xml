@@ -41,6 +41,15 @@
 					</points>
 				</factorFromMoodCurve>
 			</li>
+			<li Class="Rimocracy.StatPart_Populism">
+				<curve>
+					<points>
+						<li>(-100, 0)</li>
+						<li>(0, 0.75)</li>
+						<li>(100, 1.5)</li>
+					</points>
+				</curve>
+			</li>
 		</parts>
 	</StatDef>
 

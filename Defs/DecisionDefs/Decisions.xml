@@ -26,8 +26,15 @@
 		<label>Seniority Succession</label>
 		<description>The oldest, and most experienced, colonist shall be the leader.</description>
 		<displayRequirements>
-			<succession>Seniority</succession>
-			<inverted>true</inverted>
+			<all>
+				<li>
+					<succession>Seniority</succession>
+					<inverted>true</inverted>
+				</li>
+				<li>
+					<maxRegime>0.2</maxRegime>
+				</li>
+			</all>
 		</displayRequirements>
 		<setSuccession>Seniority</setSuccession>
 	</Rimocracy.DecisionDef>
@@ -37,8 +44,15 @@
 		<label>Lot Succession</label>
 		<description>The leader shall be chosen randomly from all citizens.</description>
 		<displayRequirements>
-			<succession>Lot</succession>
-			<inverted>true</inverted>
+			<all>
+				<li>
+					<succession>Lot</succession>
+					<inverted>true</inverted>
+				</li>
+				<li>
+					<maxRegime>0.5</maxRegime>
+				</li>
+			</all>
 		</displayRequirements>
 		<setSuccession>Lot</setSuccession>
 	</Rimocracy.DecisionDef>
@@ -48,8 +62,15 @@
 		<label>Nobility Succession</label>
 		<description>The pawn with the highest, and oldest, nobility title will be the leader.</description>
 		<displayRequirements>
-			<succession>Nobility</succession>
-			<inverted>true</inverted>
+			<all>
+				<li>
+					<succession>Nobility</succession>
+					<inverted>true</inverted>
+				</li>
+				<li>
+					<maxRegime>0.2</maxRegime>
+				</li>
+			</all>
 		</displayRequirements>
 		<setSuccession>Nobility</setSuccession>
 	</Rimocracy.DecisionDef>
@@ -59,8 +80,15 @@
 		<label>Martial Succession</label>
 		<description>The most accomplished warrior will become our leader.</description>
 		<displayRequirements>
-			<succession>Martial</succession>
-			<inverted>true</inverted>
+			<all>
+				<li>
+					<succession>Martial</succession>
+					<inverted>true</inverted>
+				</li>
+				<li>
+					<maxRegime>0.2</maxRegime>
+				</li>
+			</all>
 		</displayRequirements>
 		<setSuccession>Martial</setSuccession>
 	</Rimocracy.DecisionDef>
@@ -127,6 +155,7 @@
 		<displayRequirements>
 			<termDuration>Year</termDuration>
 			<notCampaigning>true</notCampaigning>
+			<maxRegime>0.2</maxRegime>
 		</displayRequirements>
 		<setTermDuration>Indefinite</setTermDuration>
 	</Rimocracy.DecisionDef>
@@ -139,6 +168,7 @@
 		<description>Immediately relieve the current leader of his or her duties and initiate a new succession.</description>
 		<displayRequirements>
 			<leaderExists>true</leaderExists>
+			<minRegime>-0.5</minRegime>
 			<all>
 				<li>
 					<succession>Seniority</succession>
@@ -162,9 +192,11 @@
 		</displayRequirements>
 		<effectRequirements>
 			<succession>Election</succession>
+			<minRegime>-0.1</minRegime>
 		</effectRequirements>
 		<tag/>
 		<governanceCost>0.10</governanceCost>
+		<regimeEffect>0.2</regimeEffect>
 	</Rimocracy.DecisionDef>
 
 	<Rimocracy.DecisionDef>
@@ -178,6 +210,123 @@
 		<cancelDecision>Egalitarianism</cancelDecision>
 	</Rimocracy.DecisionDef>
 
+	<!-- Populism -->
+
+	<Rimocracy.DecisionDef>
+		<defName>Populism</defName>
+		<label>Consent of the Governed</label>
+		<description>When the leaders are liked and respected by their people, they will be more effective in whatever they strive to achieve.</description>
+		<displayRequirements>
+			<decision>CultOfPersonality</decision>
+			<inverted>true</inverted>
+		</displayRequirements>
+		<effectRequirements>
+			<minRegime>-0.1</minRegime>
+		</effectRequirements>
+		<tag/>
+		<regimeEffect>0.2</regimeEffect>
+		<governanceCost>0.10</governanceCost>
+	</Rimocracy.DecisionDef>
+
+	<Rimocracy.DecisionDef>
+		<defName>Populism_Cancel</defName>
+		<label>Cancel "Consent of the Governed"</label>
+		<description>These fools just can't appreciate what the leader is really doing. We shouldn't care about their opinions any more.</description>
+		<displayRequirements>
+			<decision>Populism</decision>
+		</displayRequirements>
+		<governanceCost>0.10</governanceCost>
+		<cancelDecision>Populism</cancelDecision>
+	</Rimocracy.DecisionDef>
+
+	<!-- ResPublica -->
+
+	<Rimocracy.DecisionDef>
+		<defName>ResPublica</defName>
+		<label>Res Publica</label>
+		<description>Our nation is our common cause. When it is governed well, every citizen will be happier. When it is in trouble, everyone is.</description>
+		<displayRequirements>
+			<decision>Elitism</decision>
+			<inverted>true</inverted>
+		</displayRequirements>
+		<effectRequirements>
+			<minRegime>-0.1</minRegime>
+		</effectRequirements>
+		<tag/>
+		<regimeEffect>0.2</regimeEffect>
+		<governanceCost>0.10</governanceCost>
+	</Rimocracy.DecisionDef>
+
+	<Rimocracy.DecisionDef>
+		<defName>ResPublica_Cancel</defName>
+		<label>Cancel "Res Publica"</label>
+		<description>It's not the business of the mob to pay attention to the matters of the state.</description>
+		<displayRequirements>
+			<decision>ResPublica</decision>
+		</displayRequirements>
+		<governanceCost>0.10</governanceCost>
+		<cancelDecision>ResPublica</cancelDecision>
+	</Rimocracy.DecisionDef>
+
+	<!-- Meritocracy -->
+
+	<Rimocracy.DecisionDef>
+		<defName>Meritocracy</defName>
+		<label>Meritocracy</label>
+		<description>A smart citizen should choose the most capable candidates. Pawns with high skills are more likely to be voted for in elections.</description>
+		<effectRequirements>
+			<succession>Election</succession>
+			<minRegime>-0.1</minRegime>
+		</effectRequirements>
+		<tag/>
+		<regimeEffect>0.1</regimeEffect>
+		<governanceCost>0.10</governanceCost>
+	</Rimocracy.DecisionDef>
+
+	<Rimocracy.DecisionDef>
+		<defName>Meritocracy_Cancel</defName>
+		<label>Cancel Meritocracy</label>
+		<description>Those who can, do. Those who can't, rule those who can.</description>
+		<displayRequirements>
+			<decision>Meritocracy</decision>
+		</displayRequirements>
+		<governanceCost>0.10</governanceCost>
+		<cancelDecision>Meritocracy</cancelDecision>
+	</Rimocracy.DecisionDef>
+
+	<!-- Liberty -->
+
+	<Rimocracy.DecisionDef>
+		<defName>Liberty</defName>
+		<label>Freedom of Thought</label>
+		<description>When citizens are left to their own devices, that is, not drafted, they develop their skills much faster. But they will hate the interference of drafting.</description>
+		<effectRequirements>
+			<all>
+				<li>
+					<decision>StateOfEmergency</decision>
+					<inverted>true</inverted>
+				</li>
+				<li>
+					<minRegime>-0.1</minRegime>
+				</li>
+			</all>
+		</effectRequirements>
+		<tag/>
+		<regimeEffect>0.2</regimeEffect>
+		<governanceCost>0.10</governanceCost>
+	</Rimocracy.DecisionDef>
+
+	<Rimocracy.DecisionDef>
+		<defName>Liberty_Cancel</defName>
+		<label>Cancel "Freedom of Thought"</label>
+		<description>Liberty shouldn't be allowed to become chaos. It's time to improve the discipline.</description>
+		<displayRequirements>
+			<decision>Liberty</decision>
+		</displayRequirements>
+		<governanceCost>0.10</governanceCost>
+		<cancelDecision>Liberty</cancelDecision>
+	</Rimocracy.DecisionDef>
+
 	<!-- Elitism -->
 
 	<Rimocracy.DecisionDef>
@@ -185,10 +334,21 @@
 		<label>L'État, c'est moi</label>
 		<description>A happy leader is a productive leader. When the ruler is in a good mood, he, or she, will improve governance better.</description>
 		<displayRequirements>
-			<decision>Egalitarianism</decision>
+			<any>
+				<li>
+					<decision>Egalitarianism</decision>
+				</li>
+				<li>
+					<decision>ResPublica</decision>
+				</li>
+			</any>
 			<inverted>true</inverted>
 		</displayRequirements>
+		<effectRequirements>
+			<maxRegime>0.1</maxRegime>
+		</effectRequirements>
 		<tag/>
+		<regimeEffect>-0.2</regimeEffect>
 		<governanceCost>0.10</governanceCost>
 	</Rimocracy.DecisionDef>
 
@@ -201,6 +361,119 @@
 		</displayRequirements>
 		<governanceCost>0.10</governanceCost>
 		<cancelDecision>Elitism</cancelDecision>
+	</Rimocracy.DecisionDef>
+
+	<!-- Cult of Personality -->
+
+	<Rimocracy.DecisionDef>
+		<defName>CultOfPersonality</defName>
+		<label>Cult of Personality</label>
+		<description>The leader of our nation is an extraordinary person. Every citizen shall love him much more. Or maybe hate...</description>
+		<displayRequirements>
+			<decision>Populism</decision>
+			<inverted>true</inverted>
+		</displayRequirements>
+		<effectRequirements>
+			<maxRegime>0.1</maxRegime>
+		</effectRequirements>
+		<tag/>
+		<regimeEffect>-0.2</regimeEffect>
+		<governanceCost>0.10</governanceCost>
+	</Rimocracy.DecisionDef>
+
+	<Rimocracy.DecisionDef>
+		<defName>CultOfPersonality_Cancel</defName>
+		<label>Cancel "Cult of Personality"</label>
+		<description>The leader should be more humble.</description>
+		<displayRequirements>
+			<decision>CultOfPersonality</decision>
+		</displayRequirements>
+		<governanceCost>0.10</governanceCost>
+		<cancelDecision>CultOfPersonality</cancelDecision>
+	</Rimocracy.DecisionDef>
+
+	<!-- Stability -->
+
+	<Rimocracy.DecisionDef>
+		<defName>Stability</defName>
+		<label>Stability Doctrine</label>
+		<description>While the same leader is in charge, governance decay rate is much lower. But if leadership changes, for whatever reason, governance will halve.</description>
+		<displayRequirements>
+			<decision>Populism</decision>
+			<inverted>true</inverted>
+		</displayRequirements>
+		<effectRequirements>
+			<maxRegime>0.1</maxRegime>
+		</effectRequirements>
+		<tag/>
+		<regimeEffect>-0.2</regimeEffect>
+		<governanceCost>0.10</governanceCost>
+	</Rimocracy.DecisionDef>
+
+	<Rimocracy.DecisionDef>
+		<defName>Stability_Cancel</defName>
+		<label>Cancel "Stability Doctrine"</label>
+		<description>We need a more dynamic society.</description>
+		<displayRequirements>
+			<decision>Stability</decision>
+		</displayRequirements>
+		<governanceCost>0.10</governanceCost>
+		<cancelDecision>Stability</cancelDecision>
+	</Rimocracy.DecisionDef>
+
+	<!-- Managed Democracy -->
+
+	<Rimocracy.DecisionDef>
+		<defName>ManagedDemocracy</defName>
+		<label>Managed Democracy</label>
+		<description>We should help people make the right choice! Tweak election rules, so that the incumbent leader is always on ballot and his or her strongest opponent is disqualified. Winning an election will be much easier now.</description>
+		<displayRequirements>
+			<leaderExists>true</leaderExists>
+			<notCampaigning>true</notCampaigning>
+		</displayRequirements>
+		<effectRequirements>
+			<succession>Election</succession>
+			<maxRegime>0.1</maxRegime>
+		</effectRequirements>
+		<tag/>
+		<regimeEffect>-0.2</regimeEffect>
+		<governanceCost>0.10</governanceCost>
+	</Rimocracy.DecisionDef>
+
+	<Rimocracy.DecisionDef>
+		<defName>ManagedDemocracy_Cancel</defName>
+		<label>Cancel "Managed Democracy"</label>
+		<description>We should allow a real democracy.</description>
+		<displayRequirements>
+			<decision>ManagedDemocracy</decision>
+		</displayRequirements>
+		<governanceCost>0.10</governanceCost>
+		<cancelDecision>ManagedDemocracy</cancelDecision>
+	</Rimocracy.DecisionDef>
+
+	<!-- State of Emergency -->
+
+	<Rimocracy.DecisionDef>
+		<defName>StateOfEmergency</defName>
+		<label>State of Emergency</label>
+		<description>When you declare a State of Emergency, all mental break thresholds are reduced by 3/4 for 3 days, and elections are postponed.</description>
+		<effectRequirements>
+			<maxRegime>-0.1</maxRegime>
+		</effectRequirements>
+		<durationTicks>180000</durationTicks>
+		<regimeEffect>-0.5</regimeEffect>
+		<governanceCost>0.10</governanceCost>
+	</Rimocracy.DecisionDef>
+
+	<Rimocracy.DecisionDef>
+		<defName>StateOfEmergency_Cancel</defName>
+		<label>Cancel "State of Emergency"</label>
+		<description>The threat is over; we can return to business as usual.</description>
+		<displayRequirements>
+			<decision>StateOfEmergency</decision>
+		</displayRequirements>
+		<governanceCost>0.10</governanceCost>
+		<cancelDecision>StateOfEmergency</cancelDecision>
 	</Rimocracy.DecisionDef>
 
 </Defs>
