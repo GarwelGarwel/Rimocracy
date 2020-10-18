@@ -188,7 +188,7 @@ namespace Rimocracy
 
         public ElectionCampaign GetSupportedCampaign(Pawn pawn) => Campaigns?.FirstOrDefault(ec => ec.Supporters.Contains(pawn));
 
-        public bool DecisionActive(string tag) => decisions.Any(d => d.tag == tag);
+        public bool DecisionActive(string tag) => decisions.Any(d => d.Tag == tag);
 
         public override void FinalizeInit()
         {
@@ -233,12 +233,12 @@ namespace Rimocracy
             }
             isEnabled = true;
 
-            int n = decisions.RemoveAll(d => d.HasExpired);
+            int n = decisions.RemoveAll(d => d.HasExpired || !d.def.effectRequirements);
             if (n != 0)
                 Utility.Log($"{n} expired decision(s) removed.");
-            if (decisions.Count > 0)
+            if (Settings.DebugLogging && decisions.Count > 0)
                 foreach (Decision d in decisions)
-                    Utility.Log($"Decision tag '{d.tag}', expires in {(d.expiration - ticks).ToStringTicksToPeriod()}");
+                    Utility.Log($"Decision '{d.def.label}' expires in {(d.expiration - ticks).ToStringTicksToPeriod()}");
 
             if (Succession == null || !succession.IsValid)
                 SuccessionType = SuccessionType.Election;

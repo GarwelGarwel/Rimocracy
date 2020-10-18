@@ -4,24 +4,22 @@ namespace Rimocracy
 {
     class Decision : IExposable
     {
-        public string tag;
+        public DecisionDef def;
         public int expiration;
 
         public bool HasExpired => Find.TickManager.TicksAbs >= expiration;
 
-        public Decision(DecisionDef decisionDef)
-            : this(decisionDef.Tag, decisionDef.Expiration)
-        { }
+        public string Tag => def.Tag;
 
-        public Decision(string tag, int expiration = int.MaxValue)
+        public Decision(DecisionDef def)
         {
-            this.tag = tag;
-            this.expiration = expiration;
+            this.def = def;
+            expiration = def.Expiration;
         }
 
         public void ExposeData()
         {
-            Scribe_Values.Look(ref tag, "tag");
+            Scribe_Defs.Look(ref def, "def");
             Scribe_Values.Look(ref expiration, "expiration", int.MaxValue);
         }
     }

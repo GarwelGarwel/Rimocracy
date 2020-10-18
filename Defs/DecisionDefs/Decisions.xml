@@ -14,10 +14,10 @@
 		<defName>SuccessionElection</defName>
 		<label>Election Succession</label>
 		<description>The leader shall be elected by all free, adult colonists.</description>
-		<requirements>
+		<displayRequirements>
 			<succession>Election</succession>
 			<inverted>true</inverted>
-		</requirements>
+		</displayRequirements>
 		<setSuccession>Election</setSuccession>
 	</Rimocracy.DecisionDef>
 
@@ -25,10 +25,10 @@
 		<defName>SuccessionSeniority</defName>
 		<label>Seniority Succession</label>
 		<description>The oldest, and most experienced, colonist shall be the leader.</description>
-		<requirements>
+		<displayRequirements>
 			<succession>Seniority</succession>
 			<inverted>true</inverted>
-		</requirements>
+		</displayRequirements>
 		<setSuccession>Seniority</setSuccession>
 	</Rimocracy.DecisionDef>
 
@@ -36,10 +36,10 @@
 		<defName>SuccessionLot</defName>
 		<label>Lot Succession</label>
 		<description>The leader shall be chosen randomly from all citizens.</description>
-		<requirements>
+		<displayRequirements>
 			<succession>Lot</succession>
 			<inverted>true</inverted>
-		</requirements>
+		</displayRequirements>
 		<setSuccession>Lot</setSuccession>
 	</Rimocracy.DecisionDef>
 
@@ -47,10 +47,10 @@
 		<defName>SuccessionNobility</defName>
 		<label>Nobility Succession</label>
 		<description>The pawn with the highest, and oldest, nobility title will be the leader.</description>
-		<requirements>
+		<displayRequirements>
 			<succession>Nobility</succession>
 			<inverted>true</inverted>
-		</requirements>
+		</displayRequirements>
 		<setSuccession>Nobility</setSuccession>
 	</Rimocracy.DecisionDef>
 
@@ -58,10 +58,10 @@
 		<defName>SuccessionMartial</defName>
 		<label>Martial Succession</label>
 		<description>The most accomplished warrior will become our leader.</description>
-		<requirements>
+		<displayRequirements>
 			<succession>Martial</succession>
 			<inverted>true</inverted>
-		</requirements>
+		</displayRequirements>
 		<setSuccession>Martial</setSuccession>
 	</Rimocracy.DecisionDef>
 
@@ -77,10 +77,10 @@
 		<defName>TermQuadrum</defName>
 		<label>Quadrum-Long Term</label>
 		<description>Set term of a leader to one quadrum (15 days).</description>
-		<requirements>
+		<displayRequirements>
 			<termDuration>Halfyear</termDuration>
 			<notCampaigning>true</notCampaigning>
-		</requirements>
+		</displayRequirements>
 		<setTermDuration>Quadrum</setTermDuration>
 	</Rimocracy.DecisionDef>
 
@@ -88,7 +88,7 @@
 		<defName>TermHalfYear</defName>
 		<label>Half-Year Long Term</label>
 		<description>Set term of a leader to half a year (30 days).</description>
-		<requirements>
+		<displayRequirements>
 			<notCampaigning>true</notCampaigning>
 			<any>
 				<li>
@@ -98,7 +98,7 @@
 					<termDuration>Year</termDuration>
 				</li>
 			</any>
-		</requirements>
+		</displayRequirements>
 		<setTermDuration>Halfyear</setTermDuration>
 	</Rimocracy.DecisionDef>
 
@@ -106,7 +106,7 @@
 		<defName>TermYear</defName>
 		<label>Year-Long Term</label>
 		<description>Set term of a leader to one year (60 days).</description>
-		<requirements>
+		<displayRequirements>
 			<notCampaigning>true</notCampaigning>
 			<any>
 				<li>
@@ -116,7 +116,7 @@
 					<termDuration>Indefinite</termDuration>
 				</li>
 			</any>
-		</requirements>
+		</displayRequirements>
 		<setTermDuration>Year</setTermDuration>
 	</Rimocracy.DecisionDef>
 
@@ -124,10 +124,10 @@
 		<defName>TermIndefinite</defName>
 		<label>Indefinite Term</label>
 		<description>Leaders will rule till their death.</description>
-		<requirements>
+		<displayRequirements>
 			<termDuration>Year</termDuration>
 			<notCampaigning>true</notCampaigning>
-		</requirements>
+		</displayRequirements>
 		<setTermDuration>Indefinite</setTermDuration>
 	</Rimocracy.DecisionDef>
 	
@@ -137,7 +137,7 @@
 		<defName>Impeachment</defName>
 		<label>Impeach Leader</label>
 		<description>Immediately relieve the current leader of his or her duties and initiate a new succession.</description>
-		<requirements>
+		<displayRequirements>
 			<leaderExists>true</leaderExists>
 			<all>
 				<li>
@@ -145,7 +145,7 @@
 					<inverted>true</inverted>
 				</li>
 			</all>
-		</requirements>
+		</displayRequirements>
 		<governanceCost>0.01</governanceCost>
 		<impeachLeader>true</impeachLeader>
 	</Rimocracy.DecisionDef>
@@ -156,10 +156,13 @@
 		<defName>Egalitarianism</defName>
 		<label>Happyness for All</label>
 		<description>The goal of every government is the happyness of its people. With this doctrine, the higher the median mood of your citizens, the slower the Governance decay.</description>
-		<requirements>
+		<displayRequirements>
 			<decision>Elitism</decision>
 			<inverted>true</inverted>
-		</requirements>
+		</displayRequirements>
+		<effectRequirements>
+			<succession>Election</succession>
+		</effectRequirements>
 		<tag/>
 		<governanceCost>0.10</governanceCost>
 	</Rimocracy.DecisionDef>
@@ -168,9 +171,9 @@
 		<defName>Egalitarianism_Cancel</defName>
 		<label>Cancel Happyness for All</label>
 		<description>We are no longer interested in egalitarianism.</description>
-		<requirements>
+		<displayRequirements>
 			<decision>Egalitarianism</decision>
-		</requirements>
+		</displayRequirements>
 		<governanceCost>0.10</governanceCost>
 		<cancelDecision>Egalitarianism</cancelDecision>
 	</Rimocracy.DecisionDef>
@@ -181,10 +184,10 @@
 		<defName>Elitism</defName>
 		<label>L'État, c'est moi</label>
 		<description>A happy leader is a productive leader. When the ruler is in a good mood, he, or she, will improve governance better.</description>
-		<requirements>
+		<displayRequirements>
 			<decision>Egalitarianism</decision>
 			<inverted>true</inverted>
-		</requirements>
+		</displayRequirements>
 		<tag/>
 		<governanceCost>0.10</governanceCost>
 	</Rimocracy.DecisionDef>
@@ -193,9 +196,9 @@
 		<defName>Elitism_Cancel</defName>
 		<label>Cancel "L'État, c'est moi"</label>
 		<description>Elitism was a mistake, let us abolish it.</description>
-		<requirements>
+		<displayRequirements>
 			<decision>Elitism</decision>
-		</requirements>
+		</displayRequirements>
 		<governanceCost>0.10</governanceCost>
 		<cancelDecision>Elitism</cancelDecision>
 	</Rimocracy.DecisionDef>

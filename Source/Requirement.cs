@@ -8,6 +8,9 @@ namespace Rimocracy
     {
         static string indent = "";
 
+        public static readonly Requirement always = new Requirement();
+        public static readonly Requirement never = new Requirement() { inverted = true };
+
         bool inverted = false;
 
         List<Requirement> all = new List<Requirement>();

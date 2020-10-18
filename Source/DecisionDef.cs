@@ -5,7 +5,8 @@ namespace Rimocracy
 {
     public class DecisionDef : Def
     {
-        public Requirement requirements = new Requirement();
+        public Requirement displayRequirements = Requirement.always;
+        public Requirement effectRequirements = Requirement.always;
         public string tag;
         public int durationTicks;
         public int durationDays;
@@ -16,9 +17,13 @@ namespace Rimocracy
         public bool impeachLeader;
         public string cancelDecision;
 
-        public bool IsValid =>
+        public bool IsDisplayable =>
             (!IsUnique || !Utility.RimocracyComp.DecisionActive(Tag))
-            && (requirements == null || requirements)
+            && (displayRequirements == null || displayRequirements);
+
+        public bool IsValid =>
+            IsDisplayable
+            && (effectRequirements == null || effectRequirements)
             && Utility.RimocracyComp.Governance >= governanceCost;
 
         /// <summary>
@@ -71,7 +76,7 @@ namespace Rimocracy
             if (!cancelDecision.NullOrEmpty())
             {
                 Utility.Log($"Canceling decision tag {cancelDecision}.");
-                if (Utility.RimocracyComp.Decisions.RemoveAll(decision => decision.tag == cancelDecision) == 0)
+                if (Utility.RimocracyComp.Decisions.RemoveAll(decision => decision.Tag == cancelDecision || decision.def.defName == cancelDecision) == 0)
                     Utility.Log("Decision not found.", LogLevel.Warning);
             }
 
