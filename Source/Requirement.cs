@@ -25,6 +25,22 @@ namespace Rimocracy
         float maxRegime = 1;
         string decision;
 
+        /// <summary>
+        /// Returns true if this requirement is default
+        /// </summary>
+        public bool IsTrivial =>
+            !inverted
+            && all.NullOrEmpty()
+            && any.NullOrEmpty()
+            && succession == SuccessionType.Undefined
+            && termDuration == TermDuration.Undefined
+            && !leaderExists
+            && !notCampaigning
+            && minGovernance == 0
+            && minRegime == -1
+            && maxRegime == 1
+            && decision == null;
+
         public static implicit operator bool(Requirement requirement) => requirement.GetValue();
 
         public bool GetValue()
@@ -55,9 +71,12 @@ namespace Rimocracy
 
         public override string ToString()
         {
-            string res = indent;
+            string res = "";
             if (inverted)
-                res += "The following must be FALSE:\n";
+            {
+                res = $"{indent}The following must be FALSE:\n";
+                indent += "\t";
+            }
             if (succession != SuccessionType.Undefined)
                 res += $"{indent}Succession law: {succession}\n";
             if (termDuration != TermDuration.Undefined)
@@ -75,7 +94,7 @@ namespace Rimocracy
                     res += $"{indent}Democracy level is at most {maxRegime * 100}%\n";
                 else res += $"{indent}Authoritarianism level is at most {-minGovernance * 100}%\n";
             if (!decision.NullOrEmpty())
-                res += $"{indent}Decision {decision} is active.";
+                res += $"{indent}{decision} is active";
             if (!all.NullOrEmpty())
             {
                 res += $"{indent}All of the following:\n";
@@ -92,7 +111,9 @@ namespace Rimocracy
                     res += $"{r}\n";
                 indent = indent.Remove(0, 1);
             }
-            return res;
+            if (inverted)
+                indent = indent.Remove(0, 1);
+            return res.TrimEndNewlines();
         }
     }
 }
