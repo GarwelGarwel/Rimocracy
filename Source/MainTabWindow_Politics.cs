@@ -1,5 +1,4 @@
 ﻿using RimWorld;
-using System.Linq;
 using UnityEngine;
 using Verse;
 
@@ -7,9 +6,7 @@ namespace Rimocracy
 {
     class MainTabWindow_Politics : MainTabWindow
     {
-        Vector2 scrollPosition = new Vector2();
-
-        public override Vector2 InitialSize => new Vector2(455, Utility.PoliticsEnabled ? 400 : 180);
+        public override Vector2 InitialSize => new Vector2(455, 300);
 
         public override void DoWindowContents(Rect inRect)
         {
@@ -22,8 +19,7 @@ namespace Rimocracy
             }
 
             Listing_Standard content = new Listing_Standard();
-            Rect viewRect = new Rect(0, 0, inRect.width, 360);
-            content.BeginScrollView(inRect, ref scrollPosition, ref viewRect);
+            content.Begin(inRect);
 
             // Current Leader
             content.Label($"{Utility.LeaderTitle.CapitalizeFirst(Utility.RimocracyComp.LeaderTitleDef)}: {(Utility.RimocracyComp.Leader?.Name?.ToStringFull ?? "none")}");
@@ -59,7 +55,7 @@ namespace Rimocracy
             if (content.ButtonText("View Available Decisions"))
                 Find.WindowStack.Add(new Dialog_DecisionList());
 
-            content.EndScrollView(ref viewRect);
+            content.End();
         }
     }
 }

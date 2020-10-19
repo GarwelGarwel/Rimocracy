@@ -88,11 +88,11 @@ namespace Rimocracy
             if (minRegime > -1)
                 if (minRegime > 0)
                     res += $"{indent}Democracy level is at least {minRegime * 100}%\n";
-                else res += $"{indent}Authoritarianism level is at most {-minGovernance * 100}%\n";
+                else res += $"{indent}Authoritarianism level is at most {-minRegime * 100}%\n";
             if (maxRegime < 1)
                 if (maxRegime > 0)
                     res += $"{indent}Democracy level is at most {maxRegime * 100}%\n";
-                else res += $"{indent}Authoritarianism level is at most {-minGovernance * 100}%\n";
+                else res += $"{indent}Authoritarianism level is at least {-maxRegime * 100}%\n";
             if (!decision.NullOrEmpty())
                 res += $"{indent}{decision} is active";
             if (!all.NullOrEmpty())
