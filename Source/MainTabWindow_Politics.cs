@@ -55,12 +55,9 @@ namespace Rimocracy
                     content.Label($"- {ec}");
             }
 
-            // Decisions
-            content.GapLine();
-            content.Label("Decisions:");
-            foreach (DecisionDef def in DefDatabase<DecisionDef>.AllDefs.Where(def => def.IsValid))
-                if (content.ButtonText(def.label))
-                    Find.WindowStack.Add(new Dialog_Decision(def));
+            content.Gap();
+            if (content.ButtonText("View Available Decisions"))
+                Find.WindowStack.Add(new Dialog_DecisionList());
 
             content.EndScrollView(ref viewRect);
         }

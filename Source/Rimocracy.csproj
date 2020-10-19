@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="Decision.cs" />
     <Compile Include="DecisionDef.cs" />
+    <Compile Include="Dialog_DecisionList.cs" />
     <Compile Include="Dialog_Decision.cs" />
     <Compile Include="ElectionUtility.cs" />
     <Compile Include="LeaderTitleDef.cs" />
