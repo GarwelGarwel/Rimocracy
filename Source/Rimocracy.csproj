@@ -74,6 +74,7 @@
     <Compile Include="Stats\StatPart_Elitism.cs" />
     <Compile Include="Stats\StatPart_Populism.cs" />
     <Compile Include="Stats\StatPart_StateOfEmergency.cs" />
+    <Compile Include="Stats\StatWorker_GovernanceDecay.cs" />
     <Compile Include="Succession\SuccessionMartial.cs" />
     <Compile Include="Succession\SuccessionNobility.cs" />
     <Compile Include="ThingComps\CompProperties_AffectedByGovernance.cs" />
