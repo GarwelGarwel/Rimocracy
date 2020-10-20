@@ -13,6 +13,9 @@ namespace Rimocracy
 
         public bool ShouldBeRemoved => HasExpired || !def.effectRequirements;
 
+        public Decision()
+        { }
+
         public Decision(DecisionDef def)
         {
             this.def = def;
