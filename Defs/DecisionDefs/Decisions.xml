@@ -24,25 +24,10 @@
 	</Rimocracy.DecisionDef>
 
 	<Rimocracy.DecisionDef ParentName="BaseSuccessionDecision">
-		<defName>SuccessionSeniority</defName>
-		<label>Seniority Succession</label>
-		<description>The oldest, and most experienced, colonist shall be the leader. Considered non-democratic.</description>
-		<displayPriorityInCategory>20</displayPriorityInCategory>
-		<displayRequirements>
-			<succession>Seniority</succession>
-			<inverted>true</inverted>
-		</displayRequirements>
-		<effectRequirements>
-			<maxRegime>-0.10</maxRegime>
-		</effectRequirements>
-		<setSuccession>Seniority</setSuccession>
-	</Rimocracy.DecisionDef>
-
-	<Rimocracy.DecisionDef ParentName="BaseSuccessionDecision">
 		<defName>SuccessionLot</defName>
 		<label>Lot Succession</label>
 		<description>The leader shall be chosen randomly from all citizens. Considered not very democratic.</description>
-		<displayPriorityInCategory>30</displayPriorityInCategory>
+		<displayPriorityInCategory>20</displayPriorityInCategory>
 		<displayRequirements>
 			<succession>Lot</succession>
 			<inverted>true</inverted>
@@ -51,6 +36,21 @@
 			<maxRegime>0.10</maxRegime>
 		</effectRequirements>
 		<setSuccession>Lot</setSuccession>
+	</Rimocracy.DecisionDef>
+
+	<Rimocracy.DecisionDef ParentName="BaseSuccessionDecision">
+		<defName>SuccessionSeniority</defName>
+		<label>Seniority Succession</label>
+		<description>The oldest, and most experienced, colonist shall be the leader. Considered non-democratic.</description>
+		<displayPriorityInCategory>30</displayPriorityInCategory>
+		<displayRequirements>
+			<succession>Seniority</succession>
+			<inverted>true</inverted>
+		</displayRequirements>
+		<effectRequirements>
+			<maxRegime>-0.10</maxRegime>
+		</effectRequirements>
+		<setSuccession>Seniority</setSuccession>
 	</Rimocracy.DecisionDef>
 
 	<Rimocracy.DecisionDef ParentName="BaseSuccessionDecision">

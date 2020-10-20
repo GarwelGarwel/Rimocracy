@@ -14,7 +14,6 @@ namespace Rimocracy
 
         public Dialog_DecisionList()
         {
-            optionalTitle = "Political Decisions";
             doCloseX = true;
             closeOnClickedOutside = true;
             draggable = true;
@@ -35,11 +34,15 @@ namespace Rimocracy
             foreach (IGrouping<DecisionCategoryDef, DecisionDef> group in DefDatabase<DecisionDef>.AllDefs.Where(def => def.IsDisplayable).GroupBy(def => def.category).OrderBy(group => group.Key.displayOrder))
             {
                 content.Gap();
+                Text.Anchor = TextAnchor.MiddleCenter;
+                Text.Font = GameFont.Medium;
                 content.Label(group.Key.label);
+                Text.Font = GameFont.Small;
                 foreach (DecisionDef d in group.OrderBy(def => def.displayPriorityInCategory))
                 {
-                    content.GapLine();
+                    Text.Anchor = TextAnchor.MiddleCenter;
                     content.Label(d.LabelCap);
+                    Text.Anchor = TextAnchor.UpperLeft;
                     content.Label(d.description);
                     if (d.governanceCost != 0)
                         content.Label($"Will reduce Governance by {d.governanceCost * 100:N0}%.");
@@ -60,6 +63,7 @@ namespace Rimocracy
                         }
                     }
                     else content.Label("Requirements are not met.");
+                    content.GapLine();
                 }
             }
             content.EndScrollView(ref viewRect);
