@@ -374,7 +374,7 @@ namespace Rimocracy
                 {
                     governance = Mathf.Lerp(DecisionActive("Stability") ? 0 : 0.5f, governance, 0.5f);
                     Find.LetterStack.ReceiveLetter(Succession.NewLeaderTitle, $"{Succession.NewLeaderMessage(leader)}\n\n{FocusSkillMessage}", LetterDefOf.NeutralEvent);
-                    Tale tale = TaleRecorder.RecordTale(RimocracyDefOf.BecameLeader, leader, leaderTitle);
+                    Tale tale = TaleRecorder.RecordTale(RimocracyDefOf.BecameLeader, leader);
                     if (tale != null)
                         Utility.Log($"Tale recorded: {tale}");
                 }

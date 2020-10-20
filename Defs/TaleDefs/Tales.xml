@@ -6,11 +6,10 @@
 		<label>became leader</label>
 		<taleClass>Tale_SinglePawn</taleClass>
 		<type>Volatile</type>
-		<defSymbol>TITLE</defSymbol>
 		<baseInterest>5</baseInterest>
 		<rulePack>
 			<rulesStrings>
-				<li>tale_noun->[PAWN_nameDef] becoming [TITLE_label]</li>
+				<li>tale_noun->[PAWN_nameDef] becoming the leader</li>
 				<li>image->[PAWN_nameFull] being hailed by a group of colonists [circumstance_group]</li>
 				<li>image->colonists bowing before [PAWN_nameFull] [circumstance_group]</li>
 				<li>image->[PAWN_nameFull] giving orders to colonists [circumstance_group]</li>
