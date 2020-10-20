@@ -44,9 +44,9 @@
 			<li Class="Rimocracy.StatPart_Populism">
 				<curve>
 					<points>
-						<li>(-100, 0)</li>
-						<li>(0, 0.75)</li>
-						<li>(100, 1.5)</li>
+						<li>(-100, 0.25)</li>
+						<li>(0, 1)</li>
+						<li>(100, 2)</li>
 					</points>
 				</curve>
 			</li>

@@ -8,7 +8,7 @@
 		<category>SuccessionTypes</category>
 		<tag>Succession</tag>
 		<durationTicks>1000</durationTicks>
-		<governanceCost>0.01</governanceCost>
+		<governanceCost>0.75</governanceCost>
 	</Rimocracy.DecisionDef>
 	
 	<Rimocracy.DecisionDef ParentName="BaseSuccessionDecision">
@@ -20,6 +20,10 @@
 			<succession>Election</succession>
 			<inverted>true</inverted>
 		</displayRequirements>
+		<effectRequirements>
+			<decision>StateOfEmergency</decision>
+			<inverted>true</inverted>
+		</effectRequirements>
 		<setSuccession>Election</setSuccession>
 	</Rimocracy.DecisionDef>
 
@@ -65,7 +69,7 @@
 					<succession>Nobility</succession>
 				</li>
 				<li>
-					<decision>ResPublica</decision>
+					<decision>Meritocracy</decision>
 				</li>
 			</any>
 		</displayRequirements>
@@ -96,7 +100,7 @@
 		<category>Terms</category>
 		<tag>TermDuration</tag>
 		<durationTicks>1000</durationTicks>
-		<governanceCost>0.01</governanceCost>
+		<governanceCost>0.30</governanceCost>
 	</Rimocracy.DecisionDef>
 
 	<Rimocracy.DecisionDef ParentName="BaseTermDurationDecision">
@@ -156,9 +160,12 @@
 		<displayPriorityInCategory>40</displayPriorityInCategory>
 		<displayRequirements>
 			<termDuration>Year</termDuration>
+		</displayRequirements>
+		<effectRequirements>
 			<notCampaigning>true</notCampaigning>
 			<maxRegime>-0.2</maxRegime>
-		</displayRequirements>
+		</effectRequirements>
+		<governanceCost>0.75</governanceCost>
 		<setTermDuration>Indefinite</setTermDuration>
 	</Rimocracy.DecisionDef>
 	
@@ -172,15 +179,19 @@
 		<displayPriorityInCategory>50</displayPriorityInCategory>
 		<displayRequirements>
 			<leaderExists>true</leaderExists>
-			<minRegime>-0.5</minRegime>
+			<minRegime>-0.50</minRegime>
 			<all>
 				<li>
 					<succession>Seniority</succession>
 					<inverted>true</inverted>
 				</li>
+				<li>
+					<decision>Stability</decision>
+					<inverted>true</inverted>
+				</li>
 			</all>
 		</displayRequirements>
-		<governanceCost>0.01</governanceCost>
+		<governanceCost>0.25</governanceCost>
 		<impeachLeader>true</impeachLeader>
 	</Rimocracy.DecisionDef>
 
@@ -189,19 +200,23 @@
 	<Rimocracy.DecisionDef>
 		<defName>Populism</defName>
 		<label>Consent of the Governed</label>
-		<description>When the leaders are liked and respected by their people, they will be more effective in whatever they strive to achieve.</description>
+		<description>A true leader never forgets about his or her people and draws authority from their support. The efficiency of the leader depends on the median opinion of the citizens.</description>
 		<category>Democratic</category>
 		<displayPriorityInCategory>10</displayPriorityInCategory>
-		<displayRequirements>
-			<decision>CultOfPersonality</decision>
-			<inverted>true</inverted>
-		</displayRequirements>
 		<effectRequirements>
-			<minRegime>-0.10</minRegime>
+			<all>
+				<li>
+					<minRegime>-0.15</minRegime>
+				</li>
+				<li>
+					<decision>CultOfPersonality</decision>
+					<inverted>true</inverted>
+				</li>
+			</all>
 		</effectRequirements>
 		<tag/>
 		<governanceCost>0.50</governanceCost>
-		<regimeEffect>0.30</regimeEffect>
+		<regimeEffect>0.20</regimeEffect>
 	</Rimocracy.DecisionDef>
 
 	<Rimocracy.DecisionDef>
@@ -225,12 +240,16 @@
 		<description>The goal of every government is the happiness of its people. With this doctrine, the higher the median mood of your citizens, the slower the Governance decay.</description>
 		<category>Democratic</category>
 		<displayPriorityInCategory>20</displayPriorityInCategory>
-		<displayRequirements>
-			<decision>Elitism</decision>
-			<inverted>true</inverted>
-		</displayRequirements>
 		<effectRequirements>
-			<minRegime>0.15</minRegime>
+			<all>
+				<li>
+					<minRegime>0.10</minRegime>
+				</li>
+				<li>
+					<decision>Elitism</decision>
+					<inverted>true</inverted>
+				</li>
+			</all>
 		</effectRequirements>
 		<tag/>
 		<governanceCost>0.50</governanceCost>
@@ -263,7 +282,7 @@
 			<minRegime>0.20</minRegime>
 		</effectRequirements>
 		<tag/>
-		<regimeEffect>0.10</regimeEffect>
+		<regimeEffect>0.20</regimeEffect>
 		<governanceCost>0.50</governanceCost>
 	</Rimocracy.DecisionDef>
 
@@ -287,13 +306,17 @@
 		<label>Res Publica</label>
 		<description>Our nation is our common cause. When it is governed well, every citizen will be happier. When it is in trouble, everyone is.</description>
 		<category>Democratic</category>
-		<displayPriorityInCategory>30</displayPriorityInCategory>
-		<displayRequirements>
-			<decision>Elitism</decision>
-			<inverted>true</inverted>
-		</displayRequirements>
+		<displayPriorityInCategory>40</displayPriorityInCategory>
 		<effectRequirements>
-			<minRegime>0.30</minRegime>
+			<all>
+				<li>
+					<minRegime>0.25</minRegime>
+				</li>
+				<li>
+					<decision>StateOfEmergency</decision>
+					<inverted>true</inverted>
+				</li>
+			</all>
 		</effectRequirements>
 		<tag/>
 		<regimeEffect>0.30</regimeEffect>
@@ -303,13 +326,13 @@
 	<Rimocracy.DecisionDef>
 		<defName>ResPublica_Cancel</defName>
 		<label>Cancel "Res Publica"</label>
-		<description>It's not the business of the mob to pay attention to the matters of the state.</description>
+		<description>It's not the business of the mob to think about the matters of the state!</description>
 		<category>Democratic</category>
-		<displayPriorityInCategory>30</displayPriorityInCategory>
+		<displayPriorityInCategory>40</displayPriorityInCategory>
 		<displayRequirements>
 			<decision>ResPublica</decision>
 		</displayRequirements>
-		<governanceCost>0.10</governanceCost>
+		<governanceCost>0.30</governanceCost>
 		<cancelDecision>ResPublica</cancelDecision>
 	</Rimocracy.DecisionDef>
 
@@ -358,10 +381,6 @@
 		<description>While the same leader is in charge, governance decay rate is much lower. But if leadership changes, for whatever reason, governance will halve.</description>
 		<category>Authoritarian</category>
 		<displayPriorityInCategory>10</displayPriorityInCategory>
-		<displayRequirements>
-			<decision>Populism</decision>
-			<inverted>true</inverted>
-		</displayRequirements>
 		<effectRequirements>
 			<maxRegime>0.10</maxRegime>
 		</effectRequirements>
@@ -391,19 +410,16 @@
 		<description>A happy leader is a productive leader. When the ruler is in a good mood, he, or she, will improve governance better.</description>
 		<category>Authoritarian</category>
 		<displayPriorityInCategory>20</displayPriorityInCategory>
-		<displayRequirements>
-			<any>
+		<effectRequirements>
+			<all>
+				<li>
+					<maxRegime>-0.10</maxRegime>
+				</li>
 				<li>
 					<decision>Egalitarianism</decision>
+					<inverted>true</inverted>
 				</li>
-				<li>
-					<decision>ResPublica</decision>
-				</li>
-			</any>
-			<inverted>true</inverted>
-		</displayRequirements>
-		<effectRequirements>
-			<maxRegime>-0.10</maxRegime>
+			</all>
 		</effectRequirements>
 		<tag/>
 		<regimeEffect>-0.20</regimeEffect>
@@ -428,19 +444,23 @@
 	<Rimocracy.DecisionDef>
 		<defName>CultOfPersonality</defName>
 		<label>Cult of Personality</label>
-		<description>The leader of our nation is an extraordinary person. Every citizen shall love him much more. Or maybe hate...</description>
+		<description>Our leader is an extraordinary person, who makes all decisions and bears ultimate responsibility for successes and failures. Every citizen will recognize that and love (or hate) the leader twice as much.</description>
 		<category>Authoritarian</category>
 		<displayPriorityInCategory>30</displayPriorityInCategory>
-		<displayRequirements>
-			<decision>Populism</decision>
-			<inverted>true</inverted>
-		</displayRequirements>
 		<effectRequirements>
-			<maxRegime>-0.20</maxRegime>
+			<all>
+				<li>
+					<maxRegime>-0.20</maxRegime>
+				</li>
+				<li>
+					<decision>Populism</decision>
+					<inverted>true</inverted>
+				</li>
+			</all>
 		</effectRequirements>
 		<tag/>
 		<regimeEffect>-0.20</regimeEffect>
-		<governanceCost>0.50</governanceCost>
+		<governanceCost>0.30</governanceCost>
 	</Rimocracy.DecisionDef>
 
 	<Rimocracy.DecisionDef>
@@ -499,7 +519,15 @@
 		<category>Authoritarian</category>
 		<displayPriorityInCategory>50</displayPriorityInCategory>
 		<effectRequirements>
-			<maxRegime>-0.30</maxRegime>
+			<all>
+				<li>
+					<maxRegime>-0.20</maxRegime>
+				</li>
+				<li>
+					<decision>ResPublica</decision>
+					<inverted>true</inverted>
+				</li>
+			</all>
 		</effectRequirements>
 		<durationTicks>180000</durationTicks>
 		<regimeEffect>-0.30</regimeEffect>
