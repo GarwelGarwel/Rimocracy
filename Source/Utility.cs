@@ -71,6 +71,24 @@ namespace Rimocracy
             }
         }
 
+        public static float GetTermDurationRegimeEffect(TermDuration termDuration)
+        {
+            switch (termDuration)
+            {
+                case TermDuration.Quadrum:
+                    return 0.05f;
+
+                case TermDuration.Halfyear:
+                    return 0;
+
+                case TermDuration.Year:
+                    return -0.05f;
+
+                default:
+                    return -0.10f;
+            }
+        }
+
         public static float MedianCitizensOpinion(this Pawn pawn) =>
              Citizens.Where(p => p != pawn).Select(p => (float)p.needs.mood.thoughts.TotalOpinionOffset(pawn)).ToList().Median();
 

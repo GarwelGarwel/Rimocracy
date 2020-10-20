@@ -63,7 +63,7 @@
 		<minValue>0.25</minValue>
 		<maxValue>4</maxValue>
 		<toStringStyle>PercentZero</toStringStyle>
-		<displayPriorityInCategory>1000</displayPriorityInCategory>
+		<displayPriorityInCategory>1001</displayPriorityInCategory>
 	</StatDef>
 
 </Defs>

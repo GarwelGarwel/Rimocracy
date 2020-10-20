@@ -1,5 +1,4 @@
-﻿using HarmonyLib;
-using Rimocracy.Succession;
+﻿using Rimocracy.Succession;
 using RimWorld;
 using RimWorld.Planet;
 using System;
@@ -27,7 +26,7 @@ namespace Rimocracy
         SkillDef focusSkill;
         SuccessionType successionType = SuccessionType.Election;
         SuccessionBase succession;
-        TermDuration termDuration = TermDuration.Quadrum;
+        TermDuration termDuration = TermDuration.Halfyear;
         List<ElectionCampaign> campaigns;
         int termExpiration = int.MaxValue;
         int electionTick = int.MaxValue;
@@ -135,7 +134,7 @@ namespace Rimocracy
             set => regime = value;
         }
 
-        public float RegimeFinal => regime + (Succession != null ? Succession.RegimeEffect : 0);
+        public float RegimeFinal => regime + (Succession != null ? Succession.RegimeEffect : 0) + Utility.GetTermDurationRegimeEffect(TermDuration);
 
         public TermDuration TermDuration
         {
