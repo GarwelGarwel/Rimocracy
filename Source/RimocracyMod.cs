@@ -7,16 +7,16 @@ namespace Rimocracy
     public class RimocracyMod : Mod
     {
         Vector2 scrollPosition = new Vector2();
+        Rect viewRect = new Rect();
 
         public RimocracyMod(ModContentPack content)
             : base(content) => GetSettings<Settings>();
 
         public override void DoSettingsWindowContents(Rect inRect)
         {
+            viewRect.width = inRect.width - 20;
             Listing_Standard listingStandard = new Listing_Standard();
-            Rect viewRect = new Rect(0, 0, inRect.width - 50, 1000);
             listingStandard.BeginScrollView(inRect, ref scrollPosition, ref viewRect);
-            listingStandard.Begin(viewRect);
 
             listingStandard.Label($"Min Population for Politics: {Settings.MinPopulation}", tooltip: "Most mod effects are disabled if you have fewer citizens than this number");
             Settings.MinPopulation = (int)listingStandard.Slider(Settings.MinPopulation, 1, 20);
@@ -51,12 +51,14 @@ namespace Rimocracy
             listingStandard.Label($"Recruitment Chance Factor: {Settings.RecruitmentChanceFactor:P0}", tooltip: "Relative likelyhood of a successfully recruitment of a supporter during a campaign");
             Settings.RecruitmentChanceFactor = (float)Math.Round(listingStandard.Slider(Settings.RecruitmentChanceFactor, 0, 2), 2);
 
+            listingStandard.Label($"Governance Cost Factor: {Settings.GovernanceCostFactor:P0}", tooltip: "Adjust the Governance cost of decisions");
+            Settings.GovernanceCostFactor = (float)Math.Round(listingStandard.Slider(Settings.GovernanceCostFactor, 0, 2), 2);
+
             listingStandard.CheckboxLabeled("Debug Logging", ref Settings.DebugLogging, "Check to enable verbose logging; it is super useful for catching bugs");
 
             listingStandard.EndScrollView(ref viewRect);
-            listingStandard.End();
 
-            base.DoSettingsWindowContents(inRect);
+            //base.DoSettingsWindowContents(inRect);
         }
 
         public override string SettingsCategory() => "Rimocracy";

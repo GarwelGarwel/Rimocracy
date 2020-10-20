@@ -16,6 +16,7 @@ namespace Rimocracy
         public static int RandomVoteWeightRadius = RandomVoteWeightRadius_Default;
         public static float SwayChanceFactor = 1;
         public static float RecruitmentChanceFactor = 1;
+        public static float GovernanceCostFactor = 1;
         public static bool DebugLogging = true;
 
         const int MinPopulation_Default = 3;
@@ -43,6 +44,7 @@ namespace Rimocracy
             Scribe_Values.Look(ref RandomVoteWeightRadius, "RandomVoteWeightRadius", RandomVoteWeightRadius_Default);
             Scribe_Values.Look(ref SwayChanceFactor, "SwayChanceFactor", 1);
             Scribe_Values.Look(ref RecruitmentChanceFactor, "RecruitmentChanceFactor", 1);
+            Scribe_Values.Look(ref GovernanceCostFactor, "GovernanceCostFactor", 1);
             Scribe_Values.Look(ref DebugLogging, "DebugLogging");
         }
     }

@@ -134,7 +134,8 @@ namespace Rimocracy
             set => regime = value;
         }
 
-        public float RegimeFinal => regime + (Succession != null ? Succession.RegimeEffect : 0) + Utility.GetTermDurationRegimeEffect(TermDuration);
+        public float RegimeFinal =>
+            Mathf.Clamp(regime + (Succession != null ? Succession.RegimeEffect : 0) + Utility.GetTermDurationRegimeEffect(TermDuration), -1, 1);
 
         public TermDuration TermDuration
         {
@@ -194,7 +195,7 @@ namespace Rimocracy
             Decisions.RemoveAll(decision => decision.Tag == tag || decision.def.defName == tag);
         }
 
-        float MedianMood => Utility.Citizens.Select(pawn => pawn.needs.mood.CurLevelPercentage).OrderBy(mood => mood).ToList().Median();
+        float MedianMood => Utility.Citizens.Select(pawn => pawn.needs.mood.CurLevelPercentage).Median();
 
         string FocusSkillMessage => $"The focus skill is {focusSkill.LabelCap}.";
 
@@ -317,6 +318,12 @@ namespace Rimocracy
 
         void CallElection()
         {
+            if (DecisionActive("StateOfEmergency"))
+            {
+                Utility.Log("No election called because State of Emergency is active.");
+                return;
+            }
+
             electionTick = Find.TickManager.TicksAbs + Settings.CampaignDurationTicks;
 
             // Adjust term expiration to the time of election

@@ -90,12 +90,13 @@ namespace Rimocracy
         }
 
         public static float MedianCitizensOpinion(this Pawn pawn) =>
-             Citizens.Where(p => p != pawn).Select(p => (float)p.needs.mood.thoughts.TotalOpinionOffset(pawn)).ToList().Median();
+             Citizens.Where(p => p != pawn).Select(p => (float)p.needs.mood.thoughts.TotalOpinionOffset(pawn)).Median();
 
-        public static float Median(this List<float> list)
+        public static float Median(this IEnumerable<float> values)
         {
-            if (list.NullOrEmpty())
+            if (values.EnumerableNullOrEmpty())
                 return 0;
+            List<float> list = values.OrderBy(v => v).ToList();
             int count = list.Count;
             return count % 2 == 0 ? (list[count / 2 - 1] + list[count / 2]) / 2 : list[count / 2];
         }

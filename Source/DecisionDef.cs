@@ -28,7 +28,7 @@ namespace Rimocracy
         public bool IsValid =>
             IsDisplayable
             && (effectRequirements == null || effectRequirements)
-            && Utility.RimocracyComp.Governance >= governanceCost;
+            && Utility.RimocracyComp.Governance >= GovernanceCost;
 
         /// <summary>
         /// Tells if this decision tag should be stored
@@ -39,6 +39,8 @@ namespace Rimocracy
         /// Returns tag (for timers) or defName by default
         /// </summary>
         public string Tag => tag.NullOrEmpty() ? defName : tag;
+
+        public float GovernanceCost => governanceCost * Settings.GovernanceCostFactor;
 
         public int Duration => durationDays * GenDate.TicksPerDay + durationTicks;
 
@@ -58,7 +60,7 @@ namespace Rimocracy
             if (IsUnique)
                 Utility.RimocracyComp.Decisions.Add(new Decision(this));
 
-            Utility.RimocracyComp.Governance -= governanceCost;
+            Utility.RimocracyComp.Governance -= GovernanceCost;
 
             if (setSuccession != SuccessionType.Undefined)
             {
@@ -82,8 +84,6 @@ namespace Rimocracy
             {
                 Utility.Log($"Canceling decision tag {cancelDecision}.");
                 Utility.RimocracyComp.CancelDecision(cancelDecision);
-                //if (Utility.RimocracyComp.Decisions.RemoveAll(decision => decision.Tag == cancelDecision || decision.def.defName == cancelDecision) == 0)
-                //    Utility.Log("Decision not found.", LogLevel.Warning);
             }
 
             if (regimeEffect != 0)
