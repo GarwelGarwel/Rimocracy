@@ -5,6 +5,7 @@
 	<!-- Succession Laws -->
 	
 	<Rimocracy.DecisionDef Abstract="True" Name="BaseSuccessionDecision">
+		<category>SuccessionTypes</category>
 		<tag>Succession</tag>
 		<durationTicks>1000</durationTicks>
 		<governanceCost>0.01</governanceCost>
@@ -14,6 +15,7 @@
 		<defName>SuccessionElection</defName>
 		<label>Election Succession</label>
 		<description>The leader shall be elected by all free, adult colonists.</description>
+		<displayPriorityInCategory>10</displayPriorityInCategory>
 		<displayRequirements>
 			<succession>Election</succession>
 			<inverted>true</inverted>
@@ -25,6 +27,7 @@
 		<defName>SuccessionSeniority</defName>
 		<label>Seniority Succession</label>
 		<description>The oldest, and most experienced, colonist shall be the leader.</description>
+		<displayPriorityInCategory>20</displayPriorityInCategory>
 		<displayRequirements>
 			<all>
 				<li>
@@ -43,6 +46,7 @@
 		<defName>SuccessionLot</defName>
 		<label>Lot Succession</label>
 		<description>The leader shall be chosen randomly from all citizens.</description>
+		<displayPriorityInCategory>30</displayPriorityInCategory>
 		<displayRequirements>
 			<all>
 				<li>
@@ -61,6 +65,7 @@
 		<defName>SuccessionNobility</defName>
 		<label>Nobility Succession</label>
 		<description>The pawn with the highest, and oldest, nobility title will be the leader.</description>
+		<displayPriorityInCategory>40</displayPriorityInCategory>
 		<displayRequirements>
 			<all>
 				<li>
@@ -79,6 +84,7 @@
 		<defName>SuccessionMartial</defName>
 		<label>Martial Succession</label>
 		<description>The most accomplished warrior will become our leader.</description>
+		<displayPriorityInCategory>50</displayPriorityInCategory>
 		<displayRequirements>
 			<all>
 				<li>
@@ -96,6 +102,7 @@
 	<!-- Term Duration -->
 	
 	<Rimocracy.DecisionDef Abstract="True" Name="BaseTermDurationDecision">
+		<category>Terms</category>
 		<tag>TermDuration</tag>
 		<durationTicks>1000</durationTicks>
 		<governanceCost>0.01</governanceCost>
@@ -105,6 +112,7 @@
 		<defName>TermQuadrum</defName>
 		<label>Quadrum-Long Term</label>
 		<description>Set term of a leader to one quadrum (15 days).</description>
+		<displayPriorityInCategory>10</displayPriorityInCategory>
 		<displayRequirements>
 			<termDuration>Halfyear</termDuration>
 			<notCampaigning>true</notCampaigning>
@@ -116,6 +124,7 @@
 		<defName>TermHalfYear</defName>
 		<label>Half-Year Long Term</label>
 		<description>Set term of a leader to half a year (30 days).</description>
+		<displayPriorityInCategory>20</displayPriorityInCategory>
 		<displayRequirements>
 			<notCampaigning>true</notCampaigning>
 			<any>
@@ -134,6 +143,7 @@
 		<defName>TermYear</defName>
 		<label>Year-Long Term</label>
 		<description>Set term of a leader to one year (60 days).</description>
+		<displayPriorityInCategory>30</displayPriorityInCategory>
 		<displayRequirements>
 			<notCampaigning>true</notCampaigning>
 			<any>
@@ -152,6 +162,7 @@
 		<defName>TermIndefinite</defName>
 		<label>Indefinite Term</label>
 		<description>Leaders will rule till their death.</description>
+		<displayPriorityInCategory>40</displayPriorityInCategory>
 		<displayRequirements>
 			<termDuration>Year</termDuration>
 			<notCampaigning>true</notCampaigning>
@@ -166,6 +177,8 @@
 		<defName>Impeachment</defName>
 		<label>Impeach Leader</label>
 		<description>Immediately relieve the current leader of his or her duties and initiate a new succession.</description>
+		<category>Terms</category>
+		<displayPriorityInCategory>50</displayPriorityInCategory>
 		<displayRequirements>
 			<leaderExists>true</leaderExists>
 			<minRegime>-0.5</minRegime>
@@ -186,6 +199,8 @@
 		<defName>Egalitarianism</defName>
 		<label>Happyness for All</label>
 		<description>The goal of every government is the happyness of its people. With this doctrine, the higher the median mood of your citizens, the slower the Governance decay.</description>
+		<category>Democratic</category>
+		<displayPriorityInCategory>10</displayPriorityInCategory>
 		<displayRequirements>
 			<decision>Elitism</decision>
 			<inverted>true</inverted>
@@ -203,6 +218,8 @@
 		<defName>Egalitarianism_Cancel</defName>
 		<label>Cancel Happyness for All</label>
 		<description>We are no longer interested in egalitarianism.</description>
+		<category>Democratic</category>
+		<displayPriorityInCategory>10</displayPriorityInCategory>
 		<displayRequirements>
 			<decision>Egalitarianism</decision>
 		</displayRequirements>
@@ -216,6 +233,8 @@
 		<defName>Populism</defName>
 		<label>Consent of the Governed</label>
 		<description>When the leaders are liked and respected by their people, they will be more effective in whatever they strive to achieve.</description>
+		<category>Democratic</category>
+		<displayPriorityInCategory>20</displayPriorityInCategory>
 		<displayRequirements>
 			<decision>CultOfPersonality</decision>
 			<inverted>true</inverted>
@@ -232,6 +251,8 @@
 		<defName>Populism_Cancel</defName>
 		<label>Cancel "Consent of the Governed"</label>
 		<description>These fools just can't appreciate what the leader is really doing. We shouldn't care about their opinions any more.</description>
+		<category>Democratic</category>
+		<displayPriorityInCategory>20</displayPriorityInCategory>
 		<displayRequirements>
 			<decision>Populism</decision>
 		</displayRequirements>
@@ -245,6 +266,8 @@
 		<defName>ResPublica</defName>
 		<label>Res Publica</label>
 		<description>Our nation is our common cause. When it is governed well, every citizen will be happier. When it is in trouble, everyone is.</description>
+		<category>Democratic</category>
+		<displayPriorityInCategory>30</displayPriorityInCategory>
 		<displayRequirements>
 			<decision>Elitism</decision>
 			<inverted>true</inverted>
@@ -261,6 +284,8 @@
 		<defName>ResPublica_Cancel</defName>
 		<label>Cancel "Res Publica"</label>
 		<description>It's not the business of the mob to pay attention to the matters of the state.</description>
+		<category>Democratic</category>
+		<displayPriorityInCategory>30</displayPriorityInCategory>
 		<displayRequirements>
 			<decision>ResPublica</decision>
 		</displayRequirements>
@@ -274,6 +299,8 @@
 		<defName>Meritocracy</defName>
 		<label>Meritocracy</label>
 		<description>A smart citizen should choose the most capable candidates. Pawns with high skills are more likely to be voted for in elections.</description>
+		<category>Democratic</category>
+		<displayPriorityInCategory>40</displayPriorityInCategory>
 		<effectRequirements>
 			<succession>Election</succession>
 			<minRegime>-0.1</minRegime>
@@ -287,6 +314,8 @@
 		<defName>Meritocracy_Cancel</defName>
 		<label>Cancel Meritocracy</label>
 		<description>Those who can, do. Those who can't, rule those who can.</description>
+		<category>Democratic</category>
+		<displayPriorityInCategory>40</displayPriorityInCategory>
 		<displayRequirements>
 			<decision>Meritocracy</decision>
 		</displayRequirements>
@@ -300,6 +329,8 @@
 		<defName>Liberty</defName>
 		<label>Freedom of Thought</label>
 		<description>When citizens are left to their own devices, that is, not drafted, they develop their skills much faster. But they will hate the interference of drafting.</description>
+		<category>Democratic</category>
+		<displayPriorityInCategory>50</displayPriorityInCategory>
 		<effectRequirements>
 			<all>
 				<li>
@@ -320,6 +351,8 @@
 		<defName>Liberty_Cancel</defName>
 		<label>Cancel "Freedom of Thought"</label>
 		<description>Liberty shouldn't be allowed to become chaos. It's time to improve the discipline.</description>
+		<category>Democratic</category>
+		<displayPriorityInCategory>50</displayPriorityInCategory>
 		<displayRequirements>
 			<decision>Liberty</decision>
 		</displayRequirements>
@@ -333,6 +366,8 @@
 		<defName>Elitism</defName>
 		<label>L'État, c'est moi</label>
 		<description>A happy leader is a productive leader. When the ruler is in a good mood, he, or she, will improve governance better.</description>
+		<category>Authoritarian</category>
+		<displayPriorityInCategory>10</displayPriorityInCategory>
 		<displayRequirements>
 			<any>
 				<li>
@@ -356,6 +391,8 @@
 		<defName>Elitism_Cancel</defName>
 		<label>Cancel "L'État, c'est moi"</label>
 		<description>Elitism was a mistake, let us abolish it.</description>
+		<category>Authoritarian</category>
+		<displayPriorityInCategory>10</displayPriorityInCategory>
 		<displayRequirements>
 			<decision>Elitism</decision>
 		</displayRequirements>
@@ -369,6 +406,8 @@
 		<defName>CultOfPersonality</defName>
 		<label>Cult of Personality</label>
 		<description>The leader of our nation is an extraordinary person. Every citizen shall love him much more. Or maybe hate...</description>
+		<category>Authoritarian</category>
+		<displayPriorityInCategory>20</displayPriorityInCategory>
 		<displayRequirements>
 			<decision>Populism</decision>
 			<inverted>true</inverted>
@@ -385,6 +424,8 @@
 		<defName>CultOfPersonality_Cancel</defName>
 		<label>Cancel "Cult of Personality"</label>
 		<description>The leader should be more humble.</description>
+		<category>Authoritarian</category>
+		<displayPriorityInCategory>20</displayPriorityInCategory>
 		<displayRequirements>
 			<decision>CultOfPersonality</decision>
 		</displayRequirements>
@@ -398,6 +439,8 @@
 		<defName>Stability</defName>
 		<label>Stability Doctrine</label>
 		<description>While the same leader is in charge, governance decay rate is much lower. But if leadership changes, for whatever reason, governance will halve.</description>
+		<category>Authoritarian</category>
+		<displayPriorityInCategory>30</displayPriorityInCategory>
 		<displayRequirements>
 			<decision>Populism</decision>
 			<inverted>true</inverted>
@@ -414,6 +457,8 @@
 		<defName>Stability_Cancel</defName>
 		<label>Cancel "Stability Doctrine"</label>
 		<description>We need a more dynamic society.</description>
+		<category>Authoritarian</category>
+		<displayPriorityInCategory>30</displayPriorityInCategory>
 		<displayRequirements>
 			<decision>Stability</decision>
 		</displayRequirements>
@@ -427,6 +472,8 @@
 		<defName>ManagedDemocracy</defName>
 		<label>Managed Democracy</label>
 		<description>We should help people make the right choice! Tweak election rules, so that the incumbent leader is always on ballot and his or her strongest opponent is disqualified. Winning an election will be much easier now.</description>
+		<category>Authoritarian</category>
+		<displayPriorityInCategory>40</displayPriorityInCategory>
 		<displayRequirements>
 			<leaderExists>true</leaderExists>
 			<notCampaigning>true</notCampaigning>
@@ -444,6 +491,8 @@
 		<defName>ManagedDemocracy_Cancel</defName>
 		<label>Cancel "Managed Democracy"</label>
 		<description>We should allow a real democracy.</description>
+		<category>Authoritarian</category>
+		<displayPriorityInCategory>40</displayPriorityInCategory>
 		<displayRequirements>
 			<decision>ManagedDemocracy</decision>
 		</displayRequirements>
@@ -457,6 +506,8 @@
 		<defName>StateOfEmergency</defName>
 		<label>State of Emergency</label>
 		<description>When you declare a State of Emergency, all mental break thresholds are reduced by 3/4 for 3 days, and elections are postponed.</description>
+		<category>Authoritarian</category>
+		<displayPriorityInCategory>50</displayPriorityInCategory>
 		<effectRequirements>
 			<maxRegime>-0.1</maxRegime>
 		</effectRequirements>
@@ -469,6 +520,8 @@
 		<defName>StateOfEmergency_Cancel</defName>
 		<label>Cancel "State of Emergency"</label>
 		<description>The threat is over; we can return to business as usual.</description>
+		<category>Authoritarian</category>
+		<displayPriorityInCategory>50</displayPriorityInCategory>
 		<displayRequirements>
 			<decision>StateOfEmergency</decision>
 		</displayRequirements>

@@ -25,28 +25,42 @@ namespace Rimocracy
             viewRect.width = inRect.width - 20;
             Listing_Standard content = new Listing_Standard();
             content.BeginScrollView(inRect.AtZero(), ref scrollPosition, ref viewRect);
+
+            // Display regime type
             if (Utility.RimocracyComp.Regime != 0)
-                content.Label($"The current regime is {Math.Abs(Utility.RimocracyComp.Regime) * 100:N0}% towards {(Utility.RimocracyComp.Regime > 0 ? "democracy" : "dictatorship")}.");
-            else content.Label("The current regime is neither a democracy nor a dictatorship.");
-            foreach (DecisionDef d in DefDatabase<DecisionDef>.AllDefs.Where(def => def.IsDisplayable))
+                content.Label($"The current regime is {Math.Abs(Utility.RimocracyComp.Regime) * 100:N0}% {(Utility.RimocracyComp.Regime > 0 ? "democratic" : "authoritarian")}.");
+            else content.Label("The current regime is neither democratic nor authoritarian.");
+
+            // Display decision categories and available decisions
+            foreach (IGrouping<DecisionCategoryDef, DecisionDef> group in DefDatabase<DecisionDef>.AllDefs.Where(def => def.IsDisplayable).GroupBy(def => def.category).OrderBy(group => group.Key.displayOrder))
             {
-                content.GapLine();
-                content.Label(d.LabelCap);
-                content.Label(d.description);
-                if (d.governanceCost != 0)
-                    content.Label($"Will reduce Governance by {d.governanceCost * 100:N0}%.");
-                if (d.regimeEffect != 0)
-                    content.Label($"Will move the regime {Math.Abs(d.regimeEffect)* 100:N0}% towards {(d.regimeEffect > 0 ? "democracy" : "dictatorship")}.");
-                if (!d.effectRequirements.IsTrivial)
-                    content.Label($"Requirements:\n{d.effectRequirements}");
-                if (d.IsValid)
-                    if (content.ButtonText("Activate"))
+                content.Gap();
+                content.Label(group.Key.label);
+                foreach (DecisionDef d in group.OrderBy(def => def.displayPriorityInCategory))
+                {
+                    content.GapLine();
+                    content.Label(d.LabelCap);
+                    content.Label(d.description);
+                    if (d.governanceCost != 0)
+                        content.Label($"Will reduce Governance by {d.governanceCost * 100:N0}%.");
+                    if (d.regimeEffect != 0)
+                        content.Label($"Will move the regime {Math.Abs(d.regimeEffect) * 100:N0}% towards {(d.regimeEffect > 0 ? "democracy" : "authoritarianism")}.");
+                    if (!d.effectRequirements.IsTrivial)
+                        content.Label($"Requirements:\n{d.effectRequirements}");
+
+                    // Display Activate button for valid decisions
+                    if (d.IsValid)
                     {
-                        Utility.Log($"Activating {d.defName}.");
-                        d.Activate();
-                        Messages.Message($"{d.LabelCap} decision taken.", MessageTypeDefOf.NeutralEvent);
-                        Close();
+                        if (content.ButtonText("Activate"))
+                        {
+                            Utility.Log($"Activating {d.defName}.");
+                            d.Activate();
+                            Messages.Message($"{d.LabelCap} decision taken.", MessageTypeDefOf.NeutralEvent);
+                            Close();
+                        }
                     }
+                    else content.Label("Requirements are not met.");
+                }
             }
             content.EndScrollView(ref viewRect);
         }

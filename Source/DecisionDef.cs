@@ -5,6 +5,9 @@ namespace Rimocracy
 {
     public class DecisionDef : Def
     {
+        public DecisionCategoryDef category;
+        public int displayPriorityInCategory;
+
         public Requirement displayRequirements = Requirement.always;
         public Requirement effectRequirements = Requirement.always;
         public string tag;
