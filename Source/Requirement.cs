@@ -61,9 +61,9 @@ namespace Rimocracy
             if (res && minGovernance > 0)
                 res &= Utility.RimocracyComp.Governance >= minGovernance;
             if (res && minRegime > -1)
-                res &= Utility.RimocracyComp.Regime >= minRegime;
+                res &= Utility.RimocracyComp.RegimeFinal >= minRegime;
             if (res && maxRegime < 1)
-                res &= Utility.RimocracyComp.Regime <= maxRegime;
+                res &= Utility.RimocracyComp.RegimeFinal <= maxRegime;
             if (res && !decision.NullOrEmpty())
                 res &= Utility.RimocracyComp.DecisionActive(decision);
             return res ^ inverted;

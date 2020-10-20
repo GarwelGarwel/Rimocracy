@@ -8,9 +8,9 @@ namespace Rimocracy.Succession
     {
         int votesForWinner = 0;
 
-        public override string Title => "Election";
-
         public override SuccessionType SuccessionType => SuccessionType.Election;
+
+        public override string Title => "Election";
 
         public override string SuccessionLabel => "election";
 

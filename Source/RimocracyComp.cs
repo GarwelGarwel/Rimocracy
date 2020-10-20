@@ -86,13 +86,12 @@ namespace Rimocracy
 
                     default:
                         Utility.Log("Succession type not set! Reverting to election.", LogLevel.Error);
-                        successionType = SuccessionType.Election;
+                        SuccessionType = SuccessionType.Election;
                         succession = new SuccessionElection();
                         break;
                 }
                 return succession;
             }
-            set => succession = value;
         }
 
         public List<ElectionCampaign> Campaigns
@@ -129,6 +128,14 @@ namespace Rimocracy
             get => governanceTarget;
             set => governanceTarget = value;
         }
+
+        public float RegimeBase
+        {
+            get => regime;
+            set => regime = value;
+        }
+
+        public float RegimeFinal => regime + (Succession != null ? Succession.RegimeEffect : 0);
 
         public TermDuration TermDuration
         {
@@ -186,12 +193,6 @@ namespace Rimocracy
             foreach (Decision d in Decisions.Where(decision => decision.Tag == tag || decision.def.defName == tag))
                 d.def.Cancel();
             Decisions.RemoveAll(decision => decision.Tag == tag || decision.def.defName == tag);
-        }
-
-        public float Regime
-        {
-            get => regime;
-            set => regime = value;
         }
 
         float MedianMood => Utility.Citizens.Select(pawn => pawn.needs.mood.CurLevelPercentage).OrderBy(mood => mood).ToList().Median();

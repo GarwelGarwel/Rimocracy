@@ -89,7 +89,7 @@ namespace Rimocracy
             if (regimeEffect != 0)
             {
                 Utility.Log($"Changing regime by {regimeEffect}.");
-                Utility.RimocracyComp.Regime += regimeEffect;
+                Utility.RimocracyComp.RegimeBase += regimeEffect;
             }
 
             return true;
@@ -100,7 +100,7 @@ namespace Rimocracy
             if (regimeEffect != 0)
             {
                 Utility.Log($"Changing regime by {-regimeEffect}.");
-                Utility.RimocracyComp.Regime -= regimeEffect;
+                Utility.RimocracyComp.RegimeBase -= regimeEffect;
             }
         }
     }

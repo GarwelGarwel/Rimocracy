@@ -10,9 +10,11 @@ namespace Rimocracy.Succession
         const float DownedValue = 0.2f;
         const float DamageDealtValue = 0.001f;
 
+        public override SuccessionType SuccessionType => SuccessionType.Martial;
+
         public override string Title => "Best Warrior";
 
-        public override SuccessionType SuccessionType => SuccessionType.Martial;
+        public override float RegimeEffect => -0.10f;
 
         public override Pawn ChooseLeader() => Candidates.MaxByWithFallback(pawn => GetMartialRenown(pawn));
 

@@ -7,9 +7,11 @@ namespace Rimocracy.Succession
     /// </summary>
     class SuccessionOldest : SuccessionBase
     {
+        public override SuccessionType SuccessionType => SuccessionType.Seniority;
+
         public override string Title => "Seniority";
 
-        public override SuccessionType SuccessionType => SuccessionType.Seniority;
+        public override float RegimeEffect => -0.10f;
 
         public override string NewLeaderMessage(Pawn leader)
             => $"{{PAWN_nameFullDef}} will rule {Utility.NationName} now as the oldest colonist.".Formatted(leader.Named("PAWN"));

@@ -27,8 +27,8 @@ namespace Rimocracy
             content.BeginScrollView(inRect.AtZero(), ref scrollPosition, ref viewRect);
 
             // Display regime type
-            if (Utility.RimocracyComp.Regime != 0)
-                content.Label($"The current regime is {Math.Abs(Utility.RimocracyComp.Regime) * 100:N0}% {(Utility.RimocracyComp.Regime > 0 ? "democratic" : "authoritarian")}.");
+            if (Utility.RimocracyComp.RegimeFinal != 0)
+                content.Label($"The current regime is {Math.Abs(Utility.RimocracyComp.RegimeFinal) * 100:N0}% {(Utility.RimocracyComp.RegimeFinal > 0 ? "democratic" : "authoritarian")}.");
             else content.Label("The current regime is neither democratic nor authoritarian.");
 
             // Display decision categories and available decisions

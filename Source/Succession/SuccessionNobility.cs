@@ -5,9 +5,11 @@ namespace Rimocracy.Succession
 {
     class SuccessionNobility : SuccessionBase
     {
+        public override SuccessionType SuccessionType => SuccessionType.Nobility;
+
         public override string Title => "Nobility";
 
-        public override SuccessionType SuccessionType => SuccessionType.Nobility;
+        public override float RegimeEffect => -0.10f;
 
         public override bool IsValid => !Candidates.EnumerableNullOrEmpty();
 
