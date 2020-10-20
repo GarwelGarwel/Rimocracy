@@ -6,7 +6,7 @@ namespace Rimocracy
 {
     class MainTabWindow_Politics : MainTabWindow
     {
-        public override Vector2 InitialSize => new Vector2(455, 300);
+        public override Vector2 InitialSize => new Vector2(455, 320);
 
         public override void DoWindowContents(Rect inRect)
         {
