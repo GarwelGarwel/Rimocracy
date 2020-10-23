@@ -97,7 +97,7 @@ namespace Rimocracy
                 if (targetPawn == null)
                     continue;
                 Utility.Log($"{pawn} is trying to sway {targetPawn}.");
-                float swayChance = pawn.GetStatValue(StatDefOf.SocialImpact) * 0.1f * Settings.SwayChanceFactor;
+                float swayChance = pawn.GetStatValue(StatDefOf.SocialImpact) * Settings.SwayChanceFactor * 0.1f;
                 Utility.Log($"Sway chance: {swayChance:P1}.");
                 if (Rand.Chance(swayChance))
                 {
@@ -105,7 +105,7 @@ namespace Rimocracy
                     targetPawn.needs.mood.thoughts.memories.TryGainMemory(RimocracyDefOf.PoliticalSympathy, Candidate);
                     pawn.records.Increment(RimocracyDefOf.VotersSwayed);
 
-                    if (!Utility.RimocracyComp.Campaigns.Any(ec => ec.Supporters.Contains(targetPawn)))
+                    if (!Utility.RimocracyComp.Campaigns.Any(ec => ec.Supporters.Contains(targetPawn)) && !recruits.Contains(targetPawn))
                     {
                         // If the target pawn is not already a core supporter of any candidate, try to recruit them to the campaign
                         float recruitChance = (ElectionUtility.VoteWeight(targetPawn, Candidate) / 100 - 1) * pawn.GetStatValue(StatDefOf.NegotiationAbility) * Settings.RecruitmentChanceFactor;
