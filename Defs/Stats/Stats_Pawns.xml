@@ -12,13 +12,9 @@
 		<toStringStyle>PercentTwo</toStringStyle>
 		<statFactors>
 			<li>WorkSpeedGlobal</li>
+			<li>SocialImpact</li>
 		</statFactors>
 		<skillNeedFactors>
-			<li Class="SkillNeed_BaseBonus">
-				<skill>Social</skill>
-				<baseValue>0.8</baseValue>
-				<bonusPerLevel>0.02</bonusPerLevel>
-			</li>
 			<li Class="SkillNeed_BaseBonus">
 				<skill>Intellectual</skill>
 				<baseValue>0.9</baseValue>
@@ -49,6 +45,94 @@
 						<li>(100, 2)</li>
 					</points>
 				</curve>
+			</li>
+			<li Class="Rimocracy.StatPart_Backstories">
+				<modifiers>
+					<li>
+						<name>hiveworld drone</name>
+						<factor>0.8</factor>
+					</li>
+					<li>
+						<name>civil servant</name>
+						<factor>1.25</factor>
+					</li>
+					<li>
+						<name>castaway</name>
+						<factor>0.9</factor>
+					</li>
+					<li>
+						<name>sheriff</name>
+						<factor>1.1</factor>
+					</li>
+					<li>
+						<name>medieval slave</name>
+						<factor>0.8</factor>
+					</li>
+					<li>
+						<name>medieval lordling</name>
+						<factor>1.25</factor>
+					</li>
+					<li>
+						<name>urbworld politican</name>
+						<factor>1.25</factor>
+					</li>
+					<li>
+						<name>coliseum cleaner</name>
+						<factor>0.8</factor>
+					</li>
+					<li>
+						<name>work camp slave</name>
+						<factor>0.8</factor>
+					</li>
+					<li>
+						<name>war chief</name>
+						<factor>1.1</factor>
+					</li>
+					<li>
+						<name>vinho king</name>
+						<factor>1.1</factor>
+					</li>
+					<li>
+						<name>vatgrown slavegirl</name>
+						<factor>0.8</factor>
+					</li>
+					<li>
+						<name>urbworld sex slave</name>
+						<factor>0.8</factor>
+					</li>
+					<li>
+						<name>feudal lordling</name>
+						<factor>1.4</factor>
+					</li>
+					<li>
+						<name>system lord</name>
+						<factor>1.5</factor>
+					</li>
+					<li>
+						<name>child slave</name>
+						<factor>0.8</factor>
+					</li>
+					<li>
+						<name>displaced noble</name>
+						<factor>1.1</factor>
+					</li>
+					<li>
+						<name>minister</name>
+						<factor>1.4</factor>
+					</li>
+					<li>
+						<name>frontier marshal</name>
+						<factor>1.25</factor>
+					</li>
+					<li>
+						<name>religious hierarch</name>
+						<factor>1.1</factor>
+					</li>
+					<li>
+						<name>fallen official</name>
+						<factor>1.25</factor>
+					</li>
+				</modifiers>
 			</li>
 		</parts>
 	</StatDef>
