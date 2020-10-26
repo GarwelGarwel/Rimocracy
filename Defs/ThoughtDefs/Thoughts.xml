@@ -128,13 +128,23 @@
 		<stages>
 			<li>
 				<label>i lost election</label>
-				<description>What a disappointment!</description>
+				<description>This loss hurts.</description>
 				<baseMoodEffect>-5</baseMoodEffect>
 			</li>
 			<li>
 				<label>i won election</label>
 				<description>People have trusted me to lead this nation!</description>
 				<baseMoodEffect>10</baseMoodEffect>
+			</li>
+			<li>
+				<label>my candidate lost</label>
+				<description>What a disappointment!</description>
+				<baseMoodEffect>-2</baseMoodEffect>
+			</li>
+			<li>
+				<label>my candidate won</label>
+				<description>We made it!</description>
+				<baseMoodEffect>2</baseMoodEffect>
 			</li>
 		</stages>
 		<durationDays>5</durationDays>
