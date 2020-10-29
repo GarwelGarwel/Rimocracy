@@ -31,10 +31,10 @@ namespace Rimocracy
 
         public static string LeaderTitle => RimocracyComp?.LeaderTitleDef?.GetTitle(RimocracyComp.Leader) ?? "leader";
 
-        public static int TermDurationTicks => GetTermDurationTicks(RimocracyComp.TermDuration);
+        public static int TermDurationTicks => RimocracyComp.TermDuration.GetDurationTicks();
 
         public static bool IsCitizen(this Pawn pawn) =>
-            pawn != null
+                    pawn != null
             && !pawn.Dead
             && pawn.IsFreeColonist
             && pawn.ageTracker.AgeBiologicalYears >= Settings.CitizenshipAge
@@ -44,16 +44,16 @@ namespace Rimocracy
 
         public static bool IsLeader(this Pawn p) => PoliticsEnabled && RimocracyComp.Leader == p;
 
-        public static bool IsPowered(this Building building)
+        public static bool IsPowerStarved(this Building building)
         {
             CompPowerTrader comp = building?.GetComp<CompPowerTrader>();
-            return comp == null || comp.PowerOn;
+            return comp != null && !comp.PowerOn;
         }
 
         public static float GovernanceImprovementSpeed(Pawn pawn, Thing worktable) =>
             pawn.GetStatValue(RimocracyDefOf.GovernEfficiency) * worktable.GetStatValue(RimocracyDefOf.GovernEfficiencyFactor);
 
-        public static int GetTermDurationTicks(TermDuration termDuration)
+        public static int GetDurationTicks(this TermDuration termDuration)
         {
             switch (termDuration)
             {
@@ -71,7 +71,7 @@ namespace Rimocracy
             }
         }
 
-        public static float GetTermDurationRegimeEffect(TermDuration termDuration)
+        public static float GetRegimeEffect(this TermDuration termDuration)
         {
             switch (termDuration)
             {
@@ -101,18 +101,18 @@ namespace Rimocracy
             return count % 2 == 0 ? (list[count / 2 - 1] + list[count / 2]) / 2 : list[count / 2];
         }
 
-        public static string ListString(List<string> list)
-        {
-            if (list.NullOrEmpty())
-                return "";
-            if (list.Count == 2)
-                return $"{list[0]} and {list[1]}";
-            string res = list[0];
-            for (int i = 1; i < list.Count - 1; i++)
-                res += $", {list[i]}";
-            res += $" and {list.Last()}";
-            return res;
-        }
+        //public static string ListString(List<string> list)
+        //{
+        //    if (list.NullOrEmpty())
+        //        return "";
+        //    if (list.Count == 2)
+        //        return $"{list[0]} and {list[1]}";
+        //    string res = list[0];
+        //    for (int i = 1; i < list.Count - 1; i++)
+        //        res += $", {list[i]}";
+        //    res += $" and {list.Last()}";
+        //    return res;
+        //}
 
         internal static void Log(string message, LogLevel logLevel = LogLevel.Message)
         {

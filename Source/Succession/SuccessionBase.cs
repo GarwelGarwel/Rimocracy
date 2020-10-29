@@ -24,15 +24,13 @@ namespace Rimocracy
 
         public virtual bool IsValid => true;
 
-        public virtual string NewLeaderMessage(Pawn leader)
-            => $"{Utility.NationName} has a new {Utility.LeaderTitle}: {{PAWN_nameFullDef}}. Let {{PAWN_possessive}} reign be long and prosperous!".Formatted(leader.Named("PAWN"));
+        public virtual string NewLeaderMessage(Pawn leader) =>
+            $"{Utility.NationName} has a new {Utility.LeaderTitle}: {leader.Name}. Let {leader.gender.GetPossessive()} reign be long and prosperous!";
 
-        public virtual string SameLeaderMessage(Pawn leader)
-            => $"{{PAWN_nameFullDef}} remains the {Utility.LeaderTitle} of {Utility.NationName}.".Formatted(leader.Named("PAWN"));
+        public virtual string SameLeaderMessage(Pawn leader) => $"{leader.Name} remains the {Utility.LeaderTitle} of {Utility.NationName}.";
 
         public abstract Pawn ChooseLeader();
 
-        public virtual bool CanBeCandidate(Pawn pawn)
-            => pawn.CanBeLeader();
+        public virtual bool CanBeCandidate(Pawn pawn) => pawn.CanBeLeader();
     }
 }

@@ -129,6 +129,6 @@ namespace Rimocracy
         }
 
         public override string ToString() =>
-            $"{Candidate}, {focusSkill?.LabelCap.RawText ?? "no"} focus{(Supporters.Count > 1 ? $", {Supporters.Count - 1} core supporters" : "")}";
+            $"{Candidate.NameShortColored}, {focusSkill?.LabelCap.RawText ?? "no"} focus{(Supporters.Count > 1 ? $", {Supporters.Count - 1} core supporters" : "")}";
     }
 }

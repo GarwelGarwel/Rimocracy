@@ -6,10 +6,10 @@ namespace Rimocracy
 {
     public class Requirement
     {
-        static string indent = "";
-
         public static readonly Requirement always = new Requirement();
         public static readonly Requirement never = new Requirement() { inverted = true };
+        
+        static string indent = "";
 
         bool inverted = false;
 
@@ -84,15 +84,15 @@ namespace Rimocracy
             if (notCampaigning)
                 res += $"{indent}Not campaigning\n";
             if (minGovernance > 0)
-                res += $"{indent}Governance is at least {minGovernance * 100}%\n";
+                res += $"{indent}Governance is at least {minGovernance.ToStringPercent()}\n";
             if (minRegime > -1)
                 if (minRegime > 0)
-                    res += $"{indent}Regime is at least {minRegime * 100}% democratic\n";
-                else res += $"{indent}Regime is at most {-minRegime * 100}% authoritarian\n";
+                    res += $"{indent}Regime is at least {minRegime.ToStringPercent()} democratic\n";
+                else res += $"{indent}Regime is at most {(-minRegime).ToStringPercent()} authoritarian\n";
             if (maxRegime < 1)
                 if (maxRegime > 0)
-                    res += $"{indent}Regime is at most {maxRegime * 100}% democratic\n";
-                else res += $"{indent}Regime is at least {-maxRegime * 100}% authoritarian\n";
+                    res += $"{indent}Regime is at most {maxRegime.ToStringPercent()} democratic\n";
+                else res += $"{indent}Regime is at least {(-maxRegime).ToStringPercent()} authoritarian\n";
             if (!decision.NullOrEmpty())
                 res += $"{indent}{decision} is active";
             if (!all.NullOrEmpty())

@@ -14,7 +14,7 @@ namespace Rimocracy
             if (factor != 1)
                 res = $"{name}: x{factor.ToStringPercent()}";
             if (offset != 0)
-                res += $"\n{name} {offset.ToStringSign()}";
+                res += $"\n{name} {offset.ToStringWithSign()}";
             if (res == "")
                 return null;
             return res.Trim();

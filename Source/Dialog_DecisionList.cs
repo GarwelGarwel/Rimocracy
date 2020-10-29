@@ -1,6 +1,5 @@
 ﻿using RimWorld;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Verse;
@@ -21,17 +20,20 @@ namespace Rimocracy
 
         public override void DoWindowContents(Rect inRect)
         {
-            viewRect.width = inRect.width - 20;
+            viewRect.width = inRect.width - GenUI.ScrollBarWidth;
             Listing_Standard content = new Listing_Standard();
             content.BeginScrollView(inRect.AtZero(), ref scrollPosition, ref viewRect);
 
             // Display regime type
             if (Utility.RimocracyComp.RegimeFinal != 0)
-                content.Label($"The current regime is {Math.Abs(Utility.RimocracyComp.RegimeFinal) * 100:N0}% {(Utility.RimocracyComp.RegimeFinal > 0 ? "democratic" : "authoritarian")}.");
+                content.Label($"The current regime is {Math.Abs(Utility.RimocracyComp.RegimeFinal).ToStringPercent()} {(Utility.RimocracyComp.RegimeFinal > 0 ? "democratic" : "authoritarian")}.");
             else content.Label("The current regime is neither democratic nor authoritarian.");
 
             // Display decision categories and available decisions
-            foreach (IGrouping<DecisionCategoryDef, DecisionDef> group in DefDatabase<DecisionDef>.AllDefs.Where(def => def.IsDisplayable).GroupBy(def => def.category).OrderBy(group => group.Key.displayOrder))
+            foreach (IGrouping<DecisionCategoryDef, DecisionDef> group in DefDatabase<DecisionDef>.AllDefs
+                .Where(def => def.IsDisplayable)
+                .GroupBy(def => def.category)
+                .OrderBy(group => group.Key.displayOrder))
             {
                 content.Gap();
                 Text.Anchor = TextAnchor.MiddleCenter;
@@ -45,9 +47,9 @@ namespace Rimocracy
                     Text.Anchor = TextAnchor.UpperLeft;
                     content.Label(d.description);
                     if (d.governanceCost != 0)
-                        content.Label($"Will reduce Governance by {d.GovernanceCost * 100:N0}%.");
+                        content.Label($"Will reduce Governance by {d.GovernanceCost.ToStringPercent()}.");
                     if (d.regimeEffect != 0)
-                        content.Label($"Will move the regime {Math.Abs(d.regimeEffect) * 100:N0}% towards {(d.regimeEffect > 0 ? "democracy" : "authoritarianism")}.");
+                        content.Label($"Will move the regime {Math.Abs(d.regimeEffect).ToStringPercent()} towards {(d.regimeEffect > 0 ? "democracy" : "authoritarianism")}.");
                     if (!d.effectRequirements.IsTrivial)
                         content.Label($"Requirements:\n{d.effectRequirements}");
 
@@ -57,8 +59,9 @@ namespace Rimocracy
                         if (content.ButtonText("Activate"))
                         {
                             Utility.Log($"Activating {d.defName}.");
-                            d.Activate();
-                            Messages.Message($"{d.LabelCap} decision taken.", MessageTypeDefOf.NeutralEvent);
+                            if (d.Activate())
+                                Find.LetterStack.ReceiveLetter($"{d.LabelCap} Decision Taken", d.description, LetterDefOf.NeutralEvent, null);
+                            else Messages.Message($"Could not take {d.label} decision: requirements are not met.", MessageTypeDefOf.NegativeEvent, false);
                             Close();
                         }
                     }

@@ -14,7 +14,7 @@ namespace Rimocracy
 
         public override void DoSettingsWindowContents(Rect inRect)
         {
-            viewRect.width = inRect.width - 20;
+            viewRect.width = inRect.width - GenUI.ScrollBarWidth;
             Listing_Standard listingStandard = new Listing_Standard();
             listingStandard.BeginScrollView(inRect, ref scrollPosition, ref viewRect);
 
@@ -24,7 +24,7 @@ namespace Rimocracy
             listingStandard.Label($"Citizenship Age: {Settings.CitizenshipAge}", tooltip: "Biological age for a colonist to have citizenship rights");
             Settings.CitizenshipAge = (int)listingStandard.Slider(Settings.CitizenshipAge, 0, 18);
 
-            listingStandard.Label($"Governance Decay Speed: {Settings.GovernanceDecaySpeed:P0}", tooltip: "Relative speed of governance deterioration over time");
+            listingStandard.Label($"Governance Decay Speed: {Settings.GovernanceDecaySpeed.ToStringPercent()}", tooltip: "Relative speed of governance deterioration over time");
             Settings.GovernanceDecaySpeed = (float)Math.Round(listingStandard.Slider(Settings.GovernanceDecaySpeed, 0, 2), 2);
 
             listingStandard.Label($"Min Population for Campaigning: {Settings.MinPopulationForCampaigning}", tooltip: "Min number of voters to have elections between only two candidates, who actively seek supporters");
@@ -45,20 +45,18 @@ namespace Rimocracy
             listingStandard.Label($"Random Vote Weight Element Radius: ±{Settings.RandomVoteWeightRadius}", tooltip: "Max random number that is added or subtracted from the vote weight");
             Settings.RandomVoteWeightRadius = (int)listingStandard.Slider(Settings.RandomVoteWeightRadius, 0, 10);
 
-            listingStandard.Label($"Sway Chance Factor: {Settings.SwayChanceFactor:P0}", tooltip: "Relative likelyhood of a candidate or supporter successfully swaying a voter during a campaign");
+            listingStandard.Label($"Sway Chance Factor: {Settings.SwayChanceFactor.ToStringPercent()}", tooltip: "Relative likelyhood of a candidate or supporter successfully swaying a voter during a campaign");
             Settings.SwayChanceFactor = (float)Math.Round(listingStandard.Slider(Settings.SwayChanceFactor, 0, 2), 2);
 
-            listingStandard.Label($"Recruitment Chance Factor: {Settings.RecruitmentChanceFactor:P0}", tooltip: "Relative likelyhood of a successfully recruitment of a supporter during a campaign");
+            listingStandard.Label($"Recruitment Chance Factor: {Settings.RecruitmentChanceFactor.ToStringPercent()}", tooltip: "Relative likelyhood of a successfully recruitment of a supporter during a campaign");
             Settings.RecruitmentChanceFactor = (float)Math.Round(listingStandard.Slider(Settings.RecruitmentChanceFactor, 0, 2), 2);
 
-            listingStandard.Label($"Governance Cost Factor: {Settings.GovernanceCostFactor:P0}", tooltip: "Adjust the Governance cost of decisions");
+            listingStandard.Label($"Governance Cost Factor: {Settings.GovernanceCostFactor.ToStringPercent()}", tooltip: "Adjust the Governance cost of decisions");
             Settings.GovernanceCostFactor = (float)Math.Round(listingStandard.Slider(Settings.GovernanceCostFactor, 0, 2), 2);
 
             listingStandard.CheckboxLabeled("Debug Logging", ref Settings.DebugLogging, "Check to enable verbose logging; it is super useful for catching bugs");
 
             listingStandard.EndScrollView(ref viewRect);
-
-            //base.DoSettingsWindowContents(inRect);
         }
 
         public override string SettingsCategory() => "Rimocracy";

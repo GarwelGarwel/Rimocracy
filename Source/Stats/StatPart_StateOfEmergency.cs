@@ -9,9 +9,9 @@ namespace Rimocracy
 
         public override string ExplanationPart(StatRequest req)
         {
-            float mult = Multiplier(req) * 100;
-            return mult != 100
-                ? $"State of Emergency: x{mult:N0}%"
+            float mult = Multiplier(req);
+            return mult != 1
+                ? $"State of Emergency: x{mult.ToStringPercent()}"
                 : null;
         }
 

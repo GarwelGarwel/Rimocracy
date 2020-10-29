@@ -8,20 +8,17 @@ namespace Rimocracy
     {
         public static bool CampaigningEnabled => Utility.CitizensCount >= Settings.MinPopulationForCampaigning;
 
-        public static ElectionCampaign SupportsCampaign(this Pawn p) => Utility.RimocracyComp.Campaigns?.FirstOrDefault(ec => ec.Supporters.Contains(p));
+        public static ElectionCampaign GetCampaign(this Pawn candidate) => Utility.RimocracyComp.Campaigns?.FirstOrDefault(ec => ec.Candidate == candidate);
+
+        public static Pawn GetSupportedCandidate(this Pawn pawn) => Utility.RimocracyComp.Campaigns?.FirstOrDefault(ec => ec.Supporters.Contains(pawn))?.Candidate;
 
         public static float VoteWeight(Pawn voter, Pawn candidate)
         {
             float weight = voter.relations.OpinionOf(candidate);
 
-            // If the candidate is currently in a mental state, it's not good for an election
+            // If the candidate is currently in a mental state, it's not good for an election. Penalty is doubled for aggressive mental states
             if (candidate.InMentalState)
-            {
-                weight -= Settings.MentalStateVoteWeightPenalty;
-                // Penalty is doubled for aggressive mental states
-                if (candidate.InAggroMentalState)
-                    weight -= Settings.MentalStateVoteWeightPenalty;
-            }
+                weight -= Settings.MentalStateVoteWeightPenalty * (candidate.InAggroMentalState ? 2 : 1);
 
             // For every backstory the two pawns have in common, a bonus is added
             int sameBackstories = voter.story.AllBackstories.Count(bs => candidate.story.AllBackstories.Contains(bs));

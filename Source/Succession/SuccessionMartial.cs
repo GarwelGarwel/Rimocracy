@@ -21,11 +21,10 @@ namespace Rimocracy.Succession
         public override bool CanBeCandidate(Pawn pawn) => base.CanBeCandidate(pawn) && !pawn.WorkTagIsDisabled(WorkTags.Violent);
 
         public override string NewLeaderMessage(Pawn leader) =>
-            $"{{PAWN_nameFullDef}} will now lead {Utility.NationName} to glory as its most renowned warrior.".Formatted(leader.Named("PAWN"));
+            $"{leader.Name} will now lead {Utility.NationName} to glory as its most renowned warrior.";
 
         public override string SameLeaderMessage(Pawn leader) =>
-            $"{{PAWN_nameFullDef}} is still the most able worrior of {Utility.NationName}. Friends and foes alike bow before {{PAWN_objective}}!"
-            .Formatted(leader.Named("PAWN"));
+            $"{leader.Name} is still the most able worrior of {Utility.NationName}. Friends and foes alike bow before {leader.gender.GetObjective()}!";
 
         float GetMartialRenown(Pawn pawn) =>
             pawn.records.GetValue(RecordDefOf.KillsHumanlikes)

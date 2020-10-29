@@ -9,6 +9,6 @@ namespace Rimocracy
 
         protected override float CurveXGetter(StatRequest req) => (req.Thing as Pawn).MedianCitizensOpinion();
 
-        protected override string ExplanationLabel(StatRequest req) => $"Multiplier for median opinion {CurveXGetter(req):N0} (from Populism)";
+        protected override string ExplanationLabel(StatRequest req) => $"Populism (median opinion {CurveXGetter(req).ToStringWithSign()})";
     }
 }

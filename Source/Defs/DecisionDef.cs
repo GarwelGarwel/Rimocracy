@@ -99,7 +99,7 @@ namespace Rimocracy
         {
             if (regimeEffect != 0)
             {
-                Utility.Log($"Changing regime by {-regimeEffect}.");
+                Utility.Log($"Changing regime by {(-regimeEffect).ToStringWithSign()}.");
                 Utility.RimocracyComp.RegimeBase -= regimeEffect;
             }
         }

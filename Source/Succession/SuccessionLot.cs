@@ -16,10 +16,10 @@ namespace Rimocracy.Succession
         public override float RegimeEffect => -0.05f;
 
         public override string NewLeaderMessage(Pawn leader)
-            => $"{{PAWN_nameFullDef}} drew the short straw and will rule {Utility.NationName} from now on!".Formatted(leader.Named("PAWN"));
+            => $"{leader.Name} drew the short straw and will rule {Utility.NationName} from now on!";
 
         public override string SameLeaderMessage(Pawn leader)
-            => $"{{PAWN_nameFullDef}} has a lucky hand! {{PAWN_pronoun}} won the {Utility.LeaderTitle} lottery again.".Formatted(leader.Named("PAWN"));
+            => $"{leader.Name} has a lucky hand! {leader.gender.GetPronoun()} won the {Utility.LeaderTitle} lottery again.";
 
         public override Pawn ChooseLeader() => Candidates.RandomElementWithFallback();
     }

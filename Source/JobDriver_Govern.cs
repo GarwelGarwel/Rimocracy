@@ -1,5 +1,6 @@
 ﻿using RimWorld;
 using System.Collections.Generic;
+using Verse;
 using Verse.AI;
 
 namespace Rimocracy
@@ -34,7 +35,7 @@ namespace Rimocracy
             yield return Toils_General.Wait(2, TargetIndex.None);
         }
 
-        public override string GetReport() => $"{base.GetReport()}\r\nImproving governance at {GovernanceImprovementSpeed * 100:N1}% per hour.";
+        public override string GetReport() => $"{base.GetReport()}\r\nImproving governance at {GovernanceImprovementSpeed.ToStringPercent()} per hour.";
 
         float GovernanceImprovementSpeed => Utility.GovernanceImprovementSpeed(pawn, TargetA.Thing);
 
