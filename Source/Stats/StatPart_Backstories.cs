@@ -27,14 +27,10 @@ namespace Rimocracy
 
         public override void TransformValue(StatRequest req, ref float val)
         {
-            Utility.Log($"StatPart_Backstories.TransformValue('{req}', {val})");
-
             Pawn pawn = req.Thing as Pawn;
             
             if (modifiers == null || pawn?.story == null)
                 return;
-
-            Utility.Log($"{pawn} has backstories: '{pawn.story.childhood}' and '{pawn.story.adulthood}'.");
 
             BackstoryEffect(pawn.story.childhood, ref val);
             BackstoryEffect(pawn.story.adulthood, ref val);

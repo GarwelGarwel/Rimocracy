@@ -67,7 +67,7 @@ namespace Rimocracy
                     && p.needs.mood.thoughts.memories.NumMemoriesOfDef(RimocracyDefOf.PoliticalSympathy) < RimocracyDefOf.PoliticalSympathy.stackLimit)
                     .ToDictionary(p => p, p => Rand.Range(0, ElectionUtility.VoteWeight(p, Candidate) + 100));
 
-            if (potentialTargets.Count > 0)
+            if (Settings.DebugLogging && potentialTargets.Count > 0)
             {
                 Utility.Log($"Potential targets for {Candidate}:");
                 foreach (KeyValuePair<Pawn, float> kvp in potentialTargets)
