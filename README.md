@@ -22,6 +22,8 @@ There are several succession types that you can choose from in the settings:
 - *Election*: default type, when the candidate who gets the most votes is chosen (see details below)
 - *Lot*: the leader is chosen randomly from all eligible candidates
 - *Seniority*: the oldest (by biological age) citizen is chosen
+- *Nobility*: the highest-ranking noble pawn is chosen; if several are available, the one with the oldest title is selected
+- *Martial*: the pawn who killed and downed the most enemies and caused the most damage (with certain weights) is chosen
 
 ## Elections
 
@@ -38,6 +40,10 @@ The chance of a successful sway depends on the swayer's Social Impact stat. Succ
 A successful sway may also lead to a recruitment of the voter as a core supporter of the respective candidate. Core supporters can sway (and recruit) other voters, thus creating a snowball effect. Chance of recruitment is affected by the voter's level of support for the candidate and it usually requires several successful sways. Numbers of supporters for each candidate are shown in the Politics tab.
 
 Candidates and their supporters usually hang together and dislike their competitors. The loser and winner in the campaign also gain respective mood modifiers.
+
+## Decisions
+
+Political decisions allow you to change many rules, such as succession type or term duration. Other decisions have more complex effects. E.g., Egalitarianism makes Governance decay depend on the median mood of your citizens (the higher the mood, the slower decay). Most decisions have associated Governance costs and certain requirements. Many decisions also affect the regime type, which can vary from 100% authoritarian to 100% democratic. As you move towards either authoritarianism or democracy, some decisions become unavailable and some others open up to you.
 
 ## FAQ
 
