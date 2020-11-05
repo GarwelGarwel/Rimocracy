@@ -7,15 +7,17 @@ namespace Rimocracy.Succession
     /// </summary>
     class SuccessionOldest : SuccessionBase
     {
-        public override string Title => "Seniority";
-
         public override SuccessionType SuccessionType => SuccessionType.Seniority;
 
+        public override string Title => "Seniority";
+
+        public override float RegimeEffect => -0.10f;
+
         public override string NewLeaderMessage(Pawn leader)
-            => ("{PAWN_nameFullDef} will rule " + Utility.NationName + " now as the oldest colonist.").Formatted(leader.Named("PAWN"));
+            => $"{leader.Name} will rule {Utility.NationName} now as the oldest colonist.";
 
         public override string SameLeaderMessage(Pawn leader)
-            => ("{PAWN_nameFullDef} is still the oldest colonist in " + Utility.NationName + ". {PAWN_pronoun} remains our " + Utility.LeaderTitle + ".").Formatted(leader.Named("PAWN"));
+            => $"{leader.Name} is still the oldest colonist in {Utility.NationName}. {leader.gender.GetPronoun()} remains our {Utility.LeaderTitle}.";
 
         public override Pawn ChooseLeader() => Candidates.MaxByWithFallback(p => p.ageTracker.AgeBiologicalTicks);
     }

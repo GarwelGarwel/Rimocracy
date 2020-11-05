@@ -8,32 +8,29 @@ namespace Rimocracy
     {
         public static bool CampaigningEnabled => Utility.CitizensCount >= Settings.MinPopulationForCampaigning;
 
-        public static ElectionCampaign SupportsCampaign(this Pawn p) => Utility.RimocracyComp.Campaigns?.FirstOrDefault(ec => ec.Supporters.Contains(p));
+        public static ElectionCampaign GetCampaign(this Pawn candidate) => Utility.RimocracyComp.Campaigns?.FirstOrDefault(ec => ec.Candidate == candidate);
+
+        public static Pawn GetSupportedCandidate(this Pawn pawn) => Utility.RimocracyComp.Campaigns?.FirstOrDefault(ec => ec.Supporters.Contains(pawn))?.Candidate;
 
         public static float VoteWeight(Pawn voter, Pawn candidate)
         {
             float weight = voter.relations.OpinionOf(candidate);
 
-            // If the candidate is currently in a mental state, it's not good for an election
+            // If the candidate is currently in a mental state, it's not good for an election. Penalty is doubled for aggressive mental states
             if (candidate.InMentalState)
-            {
-                weight -= Settings.MentalStateVoteWeightPenalty;
-                // Penalty is doubled for aggressive mental states
-                if (candidate.InAggroMentalState)
-                    weight -= Settings.MentalStateVoteWeightPenalty;
-            }
+                weight -= Settings.MentalStateVoteWeightPenalty * (candidate.InAggroMentalState ? 2 : 1);
 
             // For every backstory the two pawns have in common, a bonus is added
             int sameBackstories = voter.story.AllBackstories.Count(bs => candidate.story.AllBackstories.Contains(bs));
             if (sameBackstories > 0)
-                Utility.Log(voter + " and " + candidate + " have " + sameBackstories + " backstories in common.");
+                Utility.Log($"{voter} and {candidate} have {sameBackstories} backstories in common.");
             weight += sameBackstories * Settings.SameBackstoryVoteWeightBonus;
 
             // If the candidate has a royal title, their vote weight is increased according to seniority
             RoyalTitleDef title = candidate.royalty?.MostSeniorTitle?.def;
             if (title != null)
             {
-                Utility.Log(candidate + " has royal title " + title.label + " (seniority " + title.seniority + ")");
+                Utility.Log($"{candidate} has royal title {title.label} (seniority {title.seniority}).");
                 weight += 5 + title.seniority / 10;
             }
 
@@ -44,13 +41,21 @@ namespace Rimocracy
                 .Sum(m => m.OpinionOffset())
                 * Settings.PoliticalSympathyWeightFactor;
             if (sympathy != 0)
-                Utility.Log(voter + " has " + sympathy.ToString("N1") + " of sympathy for " + candidate);
+                Utility.Log($"{voter} has {sympathy:N1} of sympathy for {candidate}.");
             weight += sympathy;
+
+            // If Meritocracy is in effect, sum of candidate's skills is taken into account
+            if (Utility.RimocracyComp.DecisionActive("Meritocracy"))
+            {
+                float sumSkills = candidate.skills.skills.Sum(sr => sr.Level);
+                Utility.Log($"{candidate} has a total level of skills of {sumSkills}, affecting Meritocracy.");
+                weight += sumSkills * 0.25f;
+            }
 
             // Adding a random factor of -5 to +5
             weight += Rand.Range(-Settings.RandomVoteWeightRadius, Settings.RandomVoteWeightRadius);
 
-            Utility.Log(voter + " vote weight for " + candidate + ": " + weight);
+            Utility.Log($"{voter} vote weight for {candidate}: {weight:N0}.");
             return weight;
         }
     }

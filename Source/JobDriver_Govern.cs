@@ -1,5 +1,6 @@
 ﻿using RimWorld;
 using System.Collections.Generic;
+using Verse;
 using Verse.AI;
 
 namespace Rimocracy
@@ -24,7 +25,7 @@ namespace Rimocracy
             }
             Toil governToil = new Toil();
             governToil.tickAction = Govern_TickAction;
-            governToil.FailOn(() => Utility.RimocracyComp.Governance >= 1);
+            governToil.FailOn(() => Utility.RimocracyComp.Governance >= Utility.RimocracyComp.GovernanceTarget);
             governToil.FailOn(() => !pawn.IsLeader());
             governToil.FailOnCannotTouch(TargetIndex.A, PathEndMode.InteractionCell);
             governToil.defaultCompleteMode = ToilCompleteMode.Delay;
@@ -32,17 +33,17 @@ namespace Rimocracy
             governToil.activeSkill = () => SkillDefOf.Social;
             yield return governToil;
             yield return Toils_General.Wait(2, TargetIndex.None);
-            yield break;
         }
+
+        public override string GetReport() => $"{base.GetReport()}\r\nImproving governance at {GovernanceImprovementSpeed.ToStringPercent()} per hour.";
+
+        float GovernanceImprovementSpeed => Utility.GovernanceImprovementSpeed(pawn, TargetA.Thing);
 
         void Govern_TickAction()
         {
             if (isSitting)
                 rotateToFace = TargetIndex.B;
-            Utility.RimocracyComp.ImproveGovernance(
-                pawn.GetStatValue(RimocracyDefOf.GovernEfficiency)
-                * TargetA.Thing.GetStatValue(RimocracyDefOf.GovernEfficiencyFactor)
-                / GenDate.TicksPerHour);
+            Utility.RimocracyComp.ImproveGovernance(GovernanceImprovementSpeed / GenDate.TicksPerHour);
             pawn.skills.Learn(SkillDefOf.Intellectual, 0.05f);
             pawn.skills.Learn(SkillDefOf.Social, 0.05f);
             pawn.GainComfortFromCellIfPossible(true);

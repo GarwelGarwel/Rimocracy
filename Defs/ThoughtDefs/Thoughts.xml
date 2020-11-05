@@ -32,6 +32,27 @@
 				<label>revered leader</label>
 				<baseOpinionOffset>30</baseOpinionOffset>
 			</li>
+			<!-- Cult of Personality stages: -->
+			<li>
+				<label>hated "leader"</label>
+				<baseOpinionOffset>-60</baseOpinionOffset>
+			</li>
+			<li>
+				<label>terribleleader</label>
+				<baseOpinionOffset>-40</baseOpinionOffset>
+			</li>
+			<li>
+				<label>our dear leader</label>
+				<baseOpinionOffset>10</baseOpinionOffset>
+			</li>
+			<li>
+				<label>our beloved leader</label>
+				<baseOpinionOffset>20</baseOpinionOffset>
+			</li>
+			<li>
+				<label>our great leader</label>
+				<baseOpinionOffset>60</baseOpinionOffset>
+			</li>
 		</stages>
 	</ThoughtDef>
 
@@ -107,13 +128,23 @@
 		<stages>
 			<li>
 				<label>i lost election</label>
-				<description>What a disappointment!</description>
+				<description>This loss hurts.</description>
 				<baseMoodEffect>-5</baseMoodEffect>
 			</li>
 			<li>
 				<label>i won election</label>
 				<description>People have trusted me to lead this nation!</description>
 				<baseMoodEffect>10</baseMoodEffect>
+			</li>
+			<li>
+				<label>my candidate lost</label>
+				<description>What a disappointment!</description>
+				<baseMoodEffect>-2</baseMoodEffect>
+			</li>
+			<li>
+				<label>my candidate won</label>
+				<description>We made it!</description>
+				<baseMoodEffect>2</baseMoodEffect>
 			</li>
 		</stages>
 		<durationDays>5</durationDays>
@@ -135,6 +166,39 @@
 		<nullifiedIfNotColonist>true</nullifiedIfNotColonist>
 		<stackLimitForSameOtherPawn>4</stackLimitForSameOtherPawn>
 		<lerpOpinionToZeroAfterDurationPct>0.5</lerpOpinionToZeroAfterDurationPct>
+	</ThoughtDef>
+
+	<ThoughtDef>
+		<defName>ResPublica</defName>
+		<thoughtClass>Thought_Situational</thoughtClass>
+		<workerClass>Rimocracy.ThoughtWorker_ResPublica</workerClass>
+		<validWhileDespawned>true</validWhileDespawned>
+		<nullifiedIfNotColonist>true</nullifiedIfNotColonist>
+		<nullifyingTraits>
+			<li>Psychopath</li>
+		</nullifyingTraits>
+		<stages>
+			<li>
+				<label>terrible government</label>
+				<description>This government is a joke!</description>
+				<baseMoodEffect>-20</baseMoodEffect>
+			</li>
+			<li>
+				<label>bad government</label>
+				<description>What am I paying my taxes for?</description>
+				<baseMoodEffect>-10</baseMoodEffect>
+			</li>
+			<li>
+				<label>just government</label>
+				<description>Our country has a decent political system.</description>
+				<baseMoodEffect>10</baseMoodEffect>
+			</li>
+			<li>
+				<label>proud of my government</label>
+				<description>We are undoubtedly the most enlightened country on this planet!</description>
+				<baseMoodEffect>20</baseMoodEffect>
+			</li>
+		</stages>
 	</ThoughtDef>
 
 </Defs>

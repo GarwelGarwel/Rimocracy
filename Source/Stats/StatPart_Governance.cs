@@ -16,7 +16,7 @@ namespace Rimocracy
         {
             float mult = Multiplier(req) * 100;
             return mult != 100
-                ? "Governance " + Utility.RimocracyComp.GovernancePercentage.ToString("N0") + "%: x" + mult.ToString("N0") + "%"
+                ? $"Governance {Utility.RimocracyComp.Governance.ToStringPercent()}: x{mult.ToStringPercent()}"
                 : null;
         }
 
@@ -25,8 +25,9 @@ namespace Rimocracy
         float Multiplier(StatRequest req)
         {
             // Only applies to player's buildings and free colonists
-            if (!req.HasThing || !Utility.PoliticsEnabled || !((req.Thing is Pawn && (req.Thing as Pawn).IsCitizen()) || (req.Thing is Building && req.Thing.Faction.IsPlayer)))
+            if (!req.HasThing || !Utility.PoliticsEnabled || !((req.Thing as Pawn).IsCitizen() || (req.Thing is Building && req.Thing.Faction != null && req.Thing.Faction.IsPlayer)))
                 return 1;
+
             float effect = Utility.RimocracyComp.Governance;
 
             // If the effect is skill-based, check if the parent stat's skills include the current focus skill

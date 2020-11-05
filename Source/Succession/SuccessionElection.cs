@@ -8,23 +8,21 @@ namespace Rimocracy.Succession
     {
         int votesForWinner = 0;
 
-        public override string Title => "Election";
-
         public override SuccessionType SuccessionType => SuccessionType.Election;
+
+        public override string Title => "Election";
 
         public override string SuccessionLabel => "election";
 
-        public override string SameLeaderTitle => Utility.LeaderTitle.CapitalizeFirst() + " Reelected";
+        public override string SameLeaderTitle => $"{Utility.LeaderTitle.CapitalizeFirst()} Reelected";
 
         public override IEnumerable<Pawn> Candidates => Utility.RimocracyComp.Candidates ?? base.Candidates;
 
         public override string NewLeaderMessage(Pawn leader) =>
-            ("{PAWN_nameFullDef} has been elected as the new " + Utility.LeaderTitle + " of " + Utility.NationName + " with "
-            + (votesForWinner != 1 ? votesForWinner + " votes" : "just one vote") + ". Vox populi, vox dei!").Formatted(leader.Named("PAWN"));
+            $"{leader.Name} has been elected as the new {Utility.LeaderTitle} of {Utility.NationName} with {(votesForWinner != 1 ? votesForWinner + " votes" : "just one vote")}. Vox populi, vox dei!";
 
         public override string SameLeaderMessage(Pawn leader) =>
-            ("{PAWN_nameFullDef} has been reelected as the " + Utility.LeaderTitle + " of " + Utility.NationName + " with "
-            + (votesForWinner != 1 ? votesForWinner + " votes." : "just one vote.")).Formatted(leader.Named("PAWN"));
+            $"{leader.Name} has been reelected as the {Utility.LeaderTitle} of {Utility.NationName} with {(votesForWinner != 1 ? votesForWinner + " votes." : "just one vote.")}";
 
         public override Pawn ChooseLeader()
         {
@@ -32,7 +30,7 @@ namespace Rimocracy.Succession
 
             // Logging votes
             foreach (KeyValuePair<Pawn, int> kvp in votes)
-                Utility.Log("- " + kvp.Key + ": " + kvp.Value + " votes");
+                Utility.Log($"- {kvp.Key}: {kvp.Value} votes");
 
             // Returning the winner
             KeyValuePair<Pawn, int> winner = votes.MaxByWithFallback(kvp => kvp.Value);
@@ -42,7 +40,7 @@ namespace Rimocracy.Succession
         }
 
         /// <summary>
-        /// Returns the given number of most candidates with the most votes;
+        /// Returns the given number of candidates with the most votes
         /// </summary>
         /// <param name="num"></param>
         /// <returns></returns>
@@ -52,7 +50,7 @@ namespace Rimocracy.Succession
         {
             Dictionary<Pawn, int> votes = new Dictionary<Pawn, int>();
 
-            foreach (Pawn p in Utility.Citizens.Where(p => !p.Dead).ToList())
+            foreach (Pawn p in Utility.Citizens.ToList())
             {
                 Pawn votedFor = Vote(p);
                 if (votes.ContainsKey(votedFor))
@@ -67,8 +65,8 @@ namespace Rimocracy.Succession
             Dictionary<Pawn, float> weights = new Dictionary<Pawn, float>();
             foreach (Pawn p in Candidates.Where(p => voter != p))
                 weights[p] = ElectionUtility.VoteWeight(voter, p);
-            Pawn choice = weights.MaxByWithFallback(kvp => kvp.Value).Key;
-            Utility.Log(voter + " votes for " + choice);
+            Pawn choice = weights.MaxBy(kvp => kvp.Value).Key;
+            Utility.Log($"{voter} votes for {choice}.");
             return choice;
         }
     }

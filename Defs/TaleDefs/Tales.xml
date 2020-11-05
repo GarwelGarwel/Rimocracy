@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	
+	<TaleDef>
+		<defName>BecameLeader</defName>
+		<label>became leader</label>
+		<taleClass>Tale_SinglePawn</taleClass>
+		<type>Volatile</type>
+		<baseInterest>5</baseInterest>
+		<rulePack>
+			<rulesStrings>
+				<li>tale_noun->[PAWN_nameDef] becoming the leader</li>
+				<li>image->[PAWN_nameFull] being hailed by a group of colonists [circumstance_group]</li>
+				<li>image->colonists bowing before [PAWN_nameFull] [circumstance_group]</li>
+				<li>image->[PAWN_nameFull] giving orders to colonists [circumstance_group]</li>
+				<li>circumstance_phrase->in a beautifully decorated room</li>
+				<li>circumstance_phrase->solemnly</li>
+				<li>circumstance_phrase->with happy tears in their eyes</li>
+				<li>desc_sentence->[PAWN_pronoun] looks optimistic and confident.</li>
+				<li>desc_sentence->[PAWN_pronoun] is smiling graciously.</li>
+				<li>desc_sentence->[PAWN_pronoun] is making an emotional speech.</li>
+				<li>desc_sentence->[PAWN_pronoun]'s face shows decisiveness.</li>
+				<li>desc_sentence->[PAWN_pronoun] seems to be fully in control of the situation.</li>
+				<li>desc_sentence->The sun is shining brightly on [PAWN_possessive] face.</li>
+			</rulesStrings>
+		</rulePack>
+	</TaleDef>
+
+</Defs>

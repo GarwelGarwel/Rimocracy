@@ -7,16 +7,22 @@ namespace Rimocracy
     {
         protected override ThoughtState CurrentSocialStateInternal(Pawn p, Pawn otherPawn)
         {
-            if (Utility.RimocracyComp?.Candidates == null)
-                return false;
-            Pawn myCandidate = Utility.RimocracyComp.GetSupportedCampaign(p)?.Candidate;
-            if (myCandidate == null || myCandidate != Utility.RimocracyComp.GetSupportedCampaign(otherPawn)?.Candidate)
+            if (Utility.RimocracyComp?.Campaigns == null)
                 return false;
 
+            Pawn myCandidate = p.GetSupportedCandidate();
+            if (myCandidate == null || myCandidate != otherPawn.GetSupportedCandidate())
+                return false;
+
+            // The current pawn is a candidate; the other pawn is their supporter
             if (p == myCandidate)
                 return ThoughtState.ActiveAtStage(1);
+
+            // The current pawn is a supporter of the other pawn
             if (otherPawn == myCandidate)
                 return ThoughtState.ActiveAtStage(2);
+
+            // Both pawns support the same candidate
             return ThoughtState.ActiveAtStage(0);
         }
     }

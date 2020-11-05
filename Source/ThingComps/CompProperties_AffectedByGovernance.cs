@@ -8,12 +8,12 @@ namespace Rimocracy
     {
         List<SkillDef> skills;
 
-        public CompProperties_AffectedByGovernance() => compClass = typeof(ThingComp_AffectedByGovernance);
-
         public List<SkillDef> Skills
         {
             get => skills;
             set => skills = value;
         }
+
+        public CompProperties_AffectedByGovernance() => compClass = typeof(ThingComp_AffectedByGovernance);
     }
 }

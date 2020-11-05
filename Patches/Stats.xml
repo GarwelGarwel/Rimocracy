@@ -2,6 +2,8 @@
 
 <Patch>
 
+	<!-- Work Speed Effects of Governance -->
+
 	<Operation Class="PatchOperationAdd">
 		<xpath>/Defs/StatDef[defName="WorkSpeedGlobal"]/parts</xpath>
 		<value>
@@ -37,7 +39,7 @@
 		</value>
 	</Operation>
 	
-	<!-- ========================= Focus Skill Effects ==========================-->
+	<!-- Focus Skill Effects -->
 	
 	<Operation Class="PatchOperationSequence">
 		<success>Always</success>
@@ -564,7 +566,7 @@
 		</value>
 	</Operation>
 
-<!-- ========================= Building Stats ==========================-->
+	<!-- Building Stats -->
 
 	<Operation Class="PatchOperationAdd">
 		<xpath>/Defs/StatDef[defName="WorkTableWorkSpeedFactor"]/parts</xpath>
@@ -572,6 +574,32 @@
 			<li Class="Rimocracy.StatPart_Governance">
 				<maxValue>1.5</maxValue>
 				<focusOnly>true</focusOnly>
+			</li>
+		</value>
+	</Operation>
+	
+	<!-- Decisions' Effects -->
+
+	<Operation Class="PatchOperationSequence">
+		<success>Always</success>
+		<operations>
+			<li Class="PatchOperationTest">
+				<xpath>/Defs/StatDef[defName="MentalBreakThreshold"]/parts</xpath>
+				<success>Invert</success>
+			</li>
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/StatDef[defName="MentalBreakThreshold"]</xpath>
+				<value>
+					<parts/>
+				</value>
+			</li>
+		</operations>
+	</Operation>
+	<Operation Class="PatchOperationAdd">
+		<xpath>/Defs/StatDef[defName="MentalBreakThreshold"]/parts</xpath>
+		<value>
+			<li Class="Rimocracy.StatPart_StateOfEmergency">
+				<value>0.25</value>
 			</li>
 		</value>
 	</Operation>

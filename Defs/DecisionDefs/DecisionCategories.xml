@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+	<Rimocracy.DecisionCategoryDef>
+		<defName>SuccessionTypes</defName>
+		<label>Succession Laws</label>
+		<displayOrder>10</displayOrder>
+	</Rimocracy.DecisionCategoryDef>
+
+	<Rimocracy.DecisionCategoryDef>
+		<defName>Terms</defName>
+		<label>Reign Terms</label>
+		<displayOrder>20</displayOrder>
+	</Rimocracy.DecisionCategoryDef>
+
+	<Rimocracy.DecisionCategoryDef>
+		<defName>Democratic</defName>
+		<label>Democratic Reforms</label>
+		<displayOrder>30</displayOrder>
+	</Rimocracy.DecisionCategoryDef>
+
+	<Rimocracy.DecisionCategoryDef>
+		<defName>Authoritarian</defName>
+		<label>Authoritarian Reforms</label>
+		<displayOrder>40</displayOrder>
+	</Rimocracy.DecisionCategoryDef>
+
+	<Rimocracy.DecisionCategoryDef>
+		<defName>Misc</defName>
+		<label>Miscellaneous</label>
+		<displayOrder>100</displayOrder>
+	</Rimocracy.DecisionCategoryDef>
+
+</Defs>
