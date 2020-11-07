@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<Defs>
+
+	<SuccessionDef>
+		<defName>Election</defName>
+		<label>election</label>
+		<description>Majority rule.</description>
+		<noun>election</noun>
+		<newLeaderMessageText>[PAWN] has been elected as the new [LEADERTITLE] of [NATIONNAME] with [NUMVOTES]. Vox populi, vox dei!</newLeaderMessageText>
+		<sameLeaderMessageTitle>[PAWN] reelected</sameLeaderMessageTitle>
+		<sameLeaderMessageText>[PAWN] has been reelected as the [LEADERTITLE] of [NATIONNAME] with [NUMVOTES].</sameLeaderMessageText>
+	</SuccessionDef>
+
+	<SuccessionDef>
+		<defName>Lot</defName>
+		<label>lot</label>
+		<description>A random citizen is chosen to lead the nation.</description>
+		<noun>lottery</noun>
+		<newLeaderMessageText>[PAWN] drew the short straw and will rule [NATIONNAME] from now on!</newLeaderMessageText>
+		<sameLeaderMessageText>[PAWN] has a lucky hand! [PAWN_pronoun] won the [LEADERTITLE] lottery again.</sameLeaderMessageText>
+	</SuccessionDef>
+
+	<SuccessionDef>
+		<defName>Seniority</defName>
+		<label>Seniority</label>
+		<description>The oldest citizen becomes the leader.</description>
+		<newLeaderMessageText>[PAWN] will rule [NATIONNAME] now as the oldest colonist.</newLeaderMessageText>
+		<sameLeaderMessageText>[PAWN] is still the oldest colonist in [NATIONNAME]. [PAWN_pronoun] remains our [LEADERTITLE].</sameLeaderMessageText>
+	</SuccessionDef>
+
+	<SuccessionDef>
+		<defName>Nobility</defName>
+		<label>nobility</label>
+		<description>The citizen with the highest, and oldest, nobility title is chosen.</description>
+	</SuccessionDef>
+
+	<SuccessionDef>
+		<defName>Martial</defName>
+		<label>martial</label>
+		<description>Most accomplished warrior becomes the leader.</description>
+		<newLeaderMessageText>[PAWN] will now lead [NATIONNAME] to glory as its most renowned warrior.</newLeaderMessageText>
+		<sameLeaderMessageTitle>[PAWN] reelected</sameLeaderMessageTitle>
+		<sameLeaderMessageText>[PAWN] is still the most able worrior of [NATIONNAME]. Friends and foes alike bow before [PAWN_objective]!</sameLeaderMessageText>
+	</SuccessionDef>
+
+</Defs>

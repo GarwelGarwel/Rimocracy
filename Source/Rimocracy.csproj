@@ -68,6 +68,7 @@
     <Compile Include="Decision.cs" />
     <Compile Include="Defs\DecisionCategoryDef.cs" />
     <Compile Include="Defs\DecisionDef.cs" />
+    <Compile Include="Defs\SuccessionDef.cs" />
     <Compile Include="Dialog_DecisionList.cs" />
     <Compile Include="ElectionUtility.cs" />
     <Compile Include="Defs\LeaderTitleDef.cs" />
