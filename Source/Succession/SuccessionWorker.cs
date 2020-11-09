@@ -6,7 +6,7 @@ namespace Rimocracy
 {
     public enum SuccessionType { Undefined = 0, Election, Lot, Seniority, Nobility, Martial };
 
-    public abstract class SuccessionBase
+    public abstract class SuccessionWorker
     {
         public SuccessionDef def;
 

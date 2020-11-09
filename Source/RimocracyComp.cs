@@ -52,34 +52,34 @@ namespace Rimocracy
                 switch (value)
                 {
                     case SuccessionType.Election:
-                        Succession = new SuccessionElection();
+                        Succession = new SuccessionWorker_Election();
                         break;
 
                     case SuccessionType.Lot:
-                        Succession = new SuccessionLot();
+                        Succession = new SuccessionWorker_Lot();
                         break;
 
                     case SuccessionType.Seniority:
-                        Succession = new SuccessionOldest();
+                        Succession = new SuccessionWorker_Oldest();
                         break;
 
                     case SuccessionType.Nobility:
-                        Succession = new SuccessionNobility();
+                        Succession = new SuccessionWorker_Nobility();
                         break;
 
                     case SuccessionType.Martial:
-                        Succession = new SuccessionMartial();
+                        Succession = new SuccessionWorker_Martial();
                         break;
 
                     default:
                         Utility.Log("Succession type not set! Reverting to election.", LogLevel.Error);
-                        Succession = new SuccessionElection();
+                        Succession = new SuccessionWorker_Election();
                         break;
                 }
             }
         }
 
-        public SuccessionBase Succession { get; set; }
+        public SuccessionWorker Succession { get; set; }
 
         public List<ElectionCampaign> Campaigns
         {
@@ -315,7 +315,7 @@ namespace Rimocracy
             // Launch campaigns
             if (ElectionUtility.CampaigningEnabled)
             {
-                Candidates = ((SuccessionElection)Succession).ChooseLeaders();
+                Candidates = ((SuccessionWorker_Election)Succession).ChooseLeaders();
                 Utility.Log("Candidates in the campaign: ");
                 foreach (ElectionCampaign ec in campaigns)
                     Utility.Log($"- {ec}");

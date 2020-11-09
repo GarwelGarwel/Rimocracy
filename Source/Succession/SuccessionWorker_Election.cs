@@ -4,7 +4,7 @@ using Verse;
 
 namespace Rimocracy.Succession
 {
-    public class SuccessionElection : SuccessionBase
+    public class SuccessionWorker_Election : SuccessionWorker
     {
         int votesForWinner = 0;
 
