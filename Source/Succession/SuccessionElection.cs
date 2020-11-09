@@ -8,21 +8,23 @@ namespace Rimocracy.Succession
     {
         int votesForWinner = 0;
 
+        public override string NewLeaderMessageText(Pawn leader) =>
+            def.newLeaderMessageText.Formatted(
+                Utility.NationName.Named("NATIONNAME"), 
+                Utility.LeaderTitle.Named("LEADERTITLE"), 
+                leader.Named("PAWN"), 
+                (votesForWinner > 1 ? $"{votesForWinner} votes" : "just one vote").Named("VOTESNUM"));
+
+        public override string SameLeaderMessageText(Pawn leader) =>
+            def.sameLeaderMessageText.Formatted(
+                Utility.NationName.Named("NATIONNAME"),
+                Utility.LeaderTitle.Named("LEADERTITLE"),
+                leader.Named("PAWN"),
+                (votesForWinner > 1 ? $"{votesForWinner} votes" : "just one vote").Named("VOTESNUM"));
+
         public override SuccessionType SuccessionType => SuccessionType.Election;
 
-        public override string Title => "Election";
-
-        public override string SuccessionLabel => "election";
-
-        public override string SameLeaderTitle => $"{Utility.LeaderTitle.CapitalizeFirst()} Reelected";
-
         public override IEnumerable<Pawn> Candidates => Utility.RimocracyComp.Candidates ?? base.Candidates;
-
-        public override string NewLeaderMessage(Pawn leader) =>
-            $"{leader.Name} has been elected as the new {Utility.LeaderTitle} of {Utility.NationName} with {(votesForWinner != 1 ? votesForWinner + " votes" : "just one vote")}. Vox populi, vox dei!";
-
-        public override string SameLeaderMessage(Pawn leader) =>
-            $"{leader.Name} has been reelected as the {Utility.LeaderTitle} of {Utility.NationName} with {(votesForWinner != 1 ? votesForWinner + " votes." : "just one vote.")}";
 
         public override Pawn ChooseLeader()
         {

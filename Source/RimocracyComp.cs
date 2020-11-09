@@ -49,9 +49,6 @@ namespace Rimocracy
             get => Succession != null ? Succession.SuccessionType : SuccessionType.Undefined;
             set
             {
-                //if (SuccessionType == value)
-                //    return;
-
                 switch (value)
                 {
                     case SuccessionType.Election:
@@ -124,7 +121,7 @@ namespace Rimocracy
         }
 
         public float RegimeFinal =>
-            Mathf.Clamp(regime + (Succession != null ? Succession.RegimeEffect : 0) + TermDuration.GetRegimeEffect(), -1, 1);
+            Mathf.Clamp(regime + (Succession != null ? Succession.def.regimeEffect : 0) + TermDuration.GetRegimeEffect(), -1, 1);
 
         public TermDuration TermDuration
         {
@@ -366,12 +363,12 @@ namespace Rimocracy
                 if (leader != oldLeader)
                 {
                     governance = Mathf.Lerp(DecisionActive("Stability") ? 0 : 0.5f, governance, 0.5f);
-                    Find.LetterStack.ReceiveLetter(Succession.NewLeaderTitle, $"{Succession.NewLeaderMessage(leader)}\n\n{FocusSkillMessage}", LetterDefOf.NeutralEvent);
+                    Find.LetterStack.ReceiveLetter(Succession.NewLeaderMessageTitle(leader), $"{Succession.NewLeaderMessageText(leader)}\n\n{FocusSkillMessage}", LetterDefOf.NeutralEvent);
                     Tale tale = TaleRecorder.RecordTale(RimocracyDefOf.BecameLeader, leader);
                     if (tale != null)
                         Utility.Log($"Tale recorded: {tale}");
                 }
-                else Find.LetterStack.ReceiveLetter(Succession.SameLeaderTitle, $"{Succession.SameLeaderMessage(leader)}\n\n{FocusSkillMessage}", LetterDefOf.NeutralEvent);
+                else Find.LetterStack.ReceiveLetter(Succession.SameLeaderMessageTitle(leader), $"{Succession.SameLeaderMessageText(leader)}\n\n{FocusSkillMessage}", LetterDefOf.NeutralEvent);
                 Utility.Log($"New leader is {leader} (chosen from {Succession.Candidates.Count()} candidates). Their term expires on {GenDate.DateFullStringAt(termExpiration, Find.WorldGrid.LongLatOf(leader.Tile))}. The focus skill is {focusSkill.defName}.");
             }
             else Utility.Log("Could not choose a new leader.", LogLevel.Warning);

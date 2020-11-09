@@ -19,6 +19,7 @@
 		<noun>lottery</noun>
 		<newLeaderMessageText>[PAWN] drew the short straw and will rule [NATIONNAME] from now on!</newLeaderMessageText>
 		<sameLeaderMessageText>[PAWN] has a lucky hand! [PAWN_pronoun] won the [LEADERTITLE] lottery again.</sameLeaderMessageText>
+		<regimeEffect>-0.05</regimeEffect>
 	</SuccessionDef>
 
 	<SuccessionDef>
@@ -27,12 +28,14 @@
 		<description>The oldest citizen becomes the leader.</description>
 		<newLeaderMessageText>[PAWN] will rule [NATIONNAME] now as the oldest colonist.</newLeaderMessageText>
 		<sameLeaderMessageText>[PAWN] is still the oldest colonist in [NATIONNAME]. [PAWN_pronoun] remains our [LEADERTITLE].</sameLeaderMessageText>
+		<regimeEffect>-0.10</regimeEffect>
 	</SuccessionDef>
 
 	<SuccessionDef>
 		<defName>Nobility</defName>
 		<label>nobility</label>
 		<description>The citizen with the highest, and oldest, nobility title is chosen.</description>
+		<regimeEffect>-0.10</regimeEffect>
 	</SuccessionDef>
 
 	<SuccessionDef>
@@ -42,6 +45,7 @@
 		<newLeaderMessageText>[PAWN] will now lead [NATIONNAME] to glory as its most renowned warrior.</newLeaderMessageText>
 		<sameLeaderMessageTitle>[PAWN] reelected</sameLeaderMessageTitle>
 		<sameLeaderMessageText>[PAWN] is still the most able worrior of [NATIONNAME]. Friends and foes alike bow before [PAWN_objective]!</sameLeaderMessageText>
+		<regimeEffect>-0.10</regimeEffect>
 	</SuccessionDef>
 
 </Defs>

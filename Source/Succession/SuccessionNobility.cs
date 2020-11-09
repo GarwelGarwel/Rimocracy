@@ -7,9 +7,9 @@ namespace Rimocracy.Succession
     {
         public override SuccessionType SuccessionType => SuccessionType.Nobility;
 
-        public override string Title => "Nobility";
+        //public override string Title => "Nobility";
 
-        public override float RegimeEffect => -0.10f;
+        //public override float RegimeEffect => -0.10f;
 
         public override bool IsValid => !Candidates.EnumerableNullOrEmpty();
 

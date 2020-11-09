@@ -12,19 +12,19 @@ namespace Rimocracy.Succession
 
         public override SuccessionType SuccessionType => SuccessionType.Martial;
 
-        public override string Title => "Best Warrior";
+        //public override string Title => "Best Warrior";
 
-        public override float RegimeEffect => -0.10f;
+        //public override float RegimeEffect => -0.10f;
 
         public override Pawn ChooseLeader() => Candidates.MaxByWithFallback(pawn => GetMartialRenown(pawn));
 
         public override bool CanBeCandidate(Pawn pawn) => base.CanBeCandidate(pawn) && !pawn.WorkTagIsDisabled(WorkTags.Violent);
 
-        public override string NewLeaderMessage(Pawn leader) =>
-            $"{leader.Name} will now lead {Utility.NationName} to glory as its most renowned warrior.";
+        //public override string NewLeaderMessage(Pawn leader) =>
+        //    $"{leader.Name} will now lead {Utility.NationName} to glory as its most renowned warrior.";
 
-        public override string SameLeaderMessage(Pawn leader) =>
-            $"{leader.Name} is still the most able worrior of {Utility.NationName}. Friends and foes alike bow before {leader.gender.GetObjective()}!";
+        //public override string SameLeaderMessage(Pawn leader) =>
+        //    $"{leader.Name} is still the most able worrior of {Utility.NationName}. Friends and foes alike bow before {leader.gender.GetObjective()}!";
 
         float GetMartialRenown(Pawn pawn) =>
             pawn.records.GetValue(RecordDefOf.KillsHumanlikes)
