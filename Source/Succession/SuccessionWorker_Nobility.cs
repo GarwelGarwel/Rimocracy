@@ -1,12 +1,10 @@
 ﻿using RimWorld;
 using Verse;
 
-namespace Rimocracy.Succession
+namespace Rimocracy
 {
     class SuccessionWorker_Nobility : SuccessionWorker
     {
-        public override SuccessionType SuccessionType => SuccessionType.Nobility;
-
         public override bool IsValid => !Candidates.EnumerableNullOrEmpty();
 
         public override bool CanBeCandidate(Pawn pawn) =>

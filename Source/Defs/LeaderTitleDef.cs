@@ -14,7 +14,7 @@ namespace Rimocracy
 
         public bool appliesToIndefiniteTerm = true;
 
-        public List<SuccessionType> successionTypes;
+        public List<SuccessionDef> successionTypes = new List<SuccessionDef>();
 
         public int minPopulation = 0;
 
@@ -37,6 +37,11 @@ namespace Rimocracy
             if (pawn == null)
                 return label ?? labelMale;
             return (pawn.gender == Gender.Female ? labelFemale : labelMale) ?? label;
+        }
+
+        public override void ResolveReferences()
+        {
+            base.ResolveReferences();
         }
     }
 }

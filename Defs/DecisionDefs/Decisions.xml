@@ -163,7 +163,7 @@
 		</displayRequirements>
 		<effectRequirements>
 			<notCampaigning>true</notCampaigning>
-			<maxRegime>-0.2</maxRegime>
+			<maxRegime>-0.20</maxRegime>
 		</effectRequirements>
 		<governanceCost>0.75</governanceCost>
 		<setTermDuration>Indefinite</setTermDuration>

@@ -18,6 +18,8 @@ namespace Rimocracy
         public static StatDef GovernEfficiency;
         public static StatDef GovernEfficiencyFactor;
 
+        public static SuccessionDef Election;// = SuccessionDef.Named("Election");
+
         public static TaleDef BecameLeader;
 
         public static ThoughtDef ElectionOutcome;

@@ -2,50 +2,55 @@
 
 <Defs>
 
-	<SuccessionDef>
+	<Rimocracy.SuccessionDef>
 		<defName>Election</defName>
 		<label>election</label>
-		<description>Majority rule.</description>
+		<description>All adult, free, non-comatose citizens vote for candidates of their choice. When there are many enough citizens, only two most popular candidates compete.</description>
 		<noun>election</noun>
+		<workerClass>Rimocracy.SuccessionWorker_Election</workerClass>
 		<newLeaderMessageText>[PAWN] has been elected as the new [LEADERTITLE] of [NATIONNAME] with [NUMVOTES]. Vox populi, vox dei!</newLeaderMessageText>
 		<sameLeaderMessageTitle>[PAWN] reelected</sameLeaderMessageTitle>
 		<sameLeaderMessageText>[PAWN] has been reelected as the [LEADERTITLE] of [NATIONNAME] with [NUMVOTES].</sameLeaderMessageText>
-	</SuccessionDef>
+	</Rimocracy.SuccessionDef>
 
-	<SuccessionDef>
+	<Rimocracy.SuccessionDef>
 		<defName>Lot</defName>
 		<label>lot</label>
 		<description>A random citizen is chosen to lead the nation.</description>
 		<noun>lottery</noun>
+		<workerClass>Rimocracy.SuccessionWorker_Lot</workerClass>
 		<newLeaderMessageText>[PAWN] drew the short straw and will rule [NATIONNAME] from now on!</newLeaderMessageText>
 		<sameLeaderMessageText>[PAWN] has a lucky hand! [PAWN_pronoun] won the [LEADERTITLE] lottery again.</sameLeaderMessageText>
 		<regimeEffect>-0.05</regimeEffect>
-	</SuccessionDef>
+	</Rimocracy.SuccessionDef>
 
-	<SuccessionDef>
+	<Rimocracy.SuccessionDef>
 		<defName>Seniority</defName>
 		<label>Seniority</label>
 		<description>The oldest citizen becomes the leader.</description>
+		<workerClass>Rimocracy.SuccessionWorker_Seniority</workerClass>
 		<newLeaderMessageText>[PAWN] will rule [NATIONNAME] now as the oldest colonist.</newLeaderMessageText>
 		<sameLeaderMessageText>[PAWN] is still the oldest colonist in [NATIONNAME]. [PAWN_pronoun] remains our [LEADERTITLE].</sameLeaderMessageText>
 		<regimeEffect>-0.10</regimeEffect>
-	</SuccessionDef>
+	</Rimocracy.SuccessionDef>
 
-	<SuccessionDef>
+	<Rimocracy.SuccessionDef>
 		<defName>Nobility</defName>
 		<label>nobility</label>
 		<description>The citizen with the highest, and oldest, nobility title is chosen.</description>
+		<workerClass>Rimocracy.SuccessionWorker_Nobility</workerClass>
 		<regimeEffect>-0.10</regimeEffect>
-	</SuccessionDef>
+	</Rimocracy.SuccessionDef>
 
-	<SuccessionDef>
+	<Rimocracy.SuccessionDef>
 		<defName>Martial</defName>
 		<label>martial</label>
 		<description>Most accomplished warrior becomes the leader.</description>
+		<workerClass>Rimocracy.SuccessionWorker_Martial</workerClass>
 		<newLeaderMessageText>[PAWN] will now lead [NATIONNAME] to glory as its most renowned warrior.</newLeaderMessageText>
 		<sameLeaderMessageTitle>[PAWN] reelected</sameLeaderMessageTitle>
 		<sameLeaderMessageText>[PAWN] is still the most able worrior of [NATIONNAME]. Friends and foes alike bow before [PAWN_objective]!</sameLeaderMessageText>
 		<regimeEffect>-0.10</regimeEffect>
-	</SuccessionDef>
+	</Rimocracy.SuccessionDef>
 
 </Defs>

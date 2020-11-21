@@ -1,7 +1,7 @@
 ﻿using RimWorld;
 using Verse;
 
-namespace Rimocracy.Succession
+namespace Rimocracy
 {
     class SuccessionWorker_Martial : SuccessionWorker
     {
@@ -9,8 +9,6 @@ namespace Rimocracy.Succession
         const float AnimalValue = 0.05f;
         const float DownedValue = 0.2f;
         const float DamageDealtValue = 0.001f;
-
-        public override SuccessionType SuccessionType => SuccessionType.Martial;
 
         public override Pawn ChooseLeader() => Candidates.MaxByWithFallback(pawn => GetMartialRenown(pawn));
 

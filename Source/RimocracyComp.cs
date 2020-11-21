@@ -1,5 +1,4 @@
-﻿using Rimocracy.Succession;
-using RimWorld;
+﻿using RimWorld;
 using RimWorld.Planet;
 using System;
 using System.Collections.Generic;
@@ -25,6 +24,7 @@ namespace Rimocracy
 
         SkillDef focusSkill;
         TermDuration termDuration = TermDuration.Halfyear;
+        SuccessionDef successionType = RimocracyDefOf.Election;
         List<ElectionCampaign> campaigns;
         int termExpiration = int.MaxValue;
         int electionTick = int.MaxValue;
@@ -44,42 +44,50 @@ namespace Rimocracy
             set => leaderTitle = value;
         }
 
-        public SuccessionType SuccessionType
+        public SuccessionDef SuccessionType
         {
-            get => Succession != null ? Succession.SuccessionType : SuccessionType.Undefined;
-            set
+            get
             {
-                switch (value)
-                {
-                    case SuccessionType.Election:
-                        Succession = new SuccessionWorker_Election();
-                        break;
-
-                    case SuccessionType.Lot:
-                        Succession = new SuccessionWorker_Lot();
-                        break;
-
-                    case SuccessionType.Seniority:
-                        Succession = new SuccessionWorker_Oldest();
-                        break;
-
-                    case SuccessionType.Nobility:
-                        Succession = new SuccessionWorker_Nobility();
-                        break;
-
-                    case SuccessionType.Martial:
-                        Succession = new SuccessionWorker_Martial();
-                        break;
-
-                    default:
-                        Utility.Log("Succession type not set! Reverting to election.", LogLevel.Error);
-                        Succession = new SuccessionWorker_Election();
-                        break;
-                }
+                if (successionType == null)
+                    successionType = RimocracyDefOf.Election;
+                return successionType;
             }
+            set => successionType = value;
         }
+        //get => Succession != null ? Succession.SuccessionType : SuccessionType.Undefined;
+        //set
+        //{
+        //    switch (value)
+        //    {
+        //        case SuccessionType.Election:
+        //            SuccessionWorker = new SuccessionWorker_Election();
+        //            break;
 
-        public SuccessionWorker Succession { get; set; }
+        //        case SuccessionType.Lot:
+        //            SuccessionWorker = new SuccessionWorker_Lot();
+        //            break;
+
+        //        case SuccessionType.Seniority:
+        //            SuccessionWorker = new SuccessionWorker_Oldest();
+        //            break;
+
+        //        case SuccessionType.Nobility:
+        //            SuccessionWorker = new SuccessionWorker_Nobility();
+        //            break;
+
+        //        case SuccessionType.Martial:
+        //            SuccessionWorker = new SuccessionWorker_Martial();
+        //            break;
+
+        //        default:
+        //            Utility.Log("Succession type not set! Reverting to election.", LogLevel.Error);
+        //            SuccessionWorker = new SuccessionWorker_Election();
+        //            break;
+        //    }
+        //}
+        //}
+
+        public SuccessionWorker SuccessionWorker => SuccessionType.Worker;
 
         public List<ElectionCampaign> Campaigns
         {
@@ -121,7 +129,7 @@ namespace Rimocracy
         }
 
         public float RegimeFinal =>
-            Mathf.Clamp(regime + (Succession != null ? Succession.def.regimeEffect : 0) + TermDuration.GetRegimeEffect(), -1, 1);
+            Mathf.Clamp(regime + (SuccessionWorker != null ? SuccessionWorker.def.regimeEffect : 0) + TermDuration.GetRegimeEffect(), -1, 1);
 
         public TermDuration TermDuration
         {
@@ -200,9 +208,7 @@ namespace Rimocracy
             Scribe_Values.Look(ref isEnabled, "isEnabled");
             Scribe_References.Look(ref leader, "leader");
             Scribe_Defs.Look(ref leaderTitle, "leaderTitle");
-            SuccessionType successionType = SuccessionType;
-            Scribe_Values.Look(ref successionType, "successionType", SuccessionType.Undefined);
-            SuccessionType = successionType;
+            Scribe_Defs.Look(ref successionType, "successionType");
             Scribe_Values.Look(ref termDuration, "termDuration", TermDuration.Quadrum, true);
             Scribe_Collections.Look(ref campaigns, "campaigns", LookMode.Deep);
             Scribe_Values.Look(ref termExpiration, "termExpiration", int.MaxValue);
@@ -243,10 +249,13 @@ namespace Rimocracy
                     Decisions.RemoveAt(i);
                 }
 
-            if (Succession == null || !Succession.IsValid)
-                SuccessionType = SuccessionType.Election;
+            if (SuccessionType == null || !SuccessionWorker.IsValid)
+            {
+                Utility.Log($"Succession type is {SuccessionType}. SuccessionWorker is {SuccessionWorker}. Resetting to election.");
+                SuccessionType = RimocracyDefOf.Election;
+            }
 
-            if (SuccessionType == SuccessionType.Election)
+            if (SuccessionType == RimocracyDefOf.Election)
             {
                 if (ticks >= termExpiration - Settings.CampaignDurationTicks || !leader.CanBeLeader())
                     // If term is about to expire or there is no (valid) leader, call a new election
@@ -255,7 +264,7 @@ namespace Rimocracy
                     else if (!campaigns.NullOrEmpty())
                     {
                         // If at least one of the candidates is no longer eligible, campaign starts over
-                        if (campaigns.Any(p => !Succession.CanBeCandidate(p.Candidate)))
+                        if (campaigns.Any(p => !SuccessionWorker.CanBeCandidate(p.Candidate)))
                         {
                             Utility.Log("Campaign restarted because one of the candidates is ineligible.");
                             campaigns = null;
@@ -315,7 +324,7 @@ namespace Rimocracy
             // Launch campaigns
             if (ElectionUtility.CampaigningEnabled)
             {
-                Candidates = ((SuccessionWorker_Election)Succession).ChooseLeaders();
+                Candidates = ((SuccessionWorker_Election)SuccessionWorker).ChooseLeaders();
                 Utility.Log("Candidates in the campaign: ");
                 foreach (ElectionCampaign ec in campaigns)
                     Utility.Log($"- {ec}");
@@ -326,7 +335,7 @@ namespace Rimocracy
         void ChooseLeader()
         {
             Pawn oldLeader = leader;
-            leader = Succession.ChooseLeader();
+            leader = SuccessionWorker.ChooseLeader();
 
             if (leader != null)
             {
@@ -363,13 +372,13 @@ namespace Rimocracy
                 if (leader != oldLeader)
                 {
                     governance = Mathf.Lerp(DecisionActive("Stability") ? 0 : 0.5f, governance, 0.5f);
-                    Find.LetterStack.ReceiveLetter(Succession.NewLeaderMessageTitle(leader), $"{Succession.NewLeaderMessageText(leader)}\n\n{FocusSkillMessage}", LetterDefOf.NeutralEvent);
+                    Find.LetterStack.ReceiveLetter(SuccessionWorker.NewLeaderMessageTitle(leader), $"{SuccessionWorker.NewLeaderMessageText(leader)}\n\n{FocusSkillMessage}", LetterDefOf.NeutralEvent);
                     Tale tale = TaleRecorder.RecordTale(RimocracyDefOf.BecameLeader, leader);
                     if (tale != null)
                         Utility.Log($"Tale recorded: {tale}");
                 }
-                else Find.LetterStack.ReceiveLetter(Succession.SameLeaderMessageTitle(leader), $"{Succession.SameLeaderMessageText(leader)}\n\n{FocusSkillMessage}", LetterDefOf.NeutralEvent);
-                Utility.Log($"New leader is {leader} (chosen from {Succession.Candidates.Count()} candidates). Their term expires on {GenDate.DateFullStringAt(termExpiration, Find.WorldGrid.LongLatOf(leader.Tile))}. The focus skill is {focusSkill.defName}.");
+                else Find.LetterStack.ReceiveLetter(SuccessionWorker.SameLeaderMessageTitle(leader), $"{SuccessionWorker.SameLeaderMessageText(leader)}\n\n{FocusSkillMessage}", LetterDefOf.NeutralEvent);
+                Utility.Log($"New leader is {leader} (chosen from {SuccessionWorker.Candidates.Count()} candidates). Their term expires on {GenDate.DateFullStringAt(termExpiration, Find.WorldGrid.LongLatOf(leader.Tile))}. The focus skill is {focusSkill.defName}.");
             }
             else Utility.Log("Could not choose a new leader.", LogLevel.Warning);
             campaigns = null;

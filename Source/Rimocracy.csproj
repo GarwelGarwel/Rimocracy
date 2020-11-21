@@ -93,7 +93,7 @@
     <Compile Include="Succession\SuccessionWorker.cs" />
     <Compile Include="Succession\SuccessionWorker_Election.cs" />
     <Compile Include="Succession\SuccessionWorker_Lot.cs" />
-    <Compile Include="Succession\SuccessionWorker_Oldest.cs" />
+    <Compile Include="Succession\SuccessionWorker_Seniority.cs" />
     <Compile Include="ThingComps\ThingComp_AffectedByGovernance.cs" />
     <Compile Include="Thoughts\ThoughtWorker_Competitor.cs" />
     <Compile Include="Thoughts\ThoughtWorker_ResPublica.cs" />

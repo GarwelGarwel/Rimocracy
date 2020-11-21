@@ -37,7 +37,7 @@ namespace Rimocracy
                     content.Label($"Focus skill: {Utility.RimocracyComp.FocusSkill.LabelCap}.");
 
                 if (Utility.RimocracyComp.TermDuration != TermDuration.Indefinite)
-                    content.Label($"Next {Utility.RimocracyComp.Succession.def.noun} in {(Utility.RimocracyComp.TermExpiration - Find.TickManager.TicksAbs).ToStringTicksToPeriod(false)}.");
+                    content.Label($"Next {Utility.RimocracyComp.SuccessionWorker.def.noun} in {(Utility.RimocracyComp.TermExpiration - Find.TickManager.TicksAbs).ToStringTicksToPeriod(false)}.");
             }
             // Next election
             else if (Utility.RimocracyComp.ElectionTick > Find.TickManager.TicksAbs)
