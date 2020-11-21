@@ -14,8 +14,8 @@ namespace Rimocracy
 
         public override string ExplanationPart(StatRequest req)
         {
-            float mult = Multiplier(req) * 100;
-            return mult != 100
+            float mult = Multiplier(req);
+            return mult != 1
                 ? $"Governance {Utility.RimocracyComp.Governance.ToStringPercent()}: x{mult.ToStringPercent()}"
                 : null;
         }
