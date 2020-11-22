@@ -15,7 +15,7 @@ namespace Rimocracy
         public int durationDays;
 
         public float governanceCost;
-        public SuccessionType setSuccession = SuccessionType.Undefined;
+        public SuccessionDef setSuccession;
         public TermDuration setTermDuration = TermDuration.Undefined;
         public bool impeachLeader;
         public string cancelDecision;
@@ -62,7 +62,7 @@ namespace Rimocracy
 
             Utility.RimocracyComp.Governance -= GovernanceCost;
 
-            if (setSuccession != SuccessionType.Undefined)
+            if (setSuccession != null)
             {
                 Utility.Log($"Setting succession to {setSuccession}.");
                 Utility.RimocracyComp.SuccessionType = setSuccession;

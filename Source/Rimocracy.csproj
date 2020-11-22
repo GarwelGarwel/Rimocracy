@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -9,9 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Rimocracy</RootNamespace>
     <AssemblyName>Rimocracy</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>false</DebugSymbols>
@@ -31,10 +32,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="0Harmony">
-      <HintPath>References\0Harmony.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="Assembly-CSharp">
       <HintPath>..\..\..\RimWorldWin64_Data\Managed\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
@@ -68,6 +65,7 @@
     <Compile Include="Decision.cs" />
     <Compile Include="Defs\DecisionCategoryDef.cs" />
     <Compile Include="Defs\DecisionDef.cs" />
+    <Compile Include="Defs\SuccessionDef.cs" />
     <Compile Include="Dialog_DecisionList.cs" />
     <Compile Include="ElectionUtility.cs" />
     <Compile Include="Defs\LeaderTitleDef.cs" />
@@ -79,20 +77,21 @@
     <Compile Include="StatModifierString.cs" />
     <Compile Include="Stats\StatPart_Backstories.cs" />
     <Compile Include="Stats\StatPart_Elitism.cs" />
+    <Compile Include="Stats\StatPart_Leader.cs" />
     <Compile Include="Stats\StatPart_Populism.cs" />
     <Compile Include="Stats\StatPart_StateOfEmergency.cs" />
     <Compile Include="Stats\StatWorker_GovernanceDecay.cs" />
-    <Compile Include="Succession\SuccessionMartial.cs" />
-    <Compile Include="Succession\SuccessionNobility.cs" />
+    <Compile Include="Succession\SuccessionWorker_Martial.cs" />
+    <Compile Include="Succession\SuccessionWorker_Nobility.cs" />
     <Compile Include="ThingComps\CompProperties_AffectedByGovernance.cs" />
     <Compile Include="ElectionCampaign.cs" />
     <Compile Include="JobDriver_Govern.cs" />
     <Compile Include="MainTabWindow_Politics.cs" />
     <Compile Include="RecordWorker_TimeAsLeader.cs" />
-    <Compile Include="Succession\SuccessionBase.cs" />
-    <Compile Include="Succession\SuccessionElection.cs" />
-    <Compile Include="Succession\SuccessionLot.cs" />
-    <Compile Include="Succession\SuccessionOldest.cs" />
+    <Compile Include="Succession\SuccessionWorker.cs" />
+    <Compile Include="Succession\SuccessionWorker_Election.cs" />
+    <Compile Include="Succession\SuccessionWorker_Lot.cs" />
+    <Compile Include="Succession\SuccessionWorker_Seniority.cs" />
     <Compile Include="ThingComps\ThingComp_AffectedByGovernance.cs" />
     <Compile Include="Thoughts\ThoughtWorker_Competitor.cs" />
     <Compile Include="Thoughts\ThoughtWorker_ResPublica.cs" />

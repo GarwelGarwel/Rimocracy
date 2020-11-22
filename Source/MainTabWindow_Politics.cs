@@ -37,7 +37,7 @@ namespace Rimocracy
                     content.Label($"Focus skill: {Utility.RimocracyComp.FocusSkill.LabelCap}.");
 
                 if (Utility.RimocracyComp.TermDuration != TermDuration.Indefinite)
-                    content.Label($"Next {Utility.RimocracyComp.Succession.SuccessionLabel} in {(Utility.RimocracyComp.TermExpiration - Find.TickManager.TicksAbs).ToStringTicksToPeriod(false)}.");
+                    content.Label($"Next {Utility.RimocracyComp.SuccessionWorker.def.noun} in {(Utility.RimocracyComp.TermExpiration - Find.TickManager.TicksAbs).ToStringTicksToPeriod(false)}.");
             }
             // Next election
             else if (Utility.RimocracyComp.ElectionTick > Find.TickManager.TicksAbs)
@@ -50,12 +50,10 @@ namespace Rimocracy
                 content.Gap();
                 content.Label("Candidates:");
                 content.Label(Utility.RimocracyComp.Campaigns.Select(ec => $"- {ec}").ToLineList());
-                //foreach (ElectionCampaign ec in Utility.RimocracyComp.Campaigns)
-                //    content.Label($"- {ec}");
             }
 
             content.Gap();
-            if (content.ButtonText("View Available Decisions"))
+            if (content.ButtonText("View Decisions"))
                 Find.WindowStack.Add(new Dialog_DecisionList());
 
             content.End();

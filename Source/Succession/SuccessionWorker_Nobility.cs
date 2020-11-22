@@ -1,16 +1,10 @@
 ﻿using RimWorld;
 using Verse;
 
-namespace Rimocracy.Succession
+namespace Rimocracy
 {
-    class SuccessionNobility : SuccessionBase
+    class SuccessionWorker_Nobility : SuccessionWorker
     {
-        public override SuccessionType SuccessionType => SuccessionType.Nobility;
-
-        public override string Title => "Nobility";
-
-        public override float RegimeEffect => -0.10f;
-
         public override bool IsValid => !Candidates.EnumerableNullOrEmpty();
 
         public override bool CanBeCandidate(Pawn pawn) =>

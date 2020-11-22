@@ -24,10 +24,22 @@ namespace Rimocracy
             Listing_Standard content = new Listing_Standard();
             content.BeginScrollView(inRect.AtZero(), ref scrollPosition, ref viewRect);
 
+            content.Label($"Succession type: {Utility.RimocracyComp.SuccessionType.LabelCap}", tooltip: Utility.RimocracyComp.SuccessionType.description);
+            content.Label($"Leader's term: {Utility.RimocracyComp.TermDuration}");
+
+            if (Utility.RimocracyComp.Decisions.Count > 0)
+            {
+                content.Label("Active decisions:");
+                foreach (Decision decision in Utility.RimocracyComp.Decisions)
+                    content.Label($"- {decision.def.LabelCap}{(decision.def.Expiration != int.MaxValue ? $" (expires in {(decision.expiration - Find.TickManager.TicksAbs).ToStringTicksToPeriod()})" : "")}", tooltip: decision.def.description);
+            }
+
             // Display regime type
             if (Utility.RimocracyComp.RegimeFinal != 0)
                 content.Label($"The current regime is {Math.Abs(Utility.RimocracyComp.RegimeFinal).ToStringPercent()} {(Utility.RimocracyComp.RegimeFinal > 0 ? "democratic" : "authoritarian")}.");
             else content.Label("The current regime is neither democratic nor authoritarian.");
+
+            content.GapLine();
 
             // Display decision categories and available decisions
             foreach (IGrouping<DecisionCategoryDef, DecisionDef> group in DefDatabase<DecisionDef>.AllDefs

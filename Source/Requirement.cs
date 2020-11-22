@@ -7,16 +7,19 @@ namespace Rimocracy
     public class Requirement
     {
         public static readonly Requirement always = new Requirement();
+
         public static readonly Requirement never = new Requirement() { inverted = true };
-        
+
         static string indent = "";
+
+        const string indentSymbol = "  ";
 
         bool inverted = false;
 
         List<Requirement> all = new List<Requirement>();
         List<Requirement> any = new List<Requirement>();
 
-        SuccessionType succession = SuccessionType.Undefined;
+        SuccessionDef succession;
         TermDuration termDuration = TermDuration.Undefined;
         bool leaderExists;
         bool notCampaigning;
@@ -32,7 +35,7 @@ namespace Rimocracy
             !inverted
             && all.NullOrEmpty()
             && any.NullOrEmpty()
-            && succession == SuccessionType.Undefined
+            && succession == null
             && termDuration == TermDuration.Undefined
             && !leaderExists
             && !notCampaigning
@@ -50,8 +53,8 @@ namespace Rimocracy
                 res &= all.All(r => r);
             if (res && !any.NullOrEmpty())
                 res &= any.Any(r => r);
-            if (res && succession != SuccessionType.Undefined)
-                res &= Utility.RimocracyComp.SuccessionType == succession;
+            if (res && succession != null)
+                res &= Utility.RimocracyComp.SuccessionType.defName == succession.defName;
             if (res && termDuration != TermDuration.Undefined)
                 res &= Utility.RimocracyComp.TermDuration == termDuration;
             if (res && leaderExists)
@@ -75,10 +78,10 @@ namespace Rimocracy
             if (inverted)
             {
                 res = $"{indent}The following must be FALSE:\n";
-                indent += "\t";
+                indent += indentSymbol;
             }
-            if (succession != SuccessionType.Undefined)
-                res += $"{indent}Succession law: {succession}\n";
+            if (succession != null)
+                res += $"{indent}Succession law: {succession.label}\n";
             if (termDuration != TermDuration.Undefined)
                 res += $"{indent}Term duration: {termDuration}\n";
             if (notCampaigning)
@@ -98,21 +101,21 @@ namespace Rimocracy
             if (!all.NullOrEmpty())
             {
                 res += $"{indent}All of the following:\n";
-                indent += "\t";
+                indent += indentSymbol;
                 foreach (Requirement r in all)
                     res += $"{r}\n";
-                indent = indent.Remove(0, 1);
+                indent = indent.Remove(0, indentSymbol.Length);
             }
             if (!any.NullOrEmpty())
             {
                 res += $"{indent}Any of the following:\n";
-                indent += "\t";
+                indent += indentSymbol;
                 foreach (Requirement r in any)
                     res += $"{r}\n";
-                indent = indent.Remove(0, 1);
+                indent = indent.Remove(0, indentSymbol.Length);
             }
             if (inverted)
-                indent = indent.Remove(0, 1);
+                indent = indent.Remove(0, indentSymbol.Length);
             return res.TrimEndNewlines();
         }
     }

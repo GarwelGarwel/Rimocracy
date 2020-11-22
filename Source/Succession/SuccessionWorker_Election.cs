@@ -2,40 +2,43 @@
 using System.Linq;
 using Verse;
 
-namespace Rimocracy.Succession
+namespace Rimocracy
 {
-    public class SuccessionElection : SuccessionBase
+    public class SuccessionWorker_Election : SuccessionWorker
     {
-        int votesForWinner = 0;
-
-        public override SuccessionType SuccessionType => SuccessionType.Election;
-
-        public override string Title => "Election";
-
-        public override string SuccessionLabel => "election";
-
-        public override string SameLeaderTitle => $"{Utility.LeaderTitle.CapitalizeFirst()} Reelected";
+        int lastVotesForWinner = 0;
 
         public override IEnumerable<Pawn> Candidates => Utility.RimocracyComp.Candidates ?? base.Candidates;
 
-        public override string NewLeaderMessage(Pawn leader) =>
-            $"{leader.Name} has been elected as the new {Utility.LeaderTitle} of {Utility.NationName} with {(votesForWinner != 1 ? votesForWinner + " votes" : "just one vote")}. Vox populi, vox dei!";
+        string VotesNumString => lastVotesForWinner > 1 ? $"{lastVotesForWinner} votes" : "just one vote";
 
-        public override string SameLeaderMessage(Pawn leader) =>
-            $"{leader.Name} has been reelected as the {Utility.LeaderTitle} of {Utility.NationName} with {(votesForWinner != 1 ? votesForWinner + " votes." : "just one vote.")}";
+        public override string NewLeaderMessageText(Pawn leader) =>
+            def.newLeaderMessageText.Formatted(
+                Utility.NationName.Named("NATIONNAME"),
+                Utility.LeaderTitle.Named("LEADERTITLE"),
+                leader.Named("PAWN"),
+                VotesNumString.Named("VOTESNUM"));
+
+        public override string SameLeaderMessageText(Pawn leader) =>
+            def.sameLeaderMessageText.Formatted(
+                Utility.NationName.Named("NATIONNAME"),
+                Utility.LeaderTitle.Named("LEADERTITLE"),
+                leader.Named("PAWN"),
+                VotesNumString.Named("VOTESNUM"));
 
         public override Pawn ChooseLeader()
         {
             Dictionary<Pawn, int> votes = GetVotes();
 
             // Logging votes
-            foreach (KeyValuePair<Pawn, int> kvp in votes)
-                Utility.Log($"- {kvp.Key}: {kvp.Value} votes");
+            if (Settings.DebugLogging)
+                foreach (KeyValuePair<Pawn, int> kvp in votes)
+                    Utility.Log($"- {kvp.Key}: {kvp.Value} votes");
 
-            // Returning the winner
+            // Determining the winner
             KeyValuePair<Pawn, int> winner = votes.MaxByWithFallback(kvp => kvp.Value);
             winner.Key.records.Increment(RimocracyDefOf.TimesElected);
-            votesForWinner = winner.Value;
+            lastVotesForWinner = winner.Value;
             return winner.Key;
         }
 
