@@ -12,6 +12,8 @@ namespace Rimocracy
 
         static string indent = "";
 
+        const string indentSymbol = "  ";
+
         bool inverted = false;
 
         List<Requirement> all = new List<Requirement>();
@@ -76,7 +78,7 @@ namespace Rimocracy
             if (inverted)
             {
                 res = $"{indent}The following must be FALSE:\n";
-                indent += "\t";
+                indent += indentSymbol;
             }
             if (succession != null)
                 res += $"{indent}Succession law: {succession.label}\n";
@@ -99,21 +101,21 @@ namespace Rimocracy
             if (!all.NullOrEmpty())
             {
                 res += $"{indent}All of the following:\n";
-                indent += "\t";
+                indent += indentSymbol;
                 foreach (Requirement r in all)
                     res += $"{r}\n";
-                indent = indent.Remove(0, 1);
+                indent = indent.Remove(0, indentSymbol.Length);
             }
             if (!any.NullOrEmpty())
             {
                 res += $"{indent}Any of the following:\n";
-                indent += "\t";
+                indent += indentSymbol;
                 foreach (Requirement r in any)
                     res += $"{r}\n";
-                indent = indent.Remove(0, 1);
+                indent = indent.Remove(0, indentSymbol.Length);
             }
             if (inverted)
-                indent = indent.Remove(0, 1);
+                indent = indent.Remove(0, indentSymbol.Length);
             return res.TrimEndNewlines();
         }
     }

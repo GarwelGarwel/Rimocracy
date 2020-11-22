@@ -50,12 +50,10 @@ namespace Rimocracy
                 content.Gap();
                 content.Label("Candidates:");
                 content.Label(Utility.RimocracyComp.Campaigns.Select(ec => $"- {ec}").ToLineList());
-                //foreach (ElectionCampaign ec in Utility.RimocracyComp.Campaigns)
-                //    content.Label($"- {ec}");
             }
 
             content.Gap();
-            if (content.ButtonText("View Available Decisions"))
+            if (content.ButtonText("View Decisions"))
                 Find.WindowStack.Add(new Dialog_DecisionList());
 
             content.End();
