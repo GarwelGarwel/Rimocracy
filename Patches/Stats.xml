@@ -603,5 +603,31 @@
 			</li>
 		</value>
 	</Operation>
+	
+	<!-- Leader's Effects -->
+	
+	<Operation Class="PatchOperationSequence">
+		<success>Always</success>
+		<operations>
+			<li Class="PatchOperationTest">
+				<xpath>/Defs/StatDef[defName="ArrestSuccessChance"]/parts</xpath>
+				<success>Invert</success>
+			</li>
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/StatDef[defName="ArrestSuccessChance"]</xpath>
+				<value>
+					<parts/>
+				</value>
+			</li>
+		</operations>
+	</Operation>
+	<Operation Class="PatchOperationAdd">
+		<xpath>/Defs/StatDef[defName="ArrestSuccessChance"]/parts</xpath>
+		<value>
+			<li Class="Rimocracy.StatPart_Leader">
+				<factor>1.5</factor>
+			</li>
+		</value>
+	</Operation>
 
 </Patch>

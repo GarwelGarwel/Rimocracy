@@ -80,6 +80,7 @@
     <Compile Include="StatModifierString.cs" />
     <Compile Include="Stats\StatPart_Backstories.cs" />
     <Compile Include="Stats\StatPart_Elitism.cs" />
+    <Compile Include="Stats\StatPart_Leader.cs" />
     <Compile Include="Stats\StatPart_Populism.cs" />
     <Compile Include="Stats\StatPart_StateOfEmergency.cs" />
     <Compile Include="Stats\StatWorker_GovernanceDecay.cs" />
