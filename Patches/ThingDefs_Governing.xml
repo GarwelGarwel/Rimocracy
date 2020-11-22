@@ -2,7 +2,7 @@
 
 <Patch>
 
-<!-- Ruling Efficiency -->
+	<!-- Ruling Efficiency -->
 
 	<Operation Class="PatchOperationAdd">
 		<xpath>/Defs/ThingDef[defName="SimpleResearchBench"]/statBases</xpath>
@@ -18,7 +18,7 @@
 		</value>
 	</Operation>
 
-<!-- Royalty -->
+	<!-- Royalty -->
 
 	<Operation Class="PatchOperationAdd">
 		<success>Always</success>
@@ -36,13 +36,63 @@
 		</value>
 	</Operation>
 
-<!-- Mod: Colony Manager -->
+	<!-- Mod: Colony Manager -->
 
 	<Operation Class="PatchOperationAdd">
 		<success>Always</success>
 		<xpath>/Defs/ThingDef[defName="FM_BasicManagerStation"]/statBases</xpath>
 		<value>
 			<GovernEfficiencyFactor>1.05</GovernEfficiencyFactor>
+		</value>
+	</Operation>
+
+	<!-- Mod: Thrones plus -->
+
+	<Operation Class="PatchOperationAdd">
+		<success>Always</success>
+		<xpath>/Defs/ThingDef[defName="ThroneA"]/statBases</xpath>
+		<value>
+			<GovernEfficiencyFactor>1.2</GovernEfficiencyFactor>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<success>Always</success>
+		<xpath>/Defs/ThingDef[defName="ThroneB"]/statBases</xpath>
+		<value>
+			<GovernEfficiencyFactor>1.2</GovernEfficiencyFactor>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<success>Always</success>
+		<xpath>/Defs/ThingDef[defName="ThroneC"]/statBases</xpath>
+		<value>
+			<GovernEfficiencyFactor>1.2</GovernEfficiencyFactor>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<success>Always</success>
+		<xpath>/Defs/ThingDef[defName="GrandThroneA"]/statBases</xpath>
+		<value>
+			<GovernEfficiencyFactor>1.3</GovernEfficiencyFactor>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<success>Always</success>
+		<xpath>/Defs/ThingDef[defName="GrandThroneB"]/statBases</xpath>
+		<value>
+			<GovernEfficiencyFactor>1.3</GovernEfficiencyFactor>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<success>Always</success>
+		<xpath>/Defs/ThingDef[defName="GrandThroneC"]/statBases</xpath>
+		<value>
+			<GovernEfficiencyFactor>1.3</GovernEfficiencyFactor>
 		</value>
 	</Operation>
 
