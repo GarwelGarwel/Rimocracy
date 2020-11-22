@@ -54,38 +54,6 @@ namespace Rimocracy
             }
             set => successionType = value;
         }
-        //get => Succession != null ? Succession.SuccessionType : SuccessionType.Undefined;
-        //set
-        //{
-        //    switch (value)
-        //    {
-        //        case SuccessionType.Election:
-        //            SuccessionWorker = new SuccessionWorker_Election();
-        //            break;
-
-        //        case SuccessionType.Lot:
-        //            SuccessionWorker = new SuccessionWorker_Lot();
-        //            break;
-
-        //        case SuccessionType.Seniority:
-        //            SuccessionWorker = new SuccessionWorker_Oldest();
-        //            break;
-
-        //        case SuccessionType.Nobility:
-        //            SuccessionWorker = new SuccessionWorker_Nobility();
-        //            break;
-
-        //        case SuccessionType.Martial:
-        //            SuccessionWorker = new SuccessionWorker_Martial();
-        //            break;
-
-        //        default:
-        //            Utility.Log("Succession type not set! Reverting to election.", LogLevel.Error);
-        //            SuccessionWorker = new SuccessionWorker_Election();
-        //            break;
-        //    }
-        //}
-        //}
 
         public SuccessionWorker SuccessionWorker => SuccessionType.Worker;
 
