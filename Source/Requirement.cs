@@ -14,7 +14,7 @@ namespace Rimocracy
 
         const string indentSymbol = "  ";
 
-        bool inverted = false;
+        protected bool inverted = false;
 
         List<Requirement> all = new List<Requirement>();
         List<Requirement> any = new List<Requirement>();
@@ -31,7 +31,7 @@ namespace Rimocracy
         /// <summary>
         /// Returns true if this requirement is default
         /// </summary>
-        public bool IsTrivial =>
+        public virtual bool IsTrivial =>
             !inverted
             && all.NullOrEmpty()
             && any.NullOrEmpty()
@@ -46,7 +46,7 @@ namespace Rimocracy
 
         public static implicit operator bool(Requirement requirement) => requirement.GetValue();
 
-        public bool GetValue()
+        protected bool GetValueBeforeInversion()
         {
             bool res = true;
             if (!all.NullOrEmpty())
@@ -69,8 +69,10 @@ namespace Rimocracy
                 res &= Utility.RimocracyComp.RegimeFinal <= maxRegime;
             if (res && !decision.NullOrEmpty())
                 res &= Utility.RimocracyComp.DecisionActive(decision);
-            return res ^ inverted;
+            return res;
         }
+
+        public bool GetValue() => GetValueBeforeInversion() ^ inverted;
 
         public override string ToString()
         {

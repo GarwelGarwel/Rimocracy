@@ -165,6 +165,13 @@
 			<notCampaigning>true</notCampaigning>
 			<maxRegime>-0.20</maxRegime>
 		</effectRequirements>
+		<considerations>
+			<li>
+				<label>Wants to rule forever</label>
+				<support>10</support>
+				<isLeader>true</isLeader>
+			</li>
+		</considerations>
 		<governanceCost>0.75</governanceCost>
 		<setTermDuration>Indefinite</setTermDuration>
 	</Rimocracy.DecisionDef>
@@ -191,6 +198,13 @@
 				</li>
 			</all>
 		</displayRequirements>
+		<considerations>
+			<li>
+				<label>"This is just a hoax"</label>
+				<support>-100</support>
+				<isLeader>true</isLeader>
+			</li>
+		</considerations>
 		<durationTicks>600000</durationTicks>
 		<governanceCost>0.25</governanceCost>
 		<impeachLeader>true</impeachLeader>

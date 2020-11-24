@@ -1,4 +1,6 @@
 ﻿using RimWorld;
+using System.Collections.Generic;
+using System.Linq;
 using Verse;
 
 namespace Rimocracy
@@ -10,6 +12,8 @@ namespace Rimocracy
 
         public Requirement displayRequirements = Requirement.always;
         public Requirement effectRequirements = Requirement.always;
+        public List<Consideration> considerations = new List<Consideration>();
+
         public string tag;
         public int durationTicks;
         public int durationDays;
@@ -48,6 +52,10 @@ namespace Rimocracy
         /// Returns expiration tick or MaxValue if only tag is set
         /// </summary>
         public int Expiration => Duration != 0 ? Find.TickManager.TicksAbs + Duration : (tag == null ? 0 : int.MaxValue);
+
+        public float GetPawnSupport(Pawn pawn) => considerations.Sum(consideration => consideration.GetSupportValue(pawn));
+
+        public string GetSupportExplanation(Pawn pawn) => GenText.ToLineList(considerations.Select(consideration => consideration.ExplanationPart(pawn)));
 
         public bool Activate()
         {
