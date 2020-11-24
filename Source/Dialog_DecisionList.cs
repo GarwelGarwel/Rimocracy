@@ -64,11 +64,24 @@ namespace Rimocracy
                         content.Label($"Will move the regime {Math.Abs(d.regimeEffect).ToStringPercent()} towards {(d.regimeEffect > 0 ? "democracy" : "authoritarianism")}.");
                     if (!d.effectRequirements.IsTrivial)
                         content.Label($"Requirements:\n{d.effectRequirements}");
-                    if (!d.considerations.NullOrEmpty() && Utility.RimocracyComp.Leader != null)
-                        content.Label($"Leader's support: {d.GetPawnSupport(Utility.RimocracyComp.Leader).ToStringWithSign()}", tooltip: d.GetSupportExplanation(Utility.RimocracyComp.Leader));
+
+                    Tuple<int, int> votingResult = d.VotingResult;
+                    switch (d.enactment)
+                    {
+                        case DecisionEnactmentRule.Decree:
+                            content.Label($"Leader's support: {d.GetPawnSupport(Utility.RimocracyComp.Leader).ToStringWithSign()}", tooltip: d.GetSupportExplanation(Utility.RimocracyComp.Leader));
+                            break;
+
+                        case DecisionEnactmentRule.Law:
+                        case DecisionEnactmentRule.Referendum:
+                            content.Label($"Support: {votingResult.Item1} - {votingResult.Item2}");
+                            break;
+                    }
+                    //if (!d.considerations.NullOrEmpty() && Utility.RimocracyComp.Leader != null)
+                    //    content.Label($"Leader's support: {d.GetPawnSupport(Utility.RimocracyComp.Leader).ToStringWithSign()}", tooltip: d.GetSupportExplanation(Utility.RimocracyComp.Leader));
 
                     // Display Activate button for valid decisions
-                    if (d.IsValid)
+                    if (d.IsValid && d.IsPassed(votingResult))
                     {
                         if (content.ButtonText("Activate"))
                         {

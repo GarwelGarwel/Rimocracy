@@ -44,6 +44,16 @@ namespace Rimocracy
 
         public static bool IsLeader(this Pawn p) => PoliticsEnabled && RimocracyComp.Leader == p;
 
+        public static float GetOpinionOfLeader(Pawn pawn)
+        {
+            Pawn leader = RimocracyComp.Leader;
+            if (leader == null)
+                return 0;
+            if (pawn == leader)
+                return 100;
+            return pawn.needs.mood.thoughts.TotalOpinionOffset(leader);
+        }
+
         public static bool IsPowerStarved(this Building building)
         {
             CompPowerTrader comp = building?.GetComp<CompPowerTrader>();

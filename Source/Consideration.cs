@@ -8,6 +8,7 @@ namespace Rimocracy
         float support;
 
         bool? isLeader;
+        CompareFloat opinionOfLeader;
 
         public override bool IsTrivial => base.IsTrivial && isLeader == null;
 
@@ -16,17 +17,13 @@ namespace Rimocracy
             bool res = base.GetValueBeforeInversion();
             if (isLeader != null)
                 res &= pawn.IsLeader() == isLeader;
+            if (opinionOfLeader != null)
+                res &= opinionOfLeader.Compare(Utility.GetOpinionOfLeader(pawn));
             return res ^ inverted;
         }
 
         public float GetSupportValue(Pawn pawn) => IsActive(pawn) ? support : 0;
 
         public string ExplanationPart(Pawn pawn) => IsActive(pawn) ? $"{label}: {support.ToStringWithSign()}" : null;
-
-        //Requirement_Personal requirement = Requirement_Personal.always;
-
-        //public float GetSupportValue(Pawn pawn) => requirement.GetValue(pawn) ? support : 0;
-
-        //public string ExplanationPart(Pawn pawn) => requirement.GetValue(pawn) ? $"{explanation}: {support.ToStringWithSign()}" : null;
     }
 }

@@ -6,6 +6,7 @@
 	
 	<Rimocracy.DecisionDef Abstract="True" Name="BaseSuccessionDecision">
 		<category>SuccessionTypes</category>
+		<enactment>Law</enactment>
 		<tag>Succession</tag>
 		<durationTicks>1000000</durationTicks>
 		<governanceCost>0.75</governanceCost>
@@ -98,6 +99,7 @@
 	
 	<Rimocracy.DecisionDef Abstract="True" Name="BaseTermDurationDecision">
 		<category>Terms</category>
+		<enactment>Law</enactment>
 		<tag>TermDuration</tag>
 		<durationTicks>1000000</durationTicks>
 		<governanceCost>0.30</governanceCost>
@@ -167,7 +169,7 @@
 		</effectRequirements>
 		<considerations>
 			<li>
-				<label>Wants to rule forever</label>
+				<label>I want to rule forever</label>
 				<support>10</support>
 				<isLeader>true</isLeader>
 			</li>
@@ -183,6 +185,7 @@
 		<label>Impeach Leader</label>
 		<description>Immediately relieve the current leader of his or her duties and initiate a new succession.</description>
 		<category>Terms</category>
+		<enactment>Referendum</enactment>
 		<displayPriorityInCategory>50</displayPriorityInCategory>
 		<displayRequirements>
 			<leaderExists>true</leaderExists>
@@ -200,9 +203,23 @@
 		</displayRequirements>
 		<considerations>
 			<li>
-				<label>"This is just a hoax"</label>
+				<label>This is just a hoax</label>
 				<support>-100</support>
 				<isLeader>true</isLeader>
+			</li>
+			<li>
+				<label>I dislike the leader</label>
+				<support>10</support>
+				<opinionOfLeader>
+					<lessThan>0</lessThan>
+				</opinionOfLeader>
+			</li>
+			<li>
+				<label>I like the leader</label>
+				<support>-10</support>
+				<opinionOfLeader>
+					<greaterThan>0</greaterThan>
+				</opinionOfLeader>
 			</li>
 		</considerations>
 		<durationTicks>600000</durationTicks>
@@ -304,7 +321,7 @@
 	<Rimocracy.DecisionDef>
 		<defName>Meritocracy_Cancel</defName>
 		<label>Cancel Meritocracy</label>
-		<description>Those who can, do. Those who can't, rule those who can.</description>
+		<description>Those who can, do. Those who can't, rule.</description>
 		<category>Democratic</category>
 		<displayPriorityInCategory>30</displayPriorityInCategory>
 		<displayRequirements>
@@ -399,6 +416,13 @@
 		<effectRequirements>
 			<maxRegime>0.10</maxRegime>
 		</effectRequirements>
+		<considerations>
+			<li>
+				<label>Wants to stay in charge</label>
+				<support>10</support>
+				<isLeader>true</isLeader>
+			</li>
+		</considerations>
 		<tag/>
 		<regimeEffect>-0.20</regimeEffect>
 		<governanceCost>0.50</governanceCost>
@@ -413,6 +437,13 @@
 		<displayRequirements>
 			<decision>Stability</decision>
 		</displayRequirements>
+		<considerations>
+			<li>
+				<label>Wants to stay in charge</label>
+				<support>-10</support>
+				<isLeader>true</isLeader>
+			</li>
+		</considerations>
 		<governanceCost>0.30</governanceCost>
 		<cancelDecision>Stability</cancelDecision>
 	</Rimocracy.DecisionDef>
@@ -436,6 +467,13 @@
 				</li>
 			</all>
 		</effectRequirements>
+		<considerations>
+			<li>
+				<label>Wants </label>
+				<support>50</support>
+				<isLeader>true</isLeader>
+			</li>
+		</considerations>
 		<tag/>
 		<regimeEffect>-0.20</regimeEffect>
 		<governanceCost>0.50</governanceCost>
@@ -532,6 +570,7 @@
 		<label>State of Emergency</label>
 		<description>When you declare a State of Emergency, all mental break thresholds are reduced by 3/4 for 3 days, and elections are postponed.</description>
 		<category>Authoritarian</category>
+		<enactment>Decree</enactment>
 		<displayPriorityInCategory>50</displayPriorityInCategory>
 		<effectRequirements>
 			<all>

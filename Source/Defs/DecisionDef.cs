@@ -1,10 +1,13 @@
 ﻿using RimWorld;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Verse;
 
 namespace Rimocracy
 {
+    public enum DecisionEnactmentRule { None = 0, Decree, Law, Referendum };
+
     public class DecisionDef : Def
     {
         public DecisionCategoryDef category;
@@ -12,6 +15,7 @@ namespace Rimocracy
 
         public Requirement displayRequirements = Requirement.always;
         public Requirement effectRequirements = Requirement.always;
+        public DecisionEnactmentRule enactment = DecisionEnactmentRule.None;
         public List<Consideration> considerations = new List<Consideration>();
 
         public string tag;
@@ -56,6 +60,49 @@ namespace Rimocracy
         public float GetPawnSupport(Pawn pawn) => considerations.Sum(consideration => consideration.GetSupportValue(pawn));
 
         public string GetSupportExplanation(Pawn pawn) => GenText.ToLineList(considerations.Select(consideration => consideration.ExplanationPart(pawn)));
+
+        public IEnumerable<Pawn> Decisionmakers
+        {
+            get
+            {
+                switch (enactment)
+                {
+                    case DecisionEnactmentRule.Decree:
+                        Pawn leader = Utility.RimocracyComp.Leader;
+                        if (leader != null)
+                            return new List<Pawn>(1) { leader };
+                        break;
+
+                    case DecisionEnactmentRule.Law:
+                    case DecisionEnactmentRule.Referendum:
+                        return Utility.Citizens;
+                }
+
+                return new List<Pawn>();
+            }
+        }
+
+        public Tuple<int, int> VotingResult
+        {
+            get
+            {
+                int yea = 0, nay = 0;
+
+                foreach (Pawn pawn in Decisionmakers)
+                {
+                    float support = GetPawnSupport(pawn);
+                    if (support >= 0)
+                        yea++;
+                    else if (support < 0)
+                        nay++;
+                }
+                return new Tuple<int, int>(yea, nay);
+            }
+        }
+
+        public bool IsPassed(Tuple<int, int> votingResult) => (enactment == DecisionEnactmentRule.None) || (votingResult.Item1 > votingResult.Item2);
+
+        public bool IsPassed() => IsPassed(VotingResult);
 
         public bool Activate()
         {
