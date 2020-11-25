@@ -208,18 +208,28 @@
 				<isLeader>true</isLeader>
 			</li>
 			<li>
-				<label>I dislike the leader</label>
-				<support>10</support>
+				<label>Opinion of the leader</label>
+				<isLeader>false</isLeader>
 				<opinionOfLeader>
-					<lessThan>0</lessThan>
+					<offset>
+						<points>
+							<li>(-100, 100)</li>
+							<li>(100, -100)</li>
+						</points>
+					</offset>
 				</opinionOfLeader>
 			</li>
 			<li>
-				<label>I like the leader</label>
-				<support>-10</support>
-				<opinionOfLeader>
-					<greaterThan>0</greaterThan>
-				</opinionOfLeader>
+				<label>Leader's popularity</label>
+				<isLeader>false</isLeader>
+				<medianOpinionOfLeader>
+					<offset>
+						<points>
+							<li>(-100, 50)</li>
+							<li>(100, -50)</li>
+						</points>
+					</offset>
+				</medianOpinionOfLeader>
 			</li>
 		</considerations>
 		<durationTicks>600000</durationTicks>

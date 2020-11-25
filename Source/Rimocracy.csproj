@@ -62,7 +62,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CompareFloat.cs" />
+    <Compile Include="DecisionVoteResults.cs" />
+    <Compile Include="PawnDecisionOpinion.cs" />
+    <Compile Include="ValueOperations.cs" />
     <Compile Include="Decision.cs" />
     <Compile Include="Consideration.cs" />
     <Compile Include="Defs\DecisionCategoryDef.cs" />

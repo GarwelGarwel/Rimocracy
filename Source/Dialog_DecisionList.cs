@@ -52,6 +52,7 @@ namespace Rimocracy
                 Text.Font = GameFont.Medium;
                 content.Label(group.Key.label);
                 Text.Font = GameFont.Small;
+
                 foreach (DecisionDef d in group.OrderBy(def => def.displayPriorityInCategory))
                 {
                     Text.Anchor = TextAnchor.MiddleCenter;
@@ -65,20 +66,19 @@ namespace Rimocracy
                     if (!d.effectRequirements.IsTrivial)
                         content.Label($"Requirements:\n{d.effectRequirements}");
 
-                    Tuple<int, int> votingResult = d.VotingResult;
+                    DecisionVoteResults votingResult = d.VotingResults;
                     switch (d.enactment)
                     {
                         case DecisionEnactmentRule.Decree:
-                            content.Label($"Leader's support: {d.GetPawnSupport(Utility.RimocracyComp.Leader).ToStringWithSign()}", tooltip: d.GetSupportExplanation(Utility.RimocracyComp.Leader));
+                            if (votingResult.Count > 0)
+                                content.Label($"Leader's support: {votingResult.First().support.ToStringWithSign()}", tooltip: votingResult.First().explanation);
                             break;
 
                         case DecisionEnactmentRule.Law:
                         case DecisionEnactmentRule.Referendum:
-                            content.Label($"Support: {votingResult.Item1} - {votingResult.Item2}");
+                            content.Label($"Support: {votingResult.Yea} - {votingResult.Nay}", tooltip: votingResult.Explanations);
                             break;
                     }
-                    //if (!d.considerations.NullOrEmpty() && Utility.RimocracyComp.Leader != null)
-                    //    content.Label($"Leader's support: {d.GetPawnSupport(Utility.RimocracyComp.Leader).ToStringWithSign()}", tooltip: d.GetSupportExplanation(Utility.RimocracyComp.Leader));
 
                     // Display Activate button for valid decisions
                     if (d.IsValid && d.IsPassed(votingResult))

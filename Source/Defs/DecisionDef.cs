@@ -57,11 +57,7 @@ namespace Rimocracy
         /// </summary>
         public int Expiration => Duration != 0 ? Find.TickManager.TicksAbs + Duration : (tag == null ? 0 : int.MaxValue);
 
-        public float GetPawnSupport(Pawn pawn) => considerations.Sum(consideration => consideration.GetSupportValue(pawn));
-
-        public string GetSupportExplanation(Pawn pawn) => GenText.ToLineList(considerations.Select(consideration => consideration.ExplanationPart(pawn)));
-
-        public IEnumerable<Pawn> Decisionmakers
+        public List<Pawn> Decisionmakers
         {
             get
             {
@@ -75,34 +71,33 @@ namespace Rimocracy
 
                     case DecisionEnactmentRule.Law:
                     case DecisionEnactmentRule.Referendum:
-                        return Utility.Citizens;
+                        return Utility.Citizens.ToList();
                 }
 
                 return new List<Pawn>();
             }
         }
 
-        public Tuple<int, int> VotingResult
-        {
-            get
-            {
-                int yea = 0, nay = 0;
+        public DecisionVoteResults VotingResults => new DecisionVoteResults(Decisionmakers.Select(pawn => GetPawnOpinion(pawn)));
 
-                foreach (Pawn pawn in Decisionmakers)
-                {
-                    float support = GetPawnSupport(pawn);
-                    if (support >= 0)
-                        yea++;
-                    else if (support < 0)
-                        nay++;
-                }
-                return new Tuple<int, int>(yea, nay);
+        public float GetPawnSupport(Pawn pawn) => considerations.Sum(consideration => consideration.GetSupportValue(pawn));
+
+        public string GetSupportExplanation(Pawn pawn) => GenText.ToLineList(considerations.Select(consideration => consideration.ExplanationPart(pawn)));
+
+        public PawnDecisionOpinion GetPawnOpinion(Pawn pawn)
+        {
+            float support = 0;
+            List<string> explanations = new List<string>();
+            foreach (Consideration consideration in considerations)
+            {
+                Tuple<float, string> supportExplanation = consideration.GetSupportAndExplanation(pawn);
+                support += supportExplanation.Item1;
+                explanations.Add(supportExplanation.Item2);
             }
+            return new PawnDecisionOpinion(pawn, support, explanations.ToLineList());
         }
 
-        public bool IsPassed(Tuple<int, int> votingResult) => (enactment == DecisionEnactmentRule.None) || (votingResult.Item1 > votingResult.Item2);
-
-        public bool IsPassed() => IsPassed(VotingResult);
+        public bool IsPassed(DecisionVoteResults votingResult) => enactment == DecisionEnactmentRule.None || votingResult.IsPassed;
 
         public bool Activate()
         {
