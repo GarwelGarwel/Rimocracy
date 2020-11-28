@@ -7,6 +7,7 @@ namespace Rimocracy
     public class SuccessionWorker_Election : SuccessionWorker
     {
         int lastVotesForWinner = 0;
+        public const int campaignsNumber = 2;
 
         public override IEnumerable<Pawn> Candidates => Utility.RimocracyComp.Candidates ?? base.Candidates;
 
@@ -47,7 +48,7 @@ namespace Rimocracy
         /// </summary>
         /// <param name="num"></param>
         /// <returns></returns>
-        public IEnumerable<Pawn> ChooseLeaders(int num = 2) => GetVotes().OrderByDescending(kvp => kvp.Value).Take(num).Select(kvp => kvp.Key);
+        public IEnumerable<Pawn> ChooseLeaders(int num = campaignsNumber) => GetVotes().OrderByDescending(kvp => kvp.Value).Take(num).Select(kvp => kvp.Key);
 
         Dictionary<Pawn, int> GetVotes()
         {

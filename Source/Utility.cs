@@ -33,8 +33,11 @@ namespace Rimocracy
 
         public static int TermDurationTicks => RimocracyComp.TermDuration.GetDurationTicks();
 
+        public static string DateFullStringWithHourAtHome(long tick) =>
+            GenDate.DateFullStringWithHourAt(tick, Find.WorldGrid.LongLatOf(Find.AnyPlayerHomeMap.Tile));
+
         public static bool IsCitizen(this Pawn pawn) =>
-                    pawn != null
+            pawn != null
             && !pawn.Dead
             && pawn.IsFreeColonist
             && pawn.ageTracker.AgeBiologicalYears >= Settings.CitizenshipAge
