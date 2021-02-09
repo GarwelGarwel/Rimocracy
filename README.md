@@ -5,17 +5,17 @@ RimWorld mod to add politics to the game
 
 Rimocracy introduces the concept of Governance Quality (or simply Governance). It is a value, measured between 0% and 100%, that affects several important aspects of the game:
 
-- Governance directly affects global work speed (which influences many other work-related stats) and negotiation ability. Governance of 0% slows your colonists down and reduces their negotiation powers by 25% while 100% Governance increases these values by the same percentage. It is always better to have high Governance.
-- Governance also affects boosts stats that use the so-called Focus Skill, which is semi-randomly selected based on your leader's skills. For instance, Intellectual focus skill will improve research speed. The effect usually ranges from nothing for zero Governance to 50% for maximum Governance. So if you have 100% governance and Intellectual focus skill, your research speed will be increased by 125% (because of Global Work Speed bonus) x 150% (because of the Focus Skill) = 187.5%.
-- However, Governance always tends to deteriorate, the faster the higher it currently is and the more citizens your nation has. For instance, if you only have three citizens and 50% of Governance, it will decay at 1.8% per day, but if you have 15 and 100% Governance, you will lose 10.9% of it every day.
-- To improve Governance, your leader needs to do Govern job. It is done at a Research Station, a throne (if you own Royalty DLC), or the Management Desk from the Colony Manager mod. By default, doing this job increases Governance by 1% every hour, but it is affected by the workstation (thrones are better than research stations, for isntance), leader's Intellectual and Social stats and other factors, most importantly the impressiveness of the room. So better give them a good place to govern from.
+- Governance directly affects work speed and other related stats. Governance of 0% makes your colonists work slower and reduces their negotiation powers by 25% while 100% Governance increases these values by the same percentage. It is always better to have high Governance.
+- When your leader is elected/appointed, a Focus Skill is semi-randomly selected based on his/her abilities. This skill receives a bigger boost. For instance, Intellectual focus skill will improve research speed. The boost ranges from nothing for zero Governance to 50% for maximum Governance. So if you have 100% governance and Intellectual focus skill, your research speed will be increased by 125% (because of Global Work Speed bonus) x 150% (because of the Focus Skill) = 187.5%.
+- However, Governance always tends to deteriorate, or decay. The rate of decay is higher for colonies with more citizens and at higher Governance level. For instance, if you only have three citizens and 50% of Governance, it will decay at 1.8% per day, but if you have 15 citizens and 100% Governance, you will lose 10.9% of it every day.
+- To improve Governance, your leader needs to do Govern job. It is done at a Research Station, a throne (if you own Royalty DLC), or the Management Desk from the Colony Manager mod. The effectiveness of governing is affected by the workstation (thrones are better than research stations, for isntance), leader's Intellectual and Social stats and other factors, most importantly the impressiveness of the room. So better give them a good place to govern from.
 - When your leader changes (see more about it below), your Governance is partially reset to the mid-point between its old value and 50%. So, if you had 70% Governance, your new leader will inherit only 60%.
 
 ## Leaders and Succession
 
 As you probably understood from the text above, player nations now have their leader. Leaders who maintain good Governance enjoy well-deserved respect from their fellow citizens while those who fail at their jobs will be despised.
 
-Leader's term can be limited (possible options are Quadrum, which is default, Half-year or Year) or indefinite, i.e. for life. When you only start playing, or when the leader's term has expired, or they died, a new leader is chosen. It is called succession.
+Leader's term can be limited (possible options are Quadrum, Half-year or Year) or indefinite, i.e. for life. When you only start playing, or when the leader's term has expired, or they died, a new leader is chosen. It is called succession.
 
 There are several succession types that you can choose from in the settings:
 
@@ -44,6 +44,8 @@ Candidates and their supporters usually hang together and dislike their competit
 ## Decisions
 
 Political decisions allow you to change many rules, such as succession type or term duration. Other decisions have more complex effects. E.g., Egalitarianism makes Governance decay depend on the median mood of your citizens (the higher the mood, the slower decay). Most decisions have associated Governance costs and certain requirements. Many decisions also affect the regime type, which can vary from 100% authoritarian to 100% democratic. As you move towards either authoritarianism or democracy, some decisions become unavailable and some others open up to you.
+
+Some decisions, like changing succession type, require support of the majority of your citizens. Their opinions will depend on their personalities and interests (e.g. older pawns will prefer Seniority succession and more aggressive types Martial succession).
 
 ## FAQ
 
