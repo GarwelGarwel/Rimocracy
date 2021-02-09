@@ -57,6 +57,17 @@ namespace Rimocracy
             return pawn.needs.mood.thoughts.TotalOpinionOffset(leader);
         }
 
+        /// <summary>
+        /// Returns pawn's most senior title's seniority, with no titles at all being -100
+        /// </summary>
+        /// <param name="pawn"></param>
+        /// <returns></returns>
+        public static int GetTitleSeniority(this Pawn pawn)
+        {
+            RoyalTitle royalTitle = pawn.royalty.MostSeniorTitle;
+            return royalTitle != null ? royalTitle.def.seniority : -100;
+        }
+
         public static bool IsPowerStarved(this Building building)
         {
             CompPowerTrader comp = building?.GetComp<CompPowerTrader>();

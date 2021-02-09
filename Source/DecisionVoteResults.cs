@@ -14,7 +14,7 @@ namespace Rimocracy
 
         public bool IsPassed => Yea > Nay;
 
-        public string Explanations => this.Select(opinion => $"{opinion.voter}: {opinion.support.ToStringWithSign()}").ToLineList();
+        public string Explanations => this.Select(opinion => $"{opinion.voter}: {opinion.support.ToStringWithSign("0")}").ToLineList();
 
         public DecisionVoteResults()
         { }

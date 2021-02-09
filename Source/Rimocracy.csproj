@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="DecisionVoteResults.cs" />
     <Compile Include="PawnDecisionOpinion.cs" />
+    <Compile Include="SkillOperations.cs" />
     <Compile Include="ValueOperations.cs" />
     <Compile Include="Decision.cs" />
     <Compile Include="Consideration.cs" />
@@ -106,6 +107,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Stats\StatPart_Governance.cs" />
     <Compile Include="Utility.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".editorconfig" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

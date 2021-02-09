@@ -1,4 +1,5 @@
-﻿using Verse;
+﻿using System.Collections.Generic;
+using Verse;
 
 namespace Rimocracy
 {
@@ -11,9 +12,8 @@ namespace Rimocracy
         public float equals = float.NaN;
 
         // Used for changing support value based on input value
-        public SimpleCurve factor;
-
-        public SimpleCurve offset;
+        SimpleCurve factor;
+        SimpleCurve offset;
 
         public ValueOperations()
         { }
@@ -25,9 +25,9 @@ namespace Rimocracy
             && value >= greaterOrEqual
             && (float.IsNaN(equals) || value == equals);
 
-        public float GetFactor(float value) => factor.EnumerableNullOrEmpty() ? 1 : factor.Evaluate(value);
+        float GetFactor(float value) => factor.EnumerableNullOrEmpty() ? 1 : factor.Evaluate(value);
 
-        public float GetOffset(float value) => offset.EnumerableNullOrEmpty() ? 0 : offset.Evaluate(value);
+        float GetOffset(float value) => offset.EnumerableNullOrEmpty() ? 0 : offset.Evaluate(value);
 
         public void TransformValue(float parameter, ref float valueToTransform)
         {
@@ -36,6 +36,22 @@ namespace Rimocracy
                 valueToTransform *= GetFactor(parameter);
                 valueToTransform += GetOffset(parameter);
             }
+        }
+
+        public string ToString(string valueLabel = "Value", string format = null)
+        {
+            List<string> res = new List<string>();
+            if (lessThan != float.MaxValue)
+                res.Add($"{valueLabel} < {lessThan.ToString(format)}");
+            if (lessOrEqual != float.MaxValue)
+                res.Add($"{valueLabel} <= {lessOrEqual.ToString(format)}");
+            if (greaterThan != float.MinValue)
+                res.Add($"{valueLabel} > {greaterThan.ToString(format)}");
+            if (greaterOrEqual != float.MinValue)
+                res.Add($"{valueLabel} >= {greaterOrEqual.ToString(format)}");
+            if (!float.IsNaN(equals))
+                res.Add($"{valueLabel} = {equals.ToString(format)}");
+            return res.ToLineList();
         }
     }
 }

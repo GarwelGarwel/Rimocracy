@@ -80,10 +80,6 @@ namespace Rimocracy
 
         public DecisionVoteResults VotingResults => new DecisionVoteResults(Decisionmakers.Select(pawn => GetPawnOpinion(pawn)));
 
-        public float GetPawnSupport(Pawn pawn) => considerations.Sum(consideration => consideration.GetSupportValue(pawn));
-
-        public string GetSupportExplanation(Pawn pawn) => GenText.ToLineList(considerations.Select(consideration => consideration.ExplanationPart(pawn)));
-
         public PawnDecisionOpinion GetPawnOpinion(Pawn pawn)
         {
             float support = 0;
@@ -91,8 +87,11 @@ namespace Rimocracy
             foreach (Consideration consideration in considerations)
             {
                 Tuple<float, string> supportExplanation = consideration.GetSupportAndExplanation(pawn);
-                support += supportExplanation.Item1;
-                explanations.Add(supportExplanation.Item2);
+                if (supportExplanation.Item1 != 0)
+                {
+                    support += supportExplanation.Item1;
+                    explanations.Add(supportExplanation.Item2);
+                }
             }
             return new PawnDecisionOpinion(pawn, support, explanations.ToLineList());
         }

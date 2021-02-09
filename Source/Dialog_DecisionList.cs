@@ -71,7 +71,7 @@ namespace Rimocracy
                     {
                         case DecisionEnactmentRule.Decree:
                             if (votingResult.Count > 0)
-                                content.Label($"Leader's support: {votingResult.First().support.ToStringWithSign()}", tooltip: votingResult.First().explanation);
+                                content.Label($"Leader's support: {votingResult.First().support.ToStringWithSign("0")}", tooltip: votingResult.First().explanation);
                             break;
 
                         case DecisionEnactmentRule.Law:
