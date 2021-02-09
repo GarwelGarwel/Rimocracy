@@ -9,7 +9,7 @@
 		<enactment>Law</enactment>
 		<tag>Succession</tag>
 		<durationTicks>1000000</durationTicks>
-		<governanceCost>0.75</governanceCost>
+		<governanceCost>0.25</governanceCost>
 	</Rimocracy.DecisionDef>
 	
 	<Rimocracy.DecisionDef ParentName="BaseSuccessionDecision">
@@ -25,6 +25,49 @@
 			<decision>StateOfEmergency</decision>
 			<inverted>true</inverted>
 		</effectRequirements>
+		<considerations>
+			<li>
+				<label>I'm unlikely to get elected</label>
+				<support>-10</support>
+				<medianOpinionOfMe>
+					<lessThan>0</lessThan>
+				</medianOpinionOfMe>
+			</li>
+			<li>
+				<label>I'm popular</label>
+				<support>10</support>
+				<medianOpinionOfMe>
+					<greaterThan>0</greaterThan>
+				</medianOpinionOfMe>
+			</li>
+			<li>
+				<label>I don't like {LEADER}, and it can unseat {LEADER_objective}</label>
+				<all>
+					<li>
+						<termDuration>Indefinite</termDuration>
+						<inverted>true</inverted>
+					</li>
+				</all>
+				<isLeader>false</isLeader>
+				<opinionOfLeader>
+					<lessThan>0</lessThan>
+					<offset>
+						<points>
+							<li>(-100, 20)</li>
+							<li>(0, 0)</li>
+						</points>
+					</offset>
+				</opinionOfLeader>
+				<medianOpinionOfLeader>
+					<lessThan>0</lessThan>
+				</medianOpinionOfLeader>
+			</li>
+			<li>
+				<label>I want a right to vote</label>
+				<support>5</support>
+				<isLeader>false</isLeader>
+			</li>
+		</considerations>
 		<setSuccession>Election</setSuccession>
 	</Rimocracy.DecisionDef>
 
@@ -40,6 +83,33 @@
 		<effectRequirements>
 			<maxRegime>0.10</maxRegime>
 		</effectRequirements>
+		<considerations>
+			<li>
+				<label>I don't want to take chances</label>
+				<support>-2</support>
+				<isLeader>true</isLeader>
+			</li>
+			<li>
+				<label>I'll have a chance</label>
+				<support>2</support>
+				<isLeader>false</isLeader>
+			</li>
+			<li>
+				<label>I don't want to lose my noble privileges</label>
+				<support>-5</support>
+				<titleSeniority>
+					<greaterThan>0</greaterThan>
+				</titleSeniority>
+				<any>
+					<li>
+						<succession>Nobility</succession>
+					</li>
+					<li>
+						<succession>Election</succession>
+					</li>
+				</any>
+			</li>
+		</considerations>
 		<setSuccession>Lot</setSuccession>
 	</Rimocracy.DecisionDef>
 
@@ -55,6 +125,34 @@
 		<effectRequirements>
 			<maxRegime>-0.10</maxRegime>
 		</effectRequirements>
+		<considerations>
+			<li>
+				<label>Age</label>
+				<age>
+					<offset>
+						<points>
+							<li>(18, -20)</li>
+							<li>(80, 20)</li>
+						</points>
+					</offset>
+				</age>
+			</li>
+			<li>
+				<label>I don't want to lose my noble privileges</label>
+				<support>-5</support>
+				<titleSeniority>
+					<greaterThan>0</greaterThan>
+				</titleSeniority>
+				<any>
+					<li>
+						<succession>Nobility</succession>
+					</li>
+					<li>
+						<succession>Election</succession>
+					</li>
+				</any>
+			</li>
+		</considerations>
 		<setSuccession>Seniority</setSuccession>
 	</Rimocracy.DecisionDef>
 
@@ -77,6 +175,20 @@
 		<effectRequirements>
 			<maxRegime>-0.10</maxRegime>
 		</effectRequirements>
+		<considerations>
+			<li>
+				<label>My title</label>
+				<titleSeniority>
+					<offset>
+						<points>
+							<li>(-100, -10)</li>
+							<li>(0, 1)</li>
+							<li>(600, 60)</li>
+						</points>
+					</offset>
+				</titleSeniority>
+			</li>
+		</considerations>
 		<setSuccession>Nobility</setSuccession>
 	</Rimocracy.DecisionDef>
 
@@ -92,6 +204,58 @@
 		<effectRequirements>
 			<maxRegime>-0.10</maxRegime>
 		</effectRequirements>
+		<considerations>
+			<li>
+				<label>Skills</label>
+				<skills>
+					<li>
+						<skill>Shooting</skill>
+						<offset>
+							<points>
+								<li>(0, -20)</li>
+								<li>(10, 0)</li>
+								<li>(20, 40)</li>
+							</points>
+						</offset>
+					</li>
+					<li>
+						<skill>Melee</skill>
+						<offset>
+							<points>
+								<li>(0, -20)</li>
+								<li>(10, 0)</li>
+								<li>(20, 40)</li>
+							</points>
+						</offset>
+					</li>
+				</skills>
+			</li>
+			<li>
+				<label>Bloodlust</label>
+				<support>10</support>
+				<trait>Bloodlust</trait>
+			</li>
+			<li>
+				<label>Kind</label>
+				<support>-10</support>
+				<trait>Kind</trait>
+			</li>
+			<li>
+				<label>Brawler</label>
+				<support>20</support>
+				<trait>Brawler</trait>
+			</li>
+			<li>
+				<label>Tough</label>
+				<support>10</support>
+				<trait>Tough</trait>
+			</li>
+			<li>
+				<label>Wimp</label>
+				<support>-20</support>
+				<trait>Wimp</trait>
+			</li>
+		</considerations>
 		<setSuccession>Martial</setSuccession>
 	</Rimocracy.DecisionDef>
 
@@ -99,10 +263,12 @@
 	
 	<Rimocracy.DecisionDef Abstract="True" Name="BaseTermDurationDecision">
 		<category>Terms</category>
-		<enactment>Law</enactment>
 		<tag>TermDuration</tag>
+		<effectRequirements>
+			<campaigning>false</campaigning>
+		</effectRequirements>
 		<durationTicks>1000000</durationTicks>
-		<governanceCost>0.30</governanceCost>
+		<governanceCost>0.20</governanceCost>
 	</Rimocracy.DecisionDef>
 
 	<Rimocracy.DecisionDef ParentName="BaseTermDurationDecision">
@@ -112,7 +278,6 @@
 		<displayPriorityInCategory>10</displayPriorityInCategory>
 		<displayRequirements>
 			<termDuration>Halfyear</termDuration>
-			<notCampaigning>true</notCampaigning>
 		</displayRequirements>
 		<setTermDuration>Quadrum</setTermDuration>
 	</Rimocracy.DecisionDef>
@@ -123,7 +288,6 @@
 		<description>Set term of a leader to half a year (30 days).</description>
 		<displayPriorityInCategory>20</displayPriorityInCategory>
 		<displayRequirements>
-			<notCampaigning>true</notCampaigning>
 			<any>
 				<li>
 					<termDuration>Quadrum</termDuration>
@@ -142,7 +306,6 @@
 		<description>Set term of a leader to one year (60 days).</description>
 		<displayPriorityInCategory>30</displayPriorityInCategory>
 		<displayRequirements>
-			<notCampaigning>true</notCampaigning>
 			<any>
 				<li>
 					<termDuration>Halfyear</termDuration>
@@ -164,7 +327,6 @@
 			<termDuration>Year</termDuration>
 		</displayRequirements>
 		<effectRequirements>
-			<notCampaigning>true</notCampaigning>
 			<maxRegime>-0.20</maxRegime>
 		</effectRequirements>
 		<considerations>
@@ -213,7 +375,7 @@
 				<opinionOfLeader>
 					<offset>
 						<points>
-							<li>(-100, 100)</li>
+							<li>(-100, 50)</li>
 							<li>(100, -100)</li>
 						</points>
 					</offset>
@@ -221,11 +383,10 @@
 			</li>
 			<li>
 				<label>Leader's popularity</label>
-				<isLeader>false</isLeader>
 				<medianOpinionOfLeader>
 					<offset>
 						<points>
-							<li>(-100, 50)</li>
+							<li>(-100, 25)</li>
 							<li>(100, -50)</li>
 						</points>
 					</offset>
@@ -233,7 +394,7 @@
 			</li>
 		</considerations>
 		<durationTicks>600000</durationTicks>
-		<governanceCost>0.25</governanceCost>
+		<governanceCost>0.20</governanceCost>
 		<impeachLeader>true</impeachLeader>
 	</Rimocracy.DecisionDef>
 
@@ -242,7 +403,7 @@
 	<Rimocracy.DecisionDef>
 		<defName>Populism</defName>
 		<label>Consent of the Governed</label>
-		<description>A true leader never forgets about his or her people and draws authority from their support. The efficiency of the leader depends on the median opinion of the citizens.</description>
+		<description>A true leader never forgets about his or her people and draws authority from their support. The efficiency of the leader depends on the citizens' median opinion of him/her.</description>
 		<category>Democratic</category>
 		<displayPriorityInCategory>10</displayPriorityInCategory>
 		<effectRequirements>
@@ -256,8 +417,15 @@
 				</li>
 			</all>
 		</effectRequirements>
+		<considerations>
+			<li>
+				<label>My opinion will count</label>
+				<support>10</support>
+				<isLeader>false</isLeader>
+			</li>
+		</considerations>
 		<tag/>
-		<governanceCost>0.50</governanceCost>
+		<governanceCost>0.25</governanceCost>
 		<regimeEffect>0.20</regimeEffect>
 	</Rimocracy.DecisionDef>
 
@@ -270,7 +438,7 @@
 		<displayRequirements>
 			<decision>Populism</decision>
 		</displayRequirements>
-		<governanceCost>0.30</governanceCost>
+		<governanceCost>0.15</governanceCost>
 		<cancelDecision>Populism</cancelDecision>
 	</Rimocracy.DecisionDef>
 
@@ -278,8 +446,8 @@
 
 	<Rimocracy.DecisionDef>
 		<defName>Egalitarianism</defName>
-		<label>Happyness for All</label>
-		<description>The goal of every government is the happiness of its people. With this doctrine, the higher the median mood of your citizens, the slower the Governance decay.</description>
+		<label>Happiness for All</label>
+		<description>The goal of every government is happiness of its people. With this doctrine, the higher the median mood of your citizens, the slower the Governance decay.</description>
 		<category>Democratic</category>
 		<displayPriorityInCategory>20</displayPriorityInCategory>
 		<effectRequirements>
@@ -294,20 +462,20 @@
 			</all>
 		</effectRequirements>
 		<tag/>
-		<governanceCost>0.50</governanceCost>
+		<governanceCost>0.25</governanceCost>
 		<regimeEffect>0.30</regimeEffect>
 	</Rimocracy.DecisionDef>
 
 	<Rimocracy.DecisionDef>
 		<defName>Egalitarianism_Cancel</defName>
-		<label>Cancel "Happyness for All"</label>
-		<description>We are no longer interested in egalitarianism.</description>
+		<label>Cancel "Happiness for All"</label>
+		<description>These unthankful people don't know what's good for them.</description>
 		<category>Democratic</category>
 		<displayPriorityInCategory>20</displayPriorityInCategory>
 		<displayRequirements>
 			<decision>Egalitarianism</decision>
 		</displayRequirements>
-		<governanceCost>0.30</governanceCost>
+		<governanceCost>0.15</governanceCost>
 		<cancelDecision>Egalitarianism</cancelDecision>
 	</Rimocracy.DecisionDef>
 
@@ -316,7 +484,7 @@
 	<Rimocracy.DecisionDef>
 		<defName>Meritocracy</defName>
 		<label>Meritocracy</label>
-		<description>A smart citizen should choose the most capable candidates. Pawns with high skills are more likely to be voted for in elections.</description>
+		<description>A smart citizen will choose the most capable candidates. Pawns with high skills are more likely to be voted for in elections.</description>
 		<category>Democratic</category>
 		<displayPriorityInCategory>30</displayPriorityInCategory>
 		<effectRequirements>
@@ -325,7 +493,7 @@
 		</effectRequirements>
 		<tag/>
 		<regimeEffect>0.20</regimeEffect>
-		<governanceCost>0.50</governanceCost>
+		<governanceCost>0.25</governanceCost>
 	</Rimocracy.DecisionDef>
 
 	<Rimocracy.DecisionDef>
@@ -337,7 +505,7 @@
 		<displayRequirements>
 			<decision>Meritocracy</decision>
 		</displayRequirements>
-		<governanceCost>0.30</governanceCost>
+		<governanceCost>0.15</governanceCost>
 		<cancelDecision>Meritocracy</cancelDecision>
 	</Rimocracy.DecisionDef>
 
@@ -362,7 +530,7 @@
 		</effectRequirements>
 		<tag/>
 		<regimeEffect>0.30</regimeEffect>
-		<governanceCost>0.50</governanceCost>
+		<governanceCost>0.25</governanceCost>
 	</Rimocracy.DecisionDef>
 
 	<Rimocracy.DecisionDef>
@@ -374,7 +542,7 @@
 		<displayRequirements>
 			<decision>ResPublica</decision>
 		</displayRequirements>
-		<governanceCost>0.30</governanceCost>
+		<governanceCost>0.15</governanceCost>
 		<cancelDecision>ResPublica</cancelDecision>
 	</Rimocracy.DecisionDef>
 
@@ -435,7 +603,7 @@
 		</considerations>
 		<tag/>
 		<regimeEffect>-0.20</regimeEffect>
-		<governanceCost>0.50</governanceCost>
+		<governanceCost>0.25</governanceCost>
 	</Rimocracy.DecisionDef>
 
 	<Rimocracy.DecisionDef>
@@ -454,7 +622,7 @@
 				<isLeader>true</isLeader>
 			</li>
 		</considerations>
-		<governanceCost>0.30</governanceCost>
+		<governanceCost>0.15</governanceCost>
 		<cancelDecision>Stability</cancelDecision>
 	</Rimocracy.DecisionDef>
 
@@ -486,7 +654,7 @@
 		</considerations>
 		<tag/>
 		<regimeEffect>-0.20</regimeEffect>
-		<governanceCost>0.50</governanceCost>
+		<governanceCost>0.25</governanceCost>
 	</Rimocracy.DecisionDef>
 
 	<Rimocracy.DecisionDef>
@@ -498,7 +666,7 @@
 		<displayRequirements>
 			<decision>Elitism</decision>
 		</displayRequirements>
-		<governanceCost>0.30</governanceCost>
+		<governanceCost>0.15</governanceCost>
 		<cancelDecision>Elitism</cancelDecision>
 	</Rimocracy.DecisionDef>
 
@@ -523,7 +691,7 @@
 		</effectRequirements>
 		<tag/>
 		<regimeEffect>-0.20</regimeEffect>
-		<governanceCost>0.30</governanceCost>
+		<governanceCost>0.15</governanceCost>
 	</Rimocracy.DecisionDef>
 
 	<Rimocracy.DecisionDef>
@@ -535,7 +703,7 @@
 		<displayRequirements>
 			<decision>CultOfPersonality</decision>
 		</displayRequirements>
-		<governanceCost>0.30</governanceCost>
+		<governanceCost>0.15</governanceCost>
 		<cancelDecision>CultOfPersonality</cancelDecision>
 	</Rimocracy.DecisionDef>
 
@@ -549,7 +717,7 @@
 		<displayPriorityInCategory>40</displayPriorityInCategory>
 		<displayRequirements>
 			<leaderExists>true</leaderExists>
-			<notCampaigning>true</notCampaigning>
+			<campaigning>false</campaigning>
 		</displayRequirements>
 		<effectRequirements>
 			<succession>Election</succession>
@@ -580,7 +748,6 @@
 		<label>State of Emergency</label>
 		<description>When you declare a State of Emergency, all mental break thresholds are reduced by 3/4 for 3 days, and elections are postponed.</description>
 		<category>Authoritarian</category>
-		<enactment>Decree</enactment>
 		<displayPriorityInCategory>50</displayPriorityInCategory>
 		<effectRequirements>
 			<all>
@@ -595,7 +762,7 @@
 		</effectRequirements>
 		<durationTicks>180000</durationTicks>
 		<regimeEffect>-0.30</regimeEffect>
-		<governanceCost>0.50</governanceCost>
+		<governanceCost>0.25</governanceCost>
 	</Rimocracy.DecisionDef>
 
 	<Rimocracy.DecisionDef>
