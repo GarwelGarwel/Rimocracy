@@ -69,4 +69,4 @@ Some decisions, like changing succession type, require support of the majority o
 
 The source code and latest release will always be available on [Github](https://github.com/GarwelGarwel/Rimocracy). Issue reports and pull requests are welcome.
 
-This mod is distributed under MIT License.
+This mod is distributed under MIT License. Icons and textures used were provided by [Flaticon.com](https://flaticon.com) and are distributed under their license.
