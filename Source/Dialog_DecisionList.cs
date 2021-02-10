@@ -6,10 +6,15 @@ using Verse;
 
 namespace Rimocracy
 {
+    /// <summary>
+    /// Dialog window with the list of possible decisions
+    /// </summary>
     public class Dialog_DecisionList : Window
     {
         Vector2 scrollPosition = new Vector2();
         Rect viewRect = new Rect();
+
+        DecisionDef decisionToShowVoteDetails;
 
         public Dialog_DecisionList()
         {
@@ -76,7 +81,13 @@ namespace Rimocracy
 
                         case DecisionEnactmentRule.Law:
                         case DecisionEnactmentRule.Referendum:
-                            content.Label($"Support: {votingResult.Yea} - {votingResult.Nay}", tooltip: votingResult.Explanations);
+                            if (content.ButtonTextLabeled($"Support: {votingResult.Yea} - {votingResult.Nay}", decisionToShowVoteDetails == d ? "Hide Details" : "Show Details"))
+                                if (decisionToShowVoteDetails != d)
+                                    decisionToShowVoteDetails = d;
+                                else decisionToShowVoteDetails = null;
+                            if (decisionToShowVoteDetails == d)
+                                foreach (PawnDecisionOpinion opinion in votingResult)
+                                    content.Label($"  {opinion.voter.NameShortColored}: {opinion.support.ToStringWithSign("0")}", tooltip: opinion.explanation);
                             break;
                     }
 
