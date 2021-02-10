@@ -5,6 +5,9 @@ using Verse;
 
 namespace Rimocracy
 {
+    /// <summary>
+    /// Defines conditions for supporting or opposing something (e.g. Decision) by a pawn, and the amount of that support
+    /// </summary>
     public class Consideration : Requirement
     {
         string label;
@@ -41,11 +44,11 @@ namespace Rimocracy
                 res &= pawn.story.traits.HasTrait(trait);
             if (!skills.NullOrEmpty())
                 res &= skills.TrueForAll(so => so.Compare(pawn));
-            if (opinionOfLeader != null)
-                res &= opinionOfLeader.Compare(Utility.GetOpinionOfLeader(pawn));
             Pawn leader = Utility.RimocracyComp.Leader;
-            if (medianOpinionOfLeader != null)
-                res &= medianOpinionOfLeader.Compare(leader != null ? leader.MedianCitizensOpinion() : 0);
+            if (opinionOfLeader != null && leader != null)
+                res &= opinionOfLeader.Compare(Utility.GetOpinionOfLeader(pawn));
+            if (medianOpinionOfLeader != null && leader != null)
+                res &= medianOpinionOfLeader.Compare(leader.MedianCitizensOpinion());
             if (medianOpinionOfMe != null)
                 res &= medianOpinionOfMe.Compare(pawn.MedianCitizensOpinion());
             if (age != null && pawn?.ageTracker != null)
@@ -64,12 +67,13 @@ namespace Rimocracy
             float s = support;
             foreach (SkillOperations so in skills)
                 so.TransformValue(pawn, ref s);
-            if (opinionOfLeader != null)
+            Pawn leader = Utility.RimocracyComp.Leader;
+            if (opinionOfLeader != null && leader != null)
                 opinionOfLeader.TransformValue(Utility.GetOpinionOfLeader(pawn), ref s);
-            if (medianOpinionOfLeader != null)
-                medianOpinionOfLeader.TransformValue(Utility.GetOpinionOfLeader(pawn), ref s);
+            if (medianOpinionOfLeader != null && leader != null)
+                medianOpinionOfLeader.TransformValue(leader.MedianCitizensOpinion(), ref s);
             if (medianOpinionOfMe != null)
-                medianOpinionOfMe.TransformValue(Utility.GetOpinionOfLeader(pawn), ref s);
+                medianOpinionOfMe.TransformValue(pawn.MedianCitizensOpinion(), ref s);
             if (age != null && pawn?.ageTracker != null)
                 age.TransformValue(pawn.ageTracker.AgeBiologicalYears, ref s);
             if (titleSeniority != null && pawn?.royalty != null)
@@ -78,6 +82,6 @@ namespace Rimocracy
         }
 
         string ExplanationPart(Pawn pawn) =>
-            $"{label}: {support.ToStringWithSign()}".Formatted(pawn.Named("PAWN"), Utility.RimocracyComp.Leader.Named("LEADER"));
+            $"{label}: {GetSupportValue(pawn).ToStringWithSign("0")}".Formatted(pawn.Named("PAWN"), Utility.RimocracyComp.Leader.Named("LEADER"));
     }
 }
