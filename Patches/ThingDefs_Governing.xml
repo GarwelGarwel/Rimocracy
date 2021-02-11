@@ -11,6 +11,21 @@
 		</value>
 	</Operation>
 
+	<Operation Class="PatchOperationSequence">
+		<success>Always</success>
+		<operations>
+			<li Class="PatchOperationTest">
+				<xpath>/Defs/ThingDef[defName="SimpleResearchBench"]/comps</xpath>
+				<success>Invert</success>
+			</li>
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/ThingDef[defName="SimpleResearchBench"]</xpath>
+				<value>
+					<comps/>
+				</value>
+			</li>
+		</operations>
+	</Operation>
 	<Operation Class="PatchOperationAdd">
 		<xpath>/Defs/ThingDef[defName="SimpleResearchBench"]/comps</xpath>
 		<value>
@@ -27,6 +42,21 @@
 		</value>
 	</Operation>
 
+	<Operation Class="PatchOperationSequence">
+		<success>Always</success>
+		<operations>
+			<li Class="PatchOperationTest">
+				<xpath>/Defs/ThingDef[defName="HiTechResearchBench"]/comps</xpath>
+				<success>Invert</success>
+			</li>
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/ThingDef[defName="HiTechResearchBench"]</xpath>
+				<value>
+					<comps/>
+				</value>
+			</li>
+		</operations>
+	</Operation>
 	<Operation Class="PatchOperationAdd">
 		<xpath>/Defs/ThingDef[defName="HiTechResearchBench"]/comps</xpath>
 		<value>
@@ -46,6 +76,21 @@
 		</value>
 	</Operation>
 
+	<Operation Class="PatchOperationSequence">
+		<success>Always</success>
+		<operations>
+			<li Class="PatchOperationTest">
+				<xpath>/Defs/ThingDef[defName="Throne"]/comps</xpath>
+				<success>Invert</success>
+			</li>
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/ThingDef[defName="Throne"]</xpath>
+				<value>
+					<comps/>
+				</value>
+			</li>
+		</operations>
+	</Operation>
 	<Operation Class="PatchOperationAdd">
 		<xpath>/Defs/ThingDef[defName="Throne"]/comps</xpath>
 		<value>
@@ -63,6 +108,21 @@
 		</value>
 	</Operation>
 
+	<Operation Class="PatchOperationSequence">
+		<success>Always</success>
+		<operations>
+			<li Class="PatchOperationTest">
+				<xpath>/Defs/ThingDef[defName="GrandThrone"]/comps</xpath>
+				<success>Invert</success>
+			</li>
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/ThingDef[defName="GrandThrone"]</xpath>
+				<value>
+					<comps/>
+				</value>
+			</li>
+		</operations>
+	</Operation>
 	<Operation Class="PatchOperationAdd">
 		<xpath>/Defs/ThingDef[defName="GrandThrone"]/comps</xpath>
 		<value>
@@ -82,6 +142,21 @@
 		</value>
 	</Operation>
 
+	<Operation Class="PatchOperationSequence">
+		<success>Always</success>
+		<operations>
+			<li Class="PatchOperationTest">
+				<xpath>/Defs/ThingDef[defName="FM_BasicManagerStation"]/comps</xpath>
+				<success>Invert</success>
+			</li>
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/ThingDef[defName="FM_BasicManagerStation"]</xpath>
+				<value>
+					<comps/>
+				</value>
+			</li>
+		</operations>
+	</Operation>
 	<Operation Class="PatchOperationAdd">
 		<success>Always</success>
 		<xpath>/Defs/ThingDef[defName="FM_BasicManagerStation"]/comps</xpath>
@@ -102,6 +177,21 @@
 		</value>
 	</Operation>
 
+	<Operation Class="PatchOperationSequence">
+		<success>Always</success>
+		<operations>
+			<li Class="PatchOperationTest">
+				<xpath>/Defs/ThingDef[defName="ThroneA"]/comps</xpath>
+				<success>Invert</success>
+			</li>
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/ThingDef[defName="ThroneA"]</xpath>
+				<value>
+					<comps/>
+				</value>
+			</li>
+		</operations>
+	</Operation>
 	<Operation Class="PatchOperationAdd">
 		<success>Always</success>
 		<xpath>/Defs/ThingDef[defName="ThroneA"]/comps</xpath>
@@ -120,6 +210,21 @@
 		</value>
 	</Operation>
 
+	<Operation Class="PatchOperationSequence">
+		<success>Always</success>
+		<operations>
+			<li Class="PatchOperationTest">
+				<xpath>/Defs/ThingDef[defName="ThroneB"]/comps</xpath>
+				<success>Invert</success>
+			</li>
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/ThingDef[defName="ThroneB"]</xpath>
+				<value>
+					<comps/>
+				</value>
+			</li>
+		</operations>
+	</Operation>
 	<Operation Class="PatchOperationAdd">
 		<success>Always</success>
 		<xpath>/Defs/ThingDef[defName="ThroneB"]/comps</xpath>
@@ -138,6 +243,21 @@
 		</value>
 	</Operation>
 
+	<Operation Class="PatchOperationSequence">
+		<success>Always</success>
+		<operations>
+			<li Class="PatchOperationTest">
+				<xpath>/Defs/ThingDef[defName="ThroneC"]/comps</xpath>
+				<success>Invert</success>
+			</li>
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/ThingDef[defName="ThroneC"]</xpath>
+				<value>
+					<comps/>
+				</value>
+			</li>
+		</operations>
+	</Operation>
 	<Operation Class="PatchOperationAdd">
 		<success>Always</success>
 		<xpath>/Defs/ThingDef[defName="ThroneC"]/comps</xpath>
@@ -156,6 +276,21 @@
 		</value>
 	</Operation>
 
+	<Operation Class="PatchOperationSequence">
+		<success>Always</success>
+		<operations>
+			<li Class="PatchOperationTest">
+				<xpath>/Defs/ThingDef[defName="GrandThroneA"]/comps</xpath>
+				<success>Invert</success>
+			</li>
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/ThingDef[defName="GrandThroneA"]</xpath>
+				<value>
+					<comps/>
+				</value>
+			</li>
+		</operations>
+	</Operation>
 	<Operation Class="PatchOperationAdd">
 		<success>Always</success>
 		<xpath>/Defs/ThingDef[defName="GrandThroneA"]/comps</xpath>
@@ -174,6 +309,21 @@
 		</value>
 	</Operation>
 
+	<Operation Class="PatchOperationSequence">
+		<success>Always</success>
+		<operations>
+			<li Class="PatchOperationTest">
+				<xpath>/Defs/ThingDef[defName="GrandThroneB"]/comps</xpath>
+				<success>Invert</success>
+			</li>
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/ThingDef[defName="GrandThroneB"]</xpath>
+				<value>
+					<comps/>
+				</value>
+			</li>
+		</operations>
+	</Operation>
 	<Operation Class="PatchOperationAdd">
 		<success>Always</success>
 		<xpath>/Defs/ThingDef[defName="GrandThroneB"]/comps</xpath>
@@ -192,6 +342,21 @@
 		</value>
 	</Operation>
 
+	<Operation Class="PatchOperationSequence">
+		<success>Always</success>
+		<operations>
+			<li Class="PatchOperationTest">
+				<xpath>/Defs/ThingDef[defName="GrandThroneC"]/comps</xpath>
+				<success>Invert</success>
+			</li>
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/ThingDef[defName="GrandThroneC"]</xpath>
+				<value>
+					<comps/>
+				</value>
+			</li>
+		</operations>
+	</Operation>
 	<Operation Class="PatchOperationAdd">
 		<success>Always</success>
 		<xpath>/Defs/ThingDef[defName="GrandThroneC"]/comps</xpath>
