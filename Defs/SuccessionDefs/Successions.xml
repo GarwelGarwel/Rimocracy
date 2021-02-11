@@ -8,9 +8,9 @@
 		<description>All adult, free, non-comatose citizens vote for candidates of their choice. When there are many enough citizens, only two most popular candidates compete.</description>
 		<noun>election</noun>
 		<workerClass>Rimocracy.SuccessionWorker_Election</workerClass>
-		<newLeaderMessageText>{PAWN} has been elected as the new {LEADERTITLE} of {NATIONNAME} with {NUMVOTES}. Vox populi, vox dei!</newLeaderMessageText>
+		<newLeaderMessageText>{PAWN} has been elected as the new {LEADERTITLE} of {NATIONNAME} with {VOTESNUM}. Vox populi, vox dei!</newLeaderMessageText>
 		<sameLeaderMessageTitle>{PAWN} reelected</sameLeaderMessageTitle>
-		<sameLeaderMessageText>{PAWN} has been reelected as the {LEADERTITLE} of {NATIONNAME} with {NUMVOTES}.</sameLeaderMessageText>
+		<sameLeaderMessageText>{PAWN} has been reelected as the {LEADERTITLE} of {NATIONNAME} with {VOTESNUM}.</sameLeaderMessageText>
 	</Rimocracy.SuccessionDef>
 
 	<Rimocracy.SuccessionDef>

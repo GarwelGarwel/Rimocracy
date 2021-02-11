@@ -6,10 +6,15 @@ using Verse;
 
 namespace Rimocracy
 {
+    /// <summary>
+    /// Dialog window with the list of possible decisions
+    /// </summary>
     public class Dialog_DecisionList : Window
     {
         Vector2 scrollPosition = new Vector2();
         Rect viewRect = new Rect();
+
+        DecisionDef decisionToShowVoteDetails;
 
         public Dialog_DecisionList()
         {
@@ -52,6 +57,7 @@ namespace Rimocracy
                 Text.Font = GameFont.Medium;
                 content.Label(group.Key.label);
                 Text.Font = GameFont.Small;
+
                 foreach (DecisionDef d in group.OrderBy(def => def.displayPriorityInCategory))
                 {
                     Text.Anchor = TextAnchor.MiddleCenter;
@@ -65,8 +71,28 @@ namespace Rimocracy
                     if (!d.effectRequirements.IsTrivial)
                         content.Label($"Requirements:\n{d.effectRequirements}");
 
+                    DecisionVoteResults votingResult = d.VotingResults;
+                    switch (d.enactment)
+                    {
+                        case DecisionEnactmentRule.Decree:
+                            if (votingResult.Count > 0)
+                                content.Label($"Leader's support: {votingResult.First().support.ToStringWithSign("0")}", tooltip: votingResult.First().explanation);
+                            break;
+
+                        case DecisionEnactmentRule.Law:
+                        case DecisionEnactmentRule.Referendum:
+                            if (content.ButtonTextLabeled($"Support: {votingResult.Yea} - {votingResult.Nay}", decisionToShowVoteDetails == d ? "Hide Details" : "Show Details"))
+                                if (decisionToShowVoteDetails != d)
+                                    decisionToShowVoteDetails = d;
+                                else decisionToShowVoteDetails = null;
+                            if (decisionToShowVoteDetails == d)
+                                foreach (PawnDecisionOpinion opinion in votingResult)
+                                    content.Label($"  {opinion.voter.NameShortColored}: {opinion.support.ToStringWithSign("0")}", tooltip: opinion.explanation);
+                            break;
+                    }
+
                     // Display Activate button for valid decisions
-                    if (d.IsValid)
+                    if (d.IsValid && d.IsPassed(votingResult))
                     {
                         if (content.ButtonText("Activate"))
                         {

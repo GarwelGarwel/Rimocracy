@@ -232,9 +232,11 @@ namespace Rimocracy
                     else if (!campaigns.NullOrEmpty())
                     {
                         // If at least one of the candidates is no longer eligible, campaign starts over
-                        if (campaigns.Any(p => !SuccessionWorker.CanBeCandidate(p.Candidate)))
+                        ElectionCampaign invalidCampaign = campaigns.Find(p => !SuccessionWorker.CanBeCandidate(p.Candidate));
+                        if (invalidCampaign != null)
                         {
-                            Utility.Log("Campaign restarted because one of the candidates is ineligible.");
+                            Utility.Log($"Campaign restarted because {invalidCampaign.Candidate} is ineligible to be a candidate.");
+                            Messages.Message($"{(invalidCampaign.Candidate.Name.ToStringShort ?? "One of the candidates")} can't be a candidate, so the election is started over.", MessageTypeDefOf.NegativeEvent);
                             campaigns = null;
                             CallElection();
                         }
@@ -282,12 +284,12 @@ namespace Rimocracy
                 return;
             }
 
-            electionTick = Find.TickManager.TicksAbs + Settings.CampaignDurationTicks;
-            Utility.Log($"Election has been called on {GenDate.DateFullStringWithHourAt(electionTick, Find.WorldGrid.LongLatOf(Find.AnyPlayerHomeMap.Tile))}");
+            ElectionTick = Find.TickManager.TicksAbs + Settings.CampaignDurationTicks;
+            Utility.Log($"Election has been called on {Utility.DateFullStringWithHourAtHome(ElectionTick)}.");
 
             // Adjust term expiration to the time of election
-            if (termExpiration < int.MaxValue)
-                termExpiration = electionTick;
+            if (TermExpiration < int.MaxValue)
+                TermExpiration = ElectionTick;
 
             // Launch campaigns
             if (ElectionUtility.CampaigningEnabled)

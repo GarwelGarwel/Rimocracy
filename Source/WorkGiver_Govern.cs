@@ -23,6 +23,10 @@ namespace Rimocracy
                 || Utility.IsPowerStarved(t as Building))
                 return false;
 
+            ThingComp_GoverningBench comp = t.TryGetComp<ThingComp_GoverningBench>();
+            if (comp != null && !comp.AllowGoverning)
+                return false;
+
             if (!forced && Utility.RimocracyComp.Governance >= (Utility.RimocracyComp.GovernanceTarget - Utility.GovernanceImprovementSpeed(pawn, t)))
             {
                 JobFailReason.Is("Governance is already high enough.");

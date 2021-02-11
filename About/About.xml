@@ -9,7 +9,7 @@
 		<li>1.1</li>
 		<li>1.2</li>
 	</supportedVersions>
-	<description>RimWorld mod to add politics to the game</description>
+	<description>RimWorld mod that adds domestic politics to the game</description>
 	<loadAfter>
 		<li>Ludeon.RimWorld</li>
 	</loadAfter>

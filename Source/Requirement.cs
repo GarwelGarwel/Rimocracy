@@ -14,15 +14,15 @@ namespace Rimocracy
 
         const string indentSymbol = "  ";
 
-        bool inverted = false;
+        protected bool inverted = false;
 
         List<Requirement> all = new List<Requirement>();
         List<Requirement> any = new List<Requirement>();
 
         SuccessionDef succession;
         TermDuration termDuration = TermDuration.Undefined;
-        bool leaderExists;
-        bool notCampaigning;
+        bool? leaderExists;
+        bool? campaigning;
         float minGovernance;
         float minRegime = -1;
         float maxRegime = 1;
@@ -31,36 +31,36 @@ namespace Rimocracy
         /// <summary>
         /// Returns true if this requirement is default
         /// </summary>
-        public bool IsTrivial =>
+        public virtual bool IsTrivial =>
             !inverted
             && all.NullOrEmpty()
             && any.NullOrEmpty()
             && succession == null
             && termDuration == TermDuration.Undefined
-            && !leaderExists
-            && !notCampaigning
+            && leaderExists == null
+            && campaigning == null
             && minGovernance == 0
             && minRegime == -1
             && maxRegime == 1
             && decision == null;
 
-        public static implicit operator bool(Requirement requirement) => requirement.GetValue();
+        public static implicit operator bool(Requirement requirement) => requirement.IsSatisfied();
 
-        public bool GetValue()
+        protected virtual bool IsSatisfied_Internal(Pawn pawn = null)
         {
             bool res = true;
             if (!all.NullOrEmpty())
-                res &= all.All(r => r);
+                res &= all.All(r => r.IsSatisfied(pawn));
             if (res && !any.NullOrEmpty())
-                res &= any.Any(r => r);
+                res &= any.Any(r => r.IsSatisfied(pawn));
             if (res && succession != null)
                 res &= Utility.RimocracyComp.SuccessionType.defName == succession.defName;
             if (res && termDuration != TermDuration.Undefined)
                 res &= Utility.RimocracyComp.TermDuration == termDuration;
-            if (res && leaderExists)
-                res &= Utility.RimocracyComp.Leader != null;
-            if (res && notCampaigning)
-                res &= Utility.RimocracyComp.Campaigns.NullOrEmpty();
+            if (res && leaderExists != null)
+                res &= (Utility.RimocracyComp.Leader != null) == leaderExists;
+            if (res && campaigning != null)
+                res &= !Utility.RimocracyComp.Campaigns.NullOrEmpty() == campaigning;
             if (res && minGovernance > 0)
                 res &= Utility.RimocracyComp.Governance >= minGovernance;
             if (res && minRegime > -1)
@@ -69,8 +69,10 @@ namespace Rimocracy
                 res &= Utility.RimocracyComp.RegimeFinal <= maxRegime;
             if (res && !decision.NullOrEmpty())
                 res &= Utility.RimocracyComp.DecisionActive(decision);
-            return res ^ inverted;
+            return res;
         }
+
+        public bool IsSatisfied(Pawn pawn = null) => IsSatisfied_Internal(pawn) ^ inverted;
 
         public override string ToString()
         {
@@ -82,10 +84,12 @@ namespace Rimocracy
             }
             if (succession != null)
                 res += $"{indent}Succession law: {succession.label}\n";
+            if (leaderExists != null)
+                res += $"{indent}Leader {((bool)leaderExists ? "exists" : "doesn't exist")}";
             if (termDuration != TermDuration.Undefined)
                 res += $"{indent}Term duration: {termDuration}\n";
-            if (notCampaigning)
-                res += $"{indent}Not campaigning\n";
+            if (campaigning != null)
+                res += $"{indent}Campaign is {((bool)campaigning ? "on" : "off")}\n";
             if (minGovernance > 0)
                 res += $"{indent}Governance is at least {minGovernance.ToStringPercent()}\n";
             if (minRegime > -1)

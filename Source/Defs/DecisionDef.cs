@@ -1,8 +1,13 @@
 ﻿using RimWorld;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Verse;
 
 namespace Rimocracy
 {
+    public enum DecisionEnactmentRule { None = 0, Decree, Law, Referendum };
+
     public class DecisionDef : Def
     {
         public DecisionCategoryDef category;
@@ -10,6 +15,9 @@ namespace Rimocracy
 
         public Requirement displayRequirements = Requirement.always;
         public Requirement effectRequirements = Requirement.always;
+        public DecisionEnactmentRule enactment = DecisionEnactmentRule.None;
+        public List<Consideration> considerations = new List<Consideration>();
+
         public string tag;
         public int durationTicks;
         public int durationDays;
@@ -48,6 +56,47 @@ namespace Rimocracy
         /// Returns expiration tick or MaxValue if only tag is set
         /// </summary>
         public int Expiration => Duration != 0 ? Find.TickManager.TicksAbs + Duration : (tag == null ? 0 : int.MaxValue);
+
+        public List<Pawn> Decisionmakers
+        {
+            get
+            {
+                switch (enactment)
+                {
+                    case DecisionEnactmentRule.Decree:
+                        Pawn leader = Utility.RimocracyComp.Leader;
+                        if (leader != null)
+                            return new List<Pawn>(1) { leader };
+                        break;
+
+                    case DecisionEnactmentRule.Law:
+                    case DecisionEnactmentRule.Referendum:
+                        return Utility.Citizens.ToList();
+                }
+
+                return new List<Pawn>();
+            }
+        }
+
+        public DecisionVoteResults VotingResults => new DecisionVoteResults(Decisionmakers.Select(pawn => GetPawnOpinion(pawn)));
+
+        public PawnDecisionOpinion GetPawnOpinion(Pawn pawn)
+        {
+            float support = 0;
+            List<string> explanations = new List<string>();
+            foreach (Consideration consideration in considerations)
+            {
+                Tuple<float, string> supportExplanation = consideration.GetSupportAndExplanation(pawn);
+                if (supportExplanation.Item1 != 0)
+                {
+                    support += supportExplanation.Item1;
+                    explanations.Add(supportExplanation.Item2);
+                }
+            }
+            return new PawnDecisionOpinion(pawn, support, explanations.ToLineList());
+        }
+
+        public bool IsPassed(DecisionVoteResults votingResult) => enactment == DecisionEnactmentRule.None || votingResult.IsPassed;
 
         public bool Activate()
         {

@@ -33,8 +33,11 @@ namespace Rimocracy
 
         public static int TermDurationTicks => RimocracyComp.TermDuration.GetDurationTicks();
 
+        public static string DateFullStringWithHourAtHome(long tick) =>
+            GenDate.DateFullStringWithHourAt(tick, Find.WorldGrid.LongLatOf(Find.AnyPlayerHomeMap.Tile));
+
         public static bool IsCitizen(this Pawn pawn) =>
-                    pawn != null
+            pawn != null
             && !pawn.Dead
             && pawn.IsFreeColonist
             && pawn.ageTracker.AgeBiologicalYears >= Settings.CitizenshipAge
@@ -43,6 +46,27 @@ namespace Rimocracy
         public static bool CanBeLeader(this Pawn p) => p.IsCitizen() && !p.GetDisabledWorkTypes(true).Contains(RimocracyDefOf.Governing);
 
         public static bool IsLeader(this Pawn p) => PoliticsEnabled && RimocracyComp.Leader == p;
+
+        public static float GetOpinionOfLeader(Pawn pawn)
+        {
+            Pawn leader = RimocracyComp.Leader;
+            if (leader == null)
+                return 0;
+            if (pawn == leader)
+                return 100;
+            return pawn.needs.mood.thoughts.TotalOpinionOffset(leader);
+        }
+
+        /// <summary>
+        /// Returns pawn's most senior title's seniority, with no titles at all being -100
+        /// </summary>
+        /// <param name="pawn"></param>
+        /// <returns></returns>
+        public static int GetTitleSeniority(this Pawn pawn)
+        {
+            RoyalTitle royalTitle = pawn.royalty.MostSeniorTitle;
+            return royalTitle != null ? royalTitle.def.seniority : -100;
+        }
 
         public static bool IsPowerStarved(this Building building)
         {
