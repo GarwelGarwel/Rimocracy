@@ -78,7 +78,7 @@ namespace Rimocracy
             }
         }
 
-        public DecisionVoteResults VotingResults => new DecisionVoteResults(Decisionmakers.Select(pawn => GetPawnOpinion(pawn)));
+        public DecisionVoteResults GetVotingResults() => new DecisionVoteResults(Decisionmakers.Select(pawn => GetPawnOpinion(pawn)));
 
         public PawnDecisionOpinion GetPawnOpinion(Pawn pawn)
         {

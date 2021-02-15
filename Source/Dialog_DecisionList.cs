@@ -71,7 +71,7 @@ namespace Rimocracy
                     if (!d.effectRequirements.IsTrivial)
                         content.Label($"Requirements:\n{d.effectRequirements}");
 
-                    DecisionVoteResults votingResult = d.VotingResults;
+                    DecisionVoteResults votingResult = d.GetVotingResults();
                     switch (d.enactment)
                     {
                         case DecisionEnactmentRule.Decree:
@@ -98,7 +98,11 @@ namespace Rimocracy
                         {
                             Utility.Log($"Activating {d.defName}.");
                             if (d.Activate())
+                            {
+                                foreach (PawnDecisionOpinion opinion in votingResult.Where(opinion => opinion.support != 0))
+                                    opinion.voter.needs.mood.thoughts.memories.TryGainMemory(ThoughtMaker.MakeThought(RimocracyDefOf.DecisionMade, opinion.support > 0 ? 1 : 0));
                                 Find.LetterStack.ReceiveLetter($"{d.LabelCap} Decision Taken", d.description, LetterDefOf.NeutralEvent, null);
+                            }
                             else Messages.Message($"Could not take {d.label} decision: requirements are not met.", MessageTypeDefOf.NegativeEvent, false);
                             Close();
                         }
