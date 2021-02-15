@@ -36,7 +36,7 @@ namespace Rimocracy
             BackstoryEffect(pawn.story.adulthood, ref val);
         }
 
-        StatModifierString GetStatModifierString(Backstory backstory) => modifiers.Find(m => m.name == backstory.identifier);
+        StatModifierString GetStatModifierString(Backstory backstory) => backstory != null ? modifiers.Find(m => m.name == backstory.identifier) : null;
 
         void BackstoryEffect(Backstory backstory, ref float val)
         {
