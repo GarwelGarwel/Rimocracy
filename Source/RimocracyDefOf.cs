@@ -25,6 +25,7 @@ namespace Rimocracy
         public static ThoughtDef DecisionMade;
         public static ThoughtDef ElectionOutcome;
         public static ThoughtDef ElectionCompetitorMemory;
+        public static ThoughtDef ImpeachedMemory;
         public static ThoughtDef PoliticalSympathy;
 
         public static WorkTypeDef Governing;

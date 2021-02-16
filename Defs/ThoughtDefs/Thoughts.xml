@@ -152,6 +152,18 @@
 	</ThoughtDef>
 
 	<ThoughtDef>
+		<defName>ImpeachedMemory</defName>
+		<stages>
+			<li>
+				<label>impeached</label>
+				<description>These idiots booted me from office!</description>
+				<baseMoodEffect>-10</baseMoodEffect>
+			</li>
+		</stages>
+		<durationDays>5</durationDays>
+	</ThoughtDef>
+
+	<ThoughtDef>
 		<defName>DecisionMade</defName>
 		<stages>
 			<li>
