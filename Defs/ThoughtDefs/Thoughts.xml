@@ -156,7 +156,7 @@
 		<stages>
 			<li>
 				<label>dislike decision</label>
-				<description>A decision was takens despite my opposition. They don't care about my opinion!</description>
+				<description>A decision was taken despite my opposition. They don't care about my opinion!</description>
 				<baseMoodEffect>-3</baseMoodEffect>
 			</li>
 			<li>
@@ -165,7 +165,7 @@
 				<baseMoodEffect>2</baseMoodEffect>
 			</li>
 		</stages>
-		<stackLimit>-1</stackLimit>
+		<stackLimit>3</stackLimit>
 		<stackedEffectMultiplier>1</stackedEffectMultiplier>
 		<durationDays>15</durationDays>
 		<nullifiedIfNotColonist>true</nullifiedIfNotColonist>

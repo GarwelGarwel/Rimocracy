@@ -16,6 +16,7 @@ namespace Rimocracy
         public Requirement displayRequirements = Requirement.always;
         public Requirement effectRequirements = Requirement.always;
         public DecisionEnactmentRule enactment = DecisionEnactmentRule.None;
+        public bool allCitizensReact = true;
         public List<Consideration> considerations = new List<Consideration>();
 
         public string tag;
@@ -78,7 +79,9 @@ namespace Rimocracy
             }
         }
 
-        public DecisionVoteResults GetVotingResults() => new DecisionVoteResults(Decisionmakers.Select(pawn => GetPawnOpinion(pawn)));
+        public DecisionVoteResults GetVotingResults(List<Pawn> voters) => new DecisionVoteResults(voters.Select(pawn => GetPawnOpinion(pawn)));
+
+        public DecisionVoteResults GetVotingResults() => GetVotingResults(Decisionmakers);
 
         public PawnDecisionOpinion GetPawnOpinion(Pawn pawn)
         {
