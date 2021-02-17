@@ -336,7 +336,7 @@
 				<isLeader>true</isLeader>
 			</li>
 		</considerations>
-		<governanceCost>0.75</governanceCost>
+		<governanceCost>0.50</governanceCost>
 		<setTermDuration>Indefinite</setTermDuration>
 	</Rimocracy.DecisionDef>
 	
@@ -438,6 +438,13 @@
 		<displayRequirements>
 			<decision>Populism</decision>
 		</displayRequirements>
+		<considerations>
+			<li>
+				<label>My opinion won't matter any more</label>
+				<support>-10</support>
+				<isLeader>false</isLeader>
+			</li>
+		</considerations>
 		<governanceCost>0.15</governanceCost>
 		<cancelDecision>Populism</cancelDecision>
 	</Rimocracy.DecisionDef>
@@ -461,6 +468,13 @@
 				</li>
 			</all>
 		</effectRequirements>
+		<considerations>
+			<li>
+				<label>The government should care about all citizens</label>
+				<support>10</support>
+				<isLeader>false</isLeader>
+			</li>
+		</considerations>
 		<tag/>
 		<governanceCost>0.25</governanceCost>
 		<regimeEffect>0.30</regimeEffect>
@@ -475,6 +489,13 @@
 		<displayRequirements>
 			<decision>Egalitarianism</decision>
 		</displayRequirements>
+		<considerations>
+			<li>
+				<label>I wish the government cared more about my happiness</label>
+				<support>-10</support>
+				<isLeader>false</isLeader>
+			</li>
+		</considerations>
 		<governanceCost>0.15</governanceCost>
 		<cancelDecision>Egalitarianism</cancelDecision>
 	</Rimocracy.DecisionDef>
@@ -596,9 +617,17 @@
 		</effectRequirements>
 		<considerations>
 			<li>
-				<label>Wants to stay in charge</label>
+				<label>I want to stay in charge</label>
 				<support>10</support>
 				<isLeader>true</isLeader>
+			</li>
+			<li>
+				<label>I want change</label>
+				<support>-10</support>
+				<isLeader>false</isLeader>
+				<opinionOfLeader>
+					<lessThan>0</lessThan>
+				</opinionOfLeader>
 			</li>
 		</considerations>
 		<tag/>
@@ -617,9 +646,17 @@
 		</displayRequirements>
 		<considerations>
 			<li>
-				<label>Wants to stay in charge</label>
+				<label>I want to stay in charge</label>
 				<support>-10</support>
 				<isLeader>true</isLeader>
+			</li>
+			<li>
+				<label>I want change</label>
+				<support>10</support>
+				<isLeader>false</isLeader>
+				<opinionOfLeader>
+					<lessThan>0</lessThan>
+				</opinionOfLeader>
 			</li>
 		</considerations>
 		<governanceCost>0.15</governanceCost>
@@ -647,9 +684,17 @@
 		</effectRequirements>
 		<considerations>
 			<li>
-				<label>Wants </label>
+				<label>I like it!</label>
 				<support>50</support>
 				<isLeader>true</isLeader>
+			</li>
+			<li>
+				<label>And what about MY happiness?</label>
+				<support>-10</support>
+				<isLeader>false</isLeader>
+				<opinionOfLeader>
+					<lessThan>0</lessThan>
+				</opinionOfLeader>
 			</li>
 		</considerations>
 		<tag/>
@@ -666,6 +711,21 @@
 		<displayRequirements>
 			<decision>Elitism</decision>
 		</displayRequirements>
+		<considerations>
+			<li>
+				<label>My interests</label>
+				<support>-50</support>
+				<isLeader>true</isLeader>
+			</li>
+			<li>
+				<label>Maybe someone will finally pay attention to me</label>
+				<support>10</support>
+				<isLeader>false</isLeader>
+				<opinionOfLeader>
+					<lessThan>0</lessThan>
+				</opinionOfLeader>
+			</li>
+		</considerations>
 		<governanceCost>0.15</governanceCost>
 		<cancelDecision>Elitism</cancelDecision>
 	</Rimocracy.DecisionDef>
@@ -689,6 +749,38 @@
 				</li>
 			</all>
 		</effectRequirements>
+		<considerations>
+			<li>
+				<label>I am the leader</label>
+				<support>20</support>
+				<isLeader>true</isLeader>
+			</li>
+			<li>
+				<label>Opinion of the leader</label>
+				<isLeader>false</isLeader>
+				<opinionOfLeader>
+					<offset>
+						<points>
+							<li>(-100, -50)</li>
+							<li>(0, 0)</li>
+							<li>(100, 25)</li>
+						</points>
+					</offset>
+				</opinionOfLeader>
+			</li>
+			<li>
+				<label>Leader's popularity</label>
+				<medianOpinionOfLeader>
+					<offset>
+						<points>
+							<li>(-100, -30)</li>
+							<li>(0, 0)</li>
+							<li>(100, 15)</li>
+						</points>
+					</offset>
+				</medianOpinionOfLeader>
+			</li>
+		</considerations>
 		<tag/>
 		<regimeEffect>-0.20</regimeEffect>
 		<governanceCost>0.15</governanceCost>
@@ -703,6 +795,38 @@
 		<displayRequirements>
 			<decision>CultOfPersonality</decision>
 		</displayRequirements>
+		<considerations>
+			<li>
+				<label>I am the leader</label>
+				<support>-20</support>
+				<isLeader>true</isLeader>
+			</li>
+			<li>
+				<label>Opinion of the leader</label>
+				<isLeader>false</isLeader>
+				<opinionOfLeader>
+					<offset>
+						<points>
+							<li>(-100, 50)</li>
+							<li>(0, 0)</li>
+							<li>(100, -25)</li>
+						</points>
+					</offset>
+				</opinionOfLeader>
+			</li>
+			<li>
+				<label>Leader's popularity</label>
+				<medianOpinionOfLeader>
+					<offset>
+						<points>
+							<li>(-100, 30)</li>
+							<li>(0, 0)</li>
+							<li>(100, -15)</li>
+						</points>
+					</offset>
+				</medianOpinionOfLeader>
+			</li>
+		</considerations>
 		<governanceCost>0.15</governanceCost>
 		<cancelDecision>CultOfPersonality</cancelDecision>
 	</Rimocracy.DecisionDef>
@@ -760,6 +884,31 @@
 				</li>
 			</all>
 		</effectRequirements>
+		<considerations>
+			<li>
+				<label>I am the leader</label>
+				<support>10</support>
+				<isLeader>true</isLeader>
+			</li>
+			<li>
+				<label>Trust of the leader</label>
+				<isLeader>false</isLeader>
+				<opinionOfLeader>
+					<offset>
+						<points>
+							<li>(-100, -30)</li>
+							<li>(50, 0)</li>
+							<li>(100, 0)</li>
+						</points>
+					</offset>
+				</opinionOfLeader>
+			</li>
+			<li>
+				<label>Campaign is on</label>
+				<support>-5</support>
+				<campaigning>true</campaigning>
+			</li>
+		</considerations>
 		<durationTicks>180000</durationTicks>
 		<regimeEffect>-0.30</regimeEffect>
 		<governanceCost>0.25</governanceCost>

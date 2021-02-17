@@ -148,6 +148,39 @@
 			</li>
 		</stages>
 		<durationDays>5</durationDays>
+		<nullifiedIfNotColonist>true</nullifiedIfNotColonist>
+	</ThoughtDef>
+
+	<ThoughtDef>
+		<defName>ImpeachedMemory</defName>
+		<stages>
+			<li>
+				<label>impeached</label>
+				<description>These idiots booted me from office!</description>
+				<baseMoodEffect>-10</baseMoodEffect>
+			</li>
+		</stages>
+		<durationDays>5</durationDays>
+	</ThoughtDef>
+
+	<ThoughtDef>
+		<defName>DecisionMade</defName>
+		<stages>
+			<li>
+				<label>dislike decision</label>
+				<description>A decision was taken despite my opposition. They don't care about my opinion!</description>
+				<baseMoodEffect>-3</baseMoodEffect>
+			</li>
+			<li>
+				<label>like decision</label>
+				<description>I'm glad that a right decision was taken.</description>
+				<baseMoodEffect>2</baseMoodEffect>
+			</li>
+		</stages>
+		<stackLimit>3</stackLimit>
+		<stackedEffectMultiplier>1</stackedEffectMultiplier>
+		<durationDays>15</durationDays>
+		<nullifiedIfNotColonist>true</nullifiedIfNotColonist>
 	</ThoughtDef>
 
 	<ThoughtDef>

@@ -16,6 +16,7 @@ namespace Rimocracy
         public Requirement displayRequirements = Requirement.always;
         public Requirement effectRequirements = Requirement.always;
         public DecisionEnactmentRule enactment = DecisionEnactmentRule.None;
+        public bool allCitizensReact = true;
         public List<Consideration> considerations = new List<Consideration>();
 
         public string tag;
@@ -78,7 +79,9 @@ namespace Rimocracy
             }
         }
 
-        public DecisionVoteResults VotingResults => new DecisionVoteResults(Decisionmakers.Select(pawn => GetPawnOpinion(pawn)));
+        public DecisionVoteResults GetVotingResults(List<Pawn> voters) => new DecisionVoteResults(voters.Select(pawn => GetPawnOpinion(pawn)));
+
+        public DecisionVoteResults GetVotingResults() => GetVotingResults(Decisionmakers);
 
         public PawnDecisionOpinion GetPawnOpinion(Pawn pawn)
         {
@@ -126,6 +129,7 @@ namespace Rimocracy
             if (impeachLeader && Utility.RimocracyComp.Leader != null)
             {
                 Utility.Log($"Impeaching {Utility.RimocracyComp.Leader}.");
+                Utility.RimocracyComp.Leader.needs.mood.thoughts.memories.TryGainMemory(RimocracyDefOf.ImpeachedMemory);
                 Utility.RimocracyComp.Leader = null;
             }
 
