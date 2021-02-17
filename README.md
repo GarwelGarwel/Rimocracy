@@ -47,6 +47,8 @@ Political decisions allow you to change many rules, such as succession type or t
 
 Some decisions, like changing succession type, require support of the majority of your citizens. Their opinions will depend on their personalities and interests (e.g. older pawns will prefer Seniority succession and more aggressive types Martial succession).
 
+Many decisions, even those that don't require a vote, will please or upset your citizens. E.g., the leader and his hard-core supporters will be happy to implement Cult of Personality while the rest of your citizens will have slight mood debuffs from it.
+
 ## FAQ
 
 **Q:** Nothing works, and the Politics tab says I don't have enough citizens.
