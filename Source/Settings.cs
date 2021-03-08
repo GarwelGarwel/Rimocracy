@@ -10,6 +10,8 @@ namespace Rimocracy
         public static float GovernanceDecaySpeed = 1;
         public static int MinPopulationForCampaigning = MinPopulationForCampaigning_Default;
         public static float CampaignDurationDays = CampaignDurationDays_Default;
+        public static int MinPopulationForCouncil = MinPopulationForCouncil_Default;
+        public static int CouncilSize = CouncilSize_Default;
         public static int MentalStateVoteWeightPenalty = MentalStateVoteWeightPenalty_Default;
         public static int SameBackstoryVoteWeightBonus = SameBackstoryVoteWeightBonus_Default;
         public static int PoliticalSympathyWeightFactor = PoliticalSympathyWeightFactor_Default;
@@ -23,6 +25,8 @@ namespace Rimocracy
         const int CitizenshipAge_Default = 16;
         const int MinPopulationForCampaigning_Default = 8;
         const float CampaignDurationDays_Default = 3;
+        const int MinPopulationForCouncil_Default = 4;
+        const int CouncilSize_Default = 3;
         const int MentalStateVoteWeightPenalty_Default = 10;
         const int SameBackstoryVoteWeightBonus_Default = 20;
         const int PoliticalSympathyWeightFactor_Default = 25;
@@ -38,6 +42,8 @@ namespace Rimocracy
             Scribe_Values.Look(ref GovernanceDecaySpeed, "GovernanceDecaySpeed", 1);
             Scribe_Values.Look(ref MinPopulationForCampaigning, "MinPopulationForCampaigning", MinPopulationForCampaigning_Default);
             Scribe_Values.Look(ref CampaignDurationDays, "CampaignDurationDays", CampaignDurationDays_Default);
+            Scribe_Values.Look(ref MinPopulationForCouncil, "MinPopulationForCouncil", MinPopulationForCouncil_Default);
+            Scribe_Values.Look(ref CouncilSize, "CouncilSize", CouncilSize_Default);
             Scribe_Values.Look(ref MentalStateVoteWeightPenalty, "MentalStateVoteWeightPenalty", MentalStateVoteWeightPenalty_Default);
             Scribe_Values.Look(ref SameBackstoryVoteWeightBonus, "SameBackstoryVoteWeightBonus", SameBackstoryVoteWeightBonus_Default);
             Scribe_Values.Look(ref PoliticalSympathyWeightFactor, "PoliticalSympathyWeightFactor", PoliticalSympathyWeightFactor_Default);

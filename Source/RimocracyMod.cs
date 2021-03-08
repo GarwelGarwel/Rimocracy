@@ -33,6 +33,12 @@ namespace Rimocracy
             listingStandard.Label($"Campaign Duration: {Settings.CampaignDurationDays} days", tooltip: "How many days a campaign lasts (also applies to the delay before the first election)");
             Settings.CampaignDurationDays = (float)Math.Round(listingStandard.Slider(Settings.CampaignDurationDays, 0, 15), 1);
 
+            listingStandard.Label($"Min Population for Council: {Settings.MinPopulationForCouncil}", tooltip: "Min number of citizens needed to create a Council");
+            Settings.MinPopulationForCouncil = (int)listingStandard.Slider(Settings.MinPopulationForCouncil, Math.Max(Settings.CouncilSize + 1, Settings.MinPopulation), 30);
+
+            listingStandard.Label($"Min Population for Council: {Settings.CouncilSize}", tooltip: "How many members there are in the Council");
+            Settings.CouncilSize = (int)listingStandard.Slider(Settings.CouncilSize, 3, Settings.MinPopulationForCouncil - 1);
+
             listingStandard.Label($"Mental State Vote Weight Penalty: {Settings.MentalStateVoteWeightPenalty}", tooltip: "How much vote weight is reduced for candidates in a mental state (the value is doubled for aggressive mental states)");
             Settings.MentalStateVoteWeightPenalty = (int)listingStandard.Slider(Settings.MentalStateVoteWeightPenalty, 0, 20);
 

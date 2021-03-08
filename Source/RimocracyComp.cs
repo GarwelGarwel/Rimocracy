@@ -349,10 +349,10 @@ namespace Rimocracy
 
                 string councilMessage = "";
                 Council.Clear();
-                if (Utility.CitizensCount >= 4)
+                if (Utility.CitizensCount >= Settings.MinPopulationForCouncil)
                 {
                     Utility.Log("Choosing Council...");
-                    ElectCouncil(3);
+                    ElectCouncil();
                     councilMessage = $"\n\nNew Council chosen:\n{Council.Select(pawn => pawn.NameShortColored.RawText).ToLineList("- ")}";
                 }
                 else Utility.Log($"Too few citizens for a council ({Utility.CitizensCount}.");
@@ -373,7 +373,7 @@ namespace Rimocracy
             campaigns = null;
         }
 
-        void ElectCouncil(int size)
+        void ElectCouncil()
         {
             Dictionary<Pawn, int> votes = new Dictionary<Pawn, int>();
             foreach (Pawn voter in Utility.Citizens.ToList())
@@ -381,7 +381,7 @@ namespace Rimocracy
                 Dictionary<Pawn, float> weights = new Dictionary<Pawn, float>();
                 foreach (Pawn p in Utility.Citizens.Where(p => voter != p && !p.IsLeader()))
                     weights[p] = ElectionUtility.VoteWeight(voter, p);
-                foreach (Pawn p in weights.OrderByDescending(kvp => kvp.Value).Take(size).Select(kvp => kvp.Key))
+                foreach (Pawn p in weights.OrderByDescending(kvp => kvp.Value).Take(Settings.CouncilSize).Select(kvp => kvp.Key))
                 {
                     Utility.Log($"{voter} votes for {p} for Council.");
                     if (votes.ContainsKey(p))
@@ -390,7 +390,7 @@ namespace Rimocracy
                 }
             }
 
-            foreach (KeyValuePair<Pawn, int> vote in votes.OrderByDescending(kvp => kvp.Value).Take(size))
+            foreach (KeyValuePair<Pawn, int> vote in votes.OrderByDescending(kvp => kvp.Value).Take(Settings.CouncilSize))
             {
                 Utility.Log($"{vote.Key} elected into Council with {vote.Value} votes.");
                 Council.Add(vote.Key);
