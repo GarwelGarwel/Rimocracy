@@ -116,6 +116,8 @@ namespace Rimocracy
         public static float MedianCitizensOpinion(this Pawn pawn) =>
              Citizens.Where(p => p != pawn).Select(p => (float)p.needs.mood.thoughts.TotalOpinionOffset(pawn)).Median();
 
+        public static float GetMedianMood() => Citizens.Select(pawn => pawn.needs.mood.CurLevelPercentage).Median();
+
         public static float Median(this IEnumerable<float> values)
         {
             if (values.EnumerableNullOrEmpty())

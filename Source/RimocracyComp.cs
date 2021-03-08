@@ -30,6 +30,8 @@ namespace Rimocracy
         int electionTick = int.MaxValue;
         List<Decision> decisions = new List<Decision>();
 
+        List<Pawn> council = new List<Pawn>();
+
         public bool IsEnabled => isEnabled;
 
         public Pawn Leader
@@ -139,7 +141,7 @@ namespace Rimocracy
             Math.Max(0,
                 BaseGovernanceDecayPerDay
                 * (leader != null ? leader.GetStatValue(RimocracyDefOf.GovernanceDecay) : 1)
-                * (DecisionActive("Egalitarianism") ? 1.5f - MedianMood : 1)
+                * (DecisionActive("Egalitarianism") ? 1.5f - Utility.GetMedianMood() : 1)
                 * (DecisionActive("Stability") ? 0.75f : 1));
 
         public bool ElectionCalled => electionTick != int.MaxValue;
@@ -150,7 +152,11 @@ namespace Rimocracy
             set => decisions = value;
         }
 
-        float MedianMood => Utility.Citizens.Select(pawn => pawn.needs.mood.CurLevelPercentage).Median();
+        public List<Pawn> Council
+        {
+            get => council;
+            set => council = value;
+        }
 
         string FocusSkillMessage => $"The focus skill is {focusSkill.LabelCap}.";
 
@@ -169,6 +175,8 @@ namespace Rimocracy
             base.FinalizeInit();
             if (decisions == null)
                 decisions = new List<Decision>();
+            if (council == null)
+                council = new List<Pawn>();
         }
 
         public override void ExposeData()
@@ -186,6 +194,7 @@ namespace Rimocracy
             Scribe_Values.Look(ref regime, "regime");
             Scribe_Defs.Look(ref focusSkill, "focusSkill");
             Scribe_Collections.Look(ref decisions, "decisions", LookMode.Deep);
+            Scribe_Collections.Look(ref council, "council", LookMode.Reference);
         }
 
         public override void WorldComponentTick()
@@ -338,20 +347,54 @@ namespace Rimocracy
                             p.needs.mood.thoughts.memories.TryGainMemory(ThoughtMaker.MakeThought(RimocracyDefOf.ElectionOutcome, stage));
                     }
 
+                string councilMessage = "";
+                Council.Clear();
+                if (Utility.CitizensCount >= 4)
+                {
+                    Utility.Log("Choosing Council...");
+                    ElectCouncil(3);
+                    councilMessage = $"\n\nNew Council chosen:\n{Council.Select(pawn => pawn.NameShortColored.RawText).ToLineList("- ")}";
+                }
+                else Utility.Log($"Too few citizens for a council ({Utility.CitizensCount}.");
+
                 // If the leader has changed, partially reset Governance; show message
                 if (leader != oldLeader)
                 {
                     governance = Mathf.Lerp(DecisionActive("Stability") ? 0 : 0.5f, governance, 0.5f);
-                    Find.LetterStack.ReceiveLetter(SuccessionWorker.NewLeaderMessageTitle(leader), $"{SuccessionWorker.NewLeaderMessageText(leader)}\n\n{FocusSkillMessage}", LetterDefOf.NeutralEvent);
+                    Find.LetterStack.ReceiveLetter(SuccessionWorker.NewLeaderMessageTitle(leader), $"{SuccessionWorker.NewLeaderMessageText(leader)}\n\n{FocusSkillMessage}{councilMessage}", LetterDefOf.NeutralEvent);
                     Tale tale = TaleRecorder.RecordTale(RimocracyDefOf.BecameLeader, leader);
                     if (tale != null)
                         Utility.Log($"Tale recorded: {tale}");
                 }
-                else Find.LetterStack.ReceiveLetter(SuccessionWorker.SameLeaderMessageTitle(leader), $"{SuccessionWorker.SameLeaderMessageText(leader)}\n\n{FocusSkillMessage}", LetterDefOf.NeutralEvent);
+                else Find.LetterStack.ReceiveLetter(SuccessionWorker.SameLeaderMessageTitle(leader), $"{SuccessionWorker.SameLeaderMessageText(leader)}\n\n{FocusSkillMessage}{councilMessage}", LetterDefOf.NeutralEvent);
                 Utility.Log($"New leader is {leader} (chosen from {SuccessionWorker.Candidates.Count()} candidates). Their term expires on {GenDate.DateFullStringAt(termExpiration, Find.WorldGrid.LongLatOf(leader.Tile))}. The focus skill is {focusSkill.defName}.");
             }
             else Utility.Log("Could not choose a new leader.", LogLevel.Warning);
             campaigns = null;
+        }
+
+        void ElectCouncil(int size)
+        {
+            Dictionary<Pawn, int> votes = new Dictionary<Pawn, int>();
+            foreach (Pawn voter in Utility.Citizens.ToList())
+            {
+                Dictionary<Pawn, float> weights = new Dictionary<Pawn, float>();
+                foreach (Pawn p in Utility.Citizens.Where(p => voter != p && !p.IsLeader()))
+                    weights[p] = ElectionUtility.VoteWeight(voter, p);
+                foreach (Pawn p in weights.OrderByDescending(kvp => kvp.Value).Take(size).Select(kvp => kvp.Key))
+                {
+                    Utility.Log($"{voter} votes for {p} for Council.");
+                    if (votes.ContainsKey(p))
+                        votes[p]++;
+                    else votes[p] = 1;
+                }
+            }
+
+            foreach (KeyValuePair<Pawn, int> vote in votes.OrderByDescending(kvp => kvp.Value).Take(size))
+            {
+                Utility.Log($"{vote.Key} elected into Council with {vote.Value} votes.");
+                Council.Add(vote.Key);
+            }
         }
     }
 }
