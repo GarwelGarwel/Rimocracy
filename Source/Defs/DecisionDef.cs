@@ -62,15 +62,16 @@ namespace Rimocracy
         {
             get
             {
+                RimocracyComp comp = Utility.RimocracyComp;
+
                 switch (enactment)
                 {
                     case DecisionEnactmentRule.Decree:
-                        Pawn leader = Utility.RimocracyComp.Leader;
-                        if (leader != null)
-                            return new List<Pawn>(1) { leader };
-                        break;
+                        return comp.LeaderList;
 
                     case DecisionEnactmentRule.Law:
+                        return comp.Council.NullOrEmpty() ? comp.LeaderList : comp.Council;
+
                     case DecisionEnactmentRule.Referendum:
                         return Utility.Citizens.ToList();
                 }

@@ -40,6 +40,8 @@ namespace Rimocracy
             set => leader = value;
         }
 
+        internal List<Pawn> LeaderList => Leader != null ? new List<Pawn>(1) { Leader } : new List<Pawn>();
+
         public LeaderTitleDef LeaderTitleDef
         {
             get => leaderTitle;
