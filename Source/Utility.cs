@@ -25,6 +25,8 @@ namespace Rimocracy
 
         public static int CitizensCount => Citizens.Count();
 
+        public static int MentalStateMalus => Citizens.Select(pawn => pawn.MentalStateDef).Where(def => def != null).Sum(def => def.IsAggro ? 5 : 2);
+
         public static string NationName => Find.FactionManager.OfPlayer.Name;
 
         public static IEnumerable<LeaderTitleDef> ApplicableLeaderTitles => DefDatabase<LeaderTitleDef>.AllDefs.Where(def => def.IsApplicable);

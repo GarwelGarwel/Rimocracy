@@ -137,7 +137,7 @@ namespace Rimocracy
         }
 
         public float BaseGovernanceDecayPerDay =>
-            (0.03f + governance * 0.1f - (0.06f + governance * 0.25f) / Utility.CitizensCount) * Settings.GovernanceDecaySpeed;
+            (0.03f + governance * 0.1f - (0.06f + governance * 0.25f) / (Utility.CitizensCount + Utility.MentalStateMalus)) * Settings.GovernanceDecaySpeed;
 
         public float GovernanceDecayPerDay =>
             Math.Max(0,
