@@ -10,7 +10,8 @@ namespace Rimocracy
         Rect viewRect = new Rect();
 
         public RimocracyMod(ModContentPack content)
-            : base(content) => GetSettings<Settings>();
+            : base(content)
+            => GetSettings<Settings>();
 
         public override void DoSettingsWindowContents(Rect inRect)
         {

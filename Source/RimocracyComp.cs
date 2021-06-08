@@ -162,13 +162,12 @@ namespace Rimocracy
             : base(world)
         { }
 
-        public bool DecisionActive(string tag) => decisions.Any(d => d.Tag == tag);
-
         public override void FinalizeInit()
         {
             base.FinalizeInit();
             if (decisions == null)
                 decisions = new List<Decision>();
+            HarmonyManager.Initialize();
         }
 
         public override void ExposeData()
@@ -259,6 +258,8 @@ namespace Rimocracy
         }
 
         public void ImproveGovernance(float amount) => governance = Math.Min(governance + amount, 1);
+
+        public bool DecisionActive(string tag) => decisions.Any(d => d.Tag == tag);
 
         internal void CancelDecision(string tag)
         {

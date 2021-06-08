@@ -1,6 +1,7 @@
 ﻿using RimWorld;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Verse;
 
 namespace Rimocracy
@@ -22,6 +23,11 @@ namespace Rimocracy
         ValueOperations age;
         ValueOperations titleSeniority;
 
+        bool? isTarget;
+        TraitDef targetTrait;
+        ValueOperations opinionOfTarget;
+        ValueOperations targetAge;
+
         public override bool IsTrivial =>
             base.IsTrivial 
             && isLeader == null
@@ -33,9 +39,12 @@ namespace Rimocracy
             && age == null
             && titleSeniority == null;
 
-        protected override bool IsSatisfied_Internal(Pawn pawn)
+        public static float GetSupportValue(IEnumerable<Consideration> considerations, Pawn pawn, Pawn target = null) =>
+            considerations.Where(consideration => consideration.IsSatisfied(pawn, target)).Sum(consideration => consideration.GetSupportValue(pawn, target));
+
+        protected override bool IsSatisfied_Internal(Pawn pawn, Pawn target = null)
         {
-            bool res = base.IsSatisfied_Internal();
+            bool res = base.IsSatisfied_Internal(pawn, target);
             if (pawn == null)
                 return res;
             if (isLeader != null)
@@ -55,14 +64,25 @@ namespace Rimocracy
                 res &= age.Compare(pawn.ageTracker.AgeBiologicalYears);
             if (titleSeniority != null && pawn?.royalty != null)
                 res &= titleSeniority.Compare(pawn.GetTitleSeniority());
+            if (target != null)
+            {
+                if (isTarget != null)
+                    res &= (pawn == target) == isTarget;
+                if (targetTrait != null && target.story?.traits != null)
+                    res &= target.story.traits.HasTrait(targetTrait);
+                if (opinionOfTarget != null)
+                    res &= opinionOfTarget.Compare(pawn.GetOpinionOfPawn(target));
+                if (targetAge != null && target.ageTracker != null)
+                    res &= targetAge.Compare(target.ageTracker.AgeBiologicalYears);
+            }
             return res;
         }
 
-        public Tuple<float, string> GetSupportAndExplanation(Pawn pawn) => IsSatisfied(pawn)
-                ? new Tuple<float, string>(GetSupportValue(pawn), ExplanationPart(pawn))
+        public Tuple<float, string> GetSupportAndExplanation(Pawn pawn, Pawn target = null) => IsSatisfied(pawn, target)
+                ? new Tuple<float, string>(GetSupportValue(pawn, target), ExplanationPart(pawn, target))
                 : new Tuple<float, string>(0, null);
 
-        float GetSupportValue(Pawn pawn)
+        float GetSupportValue(Pawn pawn, Pawn target = null)
         {
             float s = support;
             foreach (SkillOperations so in skills)
@@ -78,10 +98,17 @@ namespace Rimocracy
                 age.TransformValue(pawn.ageTracker.AgeBiologicalYears, ref s);
             if (titleSeniority != null && pawn?.royalty != null)
                 titleSeniority.TransformValue(pawn.GetTitleSeniority(), ref s);
+            if (target != null)
+            {
+                if (opinionOfTarget != null)
+                    opinionOfTarget.TransformValue(pawn.GetOpinionOfPawn(target), ref s);
+                if (targetAge != null && target.ageTracker != null)
+                    targetAge.TransformValue(target.ageTracker.AgeBiologicalYears, ref s);
+            }
             return s;
         }
 
-        string ExplanationPart(Pawn pawn) =>
-            $"{label}: {GetSupportValue(pawn).ToStringWithSign("0")}".Formatted(pawn.Named("PAWN"), Utility.RimocracyComp.Leader.Named("LEADER"));
+        string ExplanationPart(Pawn pawn, Pawn target = null) =>
+            $"{label}: {GetSupportValue(pawn, target).ToStringWithSign("0")}".Formatted(pawn.Named("PAWN"), Utility.RimocracyComp.Leader.Named("LEADER"), target.Named("TARGET"));
     }
 }

@@ -47,15 +47,16 @@ namespace Rimocracy
 
         public static bool IsLeader(this Pawn p) => PoliticsEnabled && RimocracyComp.Leader == p;
 
-        public static float GetOpinionOfLeader(Pawn pawn)
+        public static float GetOpinionOfPawn(this Pawn pawn, Pawn target)
         {
-            Pawn leader = RimocracyComp.Leader;
-            if (leader == null)
+            if (pawn == null || target == null)
                 return 0;
-            if (pawn == leader)
+            if (pawn == target)
                 return 100;
-            return pawn.needs.mood.thoughts.TotalOpinionOffset(leader);
+            return pawn.needs.mood.thoughts.TotalOpinionOffset(target);
         }
+
+        public static float GetOpinionOfLeader(Pawn pawn) => pawn.GetOpinionOfPawn(RimocracyComp.Leader);
 
         /// <summary>
         /// Returns pawn's most senior title's seniority, with no titles at all being -100

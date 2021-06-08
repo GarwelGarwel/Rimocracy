@@ -66,6 +66,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DecisionVoteResults.cs" />
+    <Compile Include="Defs\PoliticalActionDef.cs" />
+    <Compile Include="HarmonyManager.cs" />
     <Compile Include="PawnDecisionOpinion.cs" />
     <Compile Include="SkillOperations.cs" />
     <Compile Include="ThingComps\ThingComp_GoverningBench.cs" />

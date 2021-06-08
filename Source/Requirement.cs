@@ -46,7 +46,7 @@ namespace Rimocracy
 
         public static implicit operator bool(Requirement requirement) => requirement.IsSatisfied();
 
-        protected virtual bool IsSatisfied_Internal(Pawn pawn = null)
+        protected virtual bool IsSatisfied_Internal(Pawn pawn = null, Pawn target = null)
         {
             bool res = true;
             if (!all.NullOrEmpty())
@@ -72,7 +72,7 @@ namespace Rimocracy
             return res;
         }
 
-        public bool IsSatisfied(Pawn pawn = null) => IsSatisfied_Internal(pawn) ^ inverted;
+        public bool IsSatisfied(Pawn pawn = null, Pawn target = null) => IsSatisfied_Internal(pawn, target) ^ inverted;
 
         public override string ToString()
         {
