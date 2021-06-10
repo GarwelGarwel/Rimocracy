@@ -6,6 +6,8 @@ namespace Rimocracy
 {
     public class DecisionVoteResults : HashSet<PawnDecisionOpinion>
     {
+        public PawnDecisionOpinion this[Pawn pawn] => this.FirstOrDefault(opinion => opinion.voter == pawn);
+
         public int Yea => GetVotesNum(DecisionVote.Yea);
 
         public int Nay => GetVotesNum(DecisionVote.Nay);

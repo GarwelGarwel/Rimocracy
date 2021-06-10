@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<Defs>
+
+	<Rimocracy.PoliticalActionDef>
+		<defName>Arrest</defName>
+		<label>Arrest</label>
+		<considerations>
+			<li>
+				<label>They arrested a colonist</label>
+				<support>-10</support>
+				<all>
+					<li Class="Rimocracy.Consideration">
+						<targetIsColonist>true</targetIsColonist>
+					</li>
+					<li Class="Rimocracy.Consideration">
+						<trait>Psychopath</trait>
+						<inverted>true</inverted>
+					</li>
+				</all>
+			</li>
+			<li>
+				<label>I don't want to be arrested!</label>
+				<support>-100</support>
+				<isTarget>true</isTarget>
+			</li>
+			<li>
+				<label>Opinion of {TARGET}</label>
+				<opinionOfTarget>
+					<offset>
+						<points>
+							<li>(-100, 25)</li>
+							<li>(100, -25)</li>
+						</points>
+					</offset>
+				</opinionOfTarget>
+			</li>
+			<li>
+				<label>{TARGET} is a leader</label>
+				<support>-10</support>
+				<targetIsLeader>true</targetIsLeader>
+			</li>
+		</considerations>
+		<governanceChangeIfSupported>0.10</governanceChangeIfSupported>
+		<governanceChangeIfOpposed>-0.10</governanceChangeIfOpposed>
+		<actionClass>Verse.AI.Group.Lord</actionClass>
+		<actionMethod>Notify_PawnAttemptArrested</actionMethod>
+		<targetArgument>1</targetArgument>
+	</Rimocracy.PoliticalActionDef>
+
+	<Rimocracy.PoliticalActionDef>
+		<defName>Banishment</defName>
+		<label>Banishment</label>
+		<considerations>
+			<li>
+				<label>I feel sorry for the banished colonist</label>
+				<support>-10</support>
+				<trait>Psychopath</trait>
+				<inverted>true</inverted>
+			</li>
+			<li>
+				<label>I don't want to be banished!</label>
+				<support>-100</support>
+				<isTarget>true</isTarget>
+			</li>
+			<li>
+				<label>Kind</label>
+				<support>-15</support>
+				<trait>Kind</trait>
+			</li>
+			<li>
+				<label>Opinion of {TARGET}</label>
+				<opinionOfTarget>
+					<offset>
+						<points>
+							<li>(-100, 20)</li>
+							<li>(100, -20)</li>
+						</points>
+					</offset>
+				</opinionOfTarget>
+			</li>
+		</considerations>
+		<governanceChangeIfSupported>0.10</governanceChangeIfSupported>
+		<governanceChangeIfOpposed>-0.10</governanceChangeIfOpposed>
+		<actionClass>RimWorld.PawnBanishUtility</actionClass>
+		<actionMethod>Banish</actionMethod>
+		<targetArgument>1</targetArgument>
+	</Rimocracy.PoliticalActionDef>
+
+</Defs>

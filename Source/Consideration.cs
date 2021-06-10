@@ -1,7 +1,6 @@
 ﻿using RimWorld;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Verse;
 
 namespace Rimocracy
@@ -24,6 +23,8 @@ namespace Rimocracy
         ValueOperations titleSeniority;
 
         bool? isTarget;
+        bool? targetIsColonist;
+        bool? targetIsLeader;
         TraitDef targetTrait;
         ValueOperations opinionOfTarget;
         ValueOperations targetAge;
@@ -38,9 +39,6 @@ namespace Rimocracy
             && medianOpinionOfMe == null
             && age == null
             && titleSeniority == null;
-
-        public static float GetSupportValue(IEnumerable<Consideration> considerations, Pawn pawn, Pawn target = null) =>
-            considerations.Where(consideration => consideration.IsSatisfied(pawn, target)).Sum(consideration => consideration.GetSupportValue(pawn, target));
 
         protected override bool IsSatisfied_Internal(Pawn pawn, Pawn target = null)
         {
@@ -68,6 +66,10 @@ namespace Rimocracy
             {
                 if (isTarget != null)
                     res &= (pawn == target) == isTarget;
+                if (targetIsColonist != null)
+                    res &= target.IsColonist == targetIsColonist;
+                if (targetIsLeader != null)
+                    res &= target.IsLeader() == targetIsLeader;
                 if (targetTrait != null && target.story?.traits != null)
                     res &= target.story.traits.HasTrait(targetTrait);
                 if (opinionOfTarget != null)
@@ -78,12 +80,16 @@ namespace Rimocracy
             return res;
         }
 
-        public Tuple<float, string> GetSupportAndExplanation(Pawn pawn, Pawn target = null) => IsSatisfied(pawn, target)
-                ? new Tuple<float, string>(GetSupportValue(pawn, target), ExplanationPart(pawn, target))
-                : new Tuple<float, string>(0, null);
-
-        float GetSupportValue(Pawn pawn, Pawn target = null)
+        public Tuple<float, string> GetSupportAndExplanation(Pawn pawn, Pawn target = null)
         {
+            float s = GetSupport(pawn, target);
+            return new Tuple<float, string>(s, s != 0 ? $"{label}: {s.ToStringWithSign("0")}".Formatted(pawn.Named("PAWN"), Utility.RimocracyComp.Leader.Named("LEADER"), target.Named("TARGET")) : null);
+        }
+
+        public float GetSupport(Pawn pawn, Pawn target = null)
+        {
+            if (!IsSatisfied(pawn, target))
+                return 0;
             float s = support;
             foreach (SkillOperations so in skills)
                 so.TransformValue(pawn, ref s);
@@ -107,8 +113,5 @@ namespace Rimocracy
             }
             return s;
         }
-
-        string ExplanationPart(Pawn pawn, Pawn target = null) =>
-            $"{label}: {GetSupportValue(pawn, target).ToStringWithSign("0")}".Formatted(pawn.Named("PAWN"), Utility.RimocracyComp.Leader.Named("LEADER"), target.Named("TARGET"));
     }
 }
