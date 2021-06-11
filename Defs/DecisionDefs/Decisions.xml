@@ -81,7 +81,9 @@
 			<inverted>true</inverted>
 		</displayRequirements>
 		<effectRequirements>
-			<maxRegime>0.10</maxRegime>
+			<regime>
+				<lessOrEqual>0.10</lessOrEqual>
+			</regime>
 		</effectRequirements>
 		<considerations>
 			<li>
@@ -123,7 +125,9 @@
 			<inverted>true</inverted>
 		</displayRequirements>
 		<effectRequirements>
-			<maxRegime>-0.10</maxRegime>
+			<regime>
+				<lessOrEqual>-0.10</lessOrEqual>
+			</regime>
 		</effectRequirements>
 		<considerations>
 			<li>
@@ -173,7 +177,9 @@
 			</any>
 		</displayRequirements>
 		<effectRequirements>
-			<maxRegime>-0.10</maxRegime>
+			<regime>
+				<lessOrEqual>-0.10</lessOrEqual>
+			</regime>
 		</effectRequirements>
 		<considerations>
 			<li>
@@ -202,7 +208,9 @@
 			<inverted>true</inverted>
 		</displayRequirements>
 		<effectRequirements>
-			<maxRegime>-0.10</maxRegime>
+			<regime>
+				<lessOrEqual>-0.10</lessOrEqual>
+			</regime>
 		</effectRequirements>
 		<considerations>
 			<li>
@@ -327,7 +335,9 @@
 			<termDuration>Year</termDuration>
 		</displayRequirements>
 		<effectRequirements>
-			<maxRegime>-0.20</maxRegime>
+			<regime>
+				<lessOrEqual>-0.20</lessOrEqual>
+			</regime>
 		</effectRequirements>
 		<considerations>
 			<li>
@@ -351,7 +361,9 @@
 		<displayPriorityInCategory>50</displayPriorityInCategory>
 		<displayRequirements>
 			<leaderExists>true</leaderExists>
-			<minRegime>-0.50</minRegime>
+			<regime>
+				<greaterOrEqual>-0.50</greaterOrEqual>
+			</regime>
 			<all>
 				<li>
 					<succession>Seniority</succession>
@@ -409,7 +421,9 @@
 		<effectRequirements>
 			<all>
 				<li>
-					<minRegime>-0.15</minRegime>
+					<regime>
+						<greaterOrEqual>-0.15</greaterOrEqual>
+					</regime>
 				</li>
 				<li>
 					<decision>CultOfPersonality</decision>
@@ -460,7 +474,9 @@
 		<effectRequirements>
 			<all>
 				<li>
-					<minRegime>0.10</minRegime>
+					<regime>
+						<greaterOrEqual>0.10</greaterOrEqual>
+					</regime>
 				</li>
 				<li>
 					<decision>Elitism</decision>
@@ -510,7 +526,9 @@
 		<displayPriorityInCategory>30</displayPriorityInCategory>
 		<effectRequirements>
 			<succession>Election</succession>
-			<minRegime>0.20</minRegime>
+			<regime>
+				<greaterOrEqual>0.20</greaterOrEqual>
+			</regime>
 		</effectRequirements>
 		<tag/>
 		<regimeEffect>0.20</regimeEffect>
@@ -541,7 +559,9 @@
 		<effectRequirements>
 			<all>
 				<li>
-					<minRegime>0.25</minRegime>
+					<regime>
+						<greaterOrEqual>0.25</greaterOrEqual>
+					</regime>
 				</li>
 				<li>
 					<decision>StateOfEmergency</decision>
@@ -582,12 +602,14 @@
 					<inverted>true</inverted>
 				</li>
 				<li>
-					<minRegime>-0.1</minRegime>
+					<regime>
+						<greaterOrEqual>-0.10</greaterOrEqual>
+					</regime>
 				</li>
 			</all>
 		</effectRequirements>
 		<tag/>
-		<regimeEffect>0.2</regimeEffect>
+		<regimeEffect>0.20</regimeEffect>
 		<governanceCost>0.10</governanceCost>
 	</Rimocracy.DecisionDef>
 
@@ -613,7 +635,9 @@
 		<category>Authoritarian</category>
 		<displayPriorityInCategory>10</displayPriorityInCategory>
 		<effectRequirements>
-			<maxRegime>0.10</maxRegime>
+			<regime>
+				<lessOrEqual>0.10</lessOrEqual>
+			</regime>
 		</effectRequirements>
 		<considerations>
 			<li>
@@ -674,7 +698,9 @@
 		<effectRequirements>
 			<all>
 				<li>
-					<maxRegime>-0.10</maxRegime>
+					<regime>
+						<lessOrEqual>-0.10</lessOrEqual>
+					</regime>
 				</li>
 				<li>
 					<decision>Egalitarianism</decision>
@@ -741,7 +767,9 @@
 		<effectRequirements>
 			<all>
 				<li>
-					<maxRegime>-0.20</maxRegime>
+					<regime>
+						<lessOrEqual>-0.20</lessOrEqual>
+					</regime>
 				</li>
 				<li>
 					<decision>Populism</decision>
@@ -845,7 +873,9 @@
 		</displayRequirements>
 		<effectRequirements>
 			<succession>Election</succession>
-			<maxRegime>0.1</maxRegime>
+			<regime>
+				<lessOrEqual>0.10</lessOrEqual>
+			</regime>
 		</effectRequirements>
 		<tag/>
 		<regimeEffect>-0.2</regimeEffect>
@@ -876,7 +906,9 @@
 		<effectRequirements>
 			<all>
 				<li>
-					<maxRegime>-0.20</maxRegime>
+					<regime>
+						<lessOrEqual>-0.20</lessOrEqual>
+					</regime>
 				</li>
 				<li>
 					<decision>ResPublica</decision>

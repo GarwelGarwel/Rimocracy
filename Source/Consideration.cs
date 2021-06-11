@@ -24,21 +24,12 @@ namespace Rimocracy
 
         bool? isTarget;
         bool? targetIsColonist;
+        bool? targetIsCitizen;
         bool? targetIsLeader;
+        bool? targetInAggroMentalState;
         TraitDef targetTrait;
         ValueOperations opinionOfTarget;
         ValueOperations targetAge;
-
-        public override bool IsTrivial =>
-            base.IsTrivial 
-            && isLeader == null
-            && trait == null
-            && skills.NullOrEmpty()
-            && opinionOfLeader == null
-            && medianOpinionOfLeader == null
-            && medianOpinionOfMe == null
-            && age == null
-            && titleSeniority == null;
 
         protected override bool IsSatisfied_Internal(Pawn pawn, Pawn target = null)
         {
@@ -68,8 +59,12 @@ namespace Rimocracy
                     res &= (pawn == target) == isTarget;
                 if (targetIsColonist != null)
                     res &= target.IsColonist == targetIsColonist;
+                if (targetIsCitizen != null)
+                    res &= target.IsCitizen() == targetIsCitizen;
                 if (targetIsLeader != null)
                     res &= target.IsLeader() == targetIsLeader;
+                if (targetInAggroMentalState != null)
+                    res &= target.InAggroMentalState == targetInAggroMentalState;
                 if (targetTrait != null && target.story?.traits != null)
                     res &= target.story.traits.HasTrait(targetTrait);
                 if (opinionOfTarget != null)
@@ -91,6 +86,10 @@ namespace Rimocracy
             if (!IsSatisfied(pawn, target))
                 return 0;
             float s = support;
+            if (governance != null)
+                governance.TransformValue(Utility.RimocracyComp.Governance, ref s);
+            if (regime != null)
+                regime.TransformValue(Utility.RimocracyComp.RegimeFinal, ref s);
             foreach (SkillOperations so in skills)
                 so.TransformValue(pawn, ref s);
             Pawn leader = Utility.RimocracyComp.Leader;

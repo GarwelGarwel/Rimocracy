@@ -19,14 +19,13 @@ namespace Rimocracy
         List<Requirement> all = new List<Requirement>();
         List<Requirement> any = new List<Requirement>();
 
-        SuccessionDef succession;
-        TermDuration termDuration = TermDuration.Undefined;
-        bool? leaderExists;
-        bool? campaigning;
-        float minGovernance;
-        float minRegime = -1;
-        float maxRegime = 1;
-        string decision;
+        protected SuccessionDef succession;
+        protected TermDuration termDuration = TermDuration.Undefined;
+        protected bool? leaderExists;
+        protected bool? campaigning;
+        protected ValueOperations governance;
+        protected ValueOperations regime;
+        protected string decision;
 
         /// <summary>
         /// Returns true if this requirement is default
@@ -39,9 +38,8 @@ namespace Rimocracy
             && termDuration == TermDuration.Undefined
             && leaderExists == null
             && campaigning == null
-            && minGovernance == 0
-            && minRegime == -1
-            && maxRegime == 1
+            && governance == null
+            && regime == null
             && decision == null;
 
         public static implicit operator bool(Requirement requirement) => requirement.IsSatisfied();
@@ -61,12 +59,10 @@ namespace Rimocracy
                 res &= (Utility.RimocracyComp.Leader != null) == leaderExists;
             if (res && campaigning != null)
                 res &= !Utility.RimocracyComp.Campaigns.NullOrEmpty() == campaigning;
-            if (res && minGovernance > 0)
-                res &= Utility.RimocracyComp.Governance >= minGovernance;
-            if (res && minRegime > -1)
-                res &= Utility.RimocracyComp.RegimeFinal >= minRegime;
-            if (res && maxRegime < 1)
-                res &= Utility.RimocracyComp.RegimeFinal <= maxRegime;
+            if (res && governance != null)
+                res &= governance.Compare(Utility.RimocracyComp.Governance);
+            if (regime != null)
+                res &= regime.Compare(Utility.RimocracyComp.RegimeFinal);
             if (res && !decision.NullOrEmpty())
                 res &= Utility.RimocracyComp.DecisionActive(decision);
             return res;
@@ -90,16 +86,10 @@ namespace Rimocracy
                 res += $"{indent}Term duration: {termDuration}\n";
             if (campaigning != null)
                 res += $"{indent}Campaign is {((bool)campaigning ? "on" : "off")}\n";
-            if (minGovernance > 0)
-                res += $"{indent}Governance is at least {minGovernance.ToStringPercent()}\n";
-            if (minRegime > -1)
-                if (minRegime > 0)
-                    res += $"{indent}Regime is at least {minRegime.ToStringPercent()} democratic\n";
-                else res += $"{indent}Regime is at most {(-minRegime).ToStringPercent()} authoritarian\n";
-            if (maxRegime < 1)
-                if (maxRegime > 0)
-                    res += $"{indent}Regime is at most {maxRegime.ToStringPercent()} democratic\n";
-                else res += $"{indent}Regime is at least {(-maxRegime).ToStringPercent()} authoritarian\n";
+            if (governance != null)
+                res += $"{indent}{governance.ToString("Governance", "P0")}\n";
+            if (regime != null)
+                res += $"{indent}{regime.ToString("Regime (democracy)", "P0")}\n";
             if (!decision.NullOrEmpty())
                 res += $"{indent}{decision} is active";
             if (!all.NullOrEmpty())
