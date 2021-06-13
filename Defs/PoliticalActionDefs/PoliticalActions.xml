@@ -4,28 +4,30 @@
 
 	<Rimocracy.PoliticalActionDef>
 		<defName>Arrest</defName>
-		<label>Arrest</label>
+		<label>arrest</label>
 		<considerations>
 			<li>
-				<label>They arrested a colonist</label>
-				<support>-10</support>
+				<label>No reason for arrest</label>
+				<support>-5</support>
+				<targetIsColonist>true</targetIsColonist>
+				<targetInAggroMentalState>false</targetInAggroMentalState>
+			</li>
+			<li>
+				<label>I don't want to be arrested!</label>
+				<support>-50</support>
 				<all>
 					<li Class="Rimocracy.Consideration">
-						<targetIsColonist>true</targetIsColonist>
+						<isTarget>true</isTarget>
 					</li>
 					<li Class="Rimocracy.Consideration">
-						<trait>Psychopath</trait>
+						<trait>Masochist</trait>
 						<inverted>true</inverted>
 					</li>
 				</all>
 			</li>
 			<li>
-				<label>I don't want to be arrested!</label>
-				<support>-100</support>
-				<isTarget>true</isTarget>
-			</li>
-			<li>
 				<label>Opinion of {TARGET}</label>
+				<isTarget>false</isTarget>
 				<opinionOfTarget>
 					<offset>
 						<points>
@@ -41,31 +43,112 @@
 				<targetIsLeader>true</targetIsLeader>
 			</li>
 		</considerations>
+		<governanceChangeIfSupported>0.05</governanceChangeIfSupported>
+		<governanceChangeIfOpposed>-0.05</governanceChangeIfOpposed>
+		<preActionPatch>
+			<patchClass>Verse.AI.Group.Lord</patchClass>
+			<patchMethod>Notify_PawnAttemptArrested</patchMethod>
+			<targetArgument>1</targetArgument>
+		</preActionPatch>
+		<postActionPatch>
+			<patchClass>Verse.AI.Group.Lord</patchClass>
+			<patchMethod>Notify_PawnAttemptArrested</patchMethod>
+			<targetArgument>1</targetArgument>
+		</postActionPatch>
+	</Rimocracy.PoliticalActionDef>
+
+	<Rimocracy.PoliticalActionDef>
+		<defName>Execution</defName>
+		<label>execution</label>
+		<considerations>
+			<li>
+				<label>Killing people is bad</label>
+				<support>-10</support>
+				<all>
+					<li Class="Rimocracy.Consideration">
+						<trait>Psychopath</trait>
+						<inverted>true</inverted>
+					</li>
+					<li Class="Rimocracy.Consideration">
+						<trait>Bloodlust</trait>
+						<inverted>true</inverted>
+					</li>
+				</all>
+			</li>
+			<li>
+				<label>I like hurting people</label>
+				<support>15</support>
+				<trait>Bloodlust</trait>
+				<isTarget>false</isTarget>
+			</li>
+			<li>
+				<label>Kind</label>
+				<support>-10</support>
+				<trait>Kind</trait>
+			</li>
+			<li>
+				<label>{TARGET} is a fellow colonist</label>
+				<support>-10</support>
+				<all>
+					<li Class="Rimocracy.Consideration">
+						<targetIsColonist>true</targetIsColonist>
+						<isTarget>false</isTarget>
+					</li>
+					<li Class="Rimocracy.Consideration">
+						<trait>Psychopath</trait>
+						<inverted>true</inverted>
+					</li>
+				</all>
+			</li>
+			<li>
+				<label>I want to live!</label>
+				<support>-100</support>
+				<isTarget>true</isTarget>
+			</li>
+			<li>
+				<label>Opinion of {TARGET}</label>
+				<opinionOfTarget>
+					<offset>
+						<points>
+							<li>(-100, 20)</li>
+							<li>(100, -20)</li>
+						</points>
+					</offset>
+				</opinionOfTarget>
+			</li>
+		</considerations>
 		<governanceChangeIfSupported>0.10</governanceChangeIfSupported>
 		<governanceChangeIfOpposed>-0.10</governanceChangeIfOpposed>
-		<actionClass>Verse.AI.Group.Lord</actionClass>
-		<actionMethod>Notify_PawnAttemptArrested</actionMethod>
-		<targetArgument>1</targetArgument>
+		<preActionPatch>
+			<patchClass>RimWorld.ExecutionUtility</patchClass>
+			<patchMethod>DoExecutionByCut</patchMethod>
+			<targetArgument>2</targetArgument>
+		</preActionPatch>
+		<postActionPatch>
+			<patchClass>RimWorld.ExecutionUtility</patchClass>
+			<patchMethod>DoExecutionByCut</patchMethod>
+			<targetArgument>2</targetArgument>
+		</postActionPatch>
 	</Rimocracy.PoliticalActionDef>
 
 	<Rimocracy.PoliticalActionDef>
 		<defName>Banishment</defName>
-		<label>Banishment</label>
+		<label>banishment</label>
 		<considerations>
 			<li>
-				<label>I feel sorry for the banished colonist</label>
+				<label>Banishment is cruel</label>
 				<support>-10</support>
 				<trait>Psychopath</trait>
 				<inverted>true</inverted>
 			</li>
 			<li>
 				<label>I don't want to be banished!</label>
-				<support>-100</support>
+				<support>-50</support>
 				<isTarget>true</isTarget>
 			</li>
 			<li>
 				<label>Kind</label>
-				<support>-15</support>
+				<support>-10</support>
 				<trait>Kind</trait>
 			</li>
 			<li>
@@ -82,9 +165,16 @@
 		</considerations>
 		<governanceChangeIfSupported>0.10</governanceChangeIfSupported>
 		<governanceChangeIfOpposed>-0.10</governanceChangeIfOpposed>
-		<actionClass>RimWorld.PawnBanishUtility</actionClass>
-		<actionMethod>Banish</actionMethod>
-		<targetArgument>1</targetArgument>
+		<preActionPatch>
+			<patchClass>RimWorld.PawnBanishUtility</patchClass>
+			<patchMethod>Banish</patchMethod>
+			<targetArgument>1</targetArgument>
+		</preActionPatch>
+		<postActionPatch>
+			<patchClass>RimWorld.PawnBanishUtility</patchClass>
+			<patchMethod>Banish</patchMethod>
+			<targetArgument>1</targetArgument>
+		</postActionPatch>
 	</Rimocracy.PoliticalActionDef>
 
 </Defs>
