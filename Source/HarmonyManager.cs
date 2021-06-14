@@ -1,6 +1,6 @@
-﻿using System;
-using HarmonyLib;
+﻿using HarmonyLib;
 using RimWorld;
+using System;
 using Verse;
 using Verse.AI;
 
@@ -58,7 +58,6 @@ namespace Rimocracy
                 new LookTargets(target),
                 MessageTypeDefOf.NegativeEvent);
 
-
         #region ARREST
 
         public static void Arrest_Prefix(JobDriver_TakeToBed __instance, out DecisionVoteResults __state)
@@ -84,7 +83,7 @@ namespace Rimocracy
                 RimocracyDefOf.Arrest.Activate(__state ?? RimocracyDefOf.Arrest.GetOpinions(target));
         }
 
-        #endregion
+        #endregion ARREST
 
         #region EXECUTION
 
@@ -104,7 +103,7 @@ namespace Rimocracy
             RimocracyDefOf.Execution.Activate(victim);
         }
 
-        #endregion
+        #endregion EXECUTION
 
         #region RELEASE
 
@@ -124,7 +123,7 @@ namespace Rimocracy
             RimocracyDefOf.Release.Activate(p);
         }
 
-        #endregion
+        #endregion RELEASE
 
         #region BANISHMENT
 
@@ -148,7 +147,6 @@ namespace Rimocracy
                 RimocracyDefOf.Banishment.Activate(__state);
         }
 
-        #endregion
-
+        #endregion BANISHMENT
     }
 }

@@ -1,7 +1,4 @@
-﻿using RimWorld;
-using System;
-using System.Collections.Generic;
-using Verse;
+﻿using Verse;
 
 namespace Rimocracy
 {
@@ -19,40 +16,13 @@ namespace Rimocracy
         ValueOperations age;
         ValueOperations titleSeniority;
 
-        TraitDef targetTrait;
         ValueOperations opinionOfTarget;
         ValueOperations targetAge;
 
-        protected override bool IsSatisfied_Internal(Pawn pawn, Pawn target = null)
-        {
-            bool res = base.IsSatisfied_Internal(pawn, target);
-            if (pawn == null)
-                return res;
-            Pawn leader = Utility.RimocracyComp.Leader;
-            if (opinionOfLeader != null && leader != null)
-                res &= opinionOfLeader.Compare(Utility.GetOpinionOfLeader(pawn));
-            if (medianOpinionOfLeader != null && leader != null)
-                res &= medianOpinionOfLeader.Compare(leader.MedianCitizensOpinion());
-            if (medianOpinionOfMe != null)
-                res &= medianOpinionOfMe.Compare(pawn.MedianCitizensOpinion());
-            if (age != null && pawn?.ageTracker != null)
-                res &= age.Compare(pawn.ageTracker.AgeBiologicalYears);
-            if (titleSeniority != null && pawn?.royalty != null)
-                res &= titleSeniority.Compare(pawn.GetTitleSeniority());
-            if (target != null)
-            {
-                if (opinionOfTarget != null)
-                    res &= opinionOfTarget.Compare(pawn.GetOpinionOfPawn(target));
-                if (targetAge != null && target.ageTracker != null)
-                    res &= targetAge.Compare(target.ageTracker.AgeBiologicalYears);
-            }
-            return res;
-        }
-
-        public Tuple<float, string> GetSupportAndExplanation(Pawn pawn, Pawn target = null)
+        public (float support, string explanation) GetSupportAndExplanation(Pawn pawn, Pawn target = null)
         {
             float s = GetSupport(pawn, target);
-            return new Tuple<float, string>(s, s != 0 ? $"{label}: {s.ToStringWithSign("0")}".Formatted(pawn.Named("PAWN"), Utility.RimocracyComp.Leader.Named("LEADER"), target.Named("TARGET")) : null);
+            return (s, s != 0 ? $"{label}: {s.ToStringWithSign("0")}".Formatted(pawn.Named("PAWN"), Utility.RimocracyComp.Leader.Named("LEADER"), target.Named("TARGET")) : null);
         }
 
         public float GetSupport(Pawn pawn, Pawn target = null)
@@ -85,6 +55,32 @@ namespace Rimocracy
                     targetAge.TransformValue(target.ageTracker.AgeBiologicalYears, ref s);
             }
             return s;
+        }
+
+        protected override bool IsSatisfied_Internal(Pawn pawn, Pawn target = null)
+        {
+            bool res = base.IsSatisfied_Internal(pawn, target);
+            if (pawn == null)
+                return res;
+            Pawn leader = Utility.RimocracyComp.Leader;
+            if (opinionOfLeader != null && leader != null)
+                res &= opinionOfLeader.Compare(Utility.GetOpinionOfLeader(pawn));
+            if (medianOpinionOfLeader != null && leader != null)
+                res &= medianOpinionOfLeader.Compare(leader.MedianCitizensOpinion());
+            if (medianOpinionOfMe != null)
+                res &= medianOpinionOfMe.Compare(pawn.MedianCitizensOpinion());
+            if (age != null && pawn?.ageTracker != null)
+                res &= age.Compare(pawn.ageTracker.AgeBiologicalYears);
+            if (titleSeniority != null && pawn?.royalty != null)
+                res &= titleSeniority.Compare(pawn.GetTitleSeniority());
+            if (target != null)
+            {
+                if (opinionOfTarget != null)
+                    res &= opinionOfTarget.Compare(pawn.GetOpinionOfPawn(target));
+                if (targetAge != null && target.ageTracker != null)
+                    res &= targetAge.Compare(target.ageTracker.AgeBiologicalYears);
+            }
+            return res;
         }
     }
 }

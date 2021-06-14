@@ -65,7 +65,7 @@ namespace Rimocracy
                     Text.Anchor = TextAnchor.UpperLeft;
                     content.Label(d.description);
                     if (d.governanceCost != 0)
-                        content.Label($"Will reduce Governance by {d.GovernanceCost.ToStringPercent()}.");
+                        content.Label($"Will {(d.governanceCost > 0 ? "reduce" : "increase")} Governance by {Math.Abs(d.GovernanceCost).ToStringPercent()}.");
                     if (d.regimeEffect != 0)
                         content.Label($"Will move the regime {Math.Abs(d.regimeEffect).ToStringPercent()} towards {(d.regimeEffect > 0 ? "democracy" : "authoritarianism")}.");
                     if (!d.effectRequirements.IsTrivial)

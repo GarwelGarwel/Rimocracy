@@ -17,8 +17,8 @@ namespace Rimocracy
 
         protected bool inverted = false;
 
-        List<Requirement> all = new List<Requirement>();
-        List<Requirement> any = new List<Requirement>();
+        protected List<Requirement> all = new List<Requirement>();
+        protected List<Requirement> any = new List<Requirement>();
 
         protected SuccessionDef succession;
         protected TermDuration termDuration = TermDuration.Undefined;

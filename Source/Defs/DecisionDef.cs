@@ -1,5 +1,4 @@
 ﻿using RimWorld;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Verse;
@@ -89,22 +88,6 @@ namespace Rimocracy
         public DecisionVoteResults GetVotingResults(List<Pawn> voters) => new DecisionVoteResults(voters.Select(pawn => new PawnDecisionOpinion(pawn, considerations)));
 
         public DecisionVoteResults GetVotingResults() => GetVotingResults(Decisionmakers);
-
-        public PawnDecisionOpinion GetPawnOpinion(Pawn pawn)
-        {
-            float support = 0;
-            List<string> explanations = new List<string>();
-            foreach (Consideration consideration in considerations)
-            {
-                Tuple<float, string> supportExplanation = consideration.GetSupportAndExplanation(pawn);
-                if (supportExplanation.Item1 != 0)
-                {
-                    support += supportExplanation.Item1;
-                    explanations.Add(supportExplanation.Item2);
-                }
-            }
-            return new PawnDecisionOpinion(pawn, support, explanations.ToLineList());
-        }
 
         public bool IsPassed(DecisionVoteResults votingResult) => enactment == DecisionEnactmentRule.None || votingResult.Passed;
 
