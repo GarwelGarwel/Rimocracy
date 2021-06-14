@@ -10,7 +10,7 @@ namespace Rimocracy
         public float support;
         public string explanation;
 
-        public DecisionVote Vote => support > 0 ? DecisionVote.Yea : (support < 0 ? DecisionVote.Nay : DecisionVote.Abstain);
+        public DecisionVote Vote => support > 0.5f ? DecisionVote.Yea : (support < -0.5f ? DecisionVote.Nay : DecisionVote.Abstain);
 
         public PawnDecisionOpinion(Pawn voter, float support, string explanation)
         {

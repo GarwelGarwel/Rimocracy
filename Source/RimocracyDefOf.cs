@@ -10,6 +10,11 @@ namespace Rimocracy
 
         public static JobDef Govern;
 
+        public static PoliticalActionDef Arrest;
+        public static PoliticalActionDef Execution;
+        public static PoliticalActionDef Release;
+        public static PoliticalActionDef Banishment;
+
         public static RecordDef TimesElected;
         public static RecordDef VotersSwayed;
         public static RecordDef SupportersRecruited;

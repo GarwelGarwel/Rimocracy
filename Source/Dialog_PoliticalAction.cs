@@ -10,6 +10,8 @@ namespace Rimocracy
 
         DecisionVoteResults opinions;
 
+        public bool? result;
+
         public Dialog_PoliticalAction(PoliticalActionDef action, DecisionVoteResults opinions)
         {
             this.action = action;
@@ -17,6 +19,7 @@ namespace Rimocracy
             doCloseX = true;
             doCloseButton = true;
             closeOnClickedOutside = true;
+            forcePause = true;
         }
 
         public override void DoWindowContents(Rect inRect)
@@ -35,9 +38,9 @@ namespace Rimocracy
                 PawnDecisionOpinion opinion = opinions[Utility.RimocracyComp.Leader];
                 content.Label($"{Utility.LeaderTitle.CapitalizeFirst()} {Utility.RimocracyComp.Leader.NameShortColored}: {opinion.support.ToStringWithSign("0")}", tooltip: opinion.explanation);
                 float governanceChange = 0;
-                if (opinion.support > 0)
+                if (opinion.Vote == DecisionVote.Yea)
                     governanceChange = action.governanceChangeIfSupported;
-                else if (opinion.support < 0)
+                else if (opinion.Vote == DecisionVote.Nay)
                     governanceChange = action.governanceChangeIfOpposed;
                 if (governanceChange != 0)
                     content.Label($"Governance changed by {governanceChange.ToStringPercent()}.");

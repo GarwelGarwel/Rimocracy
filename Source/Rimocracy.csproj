@@ -69,7 +69,6 @@
     <Compile Include="Defs\PoliticalActionDef.cs" />
     <Compile Include="Dialog_PoliticalAction.cs" />
     <Compile Include="HarmonyManager.cs" />
-    <Compile Include="HarmonyPatchInfo.cs" />
     <Compile Include="PawnDecisionOpinion.cs" />
     <Compile Include="SkillOperations.cs" />
     <Compile Include="ThingComps\ThingComp_GoverningBench.cs" />

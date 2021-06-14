@@ -16,21 +16,17 @@ namespace Rimocracy
         public float governanceChangeIfSupported;
         public float governanceChangeIfOpposed;
 
-        public HarmonyPatchInfo preActionPatch;
-        public HarmonyPatchInfo postActionPatch;
-
         public string previewMethod;
 
         public DecisionVoteResults GetOpinions(Pawn target = null) =>
             allCitizensReact
             ? new DecisionVoteResults(Utility.Citizens.Select(pawn => new PawnDecisionOpinion(pawn, considerations, target)))
-            : new DecisionVoteResults() { new PawnDecisionOpinion(Utility.RimocracyComp.Leader, considerations, target) };
-
-        public bool Approved(Pawn target = null)
+            : (Utility.RimocracyComp.Leader != null ? new DecisionVoteResults() { new PawnDecisionOpinion(Utility.RimocracyComp.Leader, considerations, target) } : new DecisionVoteResults());
 
         public void Activate(DecisionVoteResults opinions)
         {
             Utility.Log($"{defName} activated.");
+            Utility.Log($"Opinions:\r\n{opinions}");
             foreach (PawnDecisionOpinion opinion in opinions.Where(opinion => opinion.Vote != DecisionVote.Abstain))
             {
                 opinion.voter.needs.mood.thoughts.memories.TryGainMemory(ThoughtMaker.MakeThought(RimocracyDefOf.DecisionMade, opinion.Vote == DecisionVote.Yea ? 1 : 0));
@@ -43,19 +39,5 @@ namespace Rimocracy
         }
 
         public void Activate(Pawn target = null) => Activate(GetOpinions(target));
-
-        //public string PreviewString(Pawn target = null)
-        //{
-        //    string s = "";
-        //    if (Utility.RimocracyComp.Leader != null)
-        //    {
-        //        PawnDecisionOpinion opinion = new PawnDecisionOpinion(Utility.RimocracyComp.Leader, considerations, target);
-        //        if (opinion.Vote != DecisionVote.Abstain)
-        //            s = $"{Utility.RimocracyComp.Leader.NameShortColored} {(opinion.Vote == DecisionVote.Yea ? "supports" : "opposes")} this action.\r\n";
-        //    }
-        //    if (allCitizensReact)
-        //        s += $"{Utility.Citizens.Count(pawn => considerations.Sum(consideration => consideration.GetSupport(pawn, target)) > 0)} / {Utility.CitizensCount} citizens support this action.";
-        //    return s.TrimEndNewlines();
-        //}
     }
 }

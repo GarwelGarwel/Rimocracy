@@ -6,7 +6,13 @@ using Verse;
 
 namespace Rimocracy
 {
-    public enum DecisionEnactmentRule { None = 0, Decree, Law, Referendum };
+    public enum DecisionEnactmentRule
+    { 
+        None = 0, 
+        Decree, 
+        Law, 
+        Referendum 
+    };
 
     public class DecisionDef : Def
     {
@@ -27,6 +33,7 @@ namespace Rimocracy
         public SuccessionDef setSuccession;
         public TermDuration setTermDuration = TermDuration.Undefined;
         public bool impeachLeader;
+        public bool? actionsNeedApproval;
         public string cancelDecision;
         public float regimeEffect;
 
@@ -79,7 +86,7 @@ namespace Rimocracy
             }
         }
 
-        public DecisionVoteResults GetVotingResults(List<Pawn> voters) => new DecisionVoteResults(voters.Select(pawn => GetPawnOpinion(pawn)));
+        public DecisionVoteResults GetVotingResults(List<Pawn> voters) => new DecisionVoteResults(voters.Select(pawn => new PawnDecisionOpinion(pawn, considerations)));
 
         public DecisionVoteResults GetVotingResults() => GetVotingResults(Decisionmakers);
 
@@ -99,7 +106,7 @@ namespace Rimocracy
             return new PawnDecisionOpinion(pawn, support, explanations.ToLineList());
         }
 
-        public bool IsPassed(DecisionVoteResults votingResult) => enactment == DecisionEnactmentRule.None || votingResult.IsPassed;
+        public bool IsPassed(DecisionVoteResults votingResult) => enactment == DecisionEnactmentRule.None || votingResult.Passed;
 
         public bool Activate()
         {
@@ -131,6 +138,12 @@ namespace Rimocracy
                 Utility.Log($"Impeaching {Utility.RimocracyComp.Leader}.");
                 Utility.RimocracyComp.Leader.needs.mood.thoughts.memories.TryGainMemory(RimocracyDefOf.ImpeachedMemory);
                 Utility.RimocracyComp.Leader = null;
+            }
+
+            if (actionsNeedApproval != null)
+            {
+                Utility.Log($"Setting ActionsNeeedApproval to {actionsNeedApproval}.");
+                Utility.RimocracyComp.ActionsNeedApproval = (bool)actionsNeedApproval;
             }
 
             if (!cancelDecision.NullOrEmpty())

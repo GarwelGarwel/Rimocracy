@@ -29,6 +29,7 @@ namespace Rimocracy
         int termExpiration = int.MaxValue;
         int electionTick = int.MaxValue;
         List<Decision> decisions = new List<Decision>();
+        bool actionsNeedApproval;
 
         public bool IsEnabled => isEnabled;
 
@@ -150,6 +151,12 @@ namespace Rimocracy
             set => decisions = value;
         }
 
+        public bool ActionsNeedApproval
+        {
+            get => actionsNeedApproval;
+            set => actionsNeedApproval = value;
+        }
+
         float MedianMood => Utility.Citizens.Select(pawn => pawn.needs.mood.CurLevelPercentage).Median();
 
         string FocusSkillMessage => $"The focus skill is {focusSkill.LabelCap}.";
@@ -185,6 +192,7 @@ namespace Rimocracy
             Scribe_Values.Look(ref regime, "regime");
             Scribe_Defs.Look(ref focusSkill, "focusSkill");
             Scribe_Collections.Look(ref decisions, "decisions", LookMode.Deep);
+            Scribe_Values.Look(ref actionsNeedApproval, "actionsNeedApproval");
         }
 
         public override void WorldComponentTick()

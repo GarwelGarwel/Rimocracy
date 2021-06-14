@@ -959,4 +959,83 @@
 		<cancelDecision>StateOfEmergency</cancelDecision>
 	</Rimocracy.DecisionDef>
 
+	<!-- Actions Need Approval -->
+	
+	<Rimocracy.DecisionDef>
+		<defName>ActionsNeedApproval</defName>
+		<label>Require leader's approval for actions</label>
+		<description>Game actions such as arresting or banishing pawns must be approved by the leader. If this is disabled, such actions can be taken without leader's approval but will cost Governance.</description>
+		<category>Misc</category>
+		<enactment>None</enactment>
+		<displayPriorityInCategory>50</displayPriorityInCategory>
+		<displayRequirements>
+			<all>
+				<li>
+					<leaderExists>true</leaderExists>
+				</li>
+				<li>
+					<decision>ActionsNeedApproval</decision>
+					<inverted>true</inverted>
+				</li>
+			</all>
+		</displayRequirements>
+		<considerations>
+			<li>
+				<label>I want more authority</label>
+				<support>50</support>
+				<isLeader>true</isLeader>
+			</li>
+			<li>
+				<label>Opinion of {LEADER}</label>
+				<isLeader>false</isLeader>
+				<opinionOfLeader>
+					<offset>
+						<points>
+							<li>(-100, -10)</li>
+							<li>(100, 10)</li>
+						</points>
+					</offset>
+				</opinionOfLeader>
+			</li>
+		</considerations>
+		<tag>ActionsNeedApproval</tag>
+		<governanceCost>-0.10</governanceCost>
+		<actionsNeedApproval>true</actionsNeedApproval>
+	</Rimocracy.DecisionDef>
+
+	<Rimocracy.DecisionDef>
+		<defName>ActionsNeedApproval_Cancel</defName>
+		<label>No longe require leader's approval for actions</label>
+		<description>Game actions such as arresting or banishing pawns don't need to be approved by the leader but may reduce Governance.</description>
+		<category>Misc</category>
+		<enactment>None</enactment>
+		<displayPriorityInCategory>50</displayPriorityInCategory>
+		<displayRequirements>
+			<leaderExists>true</leaderExists>
+			<decision>ActionsNeedApproval</decision>
+		</displayRequirements>
+		<considerations>
+			<li>
+				<label>My authority will be reduced</label>
+				<support>-50</support>
+				<isLeader>true</isLeader>
+			</li>
+			<li>
+				<label>Opinion of {LEADER}</label>
+				<isLeader>false</isLeader>
+				<opinionOfLeader>
+					<offset>
+						<points>
+							<li>(-100, 10)</li>
+							<li>(100, -10)</li>
+						</points>
+					</offset>
+				</opinionOfLeader>
+			</li>
+		</considerations>
+		<actionsNeedApproval>false</actionsNeedApproval>
+		<governanceCost>0.10</governanceCost>
+		<cancelDecision>ActionsNeedApproval</cancelDecision>
+	</Rimocracy.DecisionDef>
+
 </Defs>

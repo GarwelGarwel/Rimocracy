@@ -8,7 +8,7 @@
 		<considerations>
 			<li>
 				<label>No reason for arrest</label>
-				<support>-5</support>
+				<support>-10</support>
 				<targetIsColonist>true</targetIsColonist>
 				<targetInAggroMentalState>false</targetInAggroMentalState>
 			</li>
@@ -16,10 +16,10 @@
 				<label>I don't want to be arrested!</label>
 				<support>-50</support>
 				<all>
-					<li Class="Rimocracy.Consideration">
+					<li>
 						<isTarget>true</isTarget>
 					</li>
-					<li Class="Rimocracy.Consideration">
+					<li>
 						<trait>Masochist</trait>
 						<inverted>true</inverted>
 					</li>
@@ -38,23 +38,13 @@
 				</opinionOfTarget>
 			</li>
 			<li>
-				<label>{TARGET} is a leader</label>
+				<label>{TARGET} is our leader</label>
 				<support>-10</support>
 				<targetIsLeader>true</targetIsLeader>
 			</li>
 		</considerations>
 		<governanceChangeIfSupported>0.05</governanceChangeIfSupported>
 		<governanceChangeIfOpposed>-0.05</governanceChangeIfOpposed>
-		<preActionPatch>
-			<patchClass>Verse.AI.Group.Lord</patchClass>
-			<patchMethod>Notify_PawnAttemptArrested</patchMethod>
-			<targetArgument>1</targetArgument>
-		</preActionPatch>
-		<postActionPatch>
-			<patchClass>Verse.AI.Group.Lord</patchClass>
-			<patchMethod>Notify_PawnAttemptArrested</patchMethod>
-			<targetArgument>1</targetArgument>
-		</postActionPatch>
 	</Rimocracy.PoliticalActionDef>
 
 	<Rimocracy.PoliticalActionDef>
@@ -107,6 +97,7 @@
 			</li>
 			<li>
 				<label>Opinion of {TARGET}</label>
+				<isTarget>false</isTarget>
 				<opinionOfTarget>
 					<offset>
 						<points>
@@ -119,16 +110,51 @@
 		</considerations>
 		<governanceChangeIfSupported>0.10</governanceChangeIfSupported>
 		<governanceChangeIfOpposed>-0.10</governanceChangeIfOpposed>
-		<preActionPatch>
-			<patchClass>RimWorld.ExecutionUtility</patchClass>
-			<patchMethod>DoExecutionByCut</patchMethod>
-			<targetArgument>2</targetArgument>
-		</preActionPatch>
-		<postActionPatch>
-			<patchClass>RimWorld.ExecutionUtility</patchClass>
-			<patchMethod>DoExecutionByCut</patchMethod>
-			<targetArgument>2</targetArgument>
-		</postActionPatch>
+	</Rimocracy.PoliticalActionDef>
+
+	<Rimocracy.PoliticalActionDef>
+		<defName>Release</defName>
+		<label>release</label>
+		<considerations>
+			<li>
+				<label>Kind</label>
+				<support>10</support>
+				<trait>Kind</trait>
+			</li>
+			<li>
+				<label>{TARGET} is a fellow colonist</label>
+				<support>5</support>
+				<all>
+					<li>
+						<targetIsColonist>true</targetIsColonist>
+						<isTarget>false</isTarget>
+					</li>
+					<li>
+						<trait>Psychopath</trait>
+						<inverted>true</inverted>
+					</li>
+				</all>
+			</li>
+			<li>
+				<label>I want to be free!</label>
+				<support>50</support>
+				<isTarget>true</isTarget>
+			</li>
+			<li>
+				<label>Opinion of {TARGET}</label>
+				<isTarget>false</isTarget>
+				<opinionOfTarget>
+					<offset>
+						<points>
+							<li>(-100, -20)</li>
+							<li>(100, 20)</li>
+						</points>
+					</offset>
+				</opinionOfTarget>
+			</li>
+		</considerations>
+		<governanceChangeIfSupported>0.05</governanceChangeIfSupported>
+		<governanceChangeIfOpposed>-0.05</governanceChangeIfOpposed>
 	</Rimocracy.PoliticalActionDef>
 
 	<Rimocracy.PoliticalActionDef>
@@ -153,6 +179,7 @@
 			</li>
 			<li>
 				<label>Opinion of {TARGET}</label>
+				<isTarget>false</isTarget>
 				<opinionOfTarget>
 					<offset>
 						<points>
@@ -165,16 +192,6 @@
 		</considerations>
 		<governanceChangeIfSupported>0.10</governanceChangeIfSupported>
 		<governanceChangeIfOpposed>-0.10</governanceChangeIfOpposed>
-		<preActionPatch>
-			<patchClass>RimWorld.PawnBanishUtility</patchClass>
-			<patchMethod>Banish</patchMethod>
-			<targetArgument>1</targetArgument>
-		</preActionPatch>
-		<postActionPatch>
-			<patchClass>RimWorld.PawnBanishUtility</patchClass>
-			<patchMethod>Banish</patchMethod>
-			<targetArgument>1</targetArgument>
-		</postActionPatch>
 	</Rimocracy.PoliticalActionDef>
 
 </Defs>

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using RimWorld;
+using System.Collections.Generic;
 using System.Linq;
 using Verse;
 
@@ -27,6 +28,17 @@ namespace Rimocracy
         protected ValueOperations regime;
         protected string decision;
 
+        protected bool? isLeader;
+        protected bool? isTarget;
+        protected TraitDef trait;
+        protected List<SkillOperations> skills = new List<SkillOperations>();
+
+        protected bool? targetIsColonist;
+        protected bool? targetIsCitizen;
+        protected bool? targetIsLeader;
+        protected bool? targetInAggroMentalState;
+        protected TraitDef targetTrait;
+
         /// <summary>
         /// Returns true if this requirement is default
         /// </summary>
@@ -48,9 +60,9 @@ namespace Rimocracy
         {
             bool res = true;
             if (!all.NullOrEmpty())
-                res &= all.All(r => r.IsSatisfied(pawn));
+                res &= all.All(r => r.IsSatisfied(pawn, target));
             if (res && !any.NullOrEmpty())
-                res &= any.Any(r => r.IsSatisfied(pawn));
+                res &= any.Any(r => r.IsSatisfied(pawn, target));
             if (res && succession != null)
                 res &= Utility.RimocracyComp.SuccessionType.defName == succession.defName;
             if (res && termDuration != TermDuration.Undefined)
@@ -65,10 +77,36 @@ namespace Rimocracy
                 res &= regime.Compare(Utility.RimocracyComp.RegimeFinal);
             if (res && !decision.NullOrEmpty())
                 res &= Utility.RimocracyComp.DecisionActive(decision);
+
+            if (pawn != null)
+            {
+                if (isLeader != null)
+                    res &= pawn.IsLeader() == isLeader;
+                if (trait != null && pawn?.story?.traits != null)
+                    res &= pawn.story.traits.HasTrait(trait);
+                if (!skills.NullOrEmpty())
+                    res &= skills.TrueForAll(so => so.Compare(pawn));
+                if (isTarget != null)
+                    res &= (pawn == target) == isTarget;
+
+                if (target != null)
+                {
+                    if (targetIsColonist != null)
+                        res &= target.IsColonist == targetIsColonist;
+                    if (targetIsCitizen != null)
+                        res &= target.IsCitizen() == targetIsCitizen;
+                    if (targetIsLeader != null)
+                        res &= target.IsLeader() == targetIsLeader;
+                    if (targetInAggroMentalState != null)
+                        res &= target.InAggroMentalState == targetInAggroMentalState;
+                    if (targetTrait != null && target.story?.traits != null)
+                        res &= target.story.traits.HasTrait(targetTrait);
+                }
+            }
             return res;
         }
 
-        public bool IsSatisfied(Pawn pawn = null, Pawn target = null) => IsSatisfied_Internal(pawn, target) ^ inverted;
+        public virtual bool IsSatisfied(Pawn pawn = null, Pawn target = null) => IsSatisfied_Internal(pawn, target) ^ inverted;
 
         public override string ToString()
         {

@@ -13,20 +13,12 @@ namespace Rimocracy
         string label;
         float support;
 
-        bool? isLeader;
-        TraitDef trait;
-        List<SkillOperations> skills = new List<SkillOperations>();
         ValueOperations opinionOfLeader;
         ValueOperations medianOpinionOfLeader;
         ValueOperations medianOpinionOfMe;
         ValueOperations age;
         ValueOperations titleSeniority;
 
-        bool? isTarget;
-        bool? targetIsColonist;
-        bool? targetIsCitizen;
-        bool? targetIsLeader;
-        bool? targetInAggroMentalState;
         TraitDef targetTrait;
         ValueOperations opinionOfTarget;
         ValueOperations targetAge;
@@ -36,12 +28,6 @@ namespace Rimocracy
             bool res = base.IsSatisfied_Internal(pawn, target);
             if (pawn == null)
                 return res;
-            if (isLeader != null)
-                res &= pawn.IsLeader() == isLeader;
-            if (trait != null && pawn?.story?.traits != null)
-                res &= pawn.story.traits.HasTrait(trait);
-            if (!skills.NullOrEmpty())
-                res &= skills.TrueForAll(so => so.Compare(pawn));
             Pawn leader = Utility.RimocracyComp.Leader;
             if (opinionOfLeader != null && leader != null)
                 res &= opinionOfLeader.Compare(Utility.GetOpinionOfLeader(pawn));
@@ -55,18 +41,6 @@ namespace Rimocracy
                 res &= titleSeniority.Compare(pawn.GetTitleSeniority());
             if (target != null)
             {
-                if (isTarget != null)
-                    res &= (pawn == target) == isTarget;
-                if (targetIsColonist != null)
-                    res &= target.IsColonist == targetIsColonist;
-                if (targetIsCitizen != null)
-                    res &= target.IsCitizen() == targetIsCitizen;
-                if (targetIsLeader != null)
-                    res &= target.IsLeader() == targetIsLeader;
-                if (targetInAggroMentalState != null)
-                    res &= target.InAggroMentalState == targetInAggroMentalState;
-                if (targetTrait != null && target.story?.traits != null)
-                    res &= target.story.traits.HasTrait(targetTrait);
                 if (opinionOfTarget != null)
                     res &= opinionOfTarget.Compare(pawn.GetOpinionOfPawn(target));
                 if (targetAge != null && target.ageTracker != null)
