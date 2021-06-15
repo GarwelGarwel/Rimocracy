@@ -18,8 +18,8 @@ namespace Rimocracy
         public DecisionCategoryDef category;
         public int displayPriorityInCategory;
 
-        public Requirement displayRequirements = Requirement.always;
-        public Requirement effectRequirements = Requirement.always;
+        public Consideration displayRequirements = Consideration.always;
+        public Consideration effectRequirements = Consideration.always;
         public DecisionEnactmentRule enactment = DecisionEnactmentRule.None;
         public bool allCitizensReact = true;
         public List<Consideration> considerations = new List<Consideration>();

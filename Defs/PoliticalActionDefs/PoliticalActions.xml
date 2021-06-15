@@ -80,11 +80,11 @@
 				<label>{TARGET} is a fellow colonist</label>
 				<support>-10</support>
 				<all>
-					<li Class="Rimocracy.Consideration">
+					<li>
 						<targetIsColonist>true</targetIsColonist>
 						<isTarget>false</isTarget>
 					</li>
-					<li Class="Rimocracy.Consideration">
+					<li>
 						<trait>Psychopath</trait>
 						<inverted>true</inverted>
 					</li>

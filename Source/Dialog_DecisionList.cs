@@ -69,7 +69,7 @@ namespace Rimocracy
                     if (d.regimeEffect != 0)
                         content.Label($"Will move the regime {Math.Abs(d.regimeEffect).ToStringPercent()} towards {(d.regimeEffect > 0 ? "democracy" : "authoritarianism")}.");
                     if (!d.effectRequirements.IsTrivial)
-                        content.Label($"Requirements:\n{d.effectRequirements}");
+                        content.Label($"Requirements:\n{d.effectRequirements.ToString(target: Utility.RimocracyComp.Leader?.NameShortColored)}");
 
                     DecisionVoteResults votingResult = d.GetVotingResults();
                     switch (d.enactment)

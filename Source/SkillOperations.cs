@@ -5,7 +5,7 @@ namespace Rimocracy
 {
     public class SkillOperations : ValueOperations
     {
-        SkillDef skill;
+        public SkillDef skill;
 
         public bool Compare(Pawn pawn) => base.Compare(pawn.skills.GetSkill(skill).Level);
 
