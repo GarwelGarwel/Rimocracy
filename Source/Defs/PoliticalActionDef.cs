@@ -16,7 +16,7 @@ namespace Rimocracy
         public float governanceChangeIfSupported;
         public float governanceChangeIfOpposed;
 
-        public string previewMethod;
+        public string LabelTitleCase => GenText.ToTitleCaseSmart(label);
 
         public DecisionVoteResults GetOpinions(Pawn target = null) =>
             allCitizensReact

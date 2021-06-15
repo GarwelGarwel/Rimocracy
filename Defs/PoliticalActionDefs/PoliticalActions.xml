@@ -43,7 +43,7 @@
 				<targetIsLeader>true</targetIsLeader>
 			</li>
 		</considerations>
-		<governanceChangeIfSupported>0.05</governanceChangeIfSupported>
+		<governanceChangeIfSupported>0.04</governanceChangeIfSupported>
 		<governanceChangeIfOpposed>-0.05</governanceChangeIfOpposed>
 	</Rimocracy.PoliticalActionDef>
 
@@ -108,7 +108,7 @@
 				</opinionOfTarget>
 			</li>
 		</considerations>
-		<governanceChangeIfSupported>0.10</governanceChangeIfSupported>
+		<governanceChangeIfSupported>0.08</governanceChangeIfSupported>
 		<governanceChangeIfOpposed>-0.10</governanceChangeIfOpposed>
 	</Rimocracy.PoliticalActionDef>
 
@@ -153,7 +153,7 @@
 				</opinionOfTarget>
 			</li>
 		</considerations>
-		<governanceChangeIfSupported>0.05</governanceChangeIfSupported>
+		<governanceChangeIfSupported>0.04</governanceChangeIfSupported>
 		<governanceChangeIfOpposed>-0.05</governanceChangeIfOpposed>
 	</Rimocracy.PoliticalActionDef>
 
@@ -190,7 +190,7 @@
 				</opinionOfTarget>
 			</li>
 		</considerations>
-		<governanceChangeIfSupported>0.10</governanceChangeIfSupported>
+		<governanceChangeIfSupported>0.08</governanceChangeIfSupported>
 		<governanceChangeIfOpposed>-0.10</governanceChangeIfOpposed>
 	</Rimocracy.PoliticalActionDef>
 

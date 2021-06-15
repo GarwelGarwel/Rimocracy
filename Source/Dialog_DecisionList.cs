@@ -36,7 +36,7 @@ namespace Rimocracy
             {
                 content.Label("Active decisions:");
                 foreach (Decision decision in Utility.RimocracyComp.Decisions)
-                    content.Label($"- {decision.def.LabelCap}{(decision.def.Expiration != int.MaxValue ? $" (expires in {(decision.expiration - Find.TickManager.TicksAbs).ToStringTicksToPeriod()})" : "")}", tooltip: decision.def.description);
+                    content.Label($"- {decision.def.LabelTitleCase}{(decision.def.Expiration != int.MaxValue ? $" (expires in {(decision.expiration - Find.TickManager.TicksAbs).ToStringTicksToPeriod()})" : "")}", tooltip: decision.def.description);
             }
 
             // Display regime type
@@ -55,13 +55,13 @@ namespace Rimocracy
                 content.Gap();
                 Text.Anchor = TextAnchor.MiddleCenter;
                 Text.Font = GameFont.Medium;
-                content.Label(group.Key.label);
+                content.Label(group.Key.LabelCap);
                 Text.Font = GameFont.Small;
 
                 foreach (DecisionDef d in group.OrderBy(def => def.displayPriorityInCategory))
                 {
                     Text.Anchor = TextAnchor.MiddleCenter;
-                    content.Label(d.LabelCap);
+                    content.Label(d.LabelTitleCase);
                     Text.Anchor = TextAnchor.UpperLeft;
                     content.Label(d.description);
                     if (d.governanceCost != 0)
@@ -107,9 +107,9 @@ namespace Rimocracy
                                     Utility.Log($"{opinion.voter}'s opinion is {opinion.support}.");
                                     opinion.voter.needs.mood.thoughts.memories.TryGainMemory(ThoughtMaker.MakeThought(RimocracyDefOf.DecisionMade, opinion.support > 0 ? 1 : 0));
                                 }
-                                Find.LetterStack.ReceiveLetter($"{d.LabelCap} Decision Taken", d.description, LetterDefOf.NeutralEvent, null);
+                                Find.LetterStack.ReceiveLetter($"{d.LabelTitleCase} Decision Taken", d.description, LetterDefOf.NeutralEvent, null);
                             }
-                            else Messages.Message($"Could not take {d.label} decision: requirements are not met.", MessageTypeDefOf.NegativeEvent, false);
+                            else Messages.Message($"Could not take {d.LabelTitleCase} decision: requirements are not met.", MessageTypeDefOf.NegativeEvent, false);
                             Close();
                         }
                     }

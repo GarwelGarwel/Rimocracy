@@ -10,8 +10,6 @@ namespace Rimocracy
 
         DecisionVoteResults opinions;
 
-        public bool? result;
-
         public Dialog_PoliticalAction(PoliticalActionDef action, DecisionVoteResults opinions)
         {
             this.action = action;
@@ -29,7 +27,7 @@ namespace Rimocracy
 
             Text.Anchor = TextAnchor.MiddleCenter;
             Text.Font = GameFont.Medium;
-            content.Label(action.LabelCap);
+            content.Label($"Consequences of {action.LabelTitleCase} Action");
             Text.Font = GameFont.Small;
             Text.Anchor = TextAnchor.UpperLeft;
 

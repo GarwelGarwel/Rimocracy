@@ -34,7 +34,6 @@ namespace Rimocracy
         protected List<SkillOperations> skills = new List<SkillOperations>();
 
         protected bool? targetIsColonist;
-        protected bool? targetIsCitizen;
         protected bool? targetIsLeader;
         protected bool? targetInAggroMentalState;
         protected TraitDef targetTrait;
@@ -93,8 +92,6 @@ namespace Rimocracy
                 {
                     if (targetIsColonist != null)
                         res &= target.IsColonist == targetIsColonist;
-                    if (targetIsCitizen != null)
-                        res &= target.IsCitizen() == targetIsCitizen;
                     if (targetIsLeader != null)
                         res &= target.IsLeader() == targetIsLeader;
                     if (targetInAggroMentalState != null)

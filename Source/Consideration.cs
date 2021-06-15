@@ -10,19 +10,18 @@ namespace Rimocracy
         string label;
         float support;
 
-        ValueOperations opinionOfLeader;
-        ValueOperations medianOpinionOfLeader;
         ValueOperations medianOpinionOfMe;
         ValueOperations age;
         ValueOperations titleSeniority;
 
         ValueOperations opinionOfTarget;
+        ValueOperations medianOpinionOfTarget;
         ValueOperations targetAge;
 
         public (float support, string explanation) GetSupportAndExplanation(Pawn pawn, Pawn target = null)
         {
             float s = GetSupport(pawn, target);
-            return (s, s != 0 ? $"{label}: {s.ToStringWithSign("0")}".Formatted(pawn.Named("PAWN"), Utility.RimocracyComp.Leader.Named("LEADER"), target.Named("TARGET")) : null);
+            return (s, s != 0 ? $"{label.Formatted(pawn.Named("PAWN"), target.Named("TARGET")).CapitalizeFirst()}: {s.ToStringWithSign("0")}" : null);
         }
 
         public float GetSupport(Pawn pawn, Pawn target = null)
@@ -36,11 +35,6 @@ namespace Rimocracy
                 regime.TransformValue(Utility.RimocracyComp.RegimeFinal, ref s);
             foreach (SkillOperations so in skills)
                 so.TransformValue(pawn, ref s);
-            Pawn leader = Utility.RimocracyComp.Leader;
-            if (opinionOfLeader != null && leader != null)
-                opinionOfLeader.TransformValue(Utility.GetOpinionOfLeader(pawn), ref s);
-            if (medianOpinionOfLeader != null && leader != null)
-                medianOpinionOfLeader.TransformValue(leader.MedianCitizensOpinion(), ref s);
             if (medianOpinionOfMe != null)
                 medianOpinionOfMe.TransformValue(pawn.MedianCitizensOpinion(), ref s);
             if (age != null && pawn?.ageTracker != null)
@@ -51,6 +45,8 @@ namespace Rimocracy
             {
                 if (opinionOfTarget != null)
                     opinionOfTarget.TransformValue(pawn.GetOpinionOfPawn(target), ref s);
+                if (medianOpinionOfTarget != null && target != null)
+                    medianOpinionOfTarget.TransformValue(target.MedianCitizensOpinion(), ref s);
                 if (targetAge != null && target.ageTracker != null)
                     targetAge.TransformValue(target.ageTracker.AgeBiologicalYears, ref s);
             }
@@ -62,11 +58,6 @@ namespace Rimocracy
             bool res = base.IsSatisfied_Internal(pawn, target);
             if (pawn == null)
                 return res;
-            Pawn leader = Utility.RimocracyComp.Leader;
-            if (opinionOfLeader != null && leader != null)
-                res &= opinionOfLeader.Compare(Utility.GetOpinionOfLeader(pawn));
-            if (medianOpinionOfLeader != null && leader != null)
-                res &= medianOpinionOfLeader.Compare(leader.MedianCitizensOpinion());
             if (medianOpinionOfMe != null)
                 res &= medianOpinionOfMe.Compare(pawn.MedianCitizensOpinion());
             if (age != null && pawn?.ageTracker != null)
@@ -77,6 +68,8 @@ namespace Rimocracy
             {
                 if (opinionOfTarget != null)
                     res &= opinionOfTarget.Compare(pawn.GetOpinionOfPawn(target));
+                if (medianOpinionOfTarget != null && target != null)
+                    res &= medianOpinionOfTarget.Compare(target.MedianCitizensOpinion());
                 if (targetAge != null && target.ageTracker != null)
                     res &= targetAge.Compare(target.ageTracker.AgeBiologicalYears);
             }

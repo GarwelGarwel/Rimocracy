@@ -25,8 +25,8 @@ namespace Rimocracy
         public List<Consideration> considerations = new List<Consideration>();
 
         public string tag;
-        public int durationTicks;
         public int durationDays;
+        public int durationTicks;
 
         public float governanceCost;
         public SuccessionDef setSuccession;
@@ -36,19 +36,18 @@ namespace Rimocracy
         public string cancelDecision;
         public float regimeEffect;
 
+        public string LabelTitleCase => GenText.ToTitleCaseSmart(label.Formatted(new NamedArgument(Utility.RimocracyComp.Leader, "TARGET")));
+
         public bool IsDisplayable =>
-            (!IsUnique || !Utility.RimocracyComp.DecisionActive(Tag))
-            && (displayRequirements == null || displayRequirements);
+            (!IsPersistent || !Utility.RimocracyComp.DecisionActive(Tag)) && (displayRequirements == null || displayRequirements);
 
         public bool IsValid =>
-            IsDisplayable
-            && (effectRequirements == null || effectRequirements)
-            && Utility.RimocracyComp.Governance >= GovernanceCost;
+            IsDisplayable && (effectRequirements == null || effectRequirements) && Utility.RimocracyComp.Governance >= GovernanceCost;
 
         /// <summary>
         /// Tells if this decision tag should be stored
         /// </summary>
-        public bool IsUnique => Duration != 0 || tag != null;
+        public bool IsPersistent => Duration != 0 || tag != null;
 
         /// <summary>
         /// Returns tag (for timers) or defName by default
@@ -85,7 +84,7 @@ namespace Rimocracy
             }
         }
 
-        public DecisionVoteResults GetVotingResults(List<Pawn> voters) => new DecisionVoteResults(voters.Select(pawn => new PawnDecisionOpinion(pawn, considerations)));
+        public DecisionVoteResults GetVotingResults(List<Pawn> voters) => new DecisionVoteResults(voters.Select(pawn => new PawnDecisionOpinion(pawn, considerations, Utility.RimocracyComp.Leader)));
 
         public DecisionVoteResults GetVotingResults() => GetVotingResults(Decisionmakers);
 
@@ -99,7 +98,7 @@ namespace Rimocracy
                 return false;
             }
 
-            if (IsUnique)
+            if (IsPersistent)
                 Utility.RimocracyComp.Decisions.Add(new Decision(this));
 
             Utility.RimocracyComp.Governance -= GovernanceCost;
