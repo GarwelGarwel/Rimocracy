@@ -1,5 +1,6 @@
 ﻿using HarmonyLib;
 using RimWorld;
+using RimWorld.Planet;
 using System;
 using Verse;
 using Verse.AI;
@@ -20,12 +21,17 @@ namespace Rimocracy
             Type type = typeof(HarmonyManager);
 
             Utility.Log($"Applying Harmony patches...");
-            harmony.Patch(AccessTools.Method("RimWorld.JobDriver_TakeToBed:MakeNewToils"), prefix: new HarmonyMethod(type.GetMethod("Arrest_Prefix")), postfix: new HarmonyMethod(type.GetMethod("Arrest_Postfix")));
+            harmony.Patch(AccessTools.Method("RimWorld.JobDriver_TakeToBed:MakeNewToils"),
+                prefix: new HarmonyMethod(type.GetMethod("Arrest_Prefix")),
+                postfix: new HarmonyMethod(type.GetMethod("Arrest_Postfix")));
             harmony.Patch(AccessTools.Method("RimWorld.JobDriver_Execute:MakeNewToils"), prefix: new HarmonyMethod(type.GetMethod("Execution_Prefix")));
             harmony.Patch(AccessTools.Method("RimWorld.ExecutionUtility:DoExecutionByCut"), postfix: new HarmonyMethod(type.GetMethod("Execution_Postfix")));
             harmony.Patch(AccessTools.Method("Verse.AI.JobDriver_ReleasePrisoner:MakeNewToils"), prefix: new HarmonyMethod(type.GetMethod("Release_Prefix")));
             harmony.Patch(AccessTools.Method("RimWorld.GenGuest:PrisonerRelease"), postfix: new HarmonyMethod(type.GetMethod("Release_Postfix")));
             harmony.Patch(AccessTools.Method("RimWorld.PawnBanishUtility:Banish"), prefix: new HarmonyMethod(type.GetMethod("Banishment_Prefix")), postfix: new HarmonyMethod(type.GetMethod("Banishment_Postfix")));
+            harmony.Patch(AccessTools.Method("RimWorld.Planet.SettlementUtility:Attack"),
+                prefix: new HarmonyMethod(type.GetMethod("SettlementAttack_Prefix")),
+                postfix: new HarmonyMethod(type.GetMethod("SettlementAttack_Postfix")));
 
             Utility.Log($"{harmony.GetPatchedMethods().EnumerableCount()} methods patched with Harmony.");
             initialized = true;
@@ -148,5 +154,30 @@ namespace Rimocracy
         }
 
         #endregion BANISHMENT
+
+        #region SETTLEMENT ATTACK
+
+        public static bool SettlementAttack_Prefix(Caravan caravan, Settlement settlement, out DecisionVoteResults __state)
+        {
+            if (!caravan.Faction.IsPlayer)
+            {
+                __state = null;
+                return true;
+            }
+            Utility.Log($"SettlementAttack_Prefix({caravan}, {settlement})");
+            return !Vetoed(RimocracyDefOf.SettlementAttack, out __state, settlement.Faction.leader);
+        }
+
+        public static void SettlementAttack_Postfix(Caravan caravan, Settlement settlement, DecisionVoteResults __state)
+        {
+            if (!caravan.Faction.IsPlayer)
+                return;
+            Utility.Log($"SettlementAttack_Postfix({caravan}, {settlement})");
+            if (!Utility.RimocracyComp.ActionsNeedApproval || (__state != null && !__state.Vetoed))
+                RimocracyDefOf.SettlementAttack.Activate(__state);
+        }
+
+        #endregion SETTLEMENT ATTACK
+
     }
 }

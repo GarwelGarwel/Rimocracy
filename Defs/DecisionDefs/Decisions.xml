@@ -84,8 +84,8 @@
 						<skill>Shooting</skill>
 						<offset>
 							<points>
-								<li>(0, -5)</li>
-								<li>(20, 5)</li>
+								<li>(0, 5)</li>
+								<li>(20, -5)</li>
 							</points>
 						</offset>
 					</li>
@@ -93,8 +93,8 @@
 						<skill>Melee</skill>
 						<offset>
 							<points>
-								<li>(0, -5)</li>
-								<li>(20, 5)</li>
+								<li>(0, 5)</li>
+								<li>(20, -5)</li>
 							</points>
 						</offset>
 					</li>
@@ -176,8 +176,8 @@
 						<skill>Shooting</skill>
 						<offset>
 							<points>
-								<li>(0, -5)</li>
-								<li>(20, 5)</li>
+								<li>(0, 5)</li>
+								<li>(20, -5)</li>
 							</points>
 						</offset>
 					</li>
@@ -185,8 +185,8 @@
 						<skill>Melee</skill>
 						<offset>
 							<points>
-								<li>(0, -5)</li>
-								<li>(20, 5)</li>
+								<li>(0, 5)</li>
+								<li>(20, -5)</li>
 							</points>
 						</offset>
 					</li>
@@ -257,8 +257,8 @@
 						<skill>Shooting</skill>
 						<offset>
 							<points>
-								<li>(0, -5)</li>
-								<li>(20, 5)</li>
+								<li>(0, 5)</li>
+								<li>(20, -5)</li>
 							</points>
 						</offset>
 					</li>
@@ -266,8 +266,8 @@
 						<skill>Melee</skill>
 						<offset>
 							<points>
-								<li>(0, -5)</li>
-								<li>(20, 5)</li>
+								<li>(0, 5)</li>
+								<li>(20, -5)</li>
 							</points>
 						</offset>
 					</li>
@@ -343,8 +343,8 @@
 						<skill>Shooting</skill>
 						<offset>
 							<points>
-								<li>(0, -5)</li>
-								<li>(20, 5)</li>
+								<li>(0, 5)</li>
+								<li>(20, -5)</li>
 							</points>
 						</offset>
 					</li>
@@ -352,8 +352,8 @@
 						<skill>Melee</skill>
 						<offset>
 							<points>
-								<li>(0, -5)</li>
-								<li>(20, 5)</li>
+								<li>(0, 5)</li>
+								<li>(20, -5)</li>
 							</points>
 						</offset>
 					</li>
@@ -378,6 +378,11 @@
 			</regime>
 		</effectRequirements>
 		<considerations>
+			<li>
+				<label>incapable of violence</label>
+				<support>-20</support>
+				<isCapableOfViolence>false</isCapableOfViolence>
+			</li>
 			<li>
 				<label>skills</label>
 				<skills>

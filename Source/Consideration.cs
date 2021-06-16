@@ -37,6 +37,7 @@ namespace Rimocracy
         bool? isTarget;
         TraitDef trait;
         List<SkillOperations> skills = new List<SkillOperations>();
+        bool? isCapableOfViolence;
         ValueOperations medianOpinionOfMe;
         ValueOperations age;
         ValueOperations titleSeniority;
@@ -69,6 +70,7 @@ namespace Rimocracy
             && isTarget == null
             && trait == null
             && skills.NullOrEmpty()
+            && isCapableOfViolence == null
             && medianOpinionOfMe == null
             && age == null
             && titleSeniority == null
@@ -114,6 +116,8 @@ namespace Rimocracy
                     res &= pawn.story.traits.HasTrait(trait);
                 if (res && !skills.NullOrEmpty())
                     res &= skills.TrueForAll(so => so.Compare(pawn));
+                if (res && isCapableOfViolence != null)
+                    res &= pawn.WorkTagIsDisabled(WorkTags.Violent) != isCapableOfViolence;
                 if (res && medianOpinionOfMe != null)
                     res &= medianOpinionOfMe.Compare(pawn.MedianCitizensOpinion());
                 if (res && age != null && pawn?.ageTracker != null)
@@ -228,6 +232,8 @@ namespace Rimocracy
             if (!skills.EnumerableNullOrEmpty())
                 foreach (SkillOperations skill in skills)
                     res += $"{indent}{skill.ToString(skill.skill.LabelCap)}\n";
+            if (isCapableOfViolence != null)
+                res += $"{indent}{pawn.CapitalizeFirst()} is {((bool)isCapableOfViolence ? $"" : "in")}capable of violence\n";
             if (medianOpinionOfMe != null)
                 res += $"{indent}{medianOpinionOfMe.ToString($"Median citizens' opinion of {pawn}")}\n";
             if (age != null)

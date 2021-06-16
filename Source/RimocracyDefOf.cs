@@ -14,6 +14,7 @@ namespace Rimocracy
         public static PoliticalActionDef Execution;
         public static PoliticalActionDef Release;
         public static PoliticalActionDef Banishment;
+        public static PoliticalActionDef SettlementAttack;
 
         public static RecordDef TimesElected;
         public static RecordDef VotersSwayed;

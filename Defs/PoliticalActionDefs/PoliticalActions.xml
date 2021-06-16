@@ -7,12 +7,6 @@
 		<label>arrest</label>
 		<considerations>
 			<li>
-				<label>no reason for arrest</label>
-				<support>-10</support>
-				<targetIsColonist>true</targetIsColonist>
-				<targetInAggroMentalState>false</targetInAggroMentalState>
-			</li>
-			<li>
 				<label>I don't want to be arrested!</label>
 				<support>-50</support>
 				<all>
@@ -24,6 +18,12 @@
 						<inverted>true</inverted>
 					</li>
 				</all>
+			</li>
+			<li>
+				<label>no reason for arrest</label>
+				<support>-10</support>
+				<targetIsColonist>true</targetIsColonist>
+				<targetInAggroMentalState>false</targetInAggroMentalState>
 			</li>
 			<li>
 				<label>opinion of {TARGET}</label>
@@ -51,6 +51,11 @@
 		<defName>Execution</defName>
 		<label>execution</label>
 		<considerations>
+			<li>
+				<label>I want to live!</label>
+				<support>-100</support>
+				<isTarget>true</isTarget>
+			</li>
 			<li>
 				<label>killing people is bad</label>
 				<support>-10</support>
@@ -103,11 +108,6 @@
 				</all>
 			</li>
 			<li>
-				<label>I want to live!</label>
-				<support>-100</support>
-				<isTarget>true</isTarget>
-			</li>
-			<li>
 				<label>food shortage</label>
 				<isTarget>false</isTarget>
 				<daysOfFood>
@@ -130,6 +130,11 @@
 		<label>release</label>
 		<considerations>
 			<li>
+				<label>I want to be free!</label>
+				<support>50</support>
+				<isTarget>true</isTarget>
+			</li>
+			<li>
 				<label>Kind</label>
 				<support>10</support>
 				<trait>Kind</trait>
@@ -147,11 +152,6 @@
 						<inverted>true</inverted>
 					</li>
 				</all>
-			</li>
-			<li>
-				<label>I want to be free!</label>
-				<support>50</support>
-				<isTarget>true</isTarget>
 			</li>
 			<li>
 				<label>opinion of {TARGET}</label>
@@ -188,15 +188,15 @@
 		<label>banishment</label>
 		<considerations>
 			<li>
+				<label>I don't want to be banished!</label>
+				<support>-50</support>
+				<isTarget>true</isTarget>
+			</li>
+			<li>
 				<label>banishment is cruel</label>
 				<support>-10</support>
 				<trait>Psychopath</trait>
 				<inverted>true</inverted>
-			</li>
-			<li>
-				<label>I don't want to be banished!</label>
-				<support>-50</support>
-				<isTarget>true</isTarget>
 			</li>
 			<li>
 				<label>kind</label>
@@ -239,6 +239,62 @@
 						</points>
 					</offset>
 				</daysOfFood>
+			</li>
+		</considerations>
+		<governanceChangeIfSupported>0.08</governanceChangeIfSupported>
+		<governanceChangeIfOpposed>-0.10</governanceChangeIfOpposed>
+	</Rimocracy.PoliticalActionDef>
+
+	<Rimocracy.PoliticalActionDef>
+		<defName>SettlementAttack</defName>
+		<label>settlement attack</label>
+		<considerations>
+			<li>
+				<label>I don't fight</label>
+				<support>-20</support>
+				<isCapableOfViolence>false</isCapableOfViolence>
+			</li>
+			<li>
+				<label>opinion of faction leader</label>
+				<opinionOfTarget>
+					<offset>
+						<points>
+							<li>(-100, 10)</li>
+							<li>(100, -10)</li>
+						</points>
+					</offset>
+				</opinionOfTarget>
+			</li>
+			<li>
+				<label>bloodlust</label>
+				<support>10</support>
+				<trait>Bloodlust</trait>
+			</li>
+			<li>
+				<label>brawler</label>
+				<support>10</support>
+				<trait>Brawler</trait>
+			</li>
+			<li>
+				<label>tough</label>
+				<support>5</support>
+				<trait>Tough</trait>
+			</li>
+			<li>
+				<label>kind</label>
+				<support>-10</support>
+				<trait>Kind</trait>
+			</li>
+			<li>
+				<label>wimp</label>
+				<support>-5</support>
+				<trait>Wimp</trait>
+			</li>
+			<li>
+				<label>chance to prove my worth</label>
+				<support>5</support>
+				<succession>Martial</succession>
+				<isCapableOfViolence>true</isCapableOfViolence>
 			</li>
 		</considerations>
 		<governanceChangeIfSupported>0.08</governanceChangeIfSupported>
