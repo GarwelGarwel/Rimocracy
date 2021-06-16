@@ -29,6 +29,8 @@ namespace Rimocracy
         bool? campaigning;
         ValueOperations governance;
         ValueOperations regime;
+        ValueOperations population;
+        ValueOperations daysOfFood;
         string decision;
 
         bool? isLeader;
@@ -47,7 +49,6 @@ namespace Rimocracy
         ValueOperations medianOpinionOfTarget;
         ValueOperations targetAge;
 
-
         /// <summary>
         /// Returns true if this requirement is default
         /// </summary>
@@ -61,6 +62,8 @@ namespace Rimocracy
             && campaigning == null
             && governance == null
             && regime == null
+            && population == null
+            && daysOfFood == null
             && decision == null
             && isLeader == null
             && isTarget == null
@@ -94,6 +97,10 @@ namespace Rimocracy
                 res &= governance.Compare(Utility.RimocracyComp.Governance);
             if (res && regime != null)
                 res &= regime.Compare(Utility.RimocracyComp.RegimeFinal);
+            if (res && population != null)
+                res &= population.Compare(Utility.Population);
+            if (res && daysOfFood != null)
+                res &= daysOfFood.Compare(Utility.DaysOfFood);
             if (res && !decision.NullOrEmpty())
                 res &= Utility.RimocracyComp.DecisionActive(decision);
 
@@ -126,7 +133,7 @@ namespace Rimocracy
                 if (res && targetTrait != null && target.story?.traits != null)
                     res &= target.story.traits.HasTrait(targetTrait);
                 if (res && opinionOfTarget != null && pawn != null)
-                    res &= opinionOfTarget.Compare(pawn.GetOpinionOfPawn(target));
+                    res &= opinionOfTarget.Compare(pawn.GetOpinionOf(target));
                 if (res && medianOpinionOfTarget != null)
                     res &= medianOpinionOfTarget.Compare(target.MedianCitizensOpinion());
                 if (res && targetAge != null && target.ageTracker != null)
@@ -155,6 +162,10 @@ namespace Rimocracy
                 governance.TransformValue(Utility.RimocracyComp.Governance, ref s);
             if (regime != null)
                 regime.TransformValue(Utility.RimocracyComp.RegimeFinal, ref s);
+            if (population != null)
+                population.TransformValue(Utility.Population, ref s);
+            if (daysOfFood != null)
+                daysOfFood.TransformValue(Utility.DaysOfFood, ref s);
             foreach (SkillOperations so in skills)
                 so.TransformValue(pawn, ref s);
             if (medianOpinionOfMe != null)
@@ -166,7 +177,7 @@ namespace Rimocracy
             if (target != null)
             {
                 if (opinionOfTarget != null)
-                    opinionOfTarget.TransformValue(pawn.GetOpinionOfPawn(target), ref s);
+                    opinionOfTarget.TransformValue(pawn.GetOpinionOf(target), ref s);
                 if (medianOpinionOfTarget != null && target != null)
                     medianOpinionOfTarget.TransformValue(target.MedianCitizensOpinion(), ref s);
                 if (targetAge != null && target.ageTracker != null)
@@ -201,6 +212,10 @@ namespace Rimocracy
                 res += $"{indent}{governance.ToString("Governance", "P0")}\n";
             if (regime != null)
                 res += $"{indent}{regime.ToString("Regime (democracy)", "P0")}\n";
+            if (population != null)
+                res += $"{indent}{population.ToString("Population")}\n";
+            if (daysOfFood != null)
+                res += $"{indent}{daysOfFood.ToString("Days worth of food")}\n";
             if (!decision.NullOrEmpty())
                 res += $"{indent}{GenText.SplitCamelCase(decision)} is active\n";
 
@@ -210,7 +225,7 @@ namespace Rimocracy
                 res += $"{indent}{pawn.CapitalizeFirst()} is {((bool)isTarget ? $"" : $"not ")}the target\n";
             if (trait != null)
                 res += $"{indent}{pawn.CapitalizeFirst()} has trait {trait}\n";
-            if (!skills.NullOrEmpty())
+            if (!skills.EnumerableNullOrEmpty())
                 foreach (SkillOperations skill in skills)
                     res += $"{indent}{skill.ToString(skill.skill.LabelCap)}\n";
             if (medianOpinionOfMe != null)

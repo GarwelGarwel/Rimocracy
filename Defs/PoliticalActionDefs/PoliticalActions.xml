@@ -7,7 +7,7 @@
 		<label>arrest</label>
 		<considerations>
 			<li>
-				<label>No reason for arrest</label>
+				<label>no reason for arrest</label>
 				<support>-10</support>
 				<targetIsColonist>true</targetIsColonist>
 				<targetInAggroMentalState>false</targetInAggroMentalState>
@@ -26,7 +26,7 @@
 				</all>
 			</li>
 			<li>
-				<label>Opinion of {TARGET}</label>
+				<label>opinion of {TARGET}</label>
 				<isTarget>false</isTarget>
 				<opinionOfTarget>
 					<offset>
@@ -52,7 +52,7 @@
 		<label>execution</label>
 		<considerations>
 			<li>
-				<label>Killing people is bad</label>
+				<label>killing people is bad</label>
 				<support>-10</support>
 				<all>
 					<li Class="Rimocracy.Consideration">
@@ -66,13 +66,25 @@
 				</all>
 			</li>
 			<li>
+				<label>opinion of {TARGET}</label>
+				<isTarget>false</isTarget>
+				<opinionOfTarget>
+					<offset>
+						<points>
+							<li>(-100, 20)</li>
+							<li>(100, -20)</li>
+						</points>
+					</offset>
+				</opinionOfTarget>
+			</li>
+			<li>
 				<label>I like hurting people</label>
 				<support>15</support>
 				<trait>Bloodlust</trait>
 				<isTarget>false</isTarget>
 			</li>
 			<li>
-				<label>Kind</label>
+				<label>kind</label>
 				<support>-10</support>
 				<trait>Kind</trait>
 			</li>
@@ -96,16 +108,17 @@
 				<isTarget>true</isTarget>
 			</li>
 			<li>
-				<label>Opinion of {TARGET}</label>
+				<label>food shortage</label>
 				<isTarget>false</isTarget>
-				<opinionOfTarget>
+				<daysOfFood>
 					<offset>
 						<points>
-							<li>(-100, 20)</li>
-							<li>(100, -20)</li>
+							<li>(0, 10)</li>
+							<li>(3, 5)</li>
+							<li>(15, 0)</li>
 						</points>
 					</offset>
-				</opinionOfTarget>
+				</daysOfFood>
 			</li>
 		</considerations>
 		<governanceChangeIfSupported>0.08</governanceChangeIfSupported>
@@ -141,7 +154,7 @@
 				<isTarget>true</isTarget>
 			</li>
 			<li>
-				<label>Opinion of {TARGET}</label>
+				<label>opinion of {TARGET}</label>
 				<isTarget>false</isTarget>
 				<opinionOfTarget>
 					<offset>
@@ -151,6 +164,19 @@
 						</points>
 					</offset>
 				</opinionOfTarget>
+			</li>
+			<li>
+				<label>food shortage</label>
+				<targetIsColonist>false</targetIsColonist>
+				<daysOfFood>
+					<offset>
+						<points>
+							<li>(0, 10)</li>
+							<li>(3, 5)</li>
+							<li>(15, 0)</li>
+						</points>
+					</offset>
+				</daysOfFood>
 			</li>
 		</considerations>
 		<governanceChangeIfSupported>0.04</governanceChangeIfSupported>
@@ -162,7 +188,7 @@
 		<label>banishment</label>
 		<considerations>
 			<li>
-				<label>Banishment is cruel</label>
+				<label>banishment is cruel</label>
 				<support>-10</support>
 				<trait>Psychopath</trait>
 				<inverted>true</inverted>
@@ -173,12 +199,12 @@
 				<isTarget>true</isTarget>
 			</li>
 			<li>
-				<label>Kind</label>
+				<label>kind</label>
 				<support>-10</support>
 				<trait>Kind</trait>
 			</li>
 			<li>
-				<label>Opinion of {TARGET}</label>
+				<label>opinion of {TARGET}</label>
 				<isTarget>false</isTarget>
 				<opinionOfTarget>
 					<offset>
@@ -188,6 +214,31 @@
 						</points>
 					</offset>
 				</opinionOfTarget>
+			</li>
+			<li>
+				<label>population</label>
+				<population>
+					<offset>
+						<points>
+							<li>(2, -20)</li>
+							<li>(6, 0)</li>
+							<li>(15, 0)</li>
+							<li>(35, 20)</li>
+						</points>
+					</offset>
+				</population>
+			</li>
+			<li>
+				<label>food shortage</label>
+				<daysOfFood>
+					<offset>
+						<points>
+							<li>(0, 10)</li>
+							<li>(3, 5)</li>
+							<li>(15, 0)</li>
+						</points>
+					</offset>
+				</daysOfFood>
 			</li>
 		</considerations>
 		<governanceChangeIfSupported>0.08</governanceChangeIfSupported>
