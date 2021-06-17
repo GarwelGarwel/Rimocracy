@@ -127,12 +127,12 @@
 		<defName>ElectionOutcome</defName>
 		<stages>
 			<li>
-				<label>i lost election</label>
+				<label>I lost election</label>
 				<description>This loss hurts.</description>
 				<baseMoodEffect>-5</baseMoodEffect>
 			</li>
 			<li>
-				<label>i won election</label>
+				<label>I won election</label>
 				<description>People have trusted me to lead this nation!</description>
 				<baseMoodEffect>10</baseMoodEffect>
 			</li>
@@ -164,17 +164,27 @@
 	</ThoughtDef>
 
 	<ThoughtDef>
-		<defName>DecisionMade</defName>
+		<defName>LikeDecision</defName>
+		<stages>
+			<li>
+				<label>like decision</label>
+				<description>I'm glad that a right decision was taken.</description>
+				<baseMoodEffect>2</baseMoodEffect>
+			</li>
+		</stages>
+		<stackLimit>3</stackLimit>
+		<stackedEffectMultiplier>1</stackedEffectMultiplier>
+		<durationDays>15</durationDays>
+		<nullifiedIfNotColonist>true</nullifiedIfNotColonist>
+	</ThoughtDef>
+
+	<ThoughtDef>
+		<defName>DislikeDecision</defName>
 		<stages>
 			<li>
 				<label>dislike decision</label>
 				<description>A decision was taken despite my opposition. They don't care about my opinion!</description>
 				<baseMoodEffect>-3</baseMoodEffect>
-			</li>
-			<li>
-				<label>like decision</label>
-				<description>I'm glad that a right decision was taken.</description>
-				<baseMoodEffect>2</baseMoodEffect>
 			</li>
 		</stages>
 		<stackLimit>3</stackLimit>
@@ -223,12 +233,12 @@
 			</li>
 			<li>
 				<label>just government</label>
-				<description>Our country has a decent political system.</description>
+				<description>Our nation has a decent political system.</description>
 				<baseMoodEffect>10</baseMoodEffect>
 			</li>
 			<li>
 				<label>proud of my government</label>
-				<description>We are undoubtedly the most enlightened country on this planet!</description>
+				<description>We are undoubtedly the most enlightened nation on this planet!</description>
 				<baseMoodEffect>20</baseMoodEffect>
 			</li>
 		</stages>

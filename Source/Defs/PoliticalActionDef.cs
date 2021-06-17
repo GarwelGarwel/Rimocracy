@@ -29,7 +29,8 @@ namespace Rimocracy
             Utility.Log($"Opinions:\r\n{opinions}");
             foreach (PawnDecisionOpinion opinion in opinions.Where(opinion => opinion.Vote != DecisionVote.Abstain))
             {
-                opinion.voter.needs.mood.thoughts.memories.TryGainMemory(ThoughtMaker.MakeThought(RimocracyDefOf.DecisionMade, opinion.Vote == DecisionVote.Yea ? 1 : 0));
+                if (opinion.Vote != DecisionVote.Abstain)
+                    opinion.voter.needs.mood.thoughts.memories.TryGainMemory(opinion.Vote == DecisionVote.Yea ? RimocracyDefOf.LikeDecision : RimocracyDefOf.DislikeDecision);
                 if (opinion.voter == Utility.RimocracyComp.Leader)
                     Utility.RimocracyComp.Governance = Mathf.Clamp(Utility.RimocracyComp.Governance + (opinion.Vote == DecisionVote.Yea ? governanceChangeIfSupported : governanceChangeIfOpposed), 0, 1);
             }

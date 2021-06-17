@@ -28,7 +28,8 @@ namespace Rimocracy
 
         public static TaleDef BecameLeader;
 
-        public static ThoughtDef DecisionMade;
+        public static ThoughtDef LikeDecision;
+        public static ThoughtDef DislikeDecision;
         public static ThoughtDef ElectionOutcome;
         public static ThoughtDef ElectionCompetitorMemory;
         public static ThoughtDef ImpeachedMemory;

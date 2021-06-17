@@ -75,16 +75,14 @@ namespace Rimocracy
                     switch (d.enactment)
                     {
                         case DecisionEnactmentRule.Decree:
-                            if (votingResult.Count > 0)
-                                content.Label($"Leader's support: {votingResult.First().support.ToStringWithSign("0")}", tooltip: votingResult.First().explanation);
+                            if (!votingResult.EnumerableNullOrEmpty())
+                                content.Label($"{Utility.LeaderTitle}'s support: {votingResult.First().support.ToStringWithSign("0")}", tooltip: votingResult.First().explanation);
                             break;
 
                         case DecisionEnactmentRule.Law:
                         case DecisionEnactmentRule.Referendum:
                             if (content.ButtonTextLabeled($"Support: {votingResult.Yea} - {votingResult.Nay}", decisionToShowVoteDetails == d ? "Hide Details" : "Show Details"))
-                                if (decisionToShowVoteDetails != d)
-                                    decisionToShowVoteDetails = d;
-                                else decisionToShowVoteDetails = null;
+                                decisionToShowVoteDetails = decisionToShowVoteDetails != d ? d : null;
                             if (decisionToShowVoteDetails == d)
                                 foreach (PawnDecisionOpinion opinion in votingResult)
                                     content.Label($"  {opinion.voter.NameShortColored}: {opinion.support.ToStringWithSign("0")}", tooltip: opinion.explanation);
@@ -102,10 +100,10 @@ namespace Rimocracy
                             if (d.Activate())
                             {
                                 Utility.Log($"Logging opinions for {votingResult.Count} citizens.");
-                                foreach (PawnDecisionOpinion opinion in votingResult.Where(opinion => opinion.support != 0))
+                                foreach (PawnDecisionOpinion opinion in votingResult.Where(opinion => opinion.Vote != DecisionVote.Abstain))
                                 {
                                     Utility.Log($"{opinion.voter}'s opinion is {opinion.support}.");
-                                    opinion.voter.needs.mood.thoughts.memories.TryGainMemory(ThoughtMaker.MakeThought(RimocracyDefOf.DecisionMade, opinion.support > 0 ? 1 : 0));
+                                    opinion.voter.needs.mood.thoughts.memories.TryGainMemory(opinion.Vote == DecisionVote.Yea ? RimocracyDefOf.LikeDecision : RimocracyDefOf.DislikeDecision);
                                 }
                                 Find.LetterStack.ReceiveLetter($"{d.LabelTitleCase} Decision Taken", d.description, LetterDefOf.NeutralEvent, null);
                             }
