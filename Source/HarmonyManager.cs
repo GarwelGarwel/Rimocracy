@@ -46,10 +46,17 @@ namespace Rimocracy
             }
 
             opinions = politicalAction.GetOpinions(target);
+
             if (Utility.RimocracyComp.ActionsNeedApproval && opinions.Vetoed)
             {
                 Utility.Log($"Action {politicalAction.defName} was vetoed by {Utility.RimocracyComp.Leader}.");
-                DisplayVetoMessage(politicalAction, target, opinions[Utility.RimocracyComp.Leader]);
+                if (Settings.ShowActionSupportDetails)
+                    Dialog_PoliticalAction.Show(politicalAction, opinions, false);
+                else Messages.Message(
+                    $"{Utility.LeaderTitle} {Utility.RimocracyComp.Leader.NameShortColored} vetoed {politicalAction.label}{(target != null ? $" of {target.NameShortColored}" : "")} (support: {opinions[Utility.RimocracyComp.Leader].support.ToStringWithSign("0")}).",
+                    new LookTargets(target),
+                    MessageTypeDefOf.NegativeEvent);
+
                 return true;
             }
             Utility.Log($"Action {politicalAction.defName} was approved or leader's approval is not required.");
@@ -57,12 +64,6 @@ namespace Rimocracy
         }
 
         static bool Vetoed(PoliticalActionDef politicalAction, Pawn target = null) => Vetoed(politicalAction, out DecisionVoteResults _, target);
-
-        static void DisplayVetoMessage(PoliticalActionDef politicalAction, Pawn target, PawnDecisionOpinion leaderOpinion) =>
-            Messages.Message(
-                $"{Utility.LeaderTitle} {Utility.RimocracyComp.Leader.NameShortColored} vetoed {politicalAction.label}{(target != null ? $" of {target.NameShortColored}" : "")} (support: {leaderOpinion.support.ToStringWithSign("0")}).",
-                new LookTargets(target),
-                MessageTypeDefOf.NegativeEvent);
 
         #region ARREST
 

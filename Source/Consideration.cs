@@ -82,17 +82,18 @@ namespace Rimocracy
             && medianOpinionOfTarget == null
             && targetAge == null;
 
-        public static implicit operator bool(Consideration consideration) => consideration.IsSatisfied();
+        public static implicit operator bool(Consideration consideration) => consideration.IsSatisfied(target: Utility.RimocracyComp.Leader);
 
         public bool IsSatisfied(Pawn pawn = null, Pawn target = null)
         {
             bool res = true;
+
             if (succession != null)
                 res &= Utility.RimocracyComp.SuccessionType.defName == succession.defName;
             if (res && termDuration != TermDuration.Undefined)
                 res &= Utility.RimocracyComp.TermDuration == termDuration;
             if (res && leaderExists != null)
-                res &= (Utility.RimocracyComp.Leader != null) == leaderExists;
+                res &= Utility.RimocracyComp.HasLeader == leaderExists;
             if (res && campaigning != null)
                 res &= !Utility.RimocracyComp.Campaigns.NullOrEmpty() == campaigning;
             if (res && governance != null)
@@ -162,6 +163,7 @@ namespace Rimocracy
             if (!IsSatisfied(pawn, target))
                 return 0;
             float s = support;
+
             if (governance != null)
                 governance.TransformValue(Utility.RimocracyComp.Governance, ref s);
             if (regime != null)
@@ -192,88 +194,95 @@ namespace Rimocracy
 
         public string ToString(string pawn = null, string target = null)
         {
+            void AddIndent() => indent += indentSymbol;
+
+            void RemoveIndent() => indent = indent.Remove(0, indentSymbol.Length);
+
+            string res = "";
+
+            void AddLine(string text) => res += $"{indent}{text}\n";
+
             if (pawn.NullOrEmpty())
                 pawn = "the pawn";
             if (target.NullOrEmpty())
                 target = "the target";
 
-            string res = "";
             if (inverted)
             {
-                res = $"{indent}The following must be FALSE:\n";
-                indent += indentSymbol;
+                AddLine("The following must be FALSE:");
+                AddIndent();
             }
 
             if (succession != null)
-                res += $"{indent}Succession law: {succession.LabelCap}\n";
+                AddLine($"Succession law: {succession.LabelCap}");
             if (leaderExists != null)
-                res += $"{indent}Leader {((bool)leaderExists ? "exists" : "doesn't exist")}\n";
+                AddLine($"Leader {((bool)leaderExists ? "exists" : "doesn't exist")}");
             if (termDuration != TermDuration.Undefined)
-                res += $"{indent}Term duration: {termDuration}\n";
+                AddLine($"Term duration: {termDuration}");
             if (campaigning != null)
-                res += $"{indent}Campaign is {((bool)campaigning ? "on" : "off")}\n";
+                AddLine($"Campaign is {((bool)campaigning ? "on" : "off")}");
             if (governance != null)
-                res += $"{indent}{governance.ToString("Governance", "P0")}\n";
+                AddLine(governance.ToString("Governance", "P0"));
             if (regime != null)
-                res += $"{indent}{regime.ToString("Regime (democracy)", "P0")}\n";
+                AddLine(regime.ToString("Regime (democracy)", "P0"));
             if (population != null)
-                res += $"{indent}{population.ToString("Population")}\n";
+                AddLine(population.ToString("Population"));
             if (daysOfFood != null)
-                res += $"{indent}{daysOfFood.ToString("Days worth of food")}\n";
+                AddLine(daysOfFood.ToString("Days worth of food"));
             if (!decision.NullOrEmpty())
-                res += $"{indent}{GenText.SplitCamelCase(decision)} is active\n";
+                AddLine($"{GenText.SplitCamelCase(decision)} is active");
 
             if (isLeader != null)
-                res += $"{indent}{pawn.CapitalizeFirst()} is {((bool)isLeader ? $"" :"not ")}the leader\n";
+                AddLine($"{pawn.CapitalizeFirst()} is {((bool)isLeader ? $"" :"not ")}the leader");
             if (isTarget != null)
-                res += $"{indent}{pawn.CapitalizeFirst()} is {((bool)isTarget ? $"" : $"not ")}the target\n";
+                AddLine($"{pawn.CapitalizeFirst()} is {((bool)isTarget ? $"" : $"not ")}the target");
             if (trait != null)
-                res += $"{indent}{pawn.CapitalizeFirst()} has trait {trait}\n";
+                AddLine($"{pawn.CapitalizeFirst()} has trait {trait}");
             if (!skills.EnumerableNullOrEmpty())
                 foreach (SkillOperations skill in skills)
-                    res += $"{indent}{skill.ToString(skill.skill.LabelCap)}\n";
+                    AddLine(skill.ToString(skill.skill.LabelCap));
             if (isCapableOfViolence != null)
-                res += $"{indent}{pawn.CapitalizeFirst()} is {((bool)isCapableOfViolence ? $"" : "in")}capable of violence\n";
+                AddLine($"{pawn.CapitalizeFirst()} is {((bool)isCapableOfViolence ? $"" : "in")}capable of violence");
             if (medianOpinionOfMe != null)
-                res += $"{indent}{medianOpinionOfMe.ToString($"Median citizens' opinion of {pawn}")}\n";
+                AddLine(medianOpinionOfMe.ToString($"Median citizens' opinion of {pawn}"));
             if (age != null)
-                res += $"{indent}{age.ToString($"{pawn.CapitalizeFirst()}'s age")}\n";
+                AddLine(age.ToString($"{pawn.CapitalizeFirst()}'s age"));
             if (titleSeniority != null)
-                res += $"{indent}{titleSeniority.ToString($"{pawn.CapitalizeFirst()}'s title seniority")}\n";
+                AddLine(titleSeniority.ToString($"{pawn.CapitalizeFirst()}'s title seniority"));
 
             if (targetIsColonist != null)
-                res += $"{indent}{target.CapitalizeFirst()} is {((bool)targetIsColonist ? "" : "not ")}a colonist\n";
+                AddLine($"{target.CapitalizeFirst()} is {((bool)targetIsColonist ? "" : "not ")}a colonist");
             if (targetIsLeader != null)
-                res += $"{indent}{target.CapitalizeFirst()} is {((bool)targetIsLeader ? "" : "not ")}the leader\n";
+                AddLine($"{target.CapitalizeFirst()} is {((bool)targetIsLeader ? "" : "not ")}the leader");
             if (targetInAggroMentalState != null)
-                res += $"{indent}{target.CapitalizeFirst()} is {((bool)targetInAggroMentalState ? "" : "not ")}in an aggressive mental break\n";
+                AddLine($"{target.CapitalizeFirst()} is {((bool)targetInAggroMentalState ? "" : "not ")}in an aggressive mental break");
             if (targetTrait != null)
-                res += $"{indent}{target.CapitalizeFirst()} has trait {targetTrait}\n";
+                AddLine($"{target.CapitalizeFirst()} has trait {targetTrait}");
             if (opinionOfTarget != null)
-                res += $"{indent}{opinionOfTarget.ToString($"{pawn.CapitalizeFirst()}'s opinion of {target}")}\n";
+                AddLine($"{opinionOfTarget.ToString($"{pawn.CapitalizeFirst()}'s opinion of {target}")}");
             if (medianOpinionOfTarget != null)
-                res += $"{indent}{medianOpinionOfTarget.ToString($"Median citizens' opinion of {target}")}\n";
+                AddLine(medianOpinionOfTarget.ToString($"Median citizens' opinion of {target}"));
             if (targetAge != null)
-                res += $"{indent}{targetAge.ToString($"{target.CapitalizeFirst()}'s age")}\n";
+                AddLine(targetAge.ToString($"{target.CapitalizeFirst()}'s age"));
 
             if (!all.NullOrEmpty())
             {
-                res += $"{indent}All of the following:\n";
-                indent += indentSymbol;
+                AddLine("All of the following:");
+                AddIndent();
                 foreach (Consideration r in all)
                     res += $"{r.ToString(pawn, target)}\n";
-                indent = indent.Remove(0, indentSymbol.Length);
+                RemoveIndent();
             }
             if (!any.NullOrEmpty())
             {
-                res += $"{indent}Any of the following:\n";
-                indent += indentSymbol;
+                AddLine("Any of the following:");
+                AddIndent();
                 foreach (Consideration r in any)
                     res += $"{r.ToString(pawn, target)}\n";
-                indent = indent.Remove(0, indentSymbol.Length);
+                RemoveIndent();
             }
             if (inverted)
-                indent = indent.Remove(0, indentSymbol.Length);
+                RemoveIndent();
             return res.TrimEndNewlines();
         }
     }

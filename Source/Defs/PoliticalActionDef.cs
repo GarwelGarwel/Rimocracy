@@ -21,12 +21,11 @@ namespace Rimocracy
         public DecisionVoteResults GetOpinions(Pawn target = null) =>
             allCitizensReact
             ? new DecisionVoteResults(Utility.Citizens.Select(pawn => new PawnDecisionOpinion(pawn, considerations, target)))
-            : (Utility.RimocracyComp.Leader != null ? new DecisionVoteResults() { new PawnDecisionOpinion(Utility.RimocracyComp.Leader, considerations, target) } : new DecisionVoteResults());
+            : (Utility.RimocracyComp.HasLeader ? new DecisionVoteResults() { new PawnDecisionOpinion(Utility.RimocracyComp.Leader, considerations, target) } : new DecisionVoteResults());
 
         public void Activate(DecisionVoteResults opinions)
         {
             Utility.Log($"{defName} activated.");
-            Utility.Log($"Opinions:\r\n{opinions}");
             foreach (PawnDecisionOpinion opinion in opinions.Where(opinion => opinion.Vote != DecisionVote.Abstain))
             {
                 if (opinion.Vote != DecisionVote.Abstain)
@@ -35,8 +34,7 @@ namespace Rimocracy
                     Utility.RimocracyComp.Governance = Mathf.Clamp(Utility.RimocracyComp.Governance + (opinion.Vote == DecisionVote.Yea ? governanceChangeIfSupported : governanceChangeIfOpposed), 0, 1);
             }
 
-            if (!opinions.EnumerableNullOrEmpty())
-                Find.WindowStack.Add(new Dialog_PoliticalAction(this, opinions));
+            Dialog_PoliticalAction.Show(this, opinions, true);
         }
 
         public void Activate(Pawn target = null) => Activate(GetOpinions(target));

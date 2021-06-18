@@ -26,7 +26,7 @@ namespace Rimocracy
             content.Label($"{Utility.LeaderTitle.CapitalizeFirst(Utility.RimocracyComp.LeaderTitleDef)}: {Utility.RimocracyComp.Leader?.NameFullColored ?? "none"}");
 
             // Governance target, leader skills and next succession
-            if (Utility.RimocracyComp.Leader != null)
+            if (Utility.RimocracyComp.HasLeader)
             {
                 content.Label($"Governance quality: {Utility.RimocracyComp.Governance.ToStringPercent("F1")}. Decays at {Utility.RimocracyComp.GovernanceDecayPerDay.ToStringPercent()} per day.");
 

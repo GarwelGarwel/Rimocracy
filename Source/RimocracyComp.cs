@@ -39,6 +39,8 @@ namespace Rimocracy
             set => leader = value;
         }
 
+        public bool HasLeader => Leader != null;
+
         public LeaderTitleDef LeaderTitleDef
         {
             get => leaderTitle;

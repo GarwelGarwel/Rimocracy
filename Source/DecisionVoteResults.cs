@@ -16,7 +16,7 @@ namespace Rimocracy
 
         public bool Passed => Yea > Nay;
 
-        public bool Vetoed => Utility.RimocracyComp.Leader != null && this[Utility.RimocracyComp.Leader].Vote == DecisionVote.Nay;
+        public bool Vetoed => Utility.RimocracyComp.HasLeader && this[Utility.RimocracyComp.Leader].Vote == DecisionVote.Nay;
 
         public DecisionVoteResults()
         { }

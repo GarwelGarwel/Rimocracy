@@ -115,7 +115,7 @@ namespace Rimocracy
                 Utility.RimocracyComp.TermDuration = setTermDuration;
             }
 
-            if (impeachLeader && Utility.RimocracyComp.Leader != null)
+            if (impeachLeader && Utility.RimocracyComp.HasLeader)
             {
                 Utility.Log($"Impeaching {Utility.RimocracyComp.Leader}.");
                 Utility.RimocracyComp.Leader.needs.mood.thoughts.memories.TryGainMemory(RimocracyDefOf.ImpeachedMemory);
