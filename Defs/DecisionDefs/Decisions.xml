@@ -763,6 +763,121 @@
 				<greaterOrEqual>0.20</greaterOrEqual>
 			</regime>
 		</effectRequirements>
+		<considerations>
+			<li>
+				<label>skills</label>
+				<skills>
+					<li>
+						<skill>Shooting</skill>
+						<offset>
+							<points>
+								<li>(0, -10)</li>
+								<li>(20, 10)</li>
+							</points>
+						</offset>
+					</li>
+					<li>
+						<skill>Melee</skill>
+						<offset>
+							<points>
+								<li>(0, -10)</li>
+								<li>(20, 10)</li>
+							</points>
+						</offset>
+					</li>
+					<li>
+						<skill>Construction</skill>
+						<offset>
+							<points>
+								<li>(0, -10)</li>
+								<li>(20, 10)</li>
+							</points>
+						</offset>
+					</li>
+					<li>
+						<skill>Mining</skill>
+						<offset>
+							<points>
+								<li>(0, -10)</li>
+								<li>(20, 10)</li>
+							</points>
+						</offset>
+					</li>
+					<li>
+						<skill>Cooking</skill>
+						<offset>
+							<points>
+								<li>(0, -10)</li>
+								<li>(20, 10)</li>
+							</points>
+						</offset>
+					</li>
+					<li>
+						<skill>Plants</skill>
+						<offset>
+							<points>
+								<li>(0, -10)</li>
+								<li>(20, 10)</li>
+							</points>
+						</offset>
+					</li>
+					<li>
+						<skill>Animals</skill>
+						<offset>
+							<points>
+								<li>(0, -10)</li>
+								<li>(20, 10)</li>
+							</points>
+						</offset>
+					</li>
+					<li>
+						<skill>Crafting</skill>
+						<offset>
+							<points>
+								<li>(0, -10)</li>
+								<li>(20, 10)</li>
+							</points>
+						</offset>
+					</li>
+					<li>
+						<skill>Artistic</skill>
+						<offset>
+							<points>
+								<li>(0, -10)</li>
+								<li>(20, 10)</li>
+							</points>
+						</offset>
+					</li>
+					<li>
+						<skill>Medicine</skill>
+						<offset>
+							<points>
+								<li>(0, -10)</li>
+								<li>(20, 10)</li>
+							</points>
+						</offset>
+					</li>
+					<li>
+						<skill>Social</skill>
+						<offset>
+							<points>
+								<li>(0, -10)</li>
+								<li>(20, 10)</li>
+							</points>
+						</offset>
+					</li>
+					<li>
+						<skill>Intellectual</skill>
+						<offset>
+							<points>
+								<li>(0, -10)</li>
+								<li>(20, 10)</li>
+							</points>
+						</offset>
+					</li>
+				</skills>
+			</li>
+		</considerations>
 		<tag/>
 		<regimeEffect>0.20</regimeEffect>
 		<governanceCost>0.25</governanceCost>
@@ -934,7 +1049,7 @@
 
 	<Rimocracy.DecisionDef>
 		<defName>Elitism</defName>
-		<label>l'État, c'est moi</label>
+		<label>L'État, c'est moi</label>
 		<description>A happy leader is a productive leader. When the ruler is in a good mood, he, or she, will improve governance better.</description>
 		<category>Authoritarian</category>
 		<displayPriorityInCategory>20</displayPriorityInCategory>
