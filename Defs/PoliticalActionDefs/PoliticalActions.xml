@@ -2,7 +2,12 @@
 
 <Defs>
 
-	<Rimocracy.PoliticalActionDef>
+	<Rimocracy.PoliticalActionDef Abstract="True" Name="BasePoliticalAction">
+		<supportThought>LikeDecision</supportThought>
+		<opposeThought>DislikeDecision</opposeThought>
+	</Rimocracy.PoliticalActionDef>
+
+	<Rimocracy.PoliticalActionDef ParentName="BasePoliticalAction">
 		<defName>Arrest</defName>
 		<label>arrest</label>
 		<considerations>
@@ -47,7 +52,7 @@
 		<governanceChangeIfOpposed>-0.05</governanceChangeIfOpposed>
 	</Rimocracy.PoliticalActionDef>
 
-	<Rimocracy.PoliticalActionDef>
+	<Rimocracy.PoliticalActionDef ParentName="BasePoliticalAction">
 		<defName>Execution</defName>
 		<label>execution</label>
 		<considerations>
@@ -125,7 +130,7 @@
 		<governanceChangeIfOpposed>-0.10</governanceChangeIfOpposed>
 	</Rimocracy.PoliticalActionDef>
 
-	<Rimocracy.PoliticalActionDef>
+	<Rimocracy.PoliticalActionDef ParentName="BasePoliticalAction">
 		<defName>Release</defName>
 		<label>release</label>
 		<considerations>
@@ -183,7 +188,7 @@
 		<governanceChangeIfOpposed>-0.05</governanceChangeIfOpposed>
 	</Rimocracy.PoliticalActionDef>
 
-	<Rimocracy.PoliticalActionDef>
+	<Rimocracy.PoliticalActionDef ParentName="BasePoliticalAction">
 		<defName>Banishment</defName>
 		<label>banishment</label>
 		<considerations>
@@ -245,7 +250,7 @@
 		<governanceChangeIfOpposed>-0.10</governanceChangeIfOpposed>
 	</Rimocracy.PoliticalActionDef>
 
-	<Rimocracy.PoliticalActionDef>
+	<Rimocracy.PoliticalActionDef ParentName="BasePoliticalAction">
 		<defName>SettlementAttack</defName>
 		<label>settlement attack</label>
 		<considerations>
@@ -299,6 +304,39 @@
 		</considerations>
 		<governanceChangeIfSupported>0.08</governanceChangeIfSupported>
 		<governanceChangeIfOpposed>-0.10</governanceChangeIfOpposed>
+	</Rimocracy.PoliticalActionDef>
+
+	<Rimocracy.PoliticalActionDef ParentName="BasePoliticalAction">
+		<defName>Trade</defName>
+		<label>trade</label>
+		<considerations>
+			<li>
+				<label>goodwill</label>
+				<opinionOfTarget>
+					<offset>
+						<points>
+							<li>(-100, -20)</li>
+							<li>(100, 20)</li>
+						</points>
+					</offset>
+				</opinionOfTarget>
+			</li>
+			<li>
+				<label>opinion of faction leader</label>
+				<opinionOfTarget>
+					<offset>
+						<points>
+							<li>(-100, -10)</li>
+							<li>(100, 10)</li>
+						</points>
+					</offset>
+				</opinionOfTarget>
+			</li>
+		</considerations>
+		<supportThought>LikeTrade</supportThought>
+		<opposeThought>DislikeTrade</opposeThought>
+		<governanceChangeIfSupported>0.04</governanceChangeIfSupported>
+		<governanceChangeIfOpposed>-0.05</governanceChangeIfOpposed>
 	</Rimocracy.PoliticalActionDef>
 
 </Defs>

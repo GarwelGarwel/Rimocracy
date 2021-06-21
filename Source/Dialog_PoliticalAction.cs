@@ -21,7 +21,7 @@ namespace Rimocracy
             doCloseButton = true;
             closeOnClickedOutside = true;
             forcePause = true;
-            Utility.Log($"Opinions of {action.defName}:{opinions}");
+            Utility.Log($"Opinions of {action.defName}: {opinions}");
         }
 
         public override void DoWindowContents(Rect inRect)
@@ -56,7 +56,7 @@ namespace Rimocracy
 
         public static void Show(PoliticalActionDef action, DecisionVoteResults opinions, bool actionTaken)
         {
-            if (!opinions.EnumerableNullOrEmpty() && Settings.ShowActionSupportDetails)
+            if (opinions.Any(opinion => opinion.Vote != DecisionVote.Abstain))
                 Find.WindowStack.Add(new Dialog_PoliticalAction(action, opinions, actionTaken));
         }
     }

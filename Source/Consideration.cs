@@ -49,6 +49,7 @@ namespace Rimocracy
         ValueOperations opinionOfTarget;
         ValueOperations medianOpinionOfTarget;
         ValueOperations targetAge;
+        ValueOperations targetFactionGoodwill;
 
         /// <summary>
         /// Returns true if this requirement is default
@@ -80,7 +81,8 @@ namespace Rimocracy
             && targetTrait == null
             && medianOpinionOfTarget == null
             && medianOpinionOfTarget == null
-            && targetAge == null;
+            && targetAge == null
+            && targetFactionGoodwill == null;
 
         public static implicit operator bool(Consideration consideration) => consideration.IsSatisfied(target: Utility.RimocracyComp.Leader);
 
@@ -143,6 +145,8 @@ namespace Rimocracy
                     res &= medianOpinionOfTarget.Compare(target.MedianCitizensOpinion());
                 if (res && targetAge != null && target.ageTracker != null)
                     res &= targetAge.Compare(target.ageTracker.AgeBiologicalYears);
+                if (res && targetFactionGoodwill != null && target.Faction != null && !target.Faction.IsPlayer)
+                    res &= targetAge.Compare(target.Faction.PlayerGoodwill);
             }
 
             if (res && !all.NullOrEmpty())
@@ -188,6 +192,8 @@ namespace Rimocracy
                     medianOpinionOfTarget.TransformValue(target.MedianCitizensOpinion(), ref s);
                 if (targetAge != null && target.ageTracker != null)
                     targetAge.TransformValue(target.ageTracker.AgeBiologicalYears, ref s);
+                if (targetAge != null && target.Faction != null && !target.Faction.IsPlayer)
+                    targetAge.TransformValue(target.Faction.PlayerGoodwill, ref s);
             }
             return s;
         }
