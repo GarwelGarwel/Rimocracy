@@ -90,9 +90,9 @@ namespace Rimocracy
 
         public bool IsPassed(DecisionVoteResults votingResult) => enactment == DecisionEnactmentRule.None || votingResult.Passed;
 
-        public bool Activate()
+        public bool Activate(bool cheat = false)
         {
-            if (!IsValid)
+            if (!IsValid && !cheat)
             {
                 Utility.Log($"{defName} decision is invalid.", LogLevel.Warning);
                 return false;
@@ -101,7 +101,8 @@ namespace Rimocracy
             if (IsPersistent)
                 Utility.RimocracyComp.Decisions.Add(new Decision(this));
 
-            Utility.RimocracyComp.Governance -= GovernanceCost;
+            if (!cheat)
+                Utility.RimocracyComp.Governance -= GovernanceCost;
 
             if (setSuccession != null)
             {
@@ -109,7 +110,7 @@ namespace Rimocracy
                 Utility.RimocracyComp.SuccessionType = setSuccession;
             }
 
-            if (setTermDuration != TermDuration.Undefined)
+            if (setTermDuration != TermDuration.Undefined && !cheat)
             {
                 Utility.Log($"Setting term duration to {setTermDuration}.");
                 Utility.RimocracyComp.TermDuration = setTermDuration;

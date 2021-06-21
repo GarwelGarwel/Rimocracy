@@ -23,10 +23,10 @@ namespace Rimocracy
         public List<TechLevel> techLevels;
 
         public bool IsApplicable =>
-            ((Utility.RimocracyComp.TermDuration == TermDuration.Indefinite && appliesToIndefiniteTerm)
-            || (Utility.RimocracyComp.TermDuration != TermDuration.Indefinite && appliesToFixedTerm))
-            && (successionTypes.NullOrEmpty() || successionTypes.Contains(Utility.RimocracyComp.SuccessionType))
-            && (techLevels.NullOrEmpty() || techLevels.Contains(Find.FactionManager.OfPlayer.def.techLevel))
+            (Utility.RimocracyComp.TermDuration == TermDuration.Indefinite && appliesToIndefiniteTerm
+            || Utility.RimocracyComp.TermDuration != TermDuration.Indefinite && appliesToFixedTerm)
+            && (successionTypes.EnumerableNullOrEmpty() || successionTypes.Contains(Utility.RimocracyComp.SuccessionType))
+            && (techLevels.EnumerableNullOrEmpty() || techLevels.Contains(Find.FactionManager.OfPlayer.def.techLevel))
             && Utility.CitizensCount >= minPopulation
             && Utility.CitizensCount <= maxPopulation;
 
@@ -37,11 +37,6 @@ namespace Rimocracy
             if (pawn == null)
                 return label ?? labelMale;
             return (pawn.gender == Gender.Female ? labelFemale : labelMale) ?? label;
-        }
-
-        public override void ResolveReferences()
-        {
-            base.ResolveReferences();
         }
     }
 }

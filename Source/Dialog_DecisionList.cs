@@ -112,6 +112,14 @@ namespace Rimocracy
                         }
                     }
                     else content.Label("Requirements are not met.");
+
+                    // Display devmode (cheat) Activate button
+                    if (Prefs.DevMode && content.ButtonText("Activate (DevMode)"))
+                    {
+                        d.Activate(true);
+                        Close();
+                    }
+
                     content.GapLine();
                 }
             }
