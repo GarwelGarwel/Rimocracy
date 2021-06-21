@@ -2,7 +2,12 @@
 
 <Defs>
 
-	<Rimocracy.PoliticalActionDef>
+	<Rimocracy.PoliticalActionDef Abstract="True" Name="BasePoliticalAction">
+		<supportThought>LikeDecision</supportThought>
+		<opposeThought>DislikeDecision</opposeThought>
+	</Rimocracy.PoliticalActionDef>
+
+	<Rimocracy.PoliticalActionDef ParentName="BasePoliticalAction">
 		<defName>Arrest</defName>
 		<label>arrest</label>
 		<considerations>
@@ -26,6 +31,14 @@
 				<targetInAggroMentalState>false</targetInAggroMentalState>
 			</li>
 			<li>
+				<label>act of aggression</label>
+				<support>-5</support>
+				<targetIsColonist>false</targetIsColonist>
+				<targetFactionGoodwill>
+					<greaterOrEqual>0</greaterOrEqual>
+				</targetFactionGoodwill>
+			</li>
+			<li>
 				<label>opinion of {TARGET}</label>
 				<isTarget>false</isTarget>
 				<opinionOfTarget>
@@ -47,7 +60,7 @@
 		<governanceChangeIfOpposed>-0.05</governanceChangeIfOpposed>
 	</Rimocracy.PoliticalActionDef>
 
-	<Rimocracy.PoliticalActionDef>
+	<Rimocracy.PoliticalActionDef ParentName="BasePoliticalAction">
 		<defName>Execution</defName>
 		<label>execution</label>
 		<considerations>
@@ -125,7 +138,7 @@
 		<governanceChangeIfOpposed>-0.10</governanceChangeIfOpposed>
 	</Rimocracy.PoliticalActionDef>
 
-	<Rimocracy.PoliticalActionDef>
+	<Rimocracy.PoliticalActionDef ParentName="BasePoliticalAction">
 		<defName>Release</defName>
 		<label>release</label>
 		<considerations>
@@ -183,7 +196,7 @@
 		<governanceChangeIfOpposed>-0.05</governanceChangeIfOpposed>
 	</Rimocracy.PoliticalActionDef>
 
-	<Rimocracy.PoliticalActionDef>
+	<Rimocracy.PoliticalActionDef ParentName="BasePoliticalAction">
 		<defName>Banishment</defName>
 		<label>banishment</label>
 		<considerations>
@@ -245,7 +258,7 @@
 		<governanceChangeIfOpposed>-0.10</governanceChangeIfOpposed>
 	</Rimocracy.PoliticalActionDef>
 
-	<Rimocracy.PoliticalActionDef>
+	<Rimocracy.PoliticalActionDef ParentName="BasePoliticalAction">
 		<defName>SettlementAttack</defName>
 		<label>settlement attack</label>
 		<considerations>
@@ -253,6 +266,17 @@
 				<label>I don't fight</label>
 				<support>-20</support>
 				<isCapableOfViolence>false</isCapableOfViolence>
+			</li>
+			<li>
+				<label>goodwill</label>
+				<targetFactionGoodwill>
+					<offset>
+						<points>
+							<li>(-100, 10)</li>
+							<li>(100, -10)</li>
+						</points>
+					</offset>
+				</targetFactionGoodwill>
 			</li>
 			<li>
 				<label>opinion of faction leader</label>
@@ -299,6 +323,62 @@
 		</considerations>
 		<governanceChangeIfSupported>0.08</governanceChangeIfSupported>
 		<governanceChangeIfOpposed>-0.10</governanceChangeIfOpposed>
+	</Rimocracy.PoliticalActionDef>
+
+	<Rimocracy.PoliticalActionDef ParentName="BasePoliticalAction">
+		<defName>Trade</defName>
+		<label>trade</label>
+		<considerations>
+			<li>
+				<label>goodwill</label>
+				<targetFactionGoodwill>
+					<offset>
+						<points>
+							<li>(-100, -10)</li>
+							<li>(100, 10)</li>
+						</points>
+					</offset>
+				</targetFactionGoodwill>
+			</li>
+			<li>
+				<label>opinion of faction leader</label>
+				<opinionOfTarget>
+					<offset>
+						<points>
+							<li>(-100, -10)</li>
+							<li>(100, 10)</li>
+						</points>
+					</offset>
+				</opinionOfTarget>
+			</li>
+			<li>
+				<label>bloodlust</label>
+				<support>-5</support>
+				<trait>Bloodlust</trait>
+			</li>
+			<li>
+				<label>kind</label>
+				<support>5</support>
+				<trait>Kind</trait>
+			</li>
+			<li>
+				<label>we need food</label>
+				<daysOfFood>
+					<lessThan>5</lessThan>
+					<offset>
+						<points>
+							<li>(0, 10)</li>
+							<li>(3, 5)</li>
+							<li>(15, 0)</li>
+						</points>
+					</offset>
+				</daysOfFood>
+			</li>
+		</considerations>
+		<supportThought>LikeTrade</supportThought>
+		<opposeThought>DislikeTrade</opposeThought>
+		<governanceChangeIfSupported>0.20</governanceChangeIfSupported>
+		<governanceChangeIfOpposed>-0.25</governanceChangeIfOpposed>
 	</Rimocracy.PoliticalActionDef>
 
 </Defs>

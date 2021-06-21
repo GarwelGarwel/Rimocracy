@@ -2,6 +2,7 @@
 using RimWorld;
 using RimWorld.Planet;
 using System;
+using System.Linq;
 using Verse;
 using Verse.AI;
 
@@ -28,10 +29,14 @@ namespace Rimocracy
             harmony.Patch(AccessTools.Method("RimWorld.ExecutionUtility:DoExecutionByCut"), postfix: new HarmonyMethod(type.GetMethod("Execution_Postfix")));
             harmony.Patch(AccessTools.Method("Verse.AI.JobDriver_ReleasePrisoner:MakeNewToils"), prefix: new HarmonyMethod(type.GetMethod("Release_Prefix")));
             harmony.Patch(AccessTools.Method("RimWorld.GenGuest:PrisonerRelease"), postfix: new HarmonyMethod(type.GetMethod("Release_Postfix")));
-            harmony.Patch(AccessTools.Method("RimWorld.PawnBanishUtility:Banish"), prefix: new HarmonyMethod(type.GetMethod("Banishment_Prefix")), postfix: new HarmonyMethod(type.GetMethod("Banishment_Postfix")));
+            harmony.Patch(AccessTools.Method("RimWorld.PawnBanishUtility:Banish"),
+                prefix: new HarmonyMethod(type.GetMethod("Banishment_Prefix")),
+                postfix: new HarmonyMethod(type.GetMethod("Banishment_Postfix")));
             harmony.Patch(AccessTools.Method("RimWorld.Planet.SettlementUtility:Attack"),
                 prefix: new HarmonyMethod(type.GetMethod("SettlementAttack_Prefix")),
                 postfix: new HarmonyMethod(type.GetMethod("SettlementAttack_Postfix")));
+            harmony.Patch(AccessTools.Method("RimWorld.Dialog_Trade:PostOpen"), postfix: new HarmonyMethod(type.GetMethod("Trade_Prefix")));
+            harmony.Patch(AccessTools.Method("RimWorld.Faction:Notify_PlayerTraded"), postfix: new HarmonyMethod(type.GetMethod("Trade_Postfix")));
 
             Utility.Log($"{harmony.GetPatchedMethods().EnumerableCount()} methods patched with Harmony.");
             initialized = true;
@@ -46,7 +51,6 @@ namespace Rimocracy
             }
 
             opinions = politicalAction.GetOpinions(target);
-
             if (Utility.RimocracyComp.ActionsNeedApproval && opinions.Vetoed)
             {
                 Utility.Log($"Action {politicalAction.defName} was vetoed by {Utility.RimocracyComp.Leader}.");
@@ -180,5 +184,27 @@ namespace Rimocracy
 
         #endregion SETTLEMENT ATTACK
 
+        #region TRADE
+
+        // This is technically a postfix that does the job of prefixes, i.e. checks if the PoliticalAction (Trade in this case) is vetoed
+        public static void Trade_Prefix(Dialog_Trade __instance)
+        {
+            Utility.Log($"Trade_Prefix for trader {TradeSession.trader} ({TradeSession.trader?.Faction})");
+            if (TradeSession.trader == null)
+                return;
+            if (Vetoed(RimocracyDefOf.Trade, TradeSession.trader.Faction?.leader))
+                __instance.Close();
+        }
+
+        public static void Trade_Postfix(float marketValueSentByPlayer, Faction __instance)
+        {
+            if (marketValueSentByPlayer <= 0)
+                return;
+            Utility.Log($"Trade_Postfix({marketValueSentByPlayer}) for {__instance}");
+            // Governance is changed in direct proportion to the amount traded and reverse proportion to the total items' wealth of the player
+            RimocracyDefOf.Trade.Activate(__instance?.leader, marketValueSentByPlayer / Math.Max(Find.Maps.Where(map => map.IsPlayerHome).Sum(map => map.wealthWatcher.WealthItems), 1000));
+        }
+
+        #endregion TRADE
     }
 }

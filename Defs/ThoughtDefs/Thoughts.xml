@@ -194,6 +194,32 @@
 	</ThoughtDef>
 
 	<ThoughtDef>
+		<defName>LikeTrade</defName>
+		<stages>
+			<li>
+				<label>like trade</label>
+				<description>I like the trade deal we made.</description>
+				<baseMoodEffect>2</baseMoodEffect>
+			</li>
+		</stages>
+		<durationDays>5</durationDays>
+		<nullifiedIfNotColonist>true</nullifiedIfNotColonist>
+	</ThoughtDef>
+
+	<ThoughtDef>
+		<defName>DislikeTrade</defName>
+		<stages>
+			<li>
+				<label>dislike trade</label>
+				<description>We shouldn't have made that trade deal.</description>
+				<baseMoodEffect>-3</baseMoodEffect>
+			</li>
+		</stages>
+		<durationDays>5</durationDays>
+		<nullifiedIfNotColonist>true</nullifiedIfNotColonist>
+	</ThoughtDef>
+
+	<ThoughtDef>
 		<defName>PoliticalSympathy</defName>
 		<thoughtClass>Thought_MemorySocial</thoughtClass>
 		<stages>

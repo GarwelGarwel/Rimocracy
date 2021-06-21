@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using RimWorld;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Verse;
@@ -12,6 +13,8 @@ namespace Rimocracy
     {
         public bool allCitizensReact = true;
         public List<Consideration> considerations = new List<Consideration>();
+        public ThoughtDef supportThought;
+        public ThoughtDef opposeThought;
         public float governanceChangeIfSupported;
         public float governanceChangeIfOpposed;
 
@@ -22,19 +25,26 @@ namespace Rimocracy
             ? new DecisionVoteResults(Utility.Citizens.Select(pawn => new PawnDecisionOpinion(pawn, considerations, target)))
             : (Utility.RimocracyComp.HasLeader ? new DecisionVoteResults() { new PawnDecisionOpinion(Utility.RimocracyComp.Leader, considerations, target) } : new DecisionVoteResults());
 
-        public void Activate(DecisionVoteResults opinions)
+        public void Activate(DecisionVoteResults opinions, float governanceChangeFactor = 1)
         {
             Utility.Log($"{defName} activated.");
             foreach (PawnDecisionOpinion opinion in opinions.Where(opinion => opinion.Vote != DecisionVote.Abstain))
             {
-                opinion.voter.needs.mood.thoughts.memories.TryGainMemory(opinion.Vote == DecisionVote.Yea ? RimocracyDefOf.LikeDecision : RimocracyDefOf.DislikeDecision);
+                if (opinion.Vote == DecisionVote.Yea && supportThought != null)
+                    opinion.voter.needs.mood.thoughts.memories.TryGainMemory(supportThought);
+                else if (opinion.Vote == DecisionVote.Nay && opposeThought != null)
+                    opinion.voter.needs.mood.thoughts.memories.TryGainMemory(opposeThought);
                 if (opinion.voter == Utility.RimocracyComp.Leader)
-                    Utility.RimocracyComp.Governance = Mathf.Clamp(Utility.RimocracyComp.Governance + (opinion.Vote == DecisionVote.Yea ? governanceChangeIfSupported : governanceChangeIfOpposed), 0, 1);
+                    Utility.RimocracyComp.Governance = Mathf.Clamp(
+                        Utility.RimocracyComp.Governance + (opinion.Vote == DecisionVote.Yea ? governanceChangeIfSupported : governanceChangeIfOpposed) * governanceChangeFactor,
+                        0,
+                        1);
             }
 
-            Dialog_PoliticalAction.Show(this, opinions, true);
+            if (Settings.ShowActionSupportDetails)
+                Dialog_PoliticalAction.Show(this, opinions, true, governanceChangeFactor);
         }
 
-        public void Activate(Pawn target = null) => Activate(GetOpinions(target));
+        public void Activate(Pawn target = null, float governanceChangeFactor = 1) => Activate(GetOpinions(target), governanceChangeFactor);
     }
 }

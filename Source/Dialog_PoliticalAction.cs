@@ -12,16 +12,19 @@ namespace Rimocracy
 
         bool actionTaken;
 
-        public Dialog_PoliticalAction(PoliticalActionDef action, DecisionVoteResults opinions, bool actionTaken)
+        float governanceChangeFactor;
+
+        public Dialog_PoliticalAction(PoliticalActionDef action, DecisionVoteResults opinions, bool actionTaken, float governanceChangeFactor = 1)
         {
             this.action = action;
             this.opinions = opinions;
             this.actionTaken = actionTaken;
+            this.governanceChangeFactor = governanceChangeFactor;
             doCloseX = true;
             doCloseButton = true;
             closeOnClickedOutside = true;
             forcePause = true;
-            Utility.Log($"Opinions of {action.defName}:{opinions}");
+            Utility.Log($"Opinions of {action.defName}: {opinions}");
         }
 
         public override void DoWindowContents(Rect inRect)
@@ -41,10 +44,15 @@ namespace Rimocracy
             {
                 PawnDecisionOpinion opinion = opinions[Utility.RimocracyComp.Leader];
                 if (actionTaken)
+                {
+                    float govChange = 0;
                     if (opinion.Vote == DecisionVote.Yea && action.governanceChangeIfSupported != 0)
-                        content.Label($"Governance changed by {action.governanceChangeIfSupported.ToStringPercent()}, because the {Utility.LeaderTitle} spearheaded the action.");
+                        govChange = action.governanceChangeIfSupported * governanceChangeFactor;
                     else if (opinion.Vote == DecisionVote.Nay && action.governanceChangeIfOpposed != 0)
-                        content.Label($"Governance changed by {action.governanceChangeIfOpposed.ToStringPercent()}, because the action was taken despite {Utility.LeaderTitle}'s opposition.");
+                        govChange = action.governanceChangeIfOpposed * governanceChangeFactor;
+                    if (Mathf.Abs(govChange) >= 0.001f)
+                        content.Label($"Governance changed by {govChange.ToStringPercent()}, because the {Utility.LeaderTitle} {(opinion.Vote == DecisionVote.Yea ? "spearheaded" : "opposed")} the action.");
+                }
                 content.Label($"{Utility.LeaderTitle.CapitalizeFirst()} {Utility.RimocracyComp.Leader.NameShortColored}: {opinion.support.ToStringWithSign("0")}", tooltip: opinion.explanation);
             }
 
@@ -54,10 +62,10 @@ namespace Rimocracy
             content.End();
         }
 
-        public static void Show(PoliticalActionDef action, DecisionVoteResults opinions, bool actionTaken)
+        public static void Show(PoliticalActionDef action, DecisionVoteResults opinions, bool actionTaken, float governanceChangeFactor = 1)
         {
-            if (!opinions.EnumerableNullOrEmpty() && Settings.ShowActionSupportDetails)
-                Find.WindowStack.Add(new Dialog_PoliticalAction(action, opinions, actionTaken));
+            if (opinions.Any(opinion => opinion.Vote != DecisionVote.Abstain))
+                Find.WindowStack.Add(new Dialog_PoliticalAction(action, opinions, actionTaken, governanceChangeFactor));
         }
     }
 }
