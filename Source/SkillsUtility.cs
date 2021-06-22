@@ -30,9 +30,5 @@ namespace Rimocracy
         /// <returns></returns>
         public static SkillDef GetRandomSkill(List<SkillRecord> skills, SkillDef luckySkill)
             => skills.RandomElementByWeight(sr => (sr.Level + 1) * (sr.def == luckySkill ? 2 : 1)).def;
-            //.Where(sr => !sr.TotallyDisabled)
-            //.Select(sr => new KeyValuePair<SkillDef, float>(sr.def, Rand.Range(0, (sr.Level + 1) * (sr.def == luckySkill ? 2 : 1))))
-            //.MaxBy(kvp => kvp.Value)
-            //.Key;
     }
 }

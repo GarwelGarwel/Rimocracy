@@ -5,9 +5,21 @@ using Verse;
 
 namespace Rimocracy
 {
-    public enum TermDuration { Undefined = 0, Quadrum, Halfyear, Year, Indefinite };
+    public enum TermDuration
+    { 
+        Undefined = 0, 
+        Quadrum, 
+        Halfyear, 
+        Year, 
+        Indefinite 
+    };
 
-    enum LogLevel { Message = 0, Warning, Error };
+    enum LogLevel 
+    {
+        Message = 0, 
+        Warning, 
+        Error 
+    };
 
     public static class Utility
     {
@@ -17,13 +29,21 @@ namespace Rimocracy
 
         public static bool PoliticsEnabled => RimocracyComp != null && RimocracyComp.IsEnabled;
 
-        public static bool IsSimpleSlaveryInstalled =>
-            (bool)(simpleSlaveryInstalled ?? (simpleSlaveryInstalled = RimocracyDefOf.Enslaved != null));
+        public static bool IsSimpleSlaveryInstalled => (bool)(simpleSlaveryInstalled ?? (simpleSlaveryInstalled = RimocracyDefOf.Enslaved != null));
 
         public static IEnumerable<Pawn> Citizens =>
             PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonists_NoCryptosleep.Where(p => p.IsCitizen());
 
         public static int CitizensCount => Citizens.Count();
+
+        public static int Population => PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonistsAndPrisoners_NoCryptosleep.Count();
+
+        public static float TotalNutrition => Find.Maps.Where(map => map.mapPawns.AnyColonistSpawned).Sum(map => map.resourceCounter.TotalHumanEdibleNutrition);
+
+        public static float FoodConsumptionPerDay =>
+            PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonistsAndPrisoners_NoCryptosleep.Sum(pawn => pawn.needs.food.FoodFallPerTick) * GenDate.TicksPerDay;
+
+        public static float DaysOfFood => TotalNutrition / FoodConsumptionPerDay;
 
         public static string NationName => Find.FactionManager.OfPlayer.Name;
 
@@ -46,16 +66,6 @@ namespace Rimocracy
         public static bool CanBeLeader(this Pawn p) => p.IsCitizen() && !p.GetDisabledWorkTypes(true).Contains(RimocracyDefOf.Governing);
 
         public static bool IsLeader(this Pawn p) => PoliticsEnabled && RimocracyComp.Leader == p;
-
-        public static float GetOpinionOfLeader(Pawn pawn)
-        {
-            Pawn leader = RimocracyComp.Leader;
-            if (leader == null)
-                return 0;
-            if (pawn == leader)
-                return 100;
-            return pawn.needs.mood.thoughts.TotalOpinionOffset(leader);
-        }
 
         /// <summary>
         /// Returns pawn's most senior title's seniority, with no titles at all being -100
@@ -111,6 +121,15 @@ namespace Rimocracy
                 default:
                     return -0.10f;
             }
+        }
+
+        public static float GetOpinionOf(this Pawn pawn, Pawn target)
+        {
+            if (pawn == null || target == null)
+                return 0;
+            if (pawn == target)
+                return 100;
+            return pawn.needs.mood.thoughts.TotalOpinionOffset(target);
         }
 
         public static float MedianCitizensOpinion(this Pawn pawn) =>

@@ -29,6 +29,7 @@ namespace Rimocracy
         int termExpiration = int.MaxValue;
         int electionTick = int.MaxValue;
         List<Decision> decisions = new List<Decision>();
+        bool actionsNeedApproval;
 
         public bool IsEnabled => isEnabled;
 
@@ -37,6 +38,8 @@ namespace Rimocracy
             get => leader;
             set => leader = value;
         }
+
+        public bool HasLeader => Leader != null;
 
         public LeaderTitleDef LeaderTitleDef
         {
@@ -150,6 +153,12 @@ namespace Rimocracy
             set => decisions = value;
         }
 
+        public bool ActionsNeedApproval
+        {
+            get => actionsNeedApproval;
+            set => actionsNeedApproval = value;
+        }
+
         float MedianMood => Utility.Citizens.Select(pawn => pawn.needs.mood.CurLevelPercentage).Median();
 
         string FocusSkillMessage => $"The focus skill is {focusSkill.LabelCap}.";
@@ -162,13 +171,12 @@ namespace Rimocracy
             : base(world)
         { }
 
-        public bool DecisionActive(string tag) => decisions.Any(d => d.Tag == tag);
-
         public override void FinalizeInit()
         {
             base.FinalizeInit();
             if (decisions == null)
                 decisions = new List<Decision>();
+            HarmonyManager.Initialize();
         }
 
         public override void ExposeData()
@@ -186,6 +194,7 @@ namespace Rimocracy
             Scribe_Values.Look(ref regime, "regime");
             Scribe_Defs.Look(ref focusSkill, "focusSkill");
             Scribe_Collections.Look(ref decisions, "decisions", LookMode.Deep);
+            Scribe_Values.Look(ref actionsNeedApproval, "actionsNeedApproval");
         }
 
         public override void WorldComponentTick()
@@ -259,6 +268,8 @@ namespace Rimocracy
         }
 
         public void ImproveGovernance(float amount) => governance = Math.Min(governance + amount, 1);
+
+        public bool DecisionActive(string tag) => decisions.Any(d => d.Tag == tag);
 
         internal void CancelDecision(string tag)
         {

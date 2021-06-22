@@ -42,15 +42,15 @@ namespace Rimocracy
         {
             List<string> res = new List<string>();
             if (lessThan != float.MaxValue)
-                res.Add($"{valueLabel} < {lessThan.ToString(format)}");
+                res.Add($"{valueLabel} is less than {lessThan.ToString(format)}");
             if (lessOrEqual != float.MaxValue)
-                res.Add($"{valueLabel} <= {lessOrEqual.ToString(format)}");
+                res.Add($"{valueLabel} is at most {lessOrEqual.ToString(format)}");
             if (greaterThan != float.MinValue)
-                res.Add($"{valueLabel} > {greaterThan.ToString(format)}");
+                res.Add($"{valueLabel} is greater than {greaterThan.ToString(format)}");
             if (greaterOrEqual != float.MinValue)
-                res.Add($"{valueLabel} >= {greaterOrEqual.ToString(format)}");
+                res.Add($"{valueLabel} is at least {greaterOrEqual.ToString(format)}");
             if (!float.IsNaN(equals))
-                res.Add($"{valueLabel} = {equals.ToString(format)}");
+                res.Add($"{valueLabel} is {equals.ToString(format)}");
             return res.ToLineList();
         }
     }

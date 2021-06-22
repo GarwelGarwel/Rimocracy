@@ -3,31 +3,31 @@
 
 	<Rimocracy.DecisionCategoryDef>
 		<defName>SuccessionTypes</defName>
-		<label>Succession Laws</label>
+		<label>succession laws</label>
 		<displayOrder>10</displayOrder>
 	</Rimocracy.DecisionCategoryDef>
 
 	<Rimocracy.DecisionCategoryDef>
 		<defName>Terms</defName>
-		<label>Reign Terms</label>
+		<label>reign terms</label>
 		<displayOrder>20</displayOrder>
 	</Rimocracy.DecisionCategoryDef>
 
 	<Rimocracy.DecisionCategoryDef>
 		<defName>Democratic</defName>
-		<label>Democratic Reforms</label>
+		<label>democratic reforms</label>
 		<displayOrder>30</displayOrder>
 	</Rimocracy.DecisionCategoryDef>
 
 	<Rimocracy.DecisionCategoryDef>
 		<defName>Authoritarian</defName>
-		<label>Authoritarian Reforms</label>
+		<label>authoritarian reforms</label>
 		<displayOrder>40</displayOrder>
 	</Rimocracy.DecisionCategoryDef>
 
 	<Rimocracy.DecisionCategoryDef>
 		<defName>Misc</defName>
-		<label>Miscellaneous</label>
+		<label>miscellaneous</label>
 		<displayOrder>100</displayOrder>
 	</Rimocracy.DecisionCategoryDef>
 

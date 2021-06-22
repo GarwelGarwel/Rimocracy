@@ -36,7 +36,7 @@ namespace Rimocracy
             {
                 content.Label("Active decisions:");
                 foreach (Decision decision in Utility.RimocracyComp.Decisions)
-                    content.Label($"- {decision.def.LabelCap}{(decision.def.Expiration != int.MaxValue ? $" (expires in {(decision.expiration - Find.TickManager.TicksAbs).ToStringTicksToPeriod()})" : "")}", tooltip: decision.def.description);
+                    content.Label($"- {decision.def.LabelTitleCase}{(decision.def.Expiration != int.MaxValue ? $" (expires in {(decision.expiration - Find.TickManager.TicksAbs).ToStringTicksToPeriod()})" : "")}", tooltip: decision.def.description);
             }
 
             // Display regime type
@@ -55,36 +55,34 @@ namespace Rimocracy
                 content.Gap();
                 Text.Anchor = TextAnchor.MiddleCenter;
                 Text.Font = GameFont.Medium;
-                content.Label(group.Key.label);
+                content.Label(group.Key.LabelCap);
                 Text.Font = GameFont.Small;
 
                 foreach (DecisionDef d in group.OrderBy(def => def.displayPriorityInCategory))
                 {
                     Text.Anchor = TextAnchor.MiddleCenter;
-                    content.Label(d.LabelCap);
+                    content.Label(d.LabelTitleCase);
                     Text.Anchor = TextAnchor.UpperLeft;
                     content.Label(d.description);
                     if (d.governanceCost != 0)
-                        content.Label($"Will reduce Governance by {d.GovernanceCost.ToStringPercent()}.");
+                        content.Label($"Will {(d.governanceCost > 0 ? "reduce" : "increase")} Governance by {Math.Abs(d.GovernanceCost).ToStringPercent()}.");
                     if (d.regimeEffect != 0)
                         content.Label($"Will move the regime {Math.Abs(d.regimeEffect).ToStringPercent()} towards {(d.regimeEffect > 0 ? "democracy" : "authoritarianism")}.");
                     if (!d.effectRequirements.IsTrivial)
-                        content.Label($"Requirements:\n{d.effectRequirements}");
+                        content.Label($"Requirements:\n{d.effectRequirements.ToString(target: Utility.RimocracyComp.Leader?.NameShortColored)}");
 
                     DecisionVoteResults votingResult = d.GetVotingResults();
                     switch (d.enactment)
                     {
                         case DecisionEnactmentRule.Decree:
-                            if (votingResult.Count > 0)
-                                content.Label($"Leader's support: {votingResult.First().support.ToStringWithSign("0")}", tooltip: votingResult.First().explanation);
+                            if (!votingResult.EnumerableNullOrEmpty())
+                                content.Label($"{Utility.LeaderTitle}'s support: {votingResult.First().support.ToStringWithSign("0")}", tooltip: votingResult.First().explanation);
                             break;
 
                         case DecisionEnactmentRule.Law:
                         case DecisionEnactmentRule.Referendum:
                             if (content.ButtonTextLabeled($"Support: {votingResult.Yea} - {votingResult.Nay}", decisionToShowVoteDetails == d ? "Hide Details" : "Show Details"))
-                                if (decisionToShowVoteDetails != d)
-                                    decisionToShowVoteDetails = d;
-                                else decisionToShowVoteDetails = null;
+                                decisionToShowVoteDetails = decisionToShowVoteDetails != d ? d : null;
                             if (decisionToShowVoteDetails == d)
                                 foreach (PawnDecisionOpinion opinion in votingResult)
                                     content.Label($"  {opinion.voter.NameShortColored}: {opinion.support.ToStringWithSign("0")}", tooltip: opinion.explanation);
@@ -102,18 +100,26 @@ namespace Rimocracy
                             if (d.Activate())
                             {
                                 Utility.Log($"Logging opinions for {votingResult.Count} citizens.");
-                                foreach (PawnDecisionOpinion opinion in votingResult.Where(opinion => opinion.support != 0))
+                                foreach (PawnDecisionOpinion opinion in votingResult.Where(opinion => opinion.Vote != DecisionVote.Abstain))
                                 {
                                     Utility.Log($"{opinion.voter}'s opinion is {opinion.support}.");
-                                    opinion.voter.needs.mood.thoughts.memories.TryGainMemory(ThoughtMaker.MakeThought(RimocracyDefOf.DecisionMade, opinion.support > 0 ? 1 : 0));
+                                    opinion.voter.needs.mood.thoughts.memories.TryGainMemory(opinion.Vote == DecisionVote.Yea ? RimocracyDefOf.LikeDecision : RimocracyDefOf.DislikeDecision);
                                 }
-                                Find.LetterStack.ReceiveLetter($"{d.LabelCap} Decision Taken", d.description, LetterDefOf.NeutralEvent, null);
+                                Find.LetterStack.ReceiveLetter($"{d.LabelTitleCase} Decision Taken", d.description, LetterDefOf.NeutralEvent, null);
                             }
-                            else Messages.Message($"Could not take {d.label} decision: requirements are not met.", MessageTypeDefOf.NegativeEvent, false);
+                            else Messages.Message($"Could not take {d.LabelTitleCase} decision: requirements are not met.", MessageTypeDefOf.NegativeEvent, false);
                             Close();
                         }
                     }
                     else content.Label("Requirements are not met.");
+
+                    // Display devmode (cheat) Activate button
+                    if (Prefs.DevMode && content.ButtonText("Activate (DevMode)"))
+                    {
+                        d.Activate(true);
+                        Close();
+                    }
+
                     content.GapLine();
                 }
             }
