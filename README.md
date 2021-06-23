@@ -49,6 +49,20 @@ Some decisions, like changing succession type, require support of the majority o
 
 Many decisions, even those that don't require a vote, will please or upset your citizens. E.g., the leader and his hard-core supporters will be happy to implement Cult of Personality while the rest of your citizens will have slight mood debuffs from it.
 
+## Actions
+
+Some game actions such as taking, releasing or executing prisoners, banishing pawns, attacking or trading with other settlements will also have their supporters and opponents, who will react accordingly. If the action is supported by your leader, it will usually increase the Governance of the colony. If the leader opposes the action, it will either cause a Governance hit (by default) or the leader can simply veto it (if you've activated the corresponding decision).
+
+## Required & Supported Mods
+
+- **Harmony 2.0** (required since Rimocracy 1.3)
+- Colony Manager
+- Individuality
+- Rumor Has It (Continued)
+- Simple Slavery
+- Thrones plus
+- Vanilla Traits Expanded
+
 ## FAQ
 
 **Q:** Nothing works, and the Politics tab says I don't have enough citizens.
@@ -61,7 +75,7 @@ Many decisions, even those that don't require a vote, will please or upset your 
 
 **Q:** How can I change the focus skill?
 
-**A:** You can't. It is decided by the leader when he/she is chosen. The leaders tend to prefer skills they are good at. When the same leader is reelected, the focus skill can change (but is less likely to do so). If you dislike the current focus skill, your best hope is to have a better one after the next election. This is politics for you.
+**A:** You can't just pick the focus skill; it is semi-randomly chosen according to leader's skills. You'll have to wait for the next succession (e.g. election)--or impeach the leader.
 
 **Q:** Will you add <your dream feature>?
 
