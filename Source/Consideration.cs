@@ -31,6 +31,7 @@ namespace Rimocracy
         ValueOperations regime;
         ValueOperations population;
         ValueOperations daysOfFood;
+        List<TechLevel> techLevels = new List<TechLevel>();
         string decision;
 
         bool? isLeader;
@@ -66,6 +67,7 @@ namespace Rimocracy
             && regime == null
             && population == null
             && daysOfFood == null
+            && techLevels.EnumerableNullOrEmpty()
             && decision == null
             && isLeader == null
             && isTarget == null
@@ -106,6 +108,8 @@ namespace Rimocracy
                 res &= population.Compare(Utility.Population);
             if (res && daysOfFood != null)
                 res &= daysOfFood.Compare(Utility.DaysOfFood);
+            if (res && techLevels.Any())
+                res &= techLevels.Contains(Find.FactionManager.OfPlayer.def.techLevel);
             if (res && !decision.NullOrEmpty())
                 res &= Utility.RimocracyComp.DecisionActive(decision);
 
@@ -235,6 +239,8 @@ namespace Rimocracy
                 AddLine(population.ToString("Population"));
             if (daysOfFood != null)
                 AddLine(daysOfFood.ToString("Days worth of food"));
+            if (techLevels.Any())
+                AddLine($"Tech level: {techLevels.Select(techLevel => techLevel.ToStringHuman()).ToCommaList()}");
             if (!decision.NullOrEmpty())
                 AddLine($"{GenText.SplitCamelCase(decision)} is active");
 

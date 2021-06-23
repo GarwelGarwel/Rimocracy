@@ -32,7 +32,11 @@ namespace Rimocracy
         List<Decision> decisions = new List<Decision>();
         bool actionsNeedApproval;
 
-        public bool IsEnabled => isEnabled;
+        public bool IsEnabled
+        {
+            get => isEnabled;
+            private set => isEnabled = value;
+        }
 
         public Pawn Leader
         {
@@ -206,15 +210,15 @@ namespace Rimocracy
             if (ticks % UpdateInterval != updateTick)
                 return;
 
-            if (Utility.CitizensCount < Settings.MinPopulation)
+            if (IsEnabled && Utility.CitizensCount < Settings.MinPopulation)
             {
-                isEnabled = false;
+                IsEnabled = false;
                 leader = null;
                 governance = 0.5f;
                 electionTick = int.MaxValue;
                 return;
             }
-            isEnabled = true;
+            IsEnabled = true;
 
             if (leaderTitle == null)
                 ChooseLeaderTitle();
