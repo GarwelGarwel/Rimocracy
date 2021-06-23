@@ -14,6 +14,7 @@ namespace Rimocracy
         const int UpdateInterval = 500;
 
         bool isEnabled = false;
+        int updateTick = Rand.Range(0, UpdateInterval);
 
         Pawn leader;
         LeaderTitleDef leaderTitle;
@@ -182,6 +183,7 @@ namespace Rimocracy
         public override void ExposeData()
         {
             Scribe_Values.Look(ref isEnabled, "isEnabled");
+            Scribe_Values.Look(ref updateTick, "updateTick", Rand.Range(0, UpdateInterval), true);
             Scribe_References.Look(ref leader, "leader");
             Scribe_Defs.Look(ref leaderTitle, "leaderTitle");
             Scribe_Defs.Look(ref successionType, "successionType");
@@ -201,7 +203,7 @@ namespace Rimocracy
         {
             int ticks = Find.TickManager.TicksAbs;
 
-            if (ticks % UpdateInterval != 0)
+            if (ticks % UpdateInterval != updateTick)
                 return;
 
             if (Utility.CitizensCount < Settings.MinPopulation)
