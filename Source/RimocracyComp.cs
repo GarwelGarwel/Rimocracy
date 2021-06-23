@@ -210,12 +210,15 @@ namespace Rimocracy
             if (ticks % UpdateInterval != updateTick)
                 return;
 
-            if (IsEnabled && Utility.CitizensCount < Settings.MinPopulation)
+            if (Utility.CitizensCount < Settings.MinPopulation)
             {
-                IsEnabled = false;
-                leader = null;
-                governance = 0.5f;
-                electionTick = int.MaxValue;
+                if (IsEnabled)
+                {
+                    IsEnabled = false;
+                    leader = null;
+                    governance = 0.5f;
+                    electionTick = int.MaxValue;
+                }
                 return;
             }
             IsEnabled = true;

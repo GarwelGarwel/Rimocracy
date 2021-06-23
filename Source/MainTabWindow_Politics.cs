@@ -37,15 +37,15 @@ namespace Rimocracy
                     content.Label($"Focus skill: {Utility.RimocracyComp.FocusSkill.LabelCap}.");
 
                 if (Utility.RimocracyComp.TermDuration != TermDuration.Indefinite)
-                    content.Label($"Next {Utility.RimocracyComp.SuccessionWorker.def.noun} in {(Utility.RimocracyComp.TermExpiration - Find.TickManager.TicksAbs).ToStringTicksToPeriod(false)}.");
+                    content.Label($"Next {Utility.RimocracyComp.SuccessionWorker.def.noun} in {(Utility.RimocracyComp.TermExpiration - Find.TickManager.TicksAbs).ToStringTicksToPeriod(false)}.", tooltip: Utility.DateFullStringWithHourAtHome(Utility.RimocracyComp.TermExpiration));
             }
             // Next election
             else if (Utility.RimocracyComp.ElectionTick > Find.TickManager.TicksAbs)
-                content.Label($"{Utility.LeaderTitle.CapitalizeFirst(Utility.RimocracyComp.LeaderTitleDef)} will be elected in {(Utility.RimocracyComp.ElectionTick - Find.TickManager.TicksAbs).ToStringTicksToPeriod(false)}.");
+                content.Label($"{Utility.LeaderTitle.CapitalizeFirst(Utility.RimocracyComp.LeaderTitleDef)} will be elected in {(Utility.RimocracyComp.ElectionTick - Find.TickManager.TicksAbs).ToStringTicksToPeriod(false)}.", tooltip: Utility.DateFullStringWithHourAtHome(Utility.RimocracyComp.ElectionTick));
             else content.Label($"Choosing a new {Utility.LeaderTitle}...");
 
             // Election candidates
-            if (!Utility.RimocracyComp.Campaigns.NullOrEmpty())
+            if (Utility.RimocracyComp.Campaigns.Any())
             {
                 content.Gap();
                 content.Label("Candidates:");
