@@ -6,7 +6,6 @@
 	<url>https://github.com/GarwelGarwel/Rimocracy</url>
 	<packageId>Garwel.Rimocracy</packageId>
 	<supportedVersions>
-		<li>1.1</li>
 		<li>1.2</li>
 	</supportedVersions>
 	<description>RimWorld mod that adds domestic politics to the game</description>
