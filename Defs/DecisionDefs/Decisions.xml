@@ -14,7 +14,7 @@
 	
 	<Rimocracy.DecisionDef ParentName="BaseSuccessionDecision">
 		<defName>SuccessionElection</defName>
-		<label>Election Succession</label>
+		<label>election succession</label>
 		<description>The leader shall be elected by all free, adult colonists.</description>
 		<displayPriorityInCategory>10</displayPriorityInCategory>
 		<displayRequirements>
@@ -27,21 +27,18 @@
 		</effectRequirements>
 		<considerations>
 			<li>
-				<label>I'm unlikely to get elected</label>
-				<support>-10</support>
+				<label>my popularity</label>
 				<medianOpinionOfMe>
-					<lessThan>0</lessThan>
+					<offset>
+						<points>
+							<li>(-100, -10)</li>
+							<li>(100, 10)</li>
+						</points>
+					</offset>
 				</medianOpinionOfMe>
 			</li>
 			<li>
-				<label>I'm popular</label>
-				<support>10</support>
-				<medianOpinionOfMe>
-					<greaterThan>0</greaterThan>
-				</medianOpinionOfMe>
-			</li>
-			<li>
-				<label>I don't like {LEADER}, and it can unseat {LEADER_objective}</label>
+				<label>I don't like {TARGET}, and it can unseat {TARGET_objective}</label>
 				<all>
 					<li>
 						<termDuration>Indefinite</termDuration>
@@ -49,7 +46,7 @@
 					</li>
 				</all>
 				<isLeader>false</isLeader>
-				<opinionOfLeader>
+				<opinionOfTarget>
 					<lessThan>0</lessThan>
 					<offset>
 						<points>
@@ -57,15 +54,51 @@
 							<li>(0, 0)</li>
 						</points>
 					</offset>
-				</opinionOfLeader>
-				<medianOpinionOfLeader>
+				</opinionOfTarget>
+				<medianOpinionOfTarget>
 					<lessThan>0</lessThan>
-				</medianOpinionOfLeader>
+				</medianOpinionOfTarget>
 			</li>
 			<li>
 				<label>I want a right to vote</label>
 				<support>5</support>
 				<isLeader>false</isLeader>
+			</li>
+			<li>
+				<label>seniority succession</label>
+				<succession>Seniority</succession>
+				<age>
+					<offset>
+						<points>
+							<li>(18, 10)</li>
+							<li>(80, -10)</li>
+						</points>
+					</offset>
+				</age>
+			</li>
+			<li>
+				<label>martial succession</label>
+				<succession>Martial</succession>
+				<skills>
+					<li>
+						<skill>Shooting</skill>
+						<offset>
+							<points>
+								<li>(0, 5)</li>
+								<li>(20, -5)</li>
+							</points>
+						</offset>
+					</li>
+					<li>
+						<skill>Melee</skill>
+						<offset>
+							<points>
+								<li>(0, 5)</li>
+								<li>(20, -5)</li>
+							</points>
+						</offset>
+					</li>
+				</skills>
 			</li>
 		</considerations>
 		<setSuccession>Election</setSuccession>
@@ -73,7 +106,7 @@
 
 	<Rimocracy.DecisionDef ParentName="BaseSuccessionDecision">
 		<defName>SuccessionLot</defName>
-		<label>Lot Succession</label>
+		<label>lot succession</label>
 		<description>The leader shall be chosen randomly from all citizens. Considered not very democratic.</description>
 		<displayPriorityInCategory>20</displayPriorityInCategory>
 		<displayRequirements>
@@ -81,18 +114,125 @@
 			<inverted>true</inverted>
 		</displayRequirements>
 		<effectRequirements>
-			<maxRegime>0.10</maxRegime>
+			<regime>
+				<lessOrEqual>0.10</lessOrEqual>
+			</regime>
 		</effectRequirements>
 		<considerations>
 			<li>
 				<label>I don't want to take chances</label>
-				<support>-2</support>
+				<support>-5</support>
 				<isLeader>true</isLeader>
 			</li>
 			<li>
-				<label>I'll have a chance</label>
-				<support>2</support>
+				<label>I'll have a chance to rule</label>
+				<support>5</support>
 				<isLeader>false</isLeader>
+			</li>
+			<li>
+				<label>my electoral chances</label>
+				<succession>Election</succession>
+				<medianOpinionOfMe>
+					<offset>
+						<points>
+							<li>(-100, 10)</li>
+							<li>(100, -10)</li>
+						</points>
+					</offset>
+				</medianOpinionOfMe>
+			</li>
+			<li>
+				<label>seniority succession</label>
+				<succession>Seniority</succession>
+				<age>
+					<offset>
+						<points>
+							<li>(18, 10)</li>
+							<li>(80, -10)</li>
+						</points>
+					</offset>
+				</age>
+			</li>
+			<li>
+				<label>I don't want to lose my noble privileges</label>
+				<support>-10</support>
+				<titleSeniority>
+					<greaterThan>0</greaterThan>
+				</titleSeniority>
+				<any>
+					<li>
+						<succession>Nobility</succession>
+					</li>
+					<li>
+						<succession>Election</succession>
+					</li>
+				</any>
+			</li>
+			<li>
+				<label>martial succession</label>
+				<succession>Martial</succession>
+				<skills>
+					<li>
+						<skill>Shooting</skill>
+						<offset>
+							<points>
+								<li>(0, 5)</li>
+								<li>(20, -5)</li>
+							</points>
+						</offset>
+					</li>
+					<li>
+						<skill>Melee</skill>
+						<offset>
+							<points>
+								<li>(0, 5)</li>
+								<li>(20, -5)</li>
+							</points>
+						</offset>
+					</li>
+				</skills>
+			</li>
+		</considerations>
+		<setSuccession>Lot</setSuccession>
+	</Rimocracy.DecisionDef>
+
+	<Rimocracy.DecisionDef ParentName="BaseSuccessionDecision">
+		<defName>SuccessionSeniority</defName>
+		<label>seniority succession</label>
+		<description>The oldest, and therefore most experienced, colonist shall be the leader. Considered non-democratic.</description>
+		<displayPriorityInCategory>30</displayPriorityInCategory>
+		<displayRequirements>
+			<succession>Seniority</succession>
+			<inverted>true</inverted>
+		</displayRequirements>
+		<effectRequirements>
+			<regime>
+				<lessOrEqual>-0.10</lessOrEqual>
+			</regime>
+		</effectRequirements>
+		<considerations>
+			<li>
+				<label>age</label>
+				<age>
+					<offset>
+						<points>
+							<li>(18, -20)</li>
+							<li>(80, 20)</li>
+						</points>
+					</offset>
+				</age>
+			</li>
+			<li>
+				<label>my electoral chances</label>
+				<succession>Election</succession>
+				<medianOpinionOfMe>
+					<offset>
+						<points>
+							<li>(-100, 10)</li>
+							<li>(100, -10)</li>
+						</points>
+					</offset>
+				</medianOpinionOfMe>
 			</li>
 			<li>
 				<label>I don't want to lose my noble privileges</label>
@@ -109,30 +249,210 @@
 					</li>
 				</any>
 			</li>
+			<li>
+				<label>martial succession</label>
+				<succession>Martial</succession>
+				<skills>
+					<li>
+						<skill>Shooting</skill>
+						<offset>
+							<points>
+								<li>(0, 5)</li>
+								<li>(20, -5)</li>
+							</points>
+						</offset>
+					</li>
+					<li>
+						<skill>Melee</skill>
+						<offset>
+							<points>
+								<li>(0, 5)</li>
+								<li>(20, -5)</li>
+							</points>
+						</offset>
+					</li>
+				</skills>
+			</li>
 		</considerations>
-		<setSuccession>Lot</setSuccession>
+		<setSuccession>Seniority</setSuccession>
 	</Rimocracy.DecisionDef>
 
 	<Rimocracy.DecisionDef ParentName="BaseSuccessionDecision">
-		<defName>SuccessionSeniority</defName>
-		<label>Seniority Succession</label>
-		<description>The oldest, and most experienced, colonist shall be the leader. Considered non-democratic.</description>
-		<displayPriorityInCategory>30</displayPriorityInCategory>
+		<defName>SuccessionNobility</defName>
+		<label>nobility succession</label>
+		<description>The pawn with the highest, and oldest, nobility title will be the leader. Considered non-democratic.</description>
+		<displayPriorityInCategory>40</displayPriorityInCategory>
 		<displayRequirements>
-			<succession>Seniority</succession>
 			<inverted>true</inverted>
+			<any>
+				<li>
+					<succession>Nobility</succession>
+				</li>
+				<li>
+					<decision>Meritocracy</decision>
+				</li>
+			</any>
 		</displayRequirements>
 		<effectRequirements>
-			<maxRegime>-0.10</maxRegime>
+			<regime>
+				<lessOrEqual>-0.10</lessOrEqual>
+			</regime>
 		</effectRequirements>
 		<considerations>
 			<li>
-				<label>Age</label>
+				<label>my title</label>
+				<titleSeniority>
+					<offset>
+						<points>
+							<li>(-100, -10)</li>
+							<li>(0, 1)</li>
+							<li>(600, 60)</li>
+						</points>
+					</offset>
+				</titleSeniority>
+			</li>
+			<li>
+				<label>my electoral chances</label>
+				<succession>Election</succession>
+				<medianOpinionOfMe>
+					<offset>
+						<points>
+							<li>(-100, 10)</li>
+							<li>(100, -10)</li>
+						</points>
+					</offset>
+				</medianOpinionOfMe>
+			</li>
+			<li>
+				<label>seniority succession</label>
+				<succession>Seniority</succession>
 				<age>
 					<offset>
 						<points>
-							<li>(18, -20)</li>
-							<li>(80, 20)</li>
+							<li>(18, 10)</li>
+							<li>(80, -10)</li>
+						</points>
+					</offset>
+				</age>
+			</li>
+			<li>
+				<label>martial succession</label>
+				<succession>Martial</succession>
+				<skills>
+					<li>
+						<skill>Shooting</skill>
+						<offset>
+							<points>
+								<li>(0, 5)</li>
+								<li>(20, -5)</li>
+							</points>
+						</offset>
+					</li>
+					<li>
+						<skill>Melee</skill>
+						<offset>
+							<points>
+								<li>(0, 5)</li>
+								<li>(20, -5)</li>
+							</points>
+						</offset>
+					</li>
+				</skills>
+			</li>
+		</considerations>
+		<setSuccession>Nobility</setSuccession>
+	</Rimocracy.DecisionDef>
+
+	<Rimocracy.DecisionDef ParentName="BaseSuccessionDecision">
+		<defName>SuccessionMartial</defName>
+		<label>martial succession</label>
+		<description>The most accomplished warrior will become our leader. Considered non-democratic.</description>
+		<displayPriorityInCategory>50</displayPriorityInCategory>
+		<displayRequirements>
+			<succession>Martial</succession>
+			<inverted>true</inverted>
+		</displayRequirements>
+		<effectRequirements>
+			<regime>
+				<lessOrEqual>-0.10</lessOrEqual>
+			</regime>
+		</effectRequirements>
+		<considerations>
+			<li>
+				<label>incapable of violence</label>
+				<support>-20</support>
+				<isCapableOfViolence>false</isCapableOfViolence>
+			</li>
+			<li>
+				<label>skills</label>
+				<skills>
+					<li>
+						<skill>Shooting</skill>
+						<offset>
+							<points>
+								<li>(0, -10)</li>
+								<li>(10, 0)</li>
+								<li>(20, 20)</li>
+							</points>
+						</offset>
+					</li>
+					<li>
+						<skill>Melee</skill>
+						<offset>
+							<points>
+								<li>(0, -10)</li>
+								<li>(10, 0)</li>
+								<li>(20, 20)</li>
+							</points>
+						</offset>
+					</li>
+				</skills>
+			</li>
+			<li>
+				<label>bloodlust</label>
+				<support>10</support>
+				<trait>Bloodlust</trait>
+			</li>
+			<li>
+				<label>kind</label>
+				<support>-10</support>
+				<trait>Kind</trait>
+			</li>
+			<li>
+				<label>brawler</label>
+				<support>15</support>
+				<trait>Brawler</trait>
+			</li>
+			<li>
+				<label>tough</label>
+				<support>10</support>
+				<trait>Tough</trait>
+			</li>
+			<li>
+				<label>wimp</label>
+				<support>-15</support>
+				<trait>Wimp</trait>
+			</li>
+			<li>
+				<label>my electoral chances</label>
+				<succession>Election</succession>
+				<medianOpinionOfMe>
+					<offset>
+						<points>
+							<li>(-100, 10)</li>
+							<li>(100, -10)</li>
+						</points>
+					</offset>
+				</medianOpinionOfMe>
+			</li>
+			<li>
+				<label>seniority succession</label>
+				<succession>Seniority</succession>
+				<age>
+					<offset>
+						<points>
+							<li>(18, 10)</li>
+							<li>(80, -10)</li>
 						</points>
 					</offset>
 				</age>
@@ -153,109 +473,6 @@
 				</any>
 			</li>
 		</considerations>
-		<setSuccession>Seniority</setSuccession>
-	</Rimocracy.DecisionDef>
-
-	<Rimocracy.DecisionDef ParentName="BaseSuccessionDecision">
-		<defName>SuccessionNobility</defName>
-		<label>Nobility Succession</label>
-		<description>The pawn with the highest, and oldest, nobility title will be the leader. Considered non-democratic.</description>
-		<displayPriorityInCategory>40</displayPriorityInCategory>
-		<displayRequirements>
-			<inverted>true</inverted>
-			<any>
-				<li>
-					<succession>Nobility</succession>
-				</li>
-				<li>
-					<decision>Meritocracy</decision>
-				</li>
-			</any>
-		</displayRequirements>
-		<effectRequirements>
-			<maxRegime>-0.10</maxRegime>
-		</effectRequirements>
-		<considerations>
-			<li>
-				<label>My title</label>
-				<titleSeniority>
-					<offset>
-						<points>
-							<li>(-100, -10)</li>
-							<li>(0, 1)</li>
-							<li>(600, 60)</li>
-						</points>
-					</offset>
-				</titleSeniority>
-			</li>
-		</considerations>
-		<setSuccession>Nobility</setSuccession>
-	</Rimocracy.DecisionDef>
-
-	<Rimocracy.DecisionDef ParentName="BaseSuccessionDecision">
-		<defName>SuccessionMartial</defName>
-		<label>Martial Succession</label>
-		<description>The most accomplished warrior will become our leader. Considered non-democratic.</description>
-		<displayPriorityInCategory>50</displayPriorityInCategory>
-		<displayRequirements>
-			<succession>Martial</succession>
-			<inverted>true</inverted>
-		</displayRequirements>
-		<effectRequirements>
-			<maxRegime>-0.10</maxRegime>
-		</effectRequirements>
-		<considerations>
-			<li>
-				<label>Skills</label>
-				<skills>
-					<li>
-						<skill>Shooting</skill>
-						<offset>
-							<points>
-								<li>(0, -20)</li>
-								<li>(10, 0)</li>
-								<li>(20, 40)</li>
-							</points>
-						</offset>
-					</li>
-					<li>
-						<skill>Melee</skill>
-						<offset>
-							<points>
-								<li>(0, -20)</li>
-								<li>(10, 0)</li>
-								<li>(20, 40)</li>
-							</points>
-						</offset>
-					</li>
-				</skills>
-			</li>
-			<li>
-				<label>Bloodlust</label>
-				<support>10</support>
-				<trait>Bloodlust</trait>
-			</li>
-			<li>
-				<label>Kind</label>
-				<support>-10</support>
-				<trait>Kind</trait>
-			</li>
-			<li>
-				<label>Brawler</label>
-				<support>20</support>
-				<trait>Brawler</trait>
-			</li>
-			<li>
-				<label>Tough</label>
-				<support>10</support>
-				<trait>Tough</trait>
-			</li>
-			<li>
-				<label>Wimp</label>
-				<support>-20</support>
-				<trait>Wimp</trait>
-			</li>
-		</considerations>
 		<setSuccession>Martial</setSuccession>
 	</Rimocracy.DecisionDef>
 
@@ -273,7 +490,7 @@
 
 	<Rimocracy.DecisionDef ParentName="BaseTermDurationDecision">
 		<defName>TermQuadrum</defName>
-		<label>Quadrum-Long Term</label>
+		<label>quadrum-long term</label>
 		<description>Set term of a leader to one quadrum (15 days).</description>
 		<displayPriorityInCategory>10</displayPriorityInCategory>
 		<displayRequirements>
@@ -284,7 +501,7 @@
 
 	<Rimocracy.DecisionDef ParentName="BaseTermDurationDecision">
 		<defName>TermHalfYear</defName>
-		<label>Half-Year Long Term</label>
+		<label>half-year long term</label>
 		<description>Set term of a leader to half a year (30 days).</description>
 		<displayPriorityInCategory>20</displayPriorityInCategory>
 		<displayRequirements>
@@ -302,7 +519,7 @@
 
 	<Rimocracy.DecisionDef ParentName="BaseTermDurationDecision">
 		<defName>TermYear</defName>
-		<label>Year-Long Term</label>
+		<label>year-long term</label>
 		<description>Set term of a leader to one year (60 days).</description>
 		<displayPriorityInCategory>30</displayPriorityInCategory>
 		<displayRequirements>
@@ -320,20 +537,34 @@
 
 	<Rimocracy.DecisionDef ParentName="BaseTermDurationDecision">
 		<defName>TermIndefinite</defName>
-		<label>Indefinite Term</label>
+		<label>indefinite term</label>
 		<description>Leaders will rule till their death.</description>
 		<displayPriorityInCategory>40</displayPriorityInCategory>
 		<displayRequirements>
 			<termDuration>Year</termDuration>
 		</displayRequirements>
 		<effectRequirements>
-			<maxRegime>-0.20</maxRegime>
+			<regime>
+				<lessOrEqual>-0.20</lessOrEqual>
+			</regime>
 		</effectRequirements>
 		<considerations>
 			<li>
 				<label>I want to rule forever</label>
 				<support>10</support>
 				<isLeader>true</isLeader>
+			</li>
+			<li>
+				<label>opinion of {TARGET}</label>
+				<isLeader>false</isLeader>
+				<opinionOfTarget>
+					<offset>
+						<points>
+							<li>(-100, -10)</li>
+							<li>(100, 10)</li>
+						</points>
+					</offset>
+				</opinionOfTarget>
 			</li>
 		</considerations>
 		<governanceCost>0.50</governanceCost>
@@ -344,14 +575,16 @@
 	
 	<Rimocracy.DecisionDef>
 		<defName>Impeachment</defName>
-		<label>Impeach Leader</label>
+		<label>impeach leader</label>
 		<description>Immediately relieve the current leader of his or her duties and initiate a new succession.</description>
 		<category>Terms</category>
 		<enactment>Referendum</enactment>
 		<displayPriorityInCategory>50</displayPriorityInCategory>
 		<displayRequirements>
 			<leaderExists>true</leaderExists>
-			<minRegime>-0.50</minRegime>
+			<regime>
+				<greaterOrEqual>-0.50</greaterOrEqual>
+			</regime>
 			<all>
 				<li>
 					<succession>Seniority</succession>
@@ -365,32 +598,44 @@
 		</displayRequirements>
 		<considerations>
 			<li>
-				<label>This is just a hoax</label>
+				<label>I don't want destabilization</label>
+				<governance>
+					<greaterThan>0.50</greaterThan>
+					<offset>
+						<points>
+							<li>(0.50, 0)</li>
+							<li>(1, -10)</li>
+						</points>
+					</offset>
+				</governance>
+			</li>
+			<li>
+				<label>this is a witch-hunt</label>
 				<support>-100</support>
 				<isLeader>true</isLeader>
 			</li>
 			<li>
-				<label>Opinion of the leader</label>
+				<label>opinion of {TARGET}</label>
 				<isLeader>false</isLeader>
-				<opinionOfLeader>
+				<opinionOfTarget>
 					<offset>
 						<points>
-							<li>(-100, 50)</li>
-							<li>(100, -100)</li>
+							<li>(-100, 10)</li>
+							<li>(100, -20)</li>
 						</points>
 					</offset>
-				</opinionOfLeader>
+				</opinionOfTarget>
 			</li>
 			<li>
-				<label>Leader's popularity</label>
-				<medianOpinionOfLeader>
+				<label>{TARGET}'s popularity</label>
+				<medianOpinionOfTarget>
 					<offset>
 						<points>
-							<li>(-100, 25)</li>
-							<li>(100, -50)</li>
+							<li>(-100, 5)</li>
+							<li>(100, -10)</li>
 						</points>
 					</offset>
-				</medianOpinionOfLeader>
+				</medianOpinionOfTarget>
 			</li>
 		</considerations>
 		<durationTicks>600000</durationTicks>
@@ -402,14 +647,16 @@
 
 	<Rimocracy.DecisionDef>
 		<defName>Populism</defName>
-		<label>Consent of the Governed</label>
+		<label>consent of the governed</label>
 		<description>A true leader never forgets about his or her people and draws authority from their support. The efficiency of the leader depends on the citizens' median opinion of him/her.</description>
 		<category>Democratic</category>
 		<displayPriorityInCategory>10</displayPriorityInCategory>
 		<effectRequirements>
 			<all>
 				<li>
-					<minRegime>-0.15</minRegime>
+					<regime>
+						<greaterOrEqual>-0.15</greaterOrEqual>
+					</regime>
 				</li>
 				<li>
 					<decision>CultOfPersonality</decision>
@@ -419,7 +666,7 @@
 		</effectRequirements>
 		<considerations>
 			<li>
-				<label>My opinion will count</label>
+				<label>my opinion will count</label>
 				<support>10</support>
 				<isLeader>false</isLeader>
 			</li>
@@ -431,7 +678,7 @@
 
 	<Rimocracy.DecisionDef>
 		<defName>Populism_Cancel</defName>
-		<label>Cancel "Consent of the Governed"</label>
+		<label>cancel "consent of the governed"</label>
 		<description>These fools just can't appreciate what the leader is really doing. We shouldn't care about their opinions any more.</description>
 		<category>Democratic</category>
 		<displayPriorityInCategory>10</displayPriorityInCategory>
@@ -440,7 +687,7 @@
 		</displayRequirements>
 		<considerations>
 			<li>
-				<label>My opinion won't matter any more</label>
+				<label>my opinion won't matter anymore</label>
 				<support>-10</support>
 				<isLeader>false</isLeader>
 			</li>
@@ -453,14 +700,16 @@
 
 	<Rimocracy.DecisionDef>
 		<defName>Egalitarianism</defName>
-		<label>Happiness for All</label>
+		<label>happiness for all</label>
 		<description>The goal of every government is happiness of its people. With this doctrine, the higher the median mood of your citizens, the slower the Governance decay.</description>
 		<category>Democratic</category>
 		<displayPriorityInCategory>20</displayPriorityInCategory>
 		<effectRequirements>
 			<all>
 				<li>
-					<minRegime>0.10</minRegime>
+					<regime>
+						<greaterOrEqual>0.10</greaterOrEqual>
+					</regime>
 				</li>
 				<li>
 					<decision>Elitism</decision>
@@ -470,7 +719,7 @@
 		</effectRequirements>
 		<considerations>
 			<li>
-				<label>The government should care about all citizens</label>
+				<label>the government should care about all citizens</label>
 				<support>10</support>
 				<isLeader>false</isLeader>
 			</li>
@@ -482,7 +731,7 @@
 
 	<Rimocracy.DecisionDef>
 		<defName>Egalitarianism_Cancel</defName>
-		<label>Cancel "Happiness for All"</label>
+		<label>cancel "happiness for all"</label>
 		<description>These unthankful people don't know what's good for them.</description>
 		<category>Democratic</category>
 		<displayPriorityInCategory>20</displayPriorityInCategory>
@@ -504,14 +753,131 @@
 
 	<Rimocracy.DecisionDef>
 		<defName>Meritocracy</defName>
-		<label>Meritocracy</label>
+		<label>meritocracy</label>
 		<description>A smart citizen will choose the most capable candidates. Pawns with high skills are more likely to be voted for in elections.</description>
 		<category>Democratic</category>
 		<displayPriorityInCategory>30</displayPriorityInCategory>
 		<effectRequirements>
 			<succession>Election</succession>
-			<minRegime>0.20</minRegime>
+			<regime>
+				<greaterOrEqual>0.20</greaterOrEqual>
+			</regime>
 		</effectRequirements>
+		<considerations>
+			<li>
+				<label>skills</label>
+				<skills>
+					<li>
+						<skill>Shooting</skill>
+						<offset>
+							<points>
+								<li>(0, -10)</li>
+								<li>(20, 10)</li>
+							</points>
+						</offset>
+					</li>
+					<li>
+						<skill>Melee</skill>
+						<offset>
+							<points>
+								<li>(0, -10)</li>
+								<li>(20, 10)</li>
+							</points>
+						</offset>
+					</li>
+					<li>
+						<skill>Construction</skill>
+						<offset>
+							<points>
+								<li>(0, -10)</li>
+								<li>(20, 10)</li>
+							</points>
+						</offset>
+					</li>
+					<li>
+						<skill>Mining</skill>
+						<offset>
+							<points>
+								<li>(0, -10)</li>
+								<li>(20, 10)</li>
+							</points>
+						</offset>
+					</li>
+					<li>
+						<skill>Cooking</skill>
+						<offset>
+							<points>
+								<li>(0, -10)</li>
+								<li>(20, 10)</li>
+							</points>
+						</offset>
+					</li>
+					<li>
+						<skill>Plants</skill>
+						<offset>
+							<points>
+								<li>(0, -10)</li>
+								<li>(20, 10)</li>
+							</points>
+						</offset>
+					</li>
+					<li>
+						<skill>Animals</skill>
+						<offset>
+							<points>
+								<li>(0, -10)</li>
+								<li>(20, 10)</li>
+							</points>
+						</offset>
+					</li>
+					<li>
+						<skill>Crafting</skill>
+						<offset>
+							<points>
+								<li>(0, -10)</li>
+								<li>(20, 10)</li>
+							</points>
+						</offset>
+					</li>
+					<li>
+						<skill>Artistic</skill>
+						<offset>
+							<points>
+								<li>(0, -10)</li>
+								<li>(20, 10)</li>
+							</points>
+						</offset>
+					</li>
+					<li>
+						<skill>Medicine</skill>
+						<offset>
+							<points>
+								<li>(0, -10)</li>
+								<li>(20, 10)</li>
+							</points>
+						</offset>
+					</li>
+					<li>
+						<skill>Social</skill>
+						<offset>
+							<points>
+								<li>(0, -10)</li>
+								<li>(20, 10)</li>
+							</points>
+						</offset>
+					</li>
+					<li>
+						<skill>Intellectual</skill>
+						<offset>
+							<points>
+								<li>(0, -10)</li>
+								<li>(20, 10)</li>
+							</points>
+						</offset>
+					</li>
+				</skills>
+			</li>
+		</considerations>
 		<tag/>
 		<regimeEffect>0.20</regimeEffect>
 		<governanceCost>0.25</governanceCost>
@@ -519,7 +885,7 @@
 
 	<Rimocracy.DecisionDef>
 		<defName>Meritocracy_Cancel</defName>
-		<label>Cancel Meritocracy</label>
+		<label>cancel meritocracy</label>
 		<description>Those who can, do. Those who can't, rule.</description>
 		<category>Democratic</category>
 		<displayPriorityInCategory>30</displayPriorityInCategory>
@@ -534,14 +900,16 @@
 
 	<Rimocracy.DecisionDef>
 		<defName>ResPublica</defName>
-		<label>Res Publica</label>
+		<label>res publica</label>
 		<description>Our nation is our common cause. When it is governed well, every citizen will be happier. When it is in trouble, everyone is.</description>
 		<category>Democratic</category>
 		<displayPriorityInCategory>40</displayPriorityInCategory>
 		<effectRequirements>
 			<all>
 				<li>
-					<minRegime>0.25</minRegime>
+					<regime>
+						<greaterOrEqual>0.25</greaterOrEqual>
+					</regime>
 				</li>
 				<li>
 					<decision>StateOfEmergency</decision>
@@ -556,7 +924,7 @@
 
 	<Rimocracy.DecisionDef>
 		<defName>ResPublica_Cancel</defName>
-		<label>Cancel "Res Publica"</label>
+		<label>cancel "res publica"</label>
 		<description>It's not the business of the mob to think about the matters of the state!</description>
 		<category>Democratic</category>
 		<displayPriorityInCategory>40</displayPriorityInCategory>
@@ -582,12 +950,14 @@
 					<inverted>true</inverted>
 				</li>
 				<li>
-					<minRegime>-0.1</minRegime>
+					<regime>
+						<greaterOrEqual>-0.10</greaterOrEqual>
+					</regime>
 				</li>
 			</all>
 		</effectRequirements>
 		<tag/>
-		<regimeEffect>0.2</regimeEffect>
+		<regimeEffect>0.20</regimeEffect>
 		<governanceCost>0.10</governanceCost>
 	</Rimocracy.DecisionDef>
 
@@ -608,26 +978,33 @@
 
 	<Rimocracy.DecisionDef>
 		<defName>Stability</defName>
-		<label>Stability Doctrine</label>
+		<label>stability doctrine</label>
 		<description>While the same leader is in charge, governance decay rate is much lower. But if leadership changes, for whatever reason, governance will halve.</description>
 		<category>Authoritarian</category>
 		<displayPriorityInCategory>10</displayPriorityInCategory>
 		<effectRequirements>
-			<maxRegime>0.10</maxRegime>
+			<regime>
+				<lessOrEqual>0.10</lessOrEqual>
+			</regime>
 		</effectRequirements>
 		<considerations>
 			<li>
 				<label>I want to stay in charge</label>
-				<support>10</support>
+				<support>50</support>
 				<isLeader>true</isLeader>
 			</li>
 			<li>
 				<label>I want change</label>
-				<support>-10</support>
 				<isLeader>false</isLeader>
-				<opinionOfLeader>
+				<opinionOfTarget>
 					<lessThan>0</lessThan>
-				</opinionOfLeader>
+					<offset>
+						<points>
+							<li>(-100, -20)</li>
+							<li>(0, 0)</li>
+						</points>
+					</offset>
+				</opinionOfTarget>
 			</li>
 		</considerations>
 		<tag/>
@@ -637,7 +1014,7 @@
 
 	<Rimocracy.DecisionDef>
 		<defName>Stability_Cancel</defName>
-		<label>Cancel "Stability Doctrine"</label>
+		<label>cancel "stability doctrine"</label>
 		<description>We need a more dynamic society.</description>
 		<category>Authoritarian</category>
 		<displayPriorityInCategory>10</displayPriorityInCategory>
@@ -647,16 +1024,21 @@
 		<considerations>
 			<li>
 				<label>I want to stay in charge</label>
-				<support>-10</support>
+				<support>-50</support>
 				<isLeader>true</isLeader>
 			</li>
 			<li>
 				<label>I want change</label>
-				<support>10</support>
 				<isLeader>false</isLeader>
-				<opinionOfLeader>
+				<opinionOfTarget>
 					<lessThan>0</lessThan>
-				</opinionOfLeader>
+					<offset>
+						<points>
+							<li>(-100, 20)</li>
+							<li>(0, 0)</li>
+						</points>
+					</offset>
+				</opinionOfTarget>
 			</li>
 		</considerations>
 		<governanceCost>0.15</governanceCost>
@@ -674,7 +1056,9 @@
 		<effectRequirements>
 			<all>
 				<li>
-					<maxRegime>-0.10</maxRegime>
+					<regime>
+						<lessOrEqual>-0.10</lessOrEqual>
+					</regime>
 				</li>
 				<li>
 					<decision>Egalitarianism</decision>
@@ -686,15 +1070,39 @@
 			<li>
 				<label>I like it!</label>
 				<support>50</support>
+				<all>
+					<li>
+						<isLeader>true</isLeader>
+					</li>
+					<li>
+						<trait>Ascetic</trait>
+						<inverted>true</inverted>
+					</li>
+				</all>
+			</li>
+			<li>
+				<label>greedy</label>
+				<support>10</support>
 				<isLeader>true</isLeader>
 			</li>
 			<li>
-				<label>And what about MY happiness?</label>
+				<label>jealous</label>
 				<support>-10</support>
 				<isLeader>false</isLeader>
-				<opinionOfLeader>
+				<trait>Jealous</trait>
+			</li>
+			<li>
+				<label>and what about MY happiness?</label>
+				<isLeader>false</isLeader>
+				<opinionOfTarget>
 					<lessThan>0</lessThan>
-				</opinionOfLeader>
+					<offset>
+						<points>
+							<li>(-100, -20)</li>
+							<li>(0, 0)</li>
+						</points>
+					</offset>
+				</opinionOfTarget>
 			</li>
 		</considerations>
 		<tag/>
@@ -704,7 +1112,7 @@
 
 	<Rimocracy.DecisionDef>
 		<defName>Elitism_Cancel</defName>
-		<label>Cancel "L'État, c'est moi"</label>
+		<label>cancel "l'État, c'est moi"</label>
 		<description>Elitism was a mistake, let us abolish it.</description>
 		<category>Authoritarian</category>
 		<displayPriorityInCategory>20</displayPriorityInCategory>
@@ -713,17 +1121,28 @@
 		</displayRequirements>
 		<considerations>
 			<li>
-				<label>My interests</label>
+				<label>my interests</label>
 				<support>-50</support>
 				<isLeader>true</isLeader>
 			</li>
 			<li>
-				<label>Maybe someone will finally pay attention to me</label>
+				<label>jealous</label>
 				<support>10</support>
 				<isLeader>false</isLeader>
-				<opinionOfLeader>
+				<trait>Jealous</trait>
+			</li>
+			<li>
+				<label>maybe someone will finally pay attention to me</label>
+				<isLeader>false</isLeader>
+				<opinionOfTarget>
 					<lessThan>0</lessThan>
-				</opinionOfLeader>
+					<offset>
+						<points>
+							<li>(-100, 20)</li>
+							<li>(0, 0)</li>
+						</points>
+					</offset>
+				</opinionOfTarget>
 			</li>
 		</considerations>
 		<governanceCost>0.15</governanceCost>
@@ -734,14 +1153,16 @@
 
 	<Rimocracy.DecisionDef>
 		<defName>CultOfPersonality</defName>
-		<label>Cult of Personality</label>
+		<label>cult of personality</label>
 		<description>Our leader is an extraordinary person, who makes all decisions and bears ultimate responsibility for successes and failures. Every citizen will recognize that and love (or hate) the leader twice as much.</description>
 		<category>Authoritarian</category>
 		<displayPriorityInCategory>30</displayPriorityInCategory>
 		<effectRequirements>
 			<all>
 				<li>
-					<maxRegime>-0.20</maxRegime>
+					<regime>
+						<lessOrEqual>-0.20</lessOrEqual>
+					</regime>
 				</li>
 				<li>
 					<decision>Populism</decision>
@@ -752,33 +1173,47 @@
 		<considerations>
 			<li>
 				<label>I am the leader</label>
-				<support>20</support>
-				<isLeader>true</isLeader>
+				<support>50</support>
+				<all>
+					<li>
+						<isLeader>true</isLeader>
+					</li>
+					<li>
+						<trait>Ascetic</trait>
+						<inverted>true</inverted>
+					</li>
+				</all>
 			</li>
 			<li>
-				<label>Opinion of the leader</label>
+				<label>jealous</label>
+				<support>-10</support>
 				<isLeader>false</isLeader>
-				<opinionOfLeader>
-					<offset>
-						<points>
-							<li>(-100, -50)</li>
-							<li>(0, 0)</li>
-							<li>(100, 25)</li>
-						</points>
-					</offset>
-				</opinionOfLeader>
+				<trait>Jealous</trait>
 			</li>
 			<li>
-				<label>Leader's popularity</label>
-				<medianOpinionOfLeader>
+				<label>opinion of {TARGET}</label>
+				<isLeader>false</isLeader>
+				<opinionOfTarget>
 					<offset>
 						<points>
-							<li>(-100, -30)</li>
+							<li>(-100, -20)</li>
 							<li>(0, 0)</li>
-							<li>(100, 15)</li>
+							<li>(100, 10)</li>
 						</points>
 					</offset>
-				</medianOpinionOfLeader>
+				</opinionOfTarget>
+			</li>
+			<li>
+				<label>{TARGET}'s popularity</label>
+				<medianOpinionOfTarget>
+					<offset>
+						<points>
+							<li>(-100, -10)</li>
+							<li>(0, 0)</li>
+							<li>(100, 5)</li>
+						</points>
+					</offset>
+				</medianOpinionOfTarget>
 			</li>
 		</considerations>
 		<tag/>
@@ -788,7 +1223,7 @@
 
 	<Rimocracy.DecisionDef>
 		<defName>CultOfPersonality_Cancel</defName>
-		<label>Cancel Cult of Personality</label>
+		<label>cancel cult of personality</label>
 		<description>The leader should be more humble.</description>
 		<category>Authoritarian</category>
 		<displayPriorityInCategory>30</displayPriorityInCategory>
@@ -802,81 +1237,55 @@
 				<isLeader>true</isLeader>
 			</li>
 			<li>
-				<label>Opinion of the leader</label>
+				<label>jealous</label>
+				<support>10</support>
 				<isLeader>false</isLeader>
-				<opinionOfLeader>
-					<offset>
-						<points>
-							<li>(-100, 50)</li>
-							<li>(0, 0)</li>
-							<li>(100, -25)</li>
-						</points>
-					</offset>
-				</opinionOfLeader>
+				<trait>Jealous</trait>
 			</li>
 			<li>
-				<label>Leader's popularity</label>
-				<medianOpinionOfLeader>
+				<label>opinion of {TARGET}</label>
+				<isLeader>false</isLeader>
+				<opinionOfTarget>
 					<offset>
 						<points>
-							<li>(-100, 30)</li>
+							<li>(-100, 20)</li>
 							<li>(0, 0)</li>
-							<li>(100, -15)</li>
+							<li>(100, -10)</li>
 						</points>
 					</offset>
-				</medianOpinionOfLeader>
+				</opinionOfTarget>
+			</li>
+			<li>
+				<label>leader's popularity</label>
+				<medianOpinionOfTarget>
+					<offset>
+						<points>
+							<li>(-100, 10)</li>
+							<li>(0, 0)</li>
+							<li>(100, -5)</li>
+						</points>
+					</offset>
+				</medianOpinionOfTarget>
 			</li>
 		</considerations>
 		<governanceCost>0.15</governanceCost>
 		<cancelDecision>CultOfPersonality</cancelDecision>
 	</Rimocracy.DecisionDef>
 
-	<!-- Managed Democracy -->
-
-	<!--Rimocracy.DecisionDef>
-		<defName>ManagedDemocracy</defName>
-		<label>Managed Democracy</label>
-		<description>We should help people make the right choice! Tweak election rules, so that the incumbent leader is always on ballot and his or her strongest opponent is disqualified. Winning an election will be much easier now.</description>
-		<category>Authoritarian</category>
-		<displayPriorityInCategory>40</displayPriorityInCategory>
-		<displayRequirements>
-			<leaderExists>true</leaderExists>
-			<campaigning>false</campaigning>
-		</displayRequirements>
-		<effectRequirements>
-			<succession>Election</succession>
-			<maxRegime>0.1</maxRegime>
-		</effectRequirements>
-		<tag/>
-		<regimeEffect>-0.2</regimeEffect>
-		<governanceCost>0.10</governanceCost>
-	</Rimocracy.DecisionDef>
-
-	<Rimocracy.DecisionDef>
-		<defName>ManagedDemocracy_Cancel</defName>
-		<label>Cancel "Managed Democracy"</label>
-		<description>We should allow a real democracy.</description>
-		<category>Authoritarian</category>
-		<displayPriorityInCategory>40</displayPriorityInCategory>
-		<displayRequirements>
-			<decision>ManagedDemocracy</decision>
-		</displayRequirements>
-		<governanceCost>0.10</governanceCost>
-		<cancelDecision>ManagedDemocracy</cancelDecision>
-	</Rimocracy.DecisionDef-->
-
 	<!-- State of Emergency -->
 
 	<Rimocracy.DecisionDef>
 		<defName>StateOfEmergency</defName>
-		<label>State of Emergency</label>
+		<label>state of emergency</label>
 		<description>When you declare a State of Emergency, all mental break thresholds are reduced by 3/4 for 3 days, and elections are postponed.</description>
 		<category>Authoritarian</category>
 		<displayPriorityInCategory>50</displayPriorityInCategory>
 		<effectRequirements>
 			<all>
 				<li>
-					<maxRegime>-0.20</maxRegime>
+					<regime>
+						<lessOrEqual>-0.20</lessOrEqual>
+					</regime>
 				</li>
 				<li>
 					<decision>ResPublica</decision>
@@ -891,17 +1300,18 @@
 				<isLeader>true</isLeader>
 			</li>
 			<li>
-				<label>Trust of the leader</label>
+				<label>trust in {TARGET}</label>
 				<isLeader>false</isLeader>
-				<opinionOfLeader>
+				<opinionOfTarget>
 					<offset>
 						<points>
-							<li>(-100, -30)</li>
+							<li>(-100, -20)</li>
+							<li>(0, 0)</li>
 							<li>(50, 0)</li>
-							<li>(100, 0)</li>
+							<li>(100, 10)</li>
 						</points>
 					</offset>
-				</opinionOfLeader>
+				</opinionOfTarget>
 			</li>
 			<li>
 				<label>Campaign is on</label>
@@ -916,7 +1326,7 @@
 
 	<Rimocracy.DecisionDef>
 		<defName>StateOfEmergency_Cancel</defName>
-		<label>Lift State of Emergency</label>
+		<label>lift state of emergency</label>
 		<description>The threat is over; we can return to business as usual.</description>
 		<category>Authoritarian</category>
 		<displayPriorityInCategory>50</displayPriorityInCategory>
@@ -925,6 +1335,85 @@
 		</displayRequirements>
 		<governanceCost>0.10</governanceCost>
 		<cancelDecision>StateOfEmergency</cancelDecision>
+	</Rimocracy.DecisionDef>
+
+	<!-- Action Veto Power -->
+	
+	<Rimocracy.DecisionDef>
+		<defName>ActionVetoPower</defName>
+		<label>enable veto for actions</label>
+		<description>If the leader opposes a game action such as arresting or banishing pawns, he/she can stop it. Without veto power, such actions will be taken but at a cost of Governance.</description>
+		<category>Misc</category>
+		<enactment>None</enactment>
+		<displayPriorityInCategory>50</displayPriorityInCategory>
+		<displayRequirements>
+			<all>
+				<li>
+					<leaderExists>true</leaderExists>
+				</li>
+				<li>
+					<decision>ActionVetoPower</decision>
+					<inverted>true</inverted>
+				</li>
+			</all>
+		</displayRequirements>
+		<considerations>
+			<li>
+				<label>I want more authority</label>
+				<support>50</support>
+				<isLeader>true</isLeader>
+			</li>
+			<li>
+				<label>Opinion of {TARGET}</label>
+				<isLeader>false</isLeader>
+				<opinionOfTarget>
+					<offset>
+						<points>
+							<li>(-100, -10)</li>
+							<li>(100, 10)</li>
+						</points>
+					</offset>
+				</opinionOfTarget>
+			</li>
+		</considerations>
+		<tag>ActionVetoPower</tag>
+		<governanceCost>-0.10</governanceCost>
+		<actionsNeedApproval>true</actionsNeedApproval>
+	</Rimocracy.DecisionDef>
+
+	<Rimocracy.DecisionDef>
+		<defName>ActionVetoPower_Cancel</defName>
+		<label>abolish veto for actions</label>
+		<description>Leader can't prevent game actions, such as arresting or banishing pawns, from happening. Instead, they will reduce Governance if the leader opposes them.</description>
+		<category>Misc</category>
+		<enactment>None</enactment>
+		<displayPriorityInCategory>50</displayPriorityInCategory>
+		<displayRequirements>
+			<leaderExists>true</leaderExists>
+			<decision>ActionVetoPower</decision>
+		</displayRequirements>
+		<considerations>
+			<li>
+				<label>My authority will be reduced</label>
+				<support>-50</support>
+				<isLeader>true</isLeader>
+			</li>
+			<li>
+				<label>Opinion of {TARGET}</label>
+				<isLeader>false</isLeader>
+				<opinionOfTarget>
+					<offset>
+						<points>
+							<li>(-100, 10)</li>
+							<li>(100, -10)</li>
+						</points>
+					</offset>
+				</opinionOfTarget>
+			</li>
+		</considerations>
+		<actionsNeedApproval>false</actionsNeedApproval>
+		<governanceCost>0.20</governanceCost>
+		<cancelDecision>ActionVetoPower</cancelDecision>
 	</Rimocracy.DecisionDef>
 
 </Defs>

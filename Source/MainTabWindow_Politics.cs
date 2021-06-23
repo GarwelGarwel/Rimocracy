@@ -26,7 +26,7 @@ namespace Rimocracy
             content.Label($"{Utility.LeaderTitle.CapitalizeFirst(Utility.RimocracyComp.LeaderTitleDef)}: {Utility.RimocracyComp.Leader?.NameFullColored ?? "none"}");
 
             // Governance target, leader skills and next succession
-            if (Utility.RimocracyComp.Leader != null)
+            if (Utility.RimocracyComp.HasLeader)
             {
                 content.Label($"Governance quality: {Utility.RimocracyComp.Governance.ToStringPercent("F1")}. Decays at {Utility.RimocracyComp.GovernanceDecayPerDay.ToStringPercent()} per day.");
 
@@ -37,15 +37,15 @@ namespace Rimocracy
                     content.Label($"Focus skill: {Utility.RimocracyComp.FocusSkill.LabelCap}.");
 
                 if (Utility.RimocracyComp.TermDuration != TermDuration.Indefinite)
-                    content.Label($"Next {Utility.RimocracyComp.SuccessionWorker.def.noun} in {(Utility.RimocracyComp.TermExpiration - Find.TickManager.TicksAbs).ToStringTicksToPeriod(false)}.");
+                    content.Label($"Next {Utility.RimocracyComp.SuccessionWorker.def.noun} in {(Utility.RimocracyComp.TermExpiration - Find.TickManager.TicksAbs).ToStringTicksToPeriod(false)}.", tooltip: Utility.DateFullStringWithHourAtHome(Utility.RimocracyComp.TermExpiration));
             }
             // Next election
             else if (Utility.RimocracyComp.ElectionTick > Find.TickManager.TicksAbs)
-                content.Label($"{Utility.LeaderTitle.CapitalizeFirst(Utility.RimocracyComp.LeaderTitleDef)} will be elected in {(Utility.RimocracyComp.ElectionTick - Find.TickManager.TicksAbs).ToStringTicksToPeriod(false)}.");
+                content.Label($"{Utility.LeaderTitle.CapitalizeFirst(Utility.RimocracyComp.LeaderTitleDef)} will be elected in {(Utility.RimocracyComp.ElectionTick - Find.TickManager.TicksAbs).ToStringTicksToPeriod(false)}.", tooltip: Utility.DateFullStringWithHourAtHome(Utility.RimocracyComp.ElectionTick));
             else content.Label($"Choosing a new {Utility.LeaderTitle}...");
 
             // Election candidates
-            if (!Utility.RimocracyComp.Campaigns.NullOrEmpty())
+            if (Utility.RimocracyComp.Campaigns.Any())
             {
                 content.Gap();
                 content.Label("Candidates:");

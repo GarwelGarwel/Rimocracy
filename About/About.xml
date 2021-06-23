@@ -6,11 +6,19 @@
 	<url>https://github.com/GarwelGarwel/Rimocracy</url>
 	<packageId>Garwel.Rimocracy</packageId>
 	<supportedVersions>
-		<li>1.1</li>
 		<li>1.2</li>
 	</supportedVersions>
 	<description>RimWorld mod that adds domestic politics to the game</description>
+	<modDependencies>
+		<li>
+			<packageId>brrainz.harmony</packageId>
+			<displayName>Harmony</displayName>
+			<steamWorkshopUrl>steam://url/CommunityFilePage/2009463077</steamWorkshopUrl>
+			<downloadUrl>https://github.com/pardeike/HarmonyRimWorld/releases/latest</downloadUrl>
+		</li>
+	</modDependencies>
 	<loadAfter>
+		<li>brrainz.harmony</li>
 		<li>Ludeon.RimWorld</li>
 	</loadAfter>
 </ModMetaData>

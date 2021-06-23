@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="0Harmony">
+      <HintPath>References\0Harmony.dll</HintPath>
+    </Reference>
     <Reference Include="Assembly-CSharp">
       <HintPath>..\..\..\RimWorldWin64_Data\Managed\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
@@ -63,19 +66,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DecisionVoteResults.cs" />
+    <Compile Include="Defs\PoliticalActionDef.cs" />
+    <Compile Include="Dialog_PoliticalAction.cs" />
+    <Compile Include="HarmonyManager.cs" />
     <Compile Include="PawnDecisionOpinion.cs" />
     <Compile Include="SkillOperations.cs" />
     <Compile Include="ThingComps\ThingComp_GoverningBench.cs" />
     <Compile Include="ValueOperations.cs" />
     <Compile Include="Decision.cs" />
-    <Compile Include="Consideration.cs" />
     <Compile Include="Defs\DecisionCategoryDef.cs" />
     <Compile Include="Defs\DecisionDef.cs" />
     <Compile Include="Defs\SuccessionDef.cs" />
     <Compile Include="Dialog_DecisionList.cs" />
     <Compile Include="ElectionUtility.cs" />
     <Compile Include="Defs\LeaderTitleDef.cs" />
-    <Compile Include="Requirement.cs" />
+    <Compile Include="Consideration.cs" />
     <Compile Include="RimocracyDefOf.cs" />
     <Compile Include="RimocracyMod.cs" />
     <Compile Include="Settings.cs" />

@@ -10,7 +10,8 @@ namespace Rimocracy
         Rect viewRect = new Rect();
 
         public RimocracyMod(ModContentPack content)
-            : base(content) => GetSettings<Settings>();
+            : base(content)
+            => GetSettings<Settings>();
 
         public override void DoSettingsWindowContents(Rect inRect)
         {
@@ -53,6 +54,8 @@ namespace Rimocracy
 
             listingStandard.Label($"Governance Cost Factor: {Settings.GovernanceCostFactor.ToStringPercent()}", tooltip: "Adjust the Governance cost of decisions");
             Settings.GovernanceCostFactor = (float)Math.Round(listingStandard.Slider(Settings.GovernanceCostFactor, 0, 2), 2);
+
+            listingStandard.CheckboxLabeled("Show Action Support Details", ref Settings.ShowActionSupportDetails, "Show a dialog with info about who supported or opposed various actions (e.g. arrest) and why");
 
             listingStandard.CheckboxLabeled("Debug Logging", ref Settings.DebugLogging, "Check to enable verbose logging; it is super useful for catching bugs");
 
