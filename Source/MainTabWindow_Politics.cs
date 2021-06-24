@@ -15,7 +15,7 @@ namespace Rimocracy
             base.DoWindowContents(inRect);
             if (!Utility.PoliticsEnabled)
             {
-                Widgets.Label(inRect, $"You need at least {Settings.MinPopulation} free, adult colonists for politics.");
+                Widgets.Label(inRect, $"You need at least {Settings.MinPopulation.ToStringCached()} free, adult colonists for politics.");
                 return;
             }
 
@@ -45,7 +45,7 @@ namespace Rimocracy
             else content.Label($"Choosing a new {Utility.LeaderTitle}...");
 
             // Election candidates
-            if (Utility.RimocracyComp.Campaigns.Any())
+            if (!Utility.RimocracyComp.Campaigns.EnumerableNullOrEmpty())
             {
                 content.Gap();
                 content.Label("Candidates:");

@@ -38,7 +38,7 @@ namespace Rimocracy
             Text.Anchor = TextAnchor.UpperLeft;
 
             if (opinions.Count > 1)
-                content.Label($"{opinions.Yea} citizens support the action, {opinions.Nay} oppose it, and {opinions.Abstentions} are indiffirent.");
+                content.Label($"{opinions.Yea.ToStringCached()} citizens support the action, {opinions.Nay.ToStringCached()} oppose it, and {opinions.Abstentions.ToStringCached()} are indiffirent.");
 
             if (Utility.RimocracyComp.HasLeader)
             {
@@ -58,6 +58,9 @@ namespace Rimocracy
 
             foreach (PawnDecisionOpinion opinion in opinions.Where(opinion => opinion.voter != Utility.RimocracyComp.Leader))
                 content.Label($"{opinion.voter.NameShortColored}: {opinion.support.ToStringWithSign("0")}", tooltip: opinion.explanation);
+
+            content.Gap();
+            content.CheckboxLabeled("Always show action details", ref Settings.ShowActionSupportDetails, "Uncheck to disable this dialog from popping up. You may re-enable it in the Settings.");
 
             content.End();
         }

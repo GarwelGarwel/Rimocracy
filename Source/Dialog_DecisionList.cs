@@ -99,10 +99,9 @@ namespace Rimocracy
                                 votingResult = d.GetVotingResults(Utility.Citizens.ToList());
                             if (d.Activate())
                             {
-                                Utility.Log($"Logging opinions for {votingResult.Count} citizens.");
                                 foreach (PawnDecisionOpinion opinion in votingResult.Where(opinion => opinion.Vote != DecisionVote.Abstain))
                                 {
-                                    Utility.Log($"{opinion.voter}'s opinion is {opinion.support}.");
+                                    Utility.Log($"{opinion.voter}'s opinion is {opinion.support.ToStringWithSign()}.");
                                     opinion.voter.needs.mood.thoughts.memories.TryGainMemory(opinion.Vote == DecisionVote.Yea ? RimocracyDefOf.LikeDecision : RimocracyDefOf.DislikeDecision);
                                 }
                                 Find.LetterStack.ReceiveLetter($"{d.LabelTitleCase} Decision Taken", d.description, LetterDefOf.NeutralEvent, null);
