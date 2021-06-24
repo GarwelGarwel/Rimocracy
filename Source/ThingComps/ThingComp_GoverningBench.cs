@@ -16,7 +16,7 @@ namespace Rimocracy
             if (parent.Faction == Faction.OfPlayer)
                 yield return new Command_Toggle
                 {
-                    defaultLabel = "Allow governing",
+                    defaultLabel = "allow governing",
                     defaultDesc = "When active, this workbench can be used by your leader to govern the colony",
                     icon = ContentFinder<Texture2D>.Get("AllowGoverning"),
                     isActive = () => allowGoverning,

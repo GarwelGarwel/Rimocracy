@@ -11,7 +11,7 @@ namespace Rimocracy
 
         public override IEnumerable<Pawn> Candidates => Utility.RimocracyComp.Candidates ?? base.Candidates;
 
-        string VotesNumString => lastVotesForWinner > 1 ? $"{lastVotesForWinner} votes" : "just one vote";
+        string VotesNumString => lastVotesForWinner > 1 ? $"{lastVotesForWinner.ToStringCached()} votes" : "just one vote";
 
         public override string NewLeaderMessageText(Pawn leader) =>
             def.newLeaderMessageText.Formatted(
@@ -34,7 +34,7 @@ namespace Rimocracy
             // Logging votes
             if (Settings.DebugLogging)
                 foreach (KeyValuePair<Pawn, int> kvp in votes)
-                    Utility.Log($"- {kvp.Key}: {kvp.Value} votes");
+                    Utility.Log($"- {kvp.Key}: {kvp.Value.ToStringCached()} votes");
 
             // Determining the winner
             KeyValuePair<Pawn, int> winner = votes.MaxByWithFallback(kvp => kvp.Value);

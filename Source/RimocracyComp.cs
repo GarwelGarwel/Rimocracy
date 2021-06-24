@@ -318,6 +318,7 @@ namespace Rimocracy
                 Utility.Log("Candidates in the campaign: ");
                 foreach (ElectionCampaign ec in campaigns)
                     Utility.Log($"- {ec}");
+
                 Messages.Message($"The election campaign is on! {Candidates.Select(p => p.LabelShortCap).ToCommaList(true)} are competing to be the {Utility.LeaderTitle} of {Utility.NationName}.", new LookTargets(Candidates), MessageTypeDefOf.NeutralEvent);
             }
         }
@@ -368,7 +369,7 @@ namespace Rimocracy
                         Utility.Log($"Tale recorded: {tale}");
                 }
                 else Find.LetterStack.ReceiveLetter(SuccessionWorker.SameLeaderMessageTitle(leader), $"{SuccessionWorker.SameLeaderMessageText(leader)}\n\n{FocusSkillMessage}", LetterDefOf.NeutralEvent);
-                Utility.Log($"New leader is {leader} (chosen from {SuccessionWorker.Candidates.Count()} candidates). Their term expires on {GenDate.DateFullStringAt(termExpiration, Find.WorldGrid.LongLatOf(leader.Tile))}. The focus skill is {focusSkill.defName}.");
+                Utility.Log($"New leader is {leader} (chosen from {SuccessionWorker.Candidates.Count().ToStringCached()} candidates). Their term expires on {GenDate.DateFullStringAt(termExpiration, Find.WorldGrid.LongLatOf(leader.Tile))}. The focus skill is {focusSkill.defName}.");
             }
             else Utility.Log("Could not choose a new leader.", LogLevel.Warning);
             campaigns = null;

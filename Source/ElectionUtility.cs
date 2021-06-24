@@ -25,14 +25,14 @@ namespace Rimocracy
             // For every backstory the two pawns have in common, a bonus is added
             int sameBackstories = voter.story.AllBackstories.Count(bs => candidate.story.AllBackstories.Contains(bs));
             if (sameBackstories > 0)
-                Utility.Log($"{voter} and {candidate} have {sameBackstories} backstories in common.");
+                Utility.Log($"{voter} and {candidate} have {sameBackstories.ToStringCached()} backstories in common.");
             weight += sameBackstories * Settings.SameBackstoryVoteWeightBonus;
 
             // If the candidate has a royal title, their vote weight is increased according to seniority
             RoyalTitleDef title = candidate.royalty?.MostSeniorTitle?.def;
             if (title != null)
             {
-                Utility.Log($"{candidate} has royal title {title.label} (seniority {title.seniority}).");
+                Utility.Log($"{candidate} has royal title {title.label} (seniority {title.seniority.ToStringCached()}).");
                 weight += 5 + title.seniority / 10;
             }
 
