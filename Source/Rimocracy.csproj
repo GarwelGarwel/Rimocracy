@@ -71,6 +71,7 @@
     <Compile Include="HarmonyManager.cs" />
     <Compile Include="PawnDecisionOpinion.cs" />
     <Compile Include="SkillOperations.cs" />
+    <Compile Include="ThingComps\CompCitizen.cs" />
     <Compile Include="ThingComps\ThingComp_GoverningBench.cs" />
     <Compile Include="ValueOperations.cs" />
     <Compile Include="Decision.cs" />
