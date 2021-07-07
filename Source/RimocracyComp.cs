@@ -254,7 +254,7 @@ namespace Rimocracy
                         if (invalidCampaign != null)
                         {
                             Utility.Log($"Campaign restarted because {invalidCampaign.Candidate} is ineligible to be a candidate.");
-                            Messages.Message($"{(invalidCampaign.Candidate.Name.ToStringShort ?? "One of the candidates")} can't be a candidate, so the election is started over.", MessageTypeDefOf.NegativeEvent);
+                            Messages.Message($"{(invalidCampaign.Candidate != null ? invalidCampaign.Candidate.NameShortColored : new TaggedString("One of the candidates"))} can't be a candidate, so the election is started over.", MessageTypeDefOf.NegativeEvent);
                             campaigns = null;
                             CallElection();
                         }
