@@ -12,7 +12,6 @@ namespace Rimocracy
         public override void DoWindowContents(Rect inRect)
         {
             // Politics Disabled
-            base.DoWindowContents(inRect);
             if (!Utility.PoliticsEnabled)
             {
                 Widgets.Label(inRect, $"You need at least {Settings.MinPopulation.ToStringCached()} free, adult colonists for politics.");
@@ -49,7 +48,7 @@ namespace Rimocracy
             {
                 content.Gap();
                 content.Label("Candidates:");
-                content.Label(Utility.RimocracyComp.Campaigns.Select(ec => $"- {ec}").ToLineList());
+                content.Label(Utility.RimocracyComp.Campaigns.Select(ec => ec.ToString()).ToLineList("- "));
             }
 
             content.Gap();
