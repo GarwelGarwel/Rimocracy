@@ -28,11 +28,7 @@ namespace Rimocracy
             set => supporters = value;
         }
 
-        public ElectionCampaign()
-            : this(null)
-        { }
-
-        public ElectionCampaign(Pawn candidate, SkillDef focusSkill = null)
+        public ElectionCampaign(Pawn candidate, SkillDef focusSkill)
         {
             this.candidate = candidate;
             this.focusSkill = focusSkill;

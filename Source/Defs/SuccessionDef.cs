@@ -13,7 +13,7 @@ namespace Rimocracy
 
         public string newLeaderMessageTitle = "New {LEADERTITLE}";
 
-        public string newLeaderMessageText = "{NATIONNAME} has a new {LEADERTITLE}: {PAWN}. Let {PAWN_possessive} reign be long and prosperous!";
+        public string newLeaderMessageText = "{NATIONNAME} has a new {LEADERTITLE}: {PAWN}. May {PAWN_possessive} reign be long and prosperous!";
 
         public string sameLeaderMessageTitle = "{LEADERTITLE} Stays in Power";
 

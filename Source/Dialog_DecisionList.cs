@@ -89,13 +89,13 @@ namespace Rimocracy
                     switch (d.enactment)
                     {
                         case DecisionEnactmentRule.Decree:
-                            if (!votingResult.EnumerableNullOrEmpty())
+                            if (votingResult.Any())
                                 content.Label($"{Utility.LeaderTitle}'s support: {votingResult.First().support.ToStringWithSign("0")}", tooltip: votingResult.First().explanation);
                             break;
 
                         case DecisionEnactmentRule.Law:
                         case DecisionEnactmentRule.Referendum:
-                            if (content.ButtonTextLabeled($"Support: {votingResult.Yea} - {votingResult.Nay}", decisionToShowVoteDetails == d ? "Hide Details" : "Show Details"))
+                            if (content.ButtonTextLabeled($"Support: {votingResult.Yea.ToStringCached()} - {votingResult.Nay.ToStringCached()}", decisionToShowVoteDetails == d ? "Hide Details" : "Show Details"))
                                 decisionToShowVoteDetails = decisionToShowVoteDetails != d ? d : null;
                             if (decisionToShowVoteDetails == d)
                                 foreach (PawnDecisionOpinion opinion in votingResult)
