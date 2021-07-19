@@ -11,7 +11,7 @@ namespace Rimocracy
     public class RimocracyComp : WorldComponent
     {
         // How often mod enabled/disabled check, succession, governance decay etc. are updated
-        const int UpdateInterval = 500;
+        public const int UpdateInterval = 500;
 
         bool isEnabled = false;
         int updateTick = Rand.Range(0, UpdateInterval);
@@ -37,6 +37,14 @@ namespace Rimocracy
             get => isEnabled;
             private set => isEnabled = value;
         }
+
+        public int UpdateTick
+        {
+            get => updateTick;
+            set => updateTick = value;
+        }
+
+        public bool IsUpdateTick => Find.TickManager.TicksAbs % UpdateInterval == UpdateTick;
 
         public Pawn Leader
         {
@@ -205,9 +213,8 @@ namespace Rimocracy
 
         public override void WorldComponentTick()
         {
-            int ticks = Find.TickManager.TicksAbs;
 
-            if (ticks % UpdateInterval != updateTick)
+            if (!IsUpdateTick)
                 return;
 
             if (Utility.CitizensCount < Settings.MinPopulation)
@@ -222,6 +229,7 @@ namespace Rimocracy
                 return;
             }
             IsEnabled = true;
+            int ticks = Find.TickManager.TicksAbs;
 
             if (leaderTitle == null)
                 ChooseLeaderTitle();
@@ -254,7 +262,7 @@ namespace Rimocracy
                         if (invalidCampaign != null)
                         {
                             Utility.Log($"Campaign restarted because {invalidCampaign.Candidate} is ineligible to be a candidate.");
-                            Messages.Message($"{(invalidCampaign.Candidate.Name.ToStringShort ?? "One of the candidates")} can't be a candidate, so the election is started over.", MessageTypeDefOf.NegativeEvent);
+                            Messages.Message($"{(invalidCampaign.Candidate != null ? invalidCampaign.Candidate.NameShortColored : new TaggedString("One of the candidates"))} can't be a candidate, so the election is started over.", MessageTypeDefOf.NegativeEvent);
                             campaigns = null;
                             CallElection();
                         }

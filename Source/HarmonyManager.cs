@@ -71,9 +71,13 @@ namespace Rimocracy
 
         #region ARREST
 
+        // Check is the TakeToBed job is in fact to arrest a non-prisoner for the colony (to prevent it from firing for relocating prisoners etc.)
+        static bool IsActualArrestJob(JobDriver_TakeToBed jobDriver)
+            => jobDriver.job.def.makeTargetPrisoner && jobDriver.pawn.IsColonist && !jobDriver.job.targetA.Pawn.IsPrisonerOfColony;
+
         public static void Arrest_Prefix(JobDriver_TakeToBed __instance, out DecisionVoteResults __state)
         {
-            if (!__instance.job.def.makeTargetPrisoner)
+            if (!IsActualArrestJob(__instance))
             {
                 __state = null;
                 return;
@@ -86,7 +90,7 @@ namespace Rimocracy
 
         public static void Arrest_Postfix(JobDriver_TakeToBed __instance, DecisionVoteResults __state)
         {
-            if (!Utility.RimocracyComp.IsEnabled || !__instance.job.def.makeTargetPrisoner)
+            if (!Utility.RimocracyComp.IsEnabled || !IsActualArrestJob(__instance))
                 return;
             Pawn target = __instance.job.targetA.Pawn;
             Utility.Log($"Arrest_Postfix for {target}");
@@ -186,7 +190,7 @@ namespace Rimocracy
 
         #region TRADE
 
-        // This is technically a postfix that does the job of prefixes, i.e. checks if the PoliticalAction (Trade in this case) is vetoed
+        // This is technically a postfix that does the job of a prefix, i.e. checks if the PoliticalAction (Trade in this case) is vetoed
         public static void Trade_Prefix(Dialog_Trade __instance)
         {
             Utility.Log($"Trade_Prefix for trader {TradeSession.trader} ({TradeSession.trader?.Faction})");

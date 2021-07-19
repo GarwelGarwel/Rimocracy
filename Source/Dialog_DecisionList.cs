@@ -1,5 +1,6 @@
 ﻿using RimWorld;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Verse;
@@ -12,27 +13,41 @@ namespace Rimocracy
     public class Dialog_DecisionList : Window
     {
         Vector2 scrollPosition = new Vector2();
-        Rect viewRect = new Rect();
+        Rect viewRect;
 
         DecisionDef decisionToShowVoteDetails;
+        List<DecisionDef> availableDecisions;
 
         public Dialog_DecisionList()
         {
             doCloseX = true;
             closeOnClickedOutside = true;
             draggable = true;
+            UpdateAvailableDecisions();
         }
 
-        public override void DoWindowContents(Rect inRect)
+        void UpdateAvailableDecisions() => availableDecisions = DefDatabase<DecisionDef>.AllDefs.Where(def => def.IsDisplayable).ToList();
+
+        public override void DoWindowContents(Rect rect)
         {
-            viewRect.width = inRect.width - GenUI.ScrollBarWidth;
+            if (Utility.RimocracyComp.IsUpdateTick)
+            {
+                UpdateAvailableDecisions();
+                viewRect = new Rect();
+            }
+            if (viewRect.height < rect.height)
+            {
+                viewRect.width = rect.width - GenUI.ScrollBarWidth - 4;
+                viewRect.height = 500 + availableDecisions.Count * 300;
+            }
+            Widgets.BeginScrollView(rect.AtZero(), ref scrollPosition, viewRect);
             Listing_Standard content = new Listing_Standard();
-            content.BeginScrollView(inRect.AtZero(), ref scrollPosition, ref viewRect);
+            content.Begin(viewRect);
 
             content.Label($"Succession type: {Utility.RimocracyComp.SuccessionType.LabelCap}", tooltip: Utility.RimocracyComp.SuccessionType.description);
             content.Label($"Leader's term: {Utility.RimocracyComp.TermDuration}");
 
-            if (Utility.RimocracyComp.Decisions.Count > 0)
+            if (Utility.RimocracyComp.Decisions.Any())
             {
                 content.Label("Active decisions:");
                 foreach (Decision decision in Utility.RimocracyComp.Decisions)
@@ -47,8 +62,7 @@ namespace Rimocracy
             content.GapLine();
 
             // Display decision categories and available decisions
-            foreach (IGrouping<DecisionCategoryDef, DecisionDef> group in DefDatabase<DecisionDef>.AllDefs
-                .Where(def => def.IsDisplayable)
+            foreach (IGrouping<DecisionCategoryDef, DecisionDef> group in availableDecisions
                 .GroupBy(def => def.category)
                 .OrderBy(group => group.Key.displayOrder))
             {
@@ -75,13 +89,13 @@ namespace Rimocracy
                     switch (d.enactment)
                     {
                         case DecisionEnactmentRule.Decree:
-                            if (!votingResult.EnumerableNullOrEmpty())
+                            if (votingResult.Any())
                                 content.Label($"{Utility.LeaderTitle}'s support: {votingResult.First().support.ToStringWithSign("0")}", tooltip: votingResult.First().explanation);
                             break;
 
                         case DecisionEnactmentRule.Law:
                         case DecisionEnactmentRule.Referendum:
-                            if (content.ButtonTextLabeled($"Support: {votingResult.Yea} - {votingResult.Nay}", decisionToShowVoteDetails == d ? "Hide Details" : "Show Details"))
+                            if (content.ButtonTextLabeled($"Support: {votingResult.Yea.ToStringCached()} - {votingResult.Nay.ToStringCached()}", decisionToShowVoteDetails == d ? "Hide Details" : "Show Details"))
                                 decisionToShowVoteDetails = decisionToShowVoteDetails != d ? d : null;
                             if (decisionToShowVoteDetails == d)
                                 foreach (PawnDecisionOpinion opinion in votingResult)
@@ -122,7 +136,10 @@ namespace Rimocracy
                     content.GapLine();
                 }
             }
-            content.EndScrollView(ref viewRect);
+
+            viewRect.height = content.CurHeight;
+            content.End();
+            Widgets.EndScrollView();
         }
     }
 }
