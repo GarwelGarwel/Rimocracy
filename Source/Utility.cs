@@ -59,7 +59,7 @@ namespace Rimocracy
         public static bool IsCitizen(this Pawn pawn) =>
             pawn != null
             && !pawn.Dead
-            && pawn.IsFreeColonist
+            && pawn.IsFreeNonSlaveColonist
             && pawn.ageTracker.AgeBiologicalYears >= Settings.CitizenshipAge
             && (!IsSimpleSlaveryInstalled || !pawn.health.hediffSet.hediffs.Any(hediff => hediff.def == RimocracyDefOf.Enslaved));
 
