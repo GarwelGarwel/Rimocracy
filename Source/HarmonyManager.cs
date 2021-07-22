@@ -38,6 +38,8 @@ namespace Rimocracy
             harmony.Patch(AccessTools.Method("RimWorld.Dialog_Trade:PostOpen"), postfix: new HarmonyMethod(type.GetMethod("Trade_Prefix")));
             harmony.Patch(AccessTools.Method("RimWorld.Faction:Notify_PlayerTraded"), postfix: new HarmonyMethod(type.GetMethod("Trade_Postfix")));
 
+            harmony.Patch(AccessTools.Method("RimWorld.Precept_RoleSingle:Assign"), prefix: new HarmonyMethod(type.GetMethod("RoleAssign_Prefix")));
+
             Utility.Log($"{harmony.GetPatchedMethods().EnumerableCount()} methods patched with Harmony.");
             initialized = true;
         }
@@ -210,5 +212,18 @@ namespace Rimocracy
         }
 
         #endregion TRADE
+
+        #region IDEOLOGY PATCHES
+
+        // Prevents the game from assigning leader roles to anyone who is not a Rimocracy leader
+        public static bool RoleAssign_Prefix(Precept_RoleSingle __instance, Pawn p)
+        {
+            Utility.Log($"RoleAssign_Prefix({__instance.def}, {p})");
+            if (__instance.def.leaderRole)
+                return p.IsLeader();
+            return true;
+        }
+
+        #endregion
     }
 }

@@ -49,7 +49,7 @@ namespace Rimocracy
 
         public static IEnumerable<LeaderTitleDef> ApplicableLeaderTitles => DefDatabase<LeaderTitleDef>.AllDefs.Where(def => def.IsApplicable);
 
-        public static string LeaderTitle => RimocracyComp?.LeaderTitleDef?.GetTitle(RimocracyComp.Leader) ?? "leader";
+        public static string LeaderTitle => (ModsConfig.IdeologyActive ? IdeologyLeaderPrecept?.Label : RimocracyComp?.LeaderTitleDef?.GetTitle(RimocracyComp.Leader)) ?? "leader";
 
         public static int TermDurationTicks => RimocracyComp.TermDuration.GetDurationTicks();
 
@@ -63,7 +63,11 @@ namespace Rimocracy
             && pawn.ageTracker.AgeBiologicalYears >= Settings.CitizenshipAge
             && (!IsSimpleSlaveryInstalled || !pawn.health.hediffSet.hediffs.Any(hediff => hediff.def == RimocracyDefOf.Enslaved));
 
-        public static bool CanBeLeader(this Pawn p) => p.IsCitizen() && !p.GetDisabledWorkTypes(true).Contains(RimocracyDefOf.Governing);
+        public static Precept_RoleSingle IdeologyLeaderPrecept 
+            => Find.FactionManager.OfPlayer.ideos.PrimaryIdeo.GetAllPreceptsOfType<Precept_RoleSingle>().FirstOrDefault(p => p.def == PreceptDefOf.IdeoRole_Leader);
+
+        public static bool CanBeLeader(this Pawn p)
+            => p.IsCitizen() && !p.GetDisabledWorkTypes(true).Contains(RimocracyDefOf.Governing) && (!ModsConfig.IdeologyActive || IdeologyLeaderPrecept.RequirementsMet(p));
 
         public static bool IsLeader(this Pawn p) => PoliticsEnabled && RimocracyComp.Leader == p;
 
