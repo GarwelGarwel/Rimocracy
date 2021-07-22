@@ -49,7 +49,15 @@ namespace Rimocracy
         public Pawn Leader
         {
             get => leader;
-            set => leader = value;
+            set
+            {
+                leader = value;
+                if (ModsConfig.IdeologyActive)
+                    if (value != null)
+                        Utility.IdeologyLeaderPrecept.Assign(value, true);
+                    else Utility.IdeologyLeaderPrecept.Unassign(Find.FactionManager.OfPlayer.leader, true);
+                else Find.FactionManager.OfPlayer.leader = value;
+            }
         }
 
         public bool HasLeader => Leader != null;
@@ -154,7 +162,7 @@ namespace Rimocracy
         public float GovernanceDecayPerDay =>
             Math.Max(0,
                 BaseGovernanceDecayPerDay
-                * (leader != null ? leader.GetStatValue(RimocracyDefOf.GovernanceDecay) : 1)
+                * (HasLeader ? Leader.GetStatValue(RimocracyDefOf.GovernanceDecay) : 1)
                 * (DecisionActive("Egalitarianism") ? 1.5f - MedianMood : 1)
                 * (DecisionActive("Stability") ? 0.75f : 1));
 
@@ -222,7 +230,7 @@ namespace Rimocracy
                 if (IsEnabled)
                 {
                     IsEnabled = false;
-                    leader = null;
+                    Leader = null;
                     governance = 0.5f;
                     electionTick = int.MaxValue;
                 }
@@ -231,7 +239,14 @@ namespace Rimocracy
             IsEnabled = true;
             int ticks = Find.TickManager.TicksAbs;
 
-            if (leaderTitle == null)
+            // DEBUG LOGGING:
+            if (ModsConfig.IdeologyActive)
+            {
+                //Utility.Log($"Current ideologion leader precept: {Utility.IdeologyLeaderPrecept.Label}");
+                Utility.Log($"Pawns that satisfy leader requirements: {Utility.Citizens.Where(p => Utility.IdeologyLeaderPrecept.RequirementsMet(p)).Select(p => p.Name.ToStringShort).ToCommaList()}");
+            }
+
+            if (!ModsConfig.IdeologyActive && leaderTitle == null)
                 ChooseLeaderTitle();
 
             // Remove expired or invalid decisions
@@ -251,7 +266,7 @@ namespace Rimocracy
 
             if (SuccessionType == RimocracyDefOf.Election)
             {
-                if (ticks >= termExpiration - Settings.CampaignDurationTicks || !leader.CanBeLeader())
+                if (ticks >= termExpiration - Settings.CampaignDurationTicks || !Leader.CanBeLeader())
                     // If term is about to expire or there is no (valid) leader, call a new election
                     if (!ElectionCalled)
                         CallElection();
@@ -277,7 +292,7 @@ namespace Rimocracy
             }
 
             // If no valid leader, initiate succession (non-electoral)
-            else if (ticks >= termExpiration || !leader.CanBeLeader())
+            else if (ticks >= termExpiration || !Leader.CanBeLeader())
                 ChooseLeader();
 
             // Governance decay
@@ -301,7 +316,7 @@ namespace Rimocracy
             leaderTitle = Utility.ApplicableLeaderTitles.RandomElement();
             Utility.Log($"Selected leader title: {leaderTitle?.defName}.");
             if (oldLeaderTitle != leaderTitle.defName)
-                Messages.Message($"Our leader is now called {leaderTitle.GetTitle(leader)}.", MessageTypeDefOf.NeutralEvent);
+                Messages.Message($"Our leader is now called {leaderTitle.GetTitle(Leader)}.", MessageTypeDefOf.NeutralEvent);
         }
 
         void CallElection()
@@ -333,21 +348,21 @@ namespace Rimocracy
 
         void ChooseLeader()
         {
-            Pawn oldLeader = leader;
-            leader = SuccessionWorker.ChooseLeader();
+            Pawn oldLeader = Leader;
+            Leader = SuccessionWorker.ChooseLeader();
 
-            if (leader != null)
+            if (Leader != null)
             {
-                Utility.Log($"{leader} was chosen to be the leader.");
+                Utility.Log($"{Leader} was chosen to be the leader.");
 
-                if (leaderTitle == null || !leaderTitle.IsApplicable || (leader != oldLeader && Rand.Chance(0.2f)))
+                if (!ModsConfig.IdeologyActive && (leaderTitle == null || !leaderTitle.IsApplicable || (Leader != oldLeader && Rand.Chance(0.2f))))
                     ChooseLeaderTitle();
 
                 if (TermDuration != TermDuration.Indefinite)
                     termExpiration = Find.TickManager.TicksAbs + Utility.TermDurationTicks;
                 else termExpiration = int.MaxValue;
                 electionTick = int.MaxValue;
-                focusSkill = leader.GetCampaign()?.FocusSkill ?? SkillsUtility.GetRandomSkill(leader.skills.skills, leader == oldLeader ? focusSkill : null);
+                focusSkill = Leader.GetCampaign()?.FocusSkill ?? SkillsUtility.GetRandomSkill(Leader.skills.skills, Leader == oldLeader ? focusSkill : null);
 
                 // Candidates gain positive or negative thoughts of the election outcome + opinion memories of each other
                 if (Candidates != null)
@@ -368,16 +383,16 @@ namespace Rimocracy
                     }
 
                 // If the leader has changed, partially reset Governance; show message
-                if (leader != oldLeader)
+                if (Leader != oldLeader)
                 {
                     governance = Mathf.Lerp(DecisionActive("Stability") ? 0 : 0.5f, governance, 0.5f);
-                    Find.LetterStack.ReceiveLetter(SuccessionWorker.NewLeaderMessageTitle(leader), $"{SuccessionWorker.NewLeaderMessageText(leader)}\n\n{FocusSkillMessage}", LetterDefOf.NeutralEvent);
-                    Tale tale = TaleRecorder.RecordTale(RimocracyDefOf.BecameLeader, leader);
+                    Find.LetterStack.ReceiveLetter(SuccessionWorker.NewLeaderMessageTitle(Leader), $"{SuccessionWorker.NewLeaderMessageText(Leader)}\n\n{FocusSkillMessage}", LetterDefOf.NeutralEvent);
+                    Tale tale = TaleRecorder.RecordTale(RimocracyDefOf.BecameLeader, Leader);
                     if (tale != null)
                         Utility.Log($"Tale recorded: {tale}");
                 }
-                else Find.LetterStack.ReceiveLetter(SuccessionWorker.SameLeaderMessageTitle(leader), $"{SuccessionWorker.SameLeaderMessageText(leader)}\n\n{FocusSkillMessage}", LetterDefOf.NeutralEvent);
-                Utility.Log($"New leader is {leader} (chosen from {SuccessionWorker.Candidates.Count().ToStringCached()} candidates). Their term expires on {GenDate.DateFullStringAt(termExpiration, Find.WorldGrid.LongLatOf(leader.Tile))}. The focus skill is {focusSkill.defName}.");
+                else Find.LetterStack.ReceiveLetter(SuccessionWorker.SameLeaderMessageTitle(Leader), $"{SuccessionWorker.SameLeaderMessageText(Leader)}\n\n{FocusSkillMessage}", LetterDefOf.NeutralEvent);
+                Utility.Log($"New leader is {Leader} (chosen from {SuccessionWorker.Candidates.Count().ToStringCached()} candidates). Their term expires on {GenDate.DateFullStringAt(termExpiration, Find.WorldGrid.LongLatOf(leader.Tile))}. The focus skill is {focusSkill.defName}.");
             }
             else Utility.Log("Could not choose a new leader.", LogLevel.Warning);
             campaigns = null;
