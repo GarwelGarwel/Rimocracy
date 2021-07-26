@@ -239,13 +239,6 @@ namespace Rimocracy
             IsEnabled = true;
             int ticks = Find.TickManager.TicksAbs;
 
-            // DEBUG LOGGING:
-            if (ModsConfig.IdeologyActive)
-            {
-                //Utility.Log($"Current ideologion leader precept: {Utility.IdeologyLeaderPrecept.Label}");
-                Utility.Log($"Pawns that satisfy leader requirements: {Utility.Citizens.Where(p => Utility.IdeologyLeaderPrecept.RequirementsMet(p)).Select(p => p.Name.ToStringShort).ToCommaList()}");
-            }
-
             if (!ModsConfig.IdeologyActive && leaderTitle == null)
                 ChooseLeaderTitle();
 

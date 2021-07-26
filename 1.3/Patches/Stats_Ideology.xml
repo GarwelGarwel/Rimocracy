@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<Patch>
+
+	<!-- Conversion Power -->
+
+	<Operation Class="PatchOperationSequence">
+		<success>Always</success>
+		<operations>
+			<li Class="PatchOperationTest">
+				<xpath>/Defs/StatDef[defName="ConversionPower"]/parts</xpath>
+			</li>
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/StatDef[defName="ConversionPower"]/parts</xpath>
+				<value>
+					<li Class="Rimocracy.StatPart_StateIdeologion">
+						<factor>1.25</factor>
+					</li>
+				</value>
+			</li>
+		</operations>
+	</Operation>
+
+</Patch>

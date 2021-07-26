@@ -23,7 +23,7 @@ namespace Rimocracy
 
     public static class Utility
     {
-        static bool? simpleSlaveryInstalled = null;
+        static bool? simpleSlaveryInstalled;
 
         public static RimocracyComp RimocracyComp => Find.World?.GetComponent<RimocracyComp>();
 
@@ -31,8 +31,8 @@ namespace Rimocracy
 
         public static bool IsSimpleSlaveryInstalled => (bool)(simpleSlaveryInstalled ?? (simpleSlaveryInstalled = RimocracyDefOf.Enslaved != null));
 
-        public static IEnumerable<Pawn> Citizens =>
-            PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonists_NoCryptosleep.Where(p => p.IsCitizen());
+        public static IEnumerable<Pawn> Citizens
+            => PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonists_NoCryptosleep.Where(p => p.IsCitizen());
 
         public static int CitizensCount => Citizens.Count();
 
@@ -40,12 +40,14 @@ namespace Rimocracy
 
         public static float TotalNutrition => Find.Maps.Where(map => map.mapPawns.AnyColonistSpawned).Sum(map => map.resourceCounter.TotalHumanEdibleNutrition);
 
-        public static float FoodConsumptionPerDay =>
-            PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonistsAndPrisoners_NoCryptosleep.Sum(pawn => pawn.needs.food.FoodFallPerTick) * GenDate.TicksPerDay;
+        public static float FoodConsumptionPerDay
+            => PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonistsAndPrisoners_NoCryptosleep.Sum(pawn => pawn.needs.food.FoodFallPerTick) * GenDate.TicksPerDay;
 
         public static float DaysOfFood => TotalNutrition / FoodConsumptionPerDay;
 
         public static string NationName => Find.FactionManager.OfPlayer.Name;
+
+        public static Ideo NationPrimaryIdea => Find.FactionManager.OfPlayer.ideos.PrimaryIdeo;
 
         public static IEnumerable<LeaderTitleDef> ApplicableLeaderTitles => DefDatabase<LeaderTitleDef>.AllDefs.Where(def => def.IsApplicable);
 
@@ -53,18 +55,21 @@ namespace Rimocracy
 
         public static int TermDurationTicks => RimocracyComp.TermDuration.GetDurationTicks();
 
-        public static string DateFullStringWithHourAtHome(long tick) =>
-            GenDate.DateFullStringWithHourAt(tick, Find.WorldGrid.LongLatOf(Find.AnyPlayerHomeMap.Tile));
+        public static string DateFullStringWithHourAtHome(long tick)
+            => GenDate.DateFullStringWithHourAt(tick, Find.WorldGrid.LongLatOf(Find.AnyPlayerHomeMap.Tile));
 
-        public static bool IsCitizen(this Pawn pawn) =>
-            pawn != null
+        public static bool IsFreeAdultColonist(this Pawn pawn)
+            => pawn != null
             && !pawn.Dead
             && pawn.IsFreeNonSlaveColonist
             && pawn.ageTracker.AgeBiologicalYears >= Settings.CitizenshipAge
             && (!IsSimpleSlaveryInstalled || !pawn.health.hediffSet.hediffs.Any(hediff => hediff.def == RimocracyDefOf.Enslaved));
 
+        public static bool IsCitizen(this Pawn pawn)
+            => pawn.IsFreeAdultColonist() && (!ModsConfig.IdeologyActive || !RimocracyComp.DecisionActive("StateIdeologion") || pawn?.Ideo == NationPrimaryIdea);
+
         public static Precept_RoleSingle IdeologyLeaderPrecept 
-            => Find.FactionManager.OfPlayer.ideos.PrimaryIdeo.GetAllPreceptsOfType<Precept_RoleSingle>().FirstOrDefault(p => p.def == PreceptDefOf.IdeoRole_Leader);
+            => NationPrimaryIdea.GetAllPreceptsOfType<Precept_RoleSingle>().FirstOrDefault(p => p.def == PreceptDefOf.IdeoRole_Leader);
 
         public static bool CanBeLeader(this Pawn p)
             => p.IsCitizen() && !p.GetDisabledWorkTypes(true).Contains(RimocracyDefOf.Governing) && (!ModsConfig.IdeologyActive || IdeologyLeaderPrecept.RequirementsMet(p));

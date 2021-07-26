@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Defs>
+
+	<ThoughtDef>
+		<defName>StateIdeologion</defName>
+		<thoughtClass>Thought_Situational</thoughtClass>
+		<workerClass>Rimocracy.ThoughtWorker_StateIdeologion</workerClass>
+		<validWhileDespawned>true</validWhileDespawned>
+		<nullifiedIfNotColonist>true</nullifiedIfNotColonist>
+		<nullifyingTraits>
+			<li>Psychopath</li>
+		</nullifyingTraits>
+		<stages>
+			<li>
+				<label>no citizenship</label>
+				<description>I am discriminated against due to not sharing the state ideologion.</description>
+				<baseMoodEffect>-6</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+
+</Defs>

@@ -46,7 +46,7 @@ namespace Rimocracy
 
         static bool Vetoed(PoliticalActionDef politicalAction, out DecisionVoteResults opinions, Pawn target = null)
         {
-            if (!Utility.RimocracyComp.IsEnabled)
+            if (!Utility.PoliticsEnabled)
             {
                 opinions = null;
                 return false;
@@ -92,7 +92,7 @@ namespace Rimocracy
 
         public static void Arrest_Postfix(JobDriver_TakeToBed __instance, DecisionVoteResults __state)
         {
-            if (!Utility.RimocracyComp.IsEnabled || !IsActualArrestJob(__instance))
+            if (!Utility.PoliticsEnabled || !IsActualArrestJob(__instance))
                 return;
             Pawn target = __instance.job.targetA.Pawn;
             Utility.Log($"Arrest_Postfix for {target}");
@@ -114,7 +114,7 @@ namespace Rimocracy
 
         public static void Execution_Postfix(Pawn executioner, Pawn victim)
         {
-            if (!Utility.RimocracyComp.IsEnabled || victim.AnimalOrWildMan())
+            if (!Utility.PoliticsEnabled || victim.AnimalOrWildMan())
                 return;
             Utility.Log($"Execution_Postfix('{executioner}', '{victim}')");
             RimocracyDefOf.Execution.Activate(victim);
@@ -134,7 +134,7 @@ namespace Rimocracy
 
         public static void Release_Postfix(Pawn p)
         {
-            if (!Utility.RimocracyComp.IsEnabled || p.AnimalOrWildMan())
+            if (!Utility.PoliticsEnabled || p.AnimalOrWildMan())
                 return;
             Utility.Log($"Release_Postfix('{p}')");
             RimocracyDefOf.Release.Activate(p);
@@ -157,7 +157,7 @@ namespace Rimocracy
 
         public static void Banishment_Postfix(Pawn pawn, DecisionVoteResults __state)
         {
-            if (!Utility.RimocracyComp.IsEnabled)
+            if (!Utility.PoliticsEnabled)
                 return;
             Utility.Log($"Banishment_Postfix for {pawn}");
             if (!Utility.RimocracyComp.ActionsNeedApproval || (__state != null && !__state.Vetoed))
@@ -181,7 +181,7 @@ namespace Rimocracy
 
         public static void SettlementAttack_Postfix(Caravan caravan, Settlement settlement, DecisionVoteResults __state)
         {
-            if (!caravan.Faction.IsPlayer)
+            if (!caravan.Faction.IsPlayer || !Utility.PoliticsEnabled)
                 return;
             Utility.Log($"SettlementAttack_Postfix({caravan}, {settlement})");
             if (!Utility.RimocracyComp.ActionsNeedApproval || (__state != null && !__state.Vetoed))
@@ -204,7 +204,7 @@ namespace Rimocracy
 
         public static void Trade_Postfix(float marketValueSentByPlayer, Faction __instance)
         {
-            if (marketValueSentByPlayer <= 0)
+            if (marketValueSentByPlayer <= 0 || !Utility.PoliticsEnabled)
                 return;
             Utility.Log($"Trade_Postfix({marketValueSentByPlayer}) for {__instance}");
             // Governance is changed in direct proportion to the amount traded and reverse proportion to the total items' wealth of the player
@@ -219,8 +219,12 @@ namespace Rimocracy
         public static bool RoleAssign_Prefix(Precept_RoleSingle __instance, Pawn p)
         {
             Utility.Log($"RoleAssign_Prefix({__instance.def}, {p})");
-            if (__instance.def.leaderRole)
-                return p.IsLeader();
+            if (__instance.def.leaderRole && !p.IsLeader())
+            {
+                Utility.Log($"Blocked assignment of role {__instance.def} to {p}.");
+                Messages.Message($"Manual assignment of leadership roles is disabled by Rimocracy. See Politics tab for information on when, and whether, succession takes place.", MessageTypeDefOf.RejectInput);
+                return false;
+            }
             return true;
         }
 
