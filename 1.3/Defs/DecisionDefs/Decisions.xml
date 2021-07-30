@@ -100,6 +100,21 @@
 					</li>
 				</skills>
 			</li>
+			<li>
+				<label>raider ideologion</label>
+				<support>-5</support>
+				<meme>Raider</meme>
+			</li>
+			<li>
+				<label>individualist ideologion</label>
+				<support>5</support>
+				<meme>Individualist</meme>
+			</li>
+			<li>
+				<label>collectivist ideologion</label>
+				<support>-5</support>
+				<meme>Collectivist</meme>
+			</li>
 		</considerations>
 		<setSuccession>Election</setSuccession>
 	</Rimocracy.DecisionDef>
@@ -273,6 +288,16 @@
 					</li>
 				</skills>
 			</li>
+			<li>
+				<label>loyalist ideologion</label>
+				<support>5</support>
+				<meme>Loyalist</meme>
+			</li>
+			<li>
+				<label>research not allowed</label>
+				<support>4</support>
+				<precept>Research_None</precept>
+			</li>
 		</considerations>
 		<setSuccession>Seniority</setSuccession>
 	</Rimocracy.DecisionDef>
@@ -358,6 +383,16 @@
 						</offset>
 					</li>
 				</skills>
+			</li>
+			<li>
+				<label>loyalist ideologion</label>
+				<support>5</support>
+				<meme>Loyalist</meme>
+			</li>
+			<li>
+				<label>research not allowed</label>
+				<support>4</support>
+				<precept>Research_None</precept>
 			</li>
 		</considerations>
 		<setSuccession>Nobility</setSuccession>
@@ -472,6 +507,31 @@
 					</li>
 				</any>
 			</li>
+			<li>
+				<label>raider ideologion</label>
+				<support>5</support>
+				<meme>Raider</meme>
+			</li>
+			<li>
+				<label>supremacist ideologion</label>
+				<support>10</support>
+				<meme>Supremacist</meme>
+			</li>
+			<li>
+				<label>raiding respected</label>
+				<support>5</support>
+				<precept>Raiding_Respected</precept>
+			</li>
+			<li>
+				<label>raiding required</label>
+				<support>10</support>
+				<precept>Raiding_Required</precept>
+			</li>
+			<li>
+				<label>research not allowed</label>
+				<support>4</support>
+				<precept>Research_None</precept>
+			</li>
 		</considerations>
 		<setSuccession>Martial</setSuccession>
 	</Rimocracy.DecisionDef>
@@ -566,6 +626,16 @@
 					</offset>
 				</opinionOfTarget>
 			</li>
+			<li>
+				<label>loyalist ideologion</label>
+				<support>3</support>
+				<meme>Loyalist</meme>
+			</li>
+			<li>
+				<label>research not allowed</label>
+				<support>2</support>
+				<precept>Research_None</precept>
+			</li>
 		</considerations>
 		<governanceCost>0.50</governanceCost>
 		<setTermDuration>Indefinite</setTermDuration>
@@ -637,6 +707,11 @@
 					</offset>
 				</medianOpinionOfTarget>
 			</li>
+			<li>
+				<label>loyalist ideologion</label>
+				<support>-5</support>
+				<meme>Loyalist</meme>
+			</li>
 		</considerations>
 		<durationTicks>600000</durationTicks>
 		<governanceCost>0.20</governanceCost>
@@ -648,7 +723,7 @@
 	<Rimocracy.DecisionDef>
 		<defName>Populism</defName>
 		<label>consent of the governed</label>
-		<description>A true leader never forgets about his or her people and draws authority from their support. The efficiency of the leader depends on the citizens' median opinion of him/her.</description>
+		<description>A true leader never forgets about his or her people and draws authority from their support. The efficiency of the leader is affected by the citizens' median opinion of him/her.</description>
 		<category>Democratic</category>
 		<displayPriorityInCategory>10</displayPriorityInCategory>
 		<effectRequirements>
@@ -670,6 +745,16 @@
 				<support>10</support>
 				<isLeader>false</isLeader>
 			</li>
+			<li>
+				<label>individualist ideologion</label>
+				<support>10</support>
+				<meme>Individualist</meme>
+			</li>
+			<li>
+				<label>collectivist ideologion</label>
+				<support>-10</support>
+				<meme>Collectivist</meme>
+			</li>
 		</considerations>
 		<tag/>
 		<governanceCost>0.25</governanceCost>
@@ -690,6 +775,16 @@
 				<label>my opinion won't matter anymore</label>
 				<support>-10</support>
 				<isLeader>false</isLeader>
+			</li>
+			<li>
+				<label>individualist ideologion</label>
+				<support>-10</support>
+				<meme>Individualist</meme>
+			</li>
+			<li>
+				<label>collectivist ideologion</label>
+				<support>10</support>
+				<meme>Collectivist</meme>
 			</li>
 		</considerations>
 		<governanceCost>0.15</governanceCost>
@@ -723,6 +818,36 @@
 				<support>10</support>
 				<isLeader>false</isLeader>
 			</li>
+			<li>
+				<label>individualist ideologion</label>
+				<support>5</support>
+				<meme>Individualist</meme>
+			</li>
+			<li>
+				<label>collectivist ideologion</label>
+				<support>-5</support>
+				<meme>Collectivist</meme>
+			</li>
+			<li>
+				<label>human primacy</label>
+				<support>5</support>
+				<meme>HumanPrimacy</meme>
+			</li>
+			<li>
+				<label>pain is virtue</label>
+				<support>-5</support>
+				<meme>PainIsVirtue</meme>
+			</li>
+			<li>
+				<label>guilty ideologion</label>
+				<support>-5</support>
+				<meme>Guilty</meme>
+			</li>
+			<li>
+				<label>comfort ignored</label>
+				<support>-5</support>
+				<precept>Comfort_Ignored</precept>
+			</li>
 		</considerations>
 		<tag/>
 		<governanceCost>0.25</governanceCost>
@@ -743,6 +868,36 @@
 				<label>I wish the government cared more about my happiness</label>
 				<support>-10</support>
 				<isLeader>false</isLeader>
+			</li>
+			<li>
+				<label>individualist ideologion</label>
+				<support>-5</support>
+				<meme>Individualist</meme>
+			</li>
+			<li>
+				<label>collectivist ideologion</label>
+				<support>5</support>
+				<meme>Collectivist</meme>
+			</li>
+			<li>
+				<label>human primacy</label>
+				<support>-5</support>
+				<meme>HumanPrimacy</meme>
+			</li>
+			<li>
+				<label>pain is virtue</label>
+				<support>5</support>
+				<meme>PainIsVirtue</meme>
+			</li>
+			<li>
+				<label>guilty ideologion</label>
+				<support>5</support>
+				<meme>Guilty</meme>
+			</li>
+			<li>
+				<label>comfort ignored</label>
+				<support>5</support>
+				<precept>Comfort_Ignored</precept>
 			</li>
 		</considerations>
 		<governanceCost>0.15</governanceCost>
@@ -877,6 +1032,26 @@
 					</li>
 				</skills>
 			</li>
+			<li>
+				<label>research not allowed</label>
+				<support>-6</support>
+				<precept>Research_None</precept>
+			</li>
+			<li>
+				<label>extremely slow research</label>
+				<support>-4</support>
+				<precept>Research_ExtremelySlow</precept>
+			</li>
+			<li>
+				<label>very slow research</label>
+				<support>-2</support>
+				<precept>Research_VerySlow</precept>
+			</li>
+			<li>
+				<label>very fast research</label>
+				<support>2</support>
+				<precept>Research_VeryFast</precept>
+			</li>
 		</considerations>
 		<tag/>
 		<regimeEffect>0.20</regimeEffect>
@@ -917,6 +1092,28 @@
 				</li>
 			</all>
 		</effectRequirements>
+		<considerations>
+			<li>
+				<label>individualist ideologion</label>
+				<support>-5</support>
+				<meme>Individualist</meme>
+			</li>
+			<li>
+				<label>collectivist ideologion</label>
+				<support>5</support>
+				<meme>Collectivist</meme>
+			</li>
+			<li>
+				<label>loyalist ideologion</label>
+				<support>5</support>
+				<meme>Loyalist</meme>
+			</li>
+			<li>
+				<label>human primacy</label>
+				<support>5</support>
+				<meme>HumanPrimacy</meme>
+			</li>
+		</considerations>
 		<tag/>
 		<regimeEffect>0.30</regimeEffect>
 		<governanceCost>0.25</governanceCost>
@@ -1006,6 +1203,21 @@
 					</offset>
 				</opinionOfTarget>
 			</li>
+			<li>
+				<label>individualist ideologion</label>
+				<support>-5</support>
+				<meme>Individualist</meme>
+			</li>
+			<li>
+				<label>collectivist ideologion</label>
+				<support>5</support>
+				<meme>Collectivist</meme>
+			</li>
+			<li>
+				<label>loyalist ideologion</label>
+				<support>5</support>
+				<meme>Loyalist</meme>
+			</li>
 		</considerations>
 		<tag/>
 		<regimeEffect>-0.20</regimeEffect>
@@ -1039,6 +1251,21 @@
 						</points>
 					</offset>
 				</opinionOfTarget>
+			</li>
+			<li>
+				<label>individualist ideologion</label>
+				<support>5</support>
+				<meme>Individualist</meme>
+			</li>
+			<li>
+				<label>collectivist ideologion</label>
+				<support>-5</support>
+				<meme>Collectivist</meme>
+			</li>
+			<li>
+				<label>loyalist ideologion</label>
+				<support>-5</support>
+				<meme>Loyalist</meme>
 			</li>
 		</considerations>
 		<governanceCost>0.15</governanceCost>
@@ -1104,6 +1331,31 @@
 					</offset>
 				</opinionOfTarget>
 			</li>
+			<li>
+				<label>individualist ideologion</label>
+				<support>-5</support>
+				<meme>Individualist</meme>
+			</li>
+			<li>
+				<label>collectivist ideologion</label>
+				<support>5</support>
+				<meme>Collectivist</meme>
+			</li>
+			<li>
+				<label>pain is virtue</label>
+				<support>-5</support>
+				<meme>PainIsVirtue</meme>
+			</li>
+			<li>
+				<label>guilty ideologion</label>
+				<support>-5</support>
+				<meme>Guilty</meme>
+			</li>
+			<li>
+				<label>comfort ignored</label>
+				<support>-5</support>
+				<precept>Comfort_Ignored</precept>
+			</li>
 		</considerations>
 		<tag/>
 		<regimeEffect>-0.20</regimeEffect>
@@ -1143,6 +1395,31 @@
 						</points>
 					</offset>
 				</opinionOfTarget>
+			</li>
+			<li>
+				<label>individualist ideologion</label>
+				<support>-5</support>
+				<meme>Individualist</meme>
+			</li>
+			<li>
+				<label>collectivist ideologion</label>
+				<support>5</support>
+				<meme>Collectivist</meme>
+			</li>
+			<li>
+				<label>pain is virtue</label>
+				<support>5</support>
+				<meme>PainIsVirtue</meme>
+			</li>
+			<li>
+				<label>guilty ideologion</label>
+				<support>5</support>
+				<meme>Guilty</meme>
+			</li>
+			<li>
+				<label>comfort ignored</label>
+				<support>5</support>
+				<precept>Comfort_Ignored</precept>
 			</li>
 		</considerations>
 		<governanceCost>0.15</governanceCost>
@@ -1215,6 +1492,11 @@
 					</offset>
 				</medianOpinionOfTarget>
 			</li>
+			<li>
+				<label>ideological structure</label>
+				<support>5</support>
+				<meme>Structure_Ideological</meme>
+			</li>
 		</considerations>
 		<tag/>
 		<regimeEffect>-0.20</regimeEffect>
@@ -1267,6 +1549,11 @@
 					</offset>
 				</medianOpinionOfTarget>
 			</li>
+			<li>
+				<label>ideological structure</label>
+				<support>-5</support>
+				<meme>Structure_Ideological</meme>
+			</li>
 		</considerations>
 		<governanceCost>0.15</governanceCost>
 		<cancelDecision>CultOfPersonality</cancelDecision>
@@ -1317,6 +1604,16 @@
 				<label>Campaign is on</label>
 				<support>-5</support>
 				<campaigning>true</campaigning>
+			</li>
+			<li>
+				<label>raider ideologion</label>
+				<support>5</support>
+				<meme>Raider</meme>
+			</li>
+			<li>
+				<label>comfort ignored</label>
+				<support>5</support>
+				<precept>Comfort_Ignored</precept>
 			</li>
 		</considerations>
 		<durationTicks>180000</durationTicks>
@@ -1641,7 +1938,7 @@
 				<isLeader>true</isLeader>
 			</li>
 			<li>
-				<label>Opinion of {TARGET}</label>
+				<label>trust in {TARGET}</label>
 				<isLeader>false</isLeader>
 				<opinionOfTarget>
 					<offset>
@@ -1671,12 +1968,12 @@
 		</displayRequirements>
 		<considerations>
 			<li>
-				<label>My authority will be reduced</label>
+				<label>my authority will be reduced</label>
 				<support>-50</support>
 				<isLeader>true</isLeader>
 			</li>
 			<li>
-				<label>Opinion of {TARGET}</label>
+				<label>trust in {TARGET}</label>
 				<isLeader>false</isLeader>
 				<opinionOfTarget>
 					<offset>

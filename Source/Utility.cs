@@ -40,8 +40,8 @@ namespace Rimocracy
 
         public static float TotalNutrition => Find.Maps.Where(map => map.mapPawns.AnyColonistSpawned).Sum(map => map.resourceCounter.TotalHumanEdibleNutrition);
 
-        public static float FoodConsumptionPerDay
-            => PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonistsAndPrisoners_NoCryptosleep.Sum(pawn => pawn.needs.food.FoodFallPerTick) * GenDate.TicksPerDay;
+        public static float FoodConsumptionPerDay =>
+            PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonistsAndPrisoners_NoCryptosleep.Sum(pawn => pawn.needs.food.FoodFallPerTick) * GenDate.TicksPerDay;
 
         public static float DaysOfFood => TotalNutrition / FoodConsumptionPerDay;
 
@@ -55,8 +55,8 @@ namespace Rimocracy
 
         public static int TermDurationTicks => RimocracyComp.TermDuration.GetDurationTicks();
 
-        public static string DateFullStringWithHourAtHome(long tick)
-            => GenDate.DateFullStringWithHourAt(tick, Find.WorldGrid.LongLatOf(Find.AnyPlayerHomeMap.Tile));
+        public static string DateFullStringWithHourAtHome(long tick) =>
+            GenDate.DateFullStringWithHourAt(tick, Find.WorldGrid.LongLatOf(Find.AnyPlayerHomeMap.Tile));
 
         public static bool IsFreeAdultColonist(this Pawn pawn)
             => pawn != null
@@ -65,14 +65,14 @@ namespace Rimocracy
             && pawn.ageTracker.AgeBiologicalYears >= Settings.CitizenshipAge
             && (!IsSimpleSlaveryInstalled || !pawn.health.hediffSet.hediffs.Any(hediff => hediff.def == RimocracyDefOf.Enslaved));
 
-        public static bool IsCitizen(this Pawn pawn)
-            => pawn.IsFreeAdultColonist() && (!ModsConfig.IdeologyActive || !RimocracyComp.DecisionActive("StateIdeologion") || pawn?.Ideo == NationPrimaryIdea);
+        public static bool IsCitizen(this Pawn pawn) =>
+            pawn.IsFreeAdultColonist() && (!ModsConfig.IdeologyActive || !RimocracyComp.DecisionActive("StateIdeologion") || pawn?.Ideo == NationPrimaryIdea);
 
-        public static Precept_RoleSingle IdeologyLeaderPrecept 
-            => NationPrimaryIdea.GetAllPreceptsOfType<Precept_RoleSingle>().FirstOrDefault(p => p.def == PreceptDefOf.IdeoRole_Leader);
+        public static Precept_RoleSingle IdeologyLeaderPrecept =>
+            NationPrimaryIdea.GetAllPreceptsOfType<Precept_RoleSingle>().FirstOrDefault(p => p.def == PreceptDefOf.IdeoRole_Leader);
 
-        public static bool CanBeLeader(this Pawn p)
-            => p.IsCitizen() && !p.GetDisabledWorkTypes(true).Contains(RimocracyDefOf.Governing) && (!ModsConfig.IdeologyActive || IdeologyLeaderPrecept.RequirementsMet(p));
+        public static bool CanBeLeader(this Pawn p) =>
+            p.IsCitizen() && !p.GetDisabledWorkTypes(true).Contains(RimocracyDefOf.Governing) && (!ModsConfig.IdeologyActive || IdeologyLeaderPrecept.RequirementsMet(p));
 
         public static bool IsLeader(this Pawn p) => PoliticsEnabled && RimocracyComp.Leader == p;
 
@@ -143,6 +143,8 @@ namespace Rimocracy
 
         public static float MedianCitizensOpinion(this Pawn pawn) =>
              Citizens.Where(p => p != pawn).Select(p => (float)p.needs.mood.thoughts.TotalOpinionOffset(pawn)).Median();
+
+        public static float MedianMood => Citizens.Select(pawn => pawn.needs.mood.CurLevelPercentage).Median();
 
         public static float Median(this IEnumerable<float> values)
         {

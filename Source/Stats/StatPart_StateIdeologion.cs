@@ -29,7 +29,7 @@ namespace Rimocracy
                 val = val * factor + offset;
         }
 
-        protected bool AppliesTo(StatRequest req)
-            => Utility.PoliticsEnabled && Utility.RimocracyComp.DecisionActive("StateIdeologion") && req.Pawn?.Ideo != null && req.Pawn.Ideo == Utility.NationPrimaryIdea;
+        protected bool AppliesTo(StatRequest req) =>
+            Utility.PoliticsEnabled && Utility.RimocracyComp.DecisionActive("StateIdeologion") && req.Pawn?.Ideo != null && req.Pawn.Ideo == Utility.NationPrimaryIdea;
     }
 }

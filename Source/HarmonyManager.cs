@@ -12,36 +12,37 @@ namespace Rimocracy
     {
         internal static Harmony harmony;
 
-        static bool initialized = false;
-
         public static void Initialize()
         {
-            if (initialized)
+            if (harmony != null)
                 return;
+
             harmony = new Harmony("Garwel.Rimocracy");
             Type type = typeof(HarmonyManager);
 
-            Utility.Log($"Applying Harmony patches...");
-            harmony.Patch(AccessTools.Method("RimWorld.JobDriver_TakeToBed:MakeNewToils"),
-                prefix: new HarmonyMethod(type.GetMethod("Arrest_Prefix")),
-                postfix: new HarmonyMethod(type.GetMethod("Arrest_Postfix")));
-            harmony.Patch(AccessTools.Method("RimWorld.JobDriver_Execute:MakeNewToils"), prefix: new HarmonyMethod(type.GetMethod("Execution_Prefix")));
-            harmony.Patch(AccessTools.Method("RimWorld.ExecutionUtility:DoExecutionByCut"), postfix: new HarmonyMethod(type.GetMethod("Execution_Postfix")));
-            harmony.Patch(AccessTools.Method("Verse.AI.JobDriver_ReleasePrisoner:MakeNewToils"), prefix: new HarmonyMethod(type.GetMethod("Release_Prefix")));
-            harmony.Patch(AccessTools.Method("RimWorld.GenGuest:PrisonerRelease"), postfix: new HarmonyMethod(type.GetMethod("Release_Postfix")));
-            harmony.Patch(AccessTools.Method("RimWorld.PawnBanishUtility:Banish"),
-                prefix: new HarmonyMethod(type.GetMethod("Banishment_Prefix")),
-                postfix: new HarmonyMethod(type.GetMethod("Banishment_Postfix")));
-            harmony.Patch(AccessTools.Method("RimWorld.Planet.SettlementUtility:Attack"),
-                prefix: new HarmonyMethod(type.GetMethod("SettlementAttack_Prefix")),
-                postfix: new HarmonyMethod(type.GetMethod("SettlementAttack_Postfix")));
-            harmony.Patch(AccessTools.Method("RimWorld.Dialog_Trade:PostOpen"), postfix: new HarmonyMethod(type.GetMethod("Trade_Prefix")));
-            harmony.Patch(AccessTools.Method("RimWorld.Faction:Notify_PlayerTraded"), postfix: new HarmonyMethod(type.GetMethod("Trade_Postfix")));
+            void Patch(string methodToPatch, string prefix = null, string postfix = null) =>
+                harmony.Patch(
+                    AccessTools.Method(methodToPatch),
+                    prefix != null ? new HarmonyMethod(type.GetMethod(prefix)) : null,
+                    postfix != null ? new HarmonyMethod(type.GetMethod(postfix)) : null);
 
-            harmony.Patch(AccessTools.Method("RimWorld.Precept_RoleSingle:Assign"), prefix: new HarmonyMethod(type.GetMethod("RoleAssign_Prefix")));
+            Utility.Log($"Applying Harmony patches...");
+
+            // Patches for political actions
+            Patch("RimWorld.JobDriver_TakeToBed:MakeNewToils", "Arrest_Prefix", "Arrest_Postfix");
+            Patch("RimWorld.JobDriver_Execute:MakeNewToils", "Execution_Prefix");
+            Patch("RimWorld.ExecutionUtility:DoExecutionByCut", postfix: "Execution_Postfix");
+            Patch("Verse.AI.JobDriver_ReleasePrisoner:MakeNewToils", "Release_Prefix");
+            Patch("RimWorld.GenGuest:PrisonerRelease", postfix: "Release_Postfix");
+            Patch("RimWorld.PawnBanishUtility:Banish", "Banishment_Prefix", "Banishment_Postfix");
+            Patch("RimWorld.Planet.SettlementUtility:Attack", "SettlementAttack_Prefix", "SettlementAttack_Postfix");
+            Patch("RimWorld.Dialog_Trade:PostOpen", postfix: "Trade_Prefix");
+            Patch("RimWorld.Faction:Notify_PlayerTraded", postfix: "Trade_Postfix");
+
+            // Ideology compatibility patch
+            Patch("RimWorld.Precept_RoleSingle:Assign", "RoleAssign_Prefix");
 
             Utility.Log($"{harmony.GetPatchedMethods().EnumerableCount()} methods patched with Harmony.");
-            initialized = true;
         }
 
         static bool Vetoed(PoliticalActionDef politicalAction, out DecisionVoteResults opinions, Pawn target = null)
@@ -74,8 +75,8 @@ namespace Rimocracy
         #region ARREST
 
         // Check is the TakeToBed job is in fact to arrest a non-prisoner for the colony (to prevent it from firing for relocating prisoners etc.)
-        static bool IsActualArrestJob(JobDriver_TakeToBed jobDriver)
-            => jobDriver.job.def.makeTargetPrisoner && jobDriver.pawn.IsColonist && !jobDriver.job.targetA.Pawn.IsPrisonerOfColony;
+        static bool IsActualArrestJob(JobDriver_TakeToBed jobDriver) =>
+            jobDriver.job.def.makeTargetPrisoner && jobDriver.pawn.IsColonist && !jobDriver.job.targetA.Pawn.IsPrisonerOfColony;
 
         public static void Arrest_Prefix(JobDriver_TakeToBed __instance, out DecisionVoteResults __state)
         {

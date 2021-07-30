@@ -11,7 +11,10 @@ namespace Rimocracy
 
         public RimocracyMod(ModContentPack content)
             : base(content)
-            => GetSettings<Settings>();
+        {
+            GetSettings<Settings>();
+            HarmonyManager.Initialize();
+        }
 
         public override void DoSettingsWindowContents(Rect rect)
         {
