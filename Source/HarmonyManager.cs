@@ -219,10 +219,10 @@ namespace Rimocracy
         // Prevents the game from assigning leader roles to anyone who is not a Rimocracy leader
         public static bool RoleAssign_Prefix(Precept_RoleSingle __instance, Pawn p)
         {
-            Utility.Log($"RoleAssign_Prefix({__instance.def}, {p})");
-            if (__instance.def.leaderRole && !p.IsLeader())
+            Utility.Log($"RoleAssign_Prefix({__instance.def}, {p?.Label ?? "null"})");
+            if (__instance.def.leaderRole && p.HomeFaction.IsPlayer && !p.IsLeader())
             {
-                Utility.Log($"Blocked assignment of role {__instance.def} to {p}.");
+                Utility.Log($"Blocked assignment of role {__instance.def} to {p}. Current leader: {Utility.RimocracyComp.Leader?.NameShortColored ?? "null"}");
                 Messages.Message($"Manual assignment of leadership roles is disabled by Rimocracy. See Politics tab for information on when, and whether, succession takes place.", MessageTypeDefOf.RejectInput);
                 return false;
             }

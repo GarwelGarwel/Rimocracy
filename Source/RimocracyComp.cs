@@ -51,11 +51,27 @@ namespace Rimocracy
             get => leader;
             set
             {
+                if (leader == value)
+                    return;
                 leader = value;
                 if (ModsConfig.IdeologyActive)
                     if (value != null)
-                        Utility.IdeologyLeaderPrecept.Assign(value, true);
-                    else Utility.IdeologyLeaderPrecept.Unassign(Find.FactionManager.OfPlayer.leader, true);
+                    {
+                        if (Utility.NationPrimaryIdeo != value.Ideo)
+                        {
+                            // Set the new leader's ideologion as the primary one (for Multiculturalism)
+                            Utility.Log($"Current primary ideo: {Utility.NationPrimaryIdeo}; new primary ideo: {value.Ideo}");
+                            Utility.NationPrimaryIdeo.Notify_NotPrimaryAnymore(value.Ideo);
+                            Find.FactionManager.OfPlayer.ideos.SetPrimary(value.Ideo);
+                        }
+                        Utility.IdeologyLeaderPrecept().Assign(value, true);
+                    }
+                    else
+                    {
+                        Utility.IdeologyLeaderPrecept().Unassign(Find.FactionManager.OfPlayer.leader, true);
+                        // This call is needed to reset the primary ideologion if it was changed by Multiculturalism:
+                        Find.FactionManager.OfPlayer.ideos.Notify_ColonistChangedIdeo();
+                    }
                 else Find.FactionManager.OfPlayer.leader = value;
             }
         }
@@ -279,12 +295,13 @@ namespace Rimocracy
                         foreach (ElectionCampaign campaign in Campaigns.InRandomOrder())
                             campaign.RareTick();
                     }
-                    else if (!ElectionPossible)
-                    {
-                        Utility.Log("Canceling election, because not enough valid candidates available.");
-                        Messages.Message("Election canceled: need at least two valid candidates.", MessageTypeDefOf.NegativeEvent);
-                        ElectionTick = int.MaxValue;
-                    }
+
+                if (ElectionCalled && !ElectionPossible)
+                {
+                    Utility.Log("Canceling election, because not enough valid candidates available.");
+                    Messages.Message("Election canceled: need at least two valid candidates.", MessageTypeDefOf.NegativeEvent);
+                    ElectionTick = int.MaxValue;
+                }
 
                 // If election is due, choose new leader
                 if (ticks >= ElectionTick)
@@ -357,7 +374,7 @@ namespace Rimocracy
             Pawn oldLeader = Leader;
             Leader = SuccessionWorker.ChooseLeader();
 
-            if (Leader != null)
+            if (HasLeader)
             {
                 Utility.Log($"{Leader} was chosen to be the leader.");
 
