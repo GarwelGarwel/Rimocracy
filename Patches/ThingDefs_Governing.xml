@@ -92,6 +92,7 @@
 		</operations>
 	</Operation>
 	<Operation Class="PatchOperationAdd">
+		<success>Always</success>
 		<xpath>/Defs/ThingDef[defName="Throne"]/comps</xpath>
 		<value>
 			<li>
@@ -124,6 +125,7 @@
 		</operations>
 	</Operation>
 	<Operation Class="PatchOperationAdd">
+		<success>Always</success>
 		<xpath>/Defs/ThingDef[defName="GrandThrone"]/comps</xpath>
 		<value>
 			<li>
