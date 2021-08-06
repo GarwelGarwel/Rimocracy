@@ -108,7 +108,7 @@ namespace Rimocracy
             if (res && leaderExists != null)
                 res &= Utility.RimocracyComp.HasLeader == leaderExists;
             if (res && campaigning != null)
-                res &= !Utility.RimocracyComp.Campaigns.NullOrEmpty() == campaigning;
+                res &= Utility.RimocracyComp.IsCampaigning == campaigning;
             if (res && governance != null)
                 res &= governance.Compare(Utility.RimocracyComp.Governance);
             if (res && regime != null)

@@ -220,7 +220,10 @@ namespace Rimocracy
         public static bool RoleAssign_Prefix(Precept_RoleSingle __instance, Pawn p)
         {
             Utility.Log($"RoleAssign_Prefix({__instance.def}, {p})");
-            if (__instance.def.leaderRole && !p.IsLeader())
+            if (__instance.ChosenPawnValue != null)
+                Utility.Log($"The role {__instance.def.LabelCap} is currently held by {__instance.ChosenPawnValue}.");
+            else Utility.Log($"The role {__instance.def.LabelCap} is currently vacant.");
+            if (__instance.def.leaderRole && !p.IsLeader() && !__instance.IsAssigned(p))
             {
                 Utility.Log($"Blocked assignment of role {__instance.def} to {p}.");
                 Messages.Message($"Manual assignment of leadership roles is disabled by Rimocracy. See Politics tab for information on when, and whether, succession takes place.", MessageTypeDefOf.RejectInput);
@@ -229,6 +232,6 @@ namespace Rimocracy
             return true;
         }
 
-        #endregion
+        #endregion IDEOLOGY PATCHES
     }
 }

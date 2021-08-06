@@ -31,10 +31,8 @@ namespace Rimocracy
         {
             Dictionary<Pawn, int> votes = GetVotes();
 
-            // Logging votes
             if (Settings.DebugLogging)
-                foreach (KeyValuePair<Pawn, int> kvp in votes)
-                    Utility.Log($"- {kvp.Key}: {kvp.Value.ToStringCached()} votes");
+                Utility.Log(votes.Select(kvp => $"- {kvp.Key}: {kvp.Value.ToStringCached()} votes").ToLineList());
 
             // Determining the winner
             KeyValuePair<Pawn, int> winner = votes.MaxByWithFallback(kvp => kvp.Value);
@@ -46,8 +44,6 @@ namespace Rimocracy
         /// <summary>
         /// Returns the given number of candidates with the most votes
         /// </summary>
-        /// <param name="num"></param>
-        /// <returns></returns>
         public IEnumerable<Pawn> ChooseLeaders(int num = campaignsNumber) => GetVotes().OrderByDescending(kvp => kvp.Value).Take(num).Select(kvp => kvp.Key);
 
         Dictionary<Pawn, int> GetVotes()
@@ -57,9 +53,9 @@ namespace Rimocracy
             foreach (Pawn p in Utility.Citizens.ToList())
             {
                 Pawn votedFor = Vote(p);
-                if (votes.ContainsKey(votedFor))
-                    votes[votedFor]++;
-                else votes[votedFor] = 1;
+                if (votedFor == null)
+                    continue;
+                votes.Increment(p);
             }
             return votes;
         }
@@ -69,8 +65,10 @@ namespace Rimocracy
             Dictionary<Pawn, float> weights = new Dictionary<Pawn, float>();
             foreach (Pawn p in Candidates.Where(p => voter != p))
                 weights[p] = ElectionUtility.VoteWeight(voter, p);
-            Pawn choice = weights.MaxBy(kvp => kvp.Value).Key;
-            Utility.Log($"{voter} votes for {choice}.");
+            Pawn choice = weights.MaxByWithFallback(kvp => kvp.Value, new KeyValuePair<Pawn, float>(null, float.MinValue)).Key;
+            if (choice != null)
+                Utility.Log($"{voter} votes for {choice}.");
+            else Utility.Log($"{voter} has no suitable candidates to vote for.");
             return choice;
         }
     }

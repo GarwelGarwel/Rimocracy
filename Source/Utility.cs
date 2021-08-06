@@ -31,8 +31,8 @@ namespace Rimocracy
 
         public static bool IsSimpleSlaveryInstalled => (bool)(simpleSlaveryInstalled ?? (simpleSlaveryInstalled = RimocracyDefOf.Enslaved != null));
 
-        public static IEnumerable<Pawn> Citizens
-            => PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonists_NoCryptosleep.Where(p => p.IsCitizen());
+        public static IEnumerable<Pawn> Citizens =>
+            PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonists_NoCryptosleep.Where(p => p.IsCitizen());
 
         public static int CitizensCount => Citizens.Count();
 
