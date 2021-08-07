@@ -56,8 +56,8 @@ namespace Rimocracy
                 leader = value;
                 if (ModsConfig.IdeologyActive)
                     if (value != null)
-                        Utility.IdeologyLeaderPrecept.Assign(value, true);
-                    else Utility.IdeologyLeaderPrecept.Unassign(Find.FactionManager.OfPlayer.leader, true);
+                        Utility.IdeologyLeaderPrecept().Assign(value, true);
+                    else Utility.IdeologyLeaderPrecept().Unassign(Find.FactionManager.OfPlayer.leader, true);
                 else Find.FactionManager.OfPlayer.leader = value;
             }
         }
@@ -225,8 +225,9 @@ namespace Rimocracy
             if (!IsUpdateTick)
                 return;
 
-            if (Utility.CitizensCount < Settings.MinPopulation)
+            if (Utility.CitizensCount < Settings.MinPopulation || (!HasLeader && !Utility.Citizens.Any(p => p.CanBeLeader())))
             {
+                // If there are too few citizens or no potential leaders, politics is disabled
                 if (IsEnabled)
                 {
                     IsEnabled = false;

@@ -4,7 +4,7 @@
 
 	<!-- Ideology -->
 
-	<Operation Class="PatchOperationSequence">
+	<!--Operation Class="PatchOperationSequence">
 		<success>Always</success>
 		<operations>
 			<li Class="PatchOperationTest">
@@ -22,6 +22,29 @@
 	<Operation Class="PatchOperationAdd">
 		<success>Always</success>
 		<xpath>/Defs/PreceptDef[defName="IdeoRole_Leader"]/roleRequirements</xpath>
+		<value>
+			<li Class="Rimocracy.RoleRequirement_Leader"/>
+		</value>
+	</Operation-->
+
+	<Operation Class="PatchOperationSequence">
+		<success>Always</success>
+		<operations>
+			<li Class="PatchOperationTest">
+				<xpath>/Defs/PreceptDef[@Name='PreceptRoleSingleBase' or @Name='PreceptRoleMultiBase']/roleRequirements</xpath>
+				<success>Invert</success>
+			</li>
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/PreceptDef[@Name='PreceptRoleSingleBase' or @Name='PreceptRoleMultiBase']/roleRequirements</xpath>
+				<value>
+					<roleRequirements/>
+				</value>
+			</li>
+		</operations>
+	</Operation>
+	<Operation Class="PatchOperationAdd">
+		<success>Always</success>
+			<xpath>/Defs/PreceptDef[@Name='PreceptRoleSingleBase' or @Name='PreceptRoleMultiBase']/roleRequirements</xpath>
 		<value>
 			<li Class="Rimocracy.RoleRequirement_Leader"/>
 		</value>
