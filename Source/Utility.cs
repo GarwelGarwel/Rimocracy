@@ -31,8 +31,8 @@ namespace Rimocracy
 
         public static bool IsSimpleSlaveryInstalled => (bool)(simpleSlaveryInstalled ?? (simpleSlaveryInstalled = RimocracyDefOf.Enslaved != null));
 
-        public static IEnumerable<Pawn> Citizens
-            => PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonists_NoCryptosleep.Where(p => p.IsCitizen());
+        public static IEnumerable<Pawn> Citizens =>
+            PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonists_NoCryptosleep.Where(p => p.IsCitizen());
 
         public static int CitizensCount => Citizens.Count();
 
@@ -66,15 +66,15 @@ namespace Rimocracy
             && (!IsSimpleSlaveryInstalled || !pawn.health.hediffSet.hediffs.Any(hediff => hediff.def == RimocracyDefOf.Enslaved));
 
         public static bool IsCitizen(this Pawn pawn) =>
-            pawn.IsFreeAdultColonist() && (!ModsConfig.IdeologyActive || !RimocracyComp.DecisionActive("StateIdeologion") || pawn?.Ideo == NationPrimaryIdeo);
+            pawn.IsFreeAdultColonist() && (!ModsConfig.IdeologyActive || pawn?.Ideo == NationPrimaryIdea || !RimocracyComp.DecisionActive("StateIdeologion"));
 
         public static Precept_RoleSingle IdeologyLeaderPrecept(Ideo ideo = null) =>
-            (ideo ?? NationPrimaryIdeo).GetAllPreceptsOfType<Precept_RoleSingle>().FirstOrDefault(p => p.def == PreceptDefOf.IdeoRole_Leader);
+            (ideo ?? NationPrimaryIdea).GetAllPreceptsOfType<Precept_RoleSingle>().FirstOrDefault(p => p.def == PreceptDefOf.IdeoRole_Leader);
 
-        public static bool CanBeLeader(this Pawn pawn) =>
-            pawn.IsCitizen()
-            && !pawn.GetDisabledWorkTypes(true).Contains(RimocracyDefOf.Governing)
-            && (!ModsConfig.IdeologyActive || IdeologyLeaderPrecept().RequirementsMet(pawn) || (RimocracyComp.DecisionActive("Multiculturalism") && IdeologyLeaderPrecept(pawn.Ideo).RequirementsMet(pawn)));
+        public static bool RoleRequirementsMetPotentially(Pawn pawn, Precept_Role role) => role.def.roleRequirements.All(req => req is RoleRequirement_Leader || req.Met(pawn, role));
+
+        public static bool CanBeLeader(this Pawn p) =>
+            p.IsCitizen() && !p.GetDisabledWorkTypes(true).Contains(RimocracyDefOf.Governing) && (!ModsConfig.IdeologyActive || RoleRequirementsMetPotentially(p, IdeologyLeaderPrecept()));
 
         public static bool IsLeader(this Pawn p) => PoliticsEnabled && RimocracyComp.Leader == p;
 

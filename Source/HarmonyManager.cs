@@ -40,7 +40,7 @@ namespace Rimocracy
             Patch("RimWorld.Faction:Notify_PlayerTraded", postfix: "Trade_Postfix");
 
             // Ideology compatibility patch
-            Patch("RimWorld.Precept_RoleSingle:Assign", "RoleAssign_Prefix");
+            Patch("RimWorld.Precept_RoleSingle:Unassign", "RoleUnassign_Prefix");
 
             Utility.Log($"{harmony.GetPatchedMethods().EnumerableCount()} methods patched with Harmony.");
         }
@@ -216,19 +216,19 @@ namespace Rimocracy
 
         #region IDEOLOGY PATCHES
 
-        // Prevents the game from assigning leader roles to anyone who is not a Rimocracy leader
-        public static bool RoleAssign_Prefix(Precept_RoleSingle __instance, Pawn p)
+        public static bool RoleUnassign_Prefix(Precept_RoleSingle __instance, Pawn p)
         {
-            Utility.Log($"RoleAssign_Prefix({__instance.def}, {p?.Label ?? "null"})");
-            if (__instance.def.leaderRole && p.HomeFaction.IsPlayer && !p.IsLeader())
+            Utility.Log($"RoleUnassign_Prefix({__instance.def}, {p})");
+            if (__instance.def.leaderRole && p != null && p.IsLeader())
             {
-                Utility.Log($"Blocked assignment of role {__instance.def} to {p}. Current leader: {Utility.RimocracyComp.Leader?.NameShortColored ?? "null"}");
-                Messages.Message($"Manual assignment of leadership roles is disabled by Rimocracy. See Politics tab for information on when, and whether, succession takes place.", MessageTypeDefOf.RejectInput);
+                Utility.Log($"Blocked unassignment of role {__instance.def} from {p}.");
+                Messages.Message($"{Utility.LeaderTitle} can only be unassigned via Impeachment decision.", MessageTypeDefOf.RejectInput);
+                Find.WindowStack.Add(new Dialog_DecisionList());
                 return false;
             }
             return true;
         }
 
-        #endregion
+        #endregion IDEOLOGY PATCHES
     }
 }

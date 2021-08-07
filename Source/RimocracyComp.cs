@@ -56,22 +56,8 @@ namespace Rimocracy
                 leader = value;
                 if (ModsConfig.IdeologyActive)
                     if (value != null)
-                    {
-                        if (Utility.NationPrimaryIdeo != value.Ideo)
-                        {
-                            // Set the new leader's ideologion as the primary one (for Multiculturalism)
-                            Utility.Log($"Current primary ideo: {Utility.NationPrimaryIdeo}; new primary ideo: {value.Ideo}");
-                            Utility.NationPrimaryIdeo.Notify_NotPrimaryAnymore(value.Ideo);
-                            Find.FactionManager.OfPlayer.ideos.SetPrimary(value.Ideo);
-                        }
                         Utility.IdeologyLeaderPrecept().Assign(value, true);
-                    }
-                    else
-                    {
-                        Utility.IdeologyLeaderPrecept().Unassign(Find.FactionManager.OfPlayer.leader, true);
-                        // This call is needed to reset the primary ideologion if it was changed by Multiculturalism:
-                        Find.FactionManager.OfPlayer.ideos.Notify_ColonistChangedIdeo();
-                    }
+                    else Utility.IdeologyLeaderPrecept().Unassign(Find.FactionManager.OfPlayer.leader, true);
                 else Find.FactionManager.OfPlayer.leader = value;
             }
         }
@@ -102,6 +88,8 @@ namespace Rimocracy
             get => campaigns;
             set => campaigns = value;
         }
+
+        public bool IsCampaigning => !Campaigns.NullOrEmpty();
 
         public IEnumerable<Pawn> Candidates
         {
@@ -184,11 +172,6 @@ namespace Rimocracy
 
         public bool ElectionCalled => ElectionTick != int.MaxValue;
 
-        /// <summary>
-        /// Checks if at least two candidates are available (may not be the case when Ideology is installed and too few citizens have the colony's primary ideologion)
-        /// </summary>
-        bool ElectionPossible => SuccessionWorker.Candidates.Count() >= 2;
-
         public bool ActionsNeedApproval
         {
             get => actionsNeedApproval;
@@ -242,8 +225,9 @@ namespace Rimocracy
             if (!IsUpdateTick)
                 return;
 
-            if (Utility.CitizensCount < Settings.MinPopulation)
+            if (Utility.CitizensCount < Settings.MinPopulation || (!HasLeader && !Utility.Citizens.Any(p => p.CanBeLeader())))
             {
+                // If there are too few citizens or no potential leaders, politics is disabled
                 if (IsEnabled)
                 {
                     IsEnabled = false;
@@ -280,7 +264,7 @@ namespace Rimocracy
                     // If term is about to expire or there is no (valid) leader, call a new election
                     if (!ElectionCalled)
                         CallElection();
-                    else if (!Campaigns.NullOrEmpty())
+                    else if (IsCampaigning)
                     {
                         // If at least one of the candidates is no longer eligible, campaign starts over
                         ElectionCampaign invalidCampaign = Campaigns.Find(p => !SuccessionWorker.CanBeCandidate(p.Candidate));
@@ -295,13 +279,6 @@ namespace Rimocracy
                         foreach (ElectionCampaign campaign in Campaigns.InRandomOrder())
                             campaign.RareTick();
                     }
-
-                if (ElectionCalled && !ElectionPossible)
-                {
-                    Utility.Log("Canceling election, because not enough valid candidates available.");
-                    Messages.Message("Election canceled: need at least two valid candidates.", MessageTypeDefOf.NegativeEvent);
-                    ElectionTick = int.MaxValue;
-                }
 
                 // If election is due, choose new leader
                 if (ticks >= ElectionTick)
@@ -344,12 +321,6 @@ namespace Rimocracy
                 return;
             }
 
-            if (!ElectionPossible)
-            {
-                Utility.Log($"No election called, because only {SuccessionWorker.Candidates.Count().ToStringCached()} candidate(s) available.");
-                return;
-            }
-
             ElectionTick = Find.TickManager.TicksAbs + Settings.CampaignDurationTicks;
             Utility.Log($"Election has been called on {Utility.DateFullStringWithHourAtHome(ElectionTick)}.");
 
@@ -361,10 +332,7 @@ namespace Rimocracy
             if (ElectionUtility.CampaigningEnabled)
             {
                 Candidates = ((SuccessionWorker_Election)SuccessionWorker).ChooseLeaders();
-                Utility.Log("Candidates in the campaign: ");
-                foreach (ElectionCampaign ec in campaigns)
-                    Utility.Log($"- {ec}");
-
+                Utility.Log($"Candidates in the campaign: {campaigns.Select(ec => $"- {ec}").ToCommaList(true, true)}");
                 Messages.Message($"The election campaign is on! {Candidates.Select(p => p.LabelShortCap).ToCommaList(true)} are competing to be the {Utility.LeaderTitle} of {Utility.NationName}.", new LookTargets(Candidates), MessageTypeDefOf.NeutralEvent);
             }
         }
@@ -397,7 +365,7 @@ namespace Rimocracy
                     }
 
                 // Campaign supporters gain their thoughts too
-                if (Campaigns != null)
+                if (IsCampaigning)
                     foreach (ElectionCampaign campaign in Campaigns)
                     {
                         int stage = campaign.Candidate.IsLeader() ? 3 : 2;
