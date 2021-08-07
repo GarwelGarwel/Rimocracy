@@ -14,7 +14,7 @@ namespace Rimocracy
             // Politics Disabled
             if (!Utility.PoliticsEnabled)
             {
-                Widgets.Label(inRect, $"You need at least {Settings.MinPopulation.ToStringCached()} free, adult colonists for politics.");
+                Widgets.Label(inRect, $"You need at least {Settings.MinPopulation.ToStringCached()} free, adult colonists and a potential leader for politics.");
                 return;
             }
 

@@ -51,7 +51,7 @@ namespace Rimocracy
 
         public static IEnumerable<LeaderTitleDef> ApplicableLeaderTitles => DefDatabase<LeaderTitleDef>.AllDefs.Where(def => def.IsApplicable);
 
-        public static string LeaderTitle => (ModsConfig.IdeologyActive ? IdeologyLeaderPrecept?.Label : RimocracyComp?.LeaderTitleDef?.GetTitle(RimocracyComp.Leader)) ?? "leader";
+        public static string LeaderTitle => (ModsConfig.IdeologyActive ? IdeologyLeaderPrecept()?.Label : RimocracyComp?.LeaderTitleDef?.GetTitle(RimocracyComp.Leader)) ?? "leader";
 
         public static int TermDurationTicks => RimocracyComp.TermDuration.GetDurationTicks();
 
@@ -68,13 +68,13 @@ namespace Rimocracy
         public static bool IsCitizen(this Pawn pawn) =>
             pawn.IsFreeAdultColonist() && (!ModsConfig.IdeologyActive || pawn?.Ideo == NationPrimaryIdea || !RimocracyComp.DecisionActive("StateIdeologion"));
 
-        public static Precept_RoleSingle IdeologyLeaderPrecept =>
-            NationPrimaryIdea.GetAllPreceptsOfType<Precept_RoleSingle>().FirstOrDefault(p => p.def == PreceptDefOf.IdeoRole_Leader);
+        public static Precept_RoleSingle IdeologyLeaderPrecept(Ideo ideo = null) =>
+            (ideo ?? NationPrimaryIdea).GetAllPreceptsOfType<Precept_RoleSingle>().FirstOrDefault(p => p.def == PreceptDefOf.IdeoRole_Leader);
 
         public static bool RoleRequirementsMetPotentially(Pawn pawn, Precept_Role role) => role.def.roleRequirements.All(req => req is RoleRequirement_Leader || req.Met(pawn, role));
 
         public static bool CanBeLeader(this Pawn p) =>
-            p.IsCitizen() && !p.GetDisabledWorkTypes(true).Contains(RimocracyDefOf.Governing) && (!ModsConfig.IdeologyActive || RoleRequirementsMetPotentially(p, IdeologyLeaderPrecept));
+            p.IsCitizen() && !p.GetDisabledWorkTypes(true).Contains(RimocracyDefOf.Governing) && (!ModsConfig.IdeologyActive || RoleRequirementsMetPotentially(p, IdeologyLeaderPrecept()));
 
         public static bool IsLeader(this Pawn p) => PoliticsEnabled && RimocracyComp.Leader == p;
 

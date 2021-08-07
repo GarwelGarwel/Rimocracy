@@ -219,12 +219,10 @@ namespace Rimocracy
         public static bool RoleUnassign_Prefix(Precept_RoleSingle __instance, Pawn p)
         {
             Utility.Log($"RoleUnassign_Prefix({__instance.def}, {p})");
-            if (p == null)
-                return true;
-            if (__instance.def.leaderRole && p.IsLeader())
+            if (__instance.def.leaderRole && p != null && p.IsLeader())
             {
                 Utility.Log($"Blocked unassignment of role {__instance.def} from {p}.");
-                Messages.Message($"Manual removal of leaders is disabled by Rimocracy. Use Impeach decision instead.", MessageTypeDefOf.RejectInput);
+                Messages.Message($"{Utility.LeaderTitle} can only be unassigned via Impeachment decision.", MessageTypeDefOf.RejectInput);
                 Find.WindowStack.Add(new Dialog_DecisionList());
                 return false;
             }
