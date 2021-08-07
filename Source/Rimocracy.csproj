@@ -74,6 +74,7 @@
     <Compile Include="SkillOperations.cs" />
     <Compile Include="Stats\StatPart_StateIdeologion.cs" />
     <Compile Include="ThingComps\ThingComp_GoverningBench.cs" />
+    <Compile Include="Thoughts\ThoughtWorker_Multiculturalism.cs" />
     <Compile Include="Thoughts\ThoughtWorker_StateIdeologion.cs" />
     <Compile Include="ValueOperations.cs" />
     <Compile Include="Decision.cs" />

@@ -15,6 +15,9 @@ namespace Rimocracy
 
     public class DecisionDef : Def
     {
+        public const string Multiculturalism = "Multiculturalism";
+        public const string StateIdeologion = "StateIdeologion";
+
         public DecisionCategoryDef category;
         public int displayPriorityInCategory;
 
