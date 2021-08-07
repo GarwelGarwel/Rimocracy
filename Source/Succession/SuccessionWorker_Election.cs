@@ -55,7 +55,7 @@ namespace Rimocracy
                 Pawn votedFor = Vote(p);
                 if (votedFor == null)
                     continue;
-                votes.Increment(p);
+                votes.Increment(votedFor);
             }
             return votes;
         }
