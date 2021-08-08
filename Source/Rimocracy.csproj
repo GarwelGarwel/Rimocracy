@@ -68,6 +68,7 @@
     <Compile Include="DecisionVoteResults.cs" />
     <Compile Include="Defs\PoliticalActionDef.cs" />
     <Compile Include="Dialog_PoliticalAction.cs" />
+    <Compile Include="GoodwillSituationWorker_Multiculturalism.cs" />
     <Compile Include="HarmonyManager.cs" />
     <Compile Include="RoleRequirement_Leader.cs" />
     <Compile Include="PawnDecisionOpinion.cs" />
