@@ -26,6 +26,12 @@
 	</Rimocracy.DecisionCategoryDef>
 
 	<Rimocracy.DecisionCategoryDef>
+		<defName>Ideology</defName>
+		<label>ideology</label>
+		<displayOrder>50</displayOrder>
+	</Rimocracy.DecisionCategoryDef>
+
+	<Rimocracy.DecisionCategoryDef>
 		<defName>Misc</defName>
 		<label>miscellaneous</label>
 		<displayOrder>100</displayOrder>

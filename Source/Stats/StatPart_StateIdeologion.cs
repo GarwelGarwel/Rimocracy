@@ -30,6 +30,6 @@ namespace Rimocracy
         }
 
         protected bool AppliesTo(StatRequest req) =>
-            Utility.PoliticsEnabled && Utility.RimocracyComp.DecisionActive("StateIdeologion") && req.Pawn?.Ideo != null && req.Pawn.Ideo == Utility.NationPrimaryIdea;
+            Utility.PoliticsEnabled && Utility.RimocracyComp.DecisionActive(DecisionDef.StateIdeologion) && req.Pawn?.Ideo != null && req.Pawn.Ideo == Utility.NationPrimaryIdeo;
     }
 }

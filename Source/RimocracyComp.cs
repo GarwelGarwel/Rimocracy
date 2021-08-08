@@ -54,7 +54,7 @@ namespace Rimocracy
                 if (leader == value)
                     return;
                 leader = value;
-                if (ModsConfig.IdeologyActive)
+                if (ModsConfig.IdeologyActive && !DecisionActive(DecisionDef.Multiculturalism))
                     if (value != null)
                         Utility.IdeologyLeaderPrecept().Assign(value, true);
                     else Utility.IdeologyLeaderPrecept().Unassign(Find.FactionManager.OfPlayer.leader, true);
@@ -240,7 +240,7 @@ namespace Rimocracy
             IsEnabled = true;
             int ticks = Find.TickManager.TicksAbs;
 
-            if (!ModsConfig.IdeologyActive && LeaderTitleDef == null)
+            if ((!ModsConfig.IdeologyActive || DecisionActive(DecisionDef.Multiculturalism)) && LeaderTitleDef == null)
                 ChooseLeaderTitle();
 
             // Remove expired or invalid decisions
@@ -342,11 +342,11 @@ namespace Rimocracy
             Pawn oldLeader = Leader;
             Leader = SuccessionWorker.ChooseLeader();
 
-            if (Leader != null)
+            if (HasLeader)
             {
                 Utility.Log($"{Leader} was chosen to be the leader.");
 
-                if (!ModsConfig.IdeologyActive && (LeaderTitleDef == null || !LeaderTitleDef.IsApplicable || (Leader != oldLeader && Rand.Chance(0.2f))))
+                if ((!ModsConfig.IdeologyActive || DecisionActive(DecisionDef.Multiculturalism)) && (LeaderTitleDef == null || !LeaderTitleDef.IsApplicable || (Leader != oldLeader && Rand.Chance(0.2f))))
                     ChooseLeaderTitle();
 
                 if (TermDuration != TermDuration.Indefinite)

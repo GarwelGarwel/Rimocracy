@@ -164,7 +164,7 @@ namespace Rimocracy
                     res &= targetFactionGoodwill.Compare(target.Faction.PlayerGoodwill);
             }
 
-            Ideo ideo = pawn?.Ideo ?? Utility.NationPrimaryIdea;
+            Ideo ideo = pawn?.Ideo ?? Utility.NationPrimaryIdeo;
             if (ideo != null)
             {
                 if (res && !meme.NullOrEmpty())
@@ -173,7 +173,7 @@ namespace Rimocracy
                     res &= ideo.PreceptsListForReading.Any(p => p.def.defName == precept);
                 if (res && ideoCertainty != null && pawn?.ideo != null)
                     res &= ideoCertainty.Compare(pawn.ideo.Certainty);
-                Ideo targetIdeo = target?.Ideo ?? Utility.NationPrimaryIdea;
+                Ideo targetIdeo = target?.Ideo ?? Utility.NationPrimaryIdeo;
                 if (res && sameIdeologion != null && ideo != null)
                     res &= (ideo == targetIdeo) == sameIdeologion;
             }

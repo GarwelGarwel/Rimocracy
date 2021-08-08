@@ -4,29 +4,6 @@
 
 	<!-- Ideology -->
 
-	<!--Operation Class="PatchOperationSequence">
-		<success>Always</success>
-		<operations>
-			<li Class="PatchOperationTest">
-				<xpath>/Defs/PreceptDef[defName="IdeoRole_Leader"]/roleRequirements</xpath>
-				<success>Invert</success>
-			</li>
-			<li Class="PatchOperationAdd">
-				<xpath>/Defs/PreceptDef[defName="IdeoRole_Leader"]</xpath>
-				<value>
-					<roleRequirements/>
-				</value>
-			</li>
-		</operations>
-	</Operation>
-	<Operation Class="PatchOperationAdd">
-		<success>Always</success>
-		<xpath>/Defs/PreceptDef[defName="IdeoRole_Leader"]/roleRequirements</xpath>
-		<value>
-			<li Class="Rimocracy.RoleRequirement_Leader"/>
-		</value>
-	</Operation-->
-
 	<Operation Class="PatchOperationSequence">
 		<success>Always</success>
 		<operations>
