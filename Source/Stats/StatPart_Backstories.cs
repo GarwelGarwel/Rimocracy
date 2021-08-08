@@ -6,7 +6,7 @@ namespace Rimocracy
 {
     public class StatPart_Backstories : StatPart
     {
-        public List<StatModifierString> modifiers;
+        public List<StatModifier> modifiers;
 
         public override string ExplanationPart(StatRequest req)
         {
@@ -16,10 +16,10 @@ namespace Rimocracy
                 return null;
 
             string res = "";
-            StatModifierString mod = GetStatModifierString(pawn.story.childhood);
+            StatModifier mod = GetStatModifier(pawn.story.childhood);
             if (mod != null)
                 res = mod.ToString();
-            mod = GetStatModifierString(pawn.story.adulthood);
+            mod = GetStatModifier(pawn.story.adulthood);
             if (mod != null)
                 res += $"\n{mod}";
             return res == "" ? null : res.Trim();
@@ -36,19 +36,14 @@ namespace Rimocracy
             BackstoryEffect(pawn.story.adulthood, ref val);
         }
 
-        StatModifierString GetStatModifierString(Backstory backstory) => backstory != null ? modifiers.Find(m => m.name == backstory.identifier) : null;
+        StatModifier GetStatModifier(Backstory backstory) => backstory != null ? modifiers.Find(m => m.name == backstory.identifier) : null;
 
         void BackstoryEffect(Backstory backstory, ref float val)
         {
             if (backstory?.identifier == null)
                 return;
 
-            StatModifierString mod = GetStatModifierString(backstory);
-            if (mod != null)
-            {
-                val *= mod.factor;
-                val += mod.offset;
-            }
+            GetStatModifier(backstory)?.TransformValue(ref val);
         }
     }
 }

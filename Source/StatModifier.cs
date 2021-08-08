@@ -2,11 +2,15 @@
 
 namespace Rimocracy
 {
-    public class StatModifierString : IExposable
+    public class StatModifier : IExposable
     {
         public string name;
-        public float factor;
+
+        public float factor = 1;
+        
         public float offset;
+
+        public void TransformValue(ref float value) => value = value * factor + offset;
 
         public override string ToString()
         {
