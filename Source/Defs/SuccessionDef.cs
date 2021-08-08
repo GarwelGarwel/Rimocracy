@@ -9,6 +9,8 @@ namespace Rimocracy
 
         public Type workerClass;
 
+        public float weight = 1;
+
         public float regimeEffect;
 
         public string newLeaderMessageTitle = "New {LEADERTITLE}";
@@ -20,8 +22,6 @@ namespace Rimocracy
         public string sameLeaderMessageText = "{PAWN} remains the {LEADERTITLE} of {NATIONNAME}.";
 
         private SuccessionWorker worker;
-
-        public static SuccessionDef Named(string defName) => DefDatabase<SuccessionDef>.GetNamed(defName);
 
         public SuccessionWorker Worker
         {

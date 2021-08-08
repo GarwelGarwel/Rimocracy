@@ -25,7 +25,7 @@ namespace Rimocracy
 
         SkillDef focusSkill;
         TermDuration termDuration = TermDuration.Halfyear;
-        SuccessionDef successionType = RimocracyDefOf.Election;
+        SuccessionDef successionType;
         List<ElectionCampaign> campaigns;
         int termExpiration = int.MaxValue;
         int electionTick = int.MaxValue;
@@ -70,12 +70,19 @@ namespace Rimocracy
             set => leaderTitle = value;
         }
 
+        public SuccessionDef GetRandomSuccessionDef()
+        {
+            foreach (SuccessionDef def in DefDatabase<SuccessionDef>.AllDefs)
+                Utility.Log($"{def.LabelCap}: weight {def.weight}, {(def.Worker.IsValid ? "valid" : "invalid")}");
+            return DefDatabase<SuccessionDef>.AllDefs.Where(def => def.Worker.IsValid).RandomElementByWeight(def => def.weight);
+        }
+
         public SuccessionDef SuccessionType
         {
             get
             {
                 if (successionType == null)
-                    successionType = RimocracyDefOf.Election;
+                    successionType = GetRandomSuccessionDef();
                 return successionType;
             }
             set => successionType = value;
@@ -91,7 +98,7 @@ namespace Rimocracy
 
         public bool IsCampaigning => !Campaigns.NullOrEmpty();
 
-        public IEnumerable<Pawn> Candidates
+        public IEnumerable<Pawn> CampaigningCandidates
         {
             get => campaigns?.Select(c => c.Candidate);
             set
@@ -125,7 +132,7 @@ namespace Rimocracy
         }
 
         public float RegimeFinal =>
-            Mathf.Clamp(RegimeBase + (SuccessionWorker != null ? SuccessionWorker.def.regimeEffect : 0) + TermDuration.GetRegimeEffect(), -1, 1);
+            Mathf.Clamp(RegimeBase + (SuccessionType != null ? SuccessionType.regimeEffect : 0) + TermDuration.GetRegimeEffect(), -1, 1);
 
         public TermDuration TermDuration
         {
@@ -252,11 +259,11 @@ namespace Rimocracy
                     Decisions.RemoveAt(i);
                 }
 
-            if (SuccessionType == null || !SuccessionWorker.IsValid)
-            {
-                Utility.Log($"Succession type is {SuccessionType}. SuccessionWorker is {SuccessionWorker}. Resetting to election.");
-                SuccessionType = RimocracyDefOf.Election;
-            }
+            //if (SuccessionType == null || !SuccessionWorker.IsValid)
+            //{
+            //    Utility.Log($"Succession type is {SuccessionType}. SuccessionWorker is {SuccessionWorker}. Resetting to election.");
+            //    SuccessionType = RimocracyDefOf.Election;
+            //}
 
             if (SuccessionType == RimocracyDefOf.Election)
             {
@@ -331,9 +338,9 @@ namespace Rimocracy
             // Launch campaigns
             if (ElectionUtility.CampaigningEnabled)
             {
-                Candidates = ((SuccessionWorker_Election)SuccessionWorker).ChooseLeaders();
+                CampaigningCandidates = ((SuccessionWorker_Election)SuccessionWorker).ChooseLeaders();
                 Utility.Log($"Candidates in the campaign: {campaigns.Select(ec => $"- {ec}").ToCommaList(true, true)}");
-                Messages.Message($"The election campaign is on! {Candidates.Select(p => p.LabelShortCap).ToCommaList(true)} are competing to be the {Utility.LeaderTitle} of {Utility.NationName}.", new LookTargets(Candidates), MessageTypeDefOf.NeutralEvent);
+                Messages.Message($"The election campaign is on! {CampaigningCandidates.Select(p => p.LabelShortCap).ToCommaList(true)} are competing to be the {Utility.LeaderTitle} of {Utility.NationName}.", new LookTargets(CampaigningCandidates), MessageTypeDefOf.NeutralEvent);
             }
         }
 
@@ -355,19 +362,13 @@ namespace Rimocracy
                 ElectionTick = int.MaxValue;
                 FocusSkill = Leader.GetCampaign()?.FocusSkill ?? SkillsUtility.GetRandomSkill(Leader.skills.skills, Leader == oldLeader ? FocusSkill : null);
 
-                // Candidates gain positive or negative thoughts of the election outcome + opinion memories of each other
-                if (Candidates != null)
-                    foreach (Pawn p in Candidates)
-                    {
-                        p.needs.mood.thoughts.memories.TryGainMemory(ThoughtMaker.MakeThought(RimocracyDefOf.ElectionOutcome, p.IsLeader() ? 1 : 0));
-                        foreach (Pawn p2 in Candidates.Where(p2 => p2 != p))
-                            p.needs.mood.thoughts.memories.TryGainMemory(RimocracyDefOf.ElectionCompetitorMemory, p2);
-                    }
-
-                // Campaign supporters gain their thoughts too
+                // Campaigning candidates and their supporters gain their thoughts 
                 if (IsCampaigning)
                     foreach (ElectionCampaign campaign in Campaigns)
                     {
+                        campaign.Candidate.needs.mood.thoughts.memories.TryGainMemory(ThoughtMaker.MakeThought(RimocracyDefOf.ElectionOutcome, campaign.Candidate.IsLeader() ? 1 : 0));
+                        foreach (Pawn p2 in CampaigningCandidates.Where(p2 => p2 != campaign.Candidate))
+                            campaign.Candidate.needs.mood.thoughts.memories.TryGainMemory(RimocracyDefOf.ElectionCompetitorMemory, p2);
                         int stage = campaign.Candidate.IsLeader() ? 3 : 2;
                         foreach (Pawn p in campaign.Supporters.Where(p => p != campaign.Candidate))
                             p.needs.mood.thoughts.memories.TryGainMemory(ThoughtMaker.MakeThought(RimocracyDefOf.ElectionOutcome, stage));

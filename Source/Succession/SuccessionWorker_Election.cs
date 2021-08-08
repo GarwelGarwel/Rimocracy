@@ -9,7 +9,7 @@ namespace Rimocracy
         int lastVotesForWinner = 0;
         public const int campaignsNumber = 2;
 
-        public override IEnumerable<Pawn> Candidates => Utility.RimocracyComp.Candidates ?? base.Candidates;
+        public override IEnumerable<Pawn> Candidates => Utility.RimocracyComp.CampaigningCandidates ?? base.Candidates;
 
         string VotesNumString => lastVotesForWinner > 1 ? $"{lastVotesForWinner.ToStringCached()} votes" : "just one vote";
 
