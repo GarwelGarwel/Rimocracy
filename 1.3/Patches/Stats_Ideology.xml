@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<Patch>
+
+	<!-- Governance Effects on Work Efficiency -->
+
+	<Operation Class="PatchOperationSequence">
+		<success>Always</success>
+		<operations>
+			<li Class="PatchOperationTest">
+				<xpath>/Defs/StatDef[defName="SuppressionPower"]/parts</xpath>
+				<success>Invert</success>
+			</li>
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/StatDef[defName="SuppressionPower"]</xpath>
+				<value>
+					<parts/>
+				</value>
+			</li>
+		</operations>
+	</Operation>
+	<Operation Class="PatchOperationAdd">
+		<success>Always</success>
+		<xpath>/Defs/StatDef[defName="SuppressionPower"]/parts</xpath>
+		<value>
+			<li Class="Rimocracy.StatPart_Governance">
+				<maxValue>1.25</maxValue>
+				<focusOnly>true</focusOnly>
+			</li>
+		</value>
+	</Operation>
+	
+	<Operation Class="PatchOperationSequence">
+		<success>Always</success>
+		<operations>
+			<li Class="PatchOperationTest">
+				<xpath>/Defs/StatDef[defName="HackingSpeed"]/parts</xpath>
+				<success>Invert</success>
+			</li>
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/StatDef[defName="HackingSpeed"]</xpath>
+				<value>
+					<parts/>
+				</value>
+			</li>
+		</operations>
+	</Operation>
+	<Operation Class="PatchOperationAdd">
+		<success>Always</success>
+		<xpath>/Defs/StatDef[defName="HackingSpeed"]/parts</xpath>
+		<value>
+			<li Class="Rimocracy.StatPart_Governance">
+				<maxValue>1.5</maxValue>
+				<focusOnly>true</focusOnly>
+			</li>
+		</value>
+	</Operation>
+	
+	<Operation Class="PatchOperationSequence">
+		<success>Always</success>
+		<operations>
+			<li Class="PatchOperationTest">
+				<xpath>/Defs/StatDef[defName="PruningSpeed"]/parts</xpath>
+				<success>Invert</success>
+			</li>
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/StatDef[defName="PruningSpeed"]</xpath>
+				<value>
+					<parts/>
+				</value>
+			</li>
+		</operations>
+	</Operation>
+	<Operation Class="PatchOperationAdd">
+		<success>Always</success>
+		<xpath>/Defs/StatDef[defName="PruningSpeed"]/parts</xpath>
+		<value>
+			<li Class="Rimocracy.StatPart_Governance">
+				<maxValue>1.25</maxValue>
+				<focusOnly>true</focusOnly>
+			</li>
+		</value>
+	</Operation>
+	
+	<Operation Class="PatchOperationAdd">
+		<success>Always</success>
+		<xpath>/Defs/StatDef[defName="ConversionPower"]/parts</xpath>
+		<value>
+			<li Class="Rimocracy.StatPart_Governance">
+				<maxValue>1.25</maxValue>
+				<focusOnly>true</focusOnly>
+			</li>
+		</value>
+	</Operation>
+	
+	<!-- State Ideoligion -->
+
+	<Operation Class="PatchOperationAdd">
+		<success>Always</success>
+		<xpath>/Defs/StatDef[defName="ConversionPower"]/parts</xpath>
+		<value>
+			<li Class="Rimocracy.StatPart_StateIdeologion">
+				<factor>1.25</factor>
+			</li>
+		</value>
+	</Operation>
+
+</Patch>

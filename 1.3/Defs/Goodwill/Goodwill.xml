@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+	<GoodwillSituationDef>
+		<defName>Multiculturalism</defName>
+		<label>multiculturalism</label>
+		<workerClass>Rimocracy.GoodwillSituationWorker_Multiculturalism</workerClass>
+		<naturalGoodwillOffset>10</naturalGoodwillOffset>
+	</GoodwillSituationDef>
+
+</Defs>

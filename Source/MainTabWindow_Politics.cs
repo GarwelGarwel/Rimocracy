@@ -14,15 +14,17 @@ namespace Rimocracy
             // Politics Disabled
             if (!Utility.PoliticsEnabled)
             {
-                Widgets.Label(inRect, $"You need at least {Settings.MinPopulation.ToStringCached()} free, adult colonists for politics.");
+                Widgets.Label(inRect, $"You need at least {Settings.MinPopulation.ToStringCached()} free, adult colonists and a potential leader for politics.");
                 return;
             }
 
             Listing_Standard content = new Listing_Standard();
             content.Begin(inRect);
 
+            string leaderTitle = Utility.LeaderTitle.CapitalizeFirst(Utility.RimocracyComp.LeaderTitleDef);
+
             // Current Leader
-            content.Label($"{Utility.LeaderTitle.CapitalizeFirst(Utility.RimocracyComp.LeaderTitleDef)}: {Utility.RimocracyComp.Leader?.NameFullColored ?? "none"}");
+            content.Label($"{leaderTitle}: {Utility.RimocracyComp.Leader?.NameFullColored ?? "none"}");
 
             // Governance target, leader skills and next succession
             if (Utility.RimocracyComp.HasLeader)
@@ -40,15 +42,18 @@ namespace Rimocracy
             }
             // Next election
             else if (Utility.RimocracyComp.ElectionTick > Find.TickManager.TicksAbs)
-                content.Label($"{Utility.LeaderTitle.CapitalizeFirst(Utility.RimocracyComp.LeaderTitleDef)} will be elected in {(Utility.RimocracyComp.ElectionTick - Find.TickManager.TicksAbs).ToStringTicksToPeriod(false)}.", tooltip: Utility.DateFullStringWithHourAtHome(Utility.RimocracyComp.ElectionTick));
+            {
+                if (Utility.RimocracyComp.ElectionTick != int.MaxValue)
+                    content.Label($"{leaderTitle} will be elected in {(Utility.RimocracyComp.ElectionTick - Find.TickManager.TicksAbs).ToStringTicksToPeriod(false)}.", tooltip: Utility.DateFullStringWithHourAtHome(Utility.RimocracyComp.ElectionTick));
+                else content.Label($"Election of a new {leaderTitle} not yet called for.");
+            }
             else content.Label($"Choosing a new {Utility.LeaderTitle}...");
 
             // Election candidates
-            if (!Utility.RimocracyComp.Campaigns.EnumerableNullOrEmpty())
+            if (Utility.RimocracyComp.IsCampaigning)
             {
                 content.Gap();
-                content.Label("Candidates:");
-                content.Label(Utility.RimocracyComp.Campaigns.Select(ec => ec.ToString()).ToLineList("- "));
+                content.Label($"Candidates:\r\n{Utility.RimocracyComp.Campaigns.Select(ec => ec.ToString()).ToLineList("- ")}");
             }
 
             content.Gap();

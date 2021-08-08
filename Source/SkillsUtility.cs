@@ -28,7 +28,7 @@ namespace Rimocracy
         /// <param name="skills">List of SkillRecords of the pawn</param>
         /// <param name="luckySkill">SkillDef whose chances are doubled</param>
         /// <returns></returns>
-        public static SkillDef GetRandomSkill(List<SkillRecord> skills, SkillDef luckySkill)
-            => skills.RandomElementByWeight(sr => (sr.Level + 1) * (sr.def == luckySkill ? 2 : 1)).def;
+        public static SkillDef GetRandomSkill(List<SkillRecord> skills, SkillDef luckySkill) =>
+            skills.RandomElementByWeight(sr => (sr.Level + 1) * (sr.def == luckySkill ? 2 : 1)).def;
     }
 }

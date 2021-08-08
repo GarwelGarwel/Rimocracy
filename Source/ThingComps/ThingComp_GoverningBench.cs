@@ -24,9 +24,6 @@ namespace Rimocracy
                 };
         }
 
-        public override void PostExposeData()
-        {
-            Scribe_Values.Look(ref allowGoverning, "allowGoverning", true);
-        }
+        public override void PostExposeData() => Scribe_Values.Look(ref allowGoverning, "allowGoverning", true);
     }
 }
