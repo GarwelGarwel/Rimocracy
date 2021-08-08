@@ -1,4 +1,7 @@
-﻿using System;
+﻿using RimWorld;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Verse;
 
 namespace Rimocracy
@@ -10,6 +13,8 @@ namespace Rimocracy
         public Type workerClass;
 
         public float weight = 1;
+
+        List<StatModifier> memes = new List<StatModifier>();
 
         public float regimeEffect;
 
@@ -33,6 +38,19 @@ namespace Rimocracy
                     worker.def = this;
                 }
                 return worker;
+            }
+        }
+
+        public float Weight
+        {
+            get
+            {
+                float res = weight;
+                Ideo ideo = Utility.NationPrimaryIdeo;
+                if (!memes.NullOrEmpty() && ideo != null)
+                    foreach (StatModifier meme in memes.Where(meme => ideo.memes.Exists(m => m.defName == meme.name)))
+                        meme.TransformValue(ref res);
+                return res;
             }
         }
     }

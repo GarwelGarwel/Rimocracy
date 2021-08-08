@@ -17,6 +17,7 @@ namespace Rimocracy
     {
         public const string Multiculturalism = "Multiculturalism";
         public const string StateIdeologion = "StateIdeologion";
+        public const string StateOfEmergency = "StateOfEmergency";
 
         public DecisionCategoryDef category;
         public int displayPriorityInCategory;
@@ -117,6 +118,7 @@ namespace Rimocracy
             {
                 Utility.Log($"Setting term duration to {setTermDuration}.");
                 Utility.RimocracyComp.TermDuration = setTermDuration;
+                Utility.RimocracyComp.RecalcTermExpiration();
             }
 
             if (impeachLeader && Utility.RimocracyComp.HasLeader)
