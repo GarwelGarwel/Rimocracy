@@ -1638,11 +1638,11 @@
 
 	<Rimocracy.DecisionDef>
 		<defName>StateIdeologion</defName>
-		<label>establish state ideologion</label>
-		<description>Only colonists that share the primary belief system have citizenship rights. This ideologion will become more attractive, but disenfranchised colonists will be unhappy.</description>
-		<category>Misc</category>
+		<label>state ideologion</label>
+		<description>Only colonists that share the primary belief system have citizenship rights. This ideologion will become more attractive, but disenfranchised colonists will be unhappy. Note: Canceling this decision later may be hard, especially if the state ideologion opposes freedom of thought.</description>
+		<category>Ideology</category>
 		<enactment>Referendum</enactment>
-		<displayPriorityInCategory>50</displayPriorityInCategory>
+		<displayPriorityInCategory>10</displayPriorityInCategory>
 		<displayRequirements>
 			<all>
 				<li>
@@ -1785,9 +1785,9 @@
 		<defName>StateIdeologion_Cancel</defName>
 		<label>abolish state ideologion</label>
 		<description>All free, adult colonists shall have citizenship rights regardless of their ideologion.</description>
-		<category>Misc</category>
+		<category>Ideology</category>
 		<enactment>Referendum</enactment>
-		<displayPriorityInCategory>50</displayPriorityInCategory>
+		<displayPriorityInCategory>10</displayPriorityInCategory>
 		<displayRequirements>
 			<modActive>Ideology</modActive>
 			<decision>StateIdeologion</decision>
@@ -1800,19 +1800,13 @@
 			</li>
 			<li>
 				<label>I have a different ideologion</label>
-				<support>10</support>
+				<support>50</support>
 				<sameIdeologion>false</sameIdeologion>
 			</li>
 			<li>
 				<label>proselytizer ideologion</label>
 				<support>-5</support>
 				<sameIdeologion>true</sameIdeologion>
-				<meme>Proselytizer</meme>
-			</li>
-			<li>
-				<label>proselytizer ideologion</label>
-				<support>5</support>
-				<sameIdeologion>false</sameIdeologion>
 				<meme>Proselytizer</meme>
 			</li>
 			<li>
@@ -1898,18 +1892,6 @@
 					</offset>
 				</ideoCertainty>
 			</li>
-			<li>
-				<label>certainty in ideologion</label>
-				<sameIdeologion>false</sameIdeologion>
-				<ideoCertainty>
-					<offset>
-						<points>
-							<li>(0, -10)</li>
-							<li>(1, 10)</li>
-						</points>
-					</offset>
-				</ideoCertainty>
-			</li>
 		</considerations>
 		<governanceCost>0.20</governanceCost>
 		<cancelDecision>StateIdeologion</cancelDecision>
@@ -1919,11 +1901,11 @@
 
 	<Rimocracy.DecisionDef>
 		<defName>Multiculturalism</defName>
-		<label>adopt multiculturalism</label>
-		<description>Citizens' beliefs shall have no effect on their civil rights. Anyone can become the nation's political leader, but ideologions' leadership roles are abolished. Followers of non-primary ideologion will appreciate this equality.</description>
-		<category>Misc</category>
+		<label>multiculturalism</label>
+		<description>Citizens' beliefs shall have no effect on their civil rights. Follower of any ideologion can become the nation's political leader, but there will be no ideologion leader. Followers of non-primary ideologion will appreciate this equality.</description>
+		<category>Ideology</category>
 		<enactment>Referendum</enactment>
-		<displayPriorityInCategory>60</displayPriorityInCategory>
+		<displayPriorityInCategory>20</displayPriorityInCategory>
 		<displayRequirements>
 			<all>
 				<li>
@@ -2036,20 +2018,15 @@
 	<Rimocracy.DecisionDef>
 		<defName>Multiculturalism_Cancel</defName>
 		<label>abolish multiculturalism</label>
-		<description>Only representatives of the primary ideologion shall be allowed to lead the nation. They will also become the ideologion's leader.</description>
-		<category>Misc</category>
+		<description>Only representatives of the primary ideologion shall be allowed to lead the nation. The political leader will also become his or her ideologion's leader.</description>
+		<category>Ideology</category>
 		<enactment>Referendum</enactment>
-		<displayPriorityInCategory>60</displayPriorityInCategory>
+		<displayPriorityInCategory>20</displayPriorityInCategory>
 		<displayRequirements>
 			<modActive>Ideology</modActive>
 			<decision>Multiculturalism</decision>
 		</displayRequirements>
 		<considerations>
-			<li>
-				<label>kind</label>
-				<support>-5</support>
-				<trait>Kind</trait>
-			</li>
 			<li>
 				<label>I lose a chance to become a leader</label>
 				<support>-10</support>
@@ -2063,8 +2040,13 @@
 				<sameIdeologion>false</sameIdeologion>
 			</li>
 			<li>
+				<label>kind</label>
+				<support>-5</support>
+				<trait>Kind</trait>
+			</li>
+			<li>
 				<label>I gain the Ideologion leader title</label>
-				<support>20</support>
+				<support>15</support>
 				<isLeader>true</isLeader>
 				<sameIdeologion>true</sameIdeologion>
 			</li>
@@ -2124,18 +2106,6 @@
 						<points>
 							<li>(0, -5)</li>
 							<li>(1, 5)</li>
-						</points>
-					</offset>
-				</ideoCertainty>
-			</li>
-			<li>
-				<label>certainty in ideologion</label>
-				<sameIdeologion>false</sameIdeologion>
-				<ideoCertainty>
-					<offset>
-						<points>
-							<li>(0, 0)</li>
-							<li>(1, -10)</li>
 						</points>
 					</offset>
 				</ideoCertainty>
