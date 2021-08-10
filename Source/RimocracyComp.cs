@@ -70,14 +70,14 @@ namespace Rimocracy
             set => leaderTitle = value;
         }
 
-        public SuccessionDef GetRandomSuccessionDef() => DefDatabase<SuccessionDef>.AllDefs.Where(def => def.Worker.IsValid).RandomElementByWeight(def => def.Weight);
+        public SuccessionDef GetRandomSuccessionDef(Ideo ideo) => DefDatabase<SuccessionDef>.AllDefs.Where(def => def.Worker.IsValid).RandomElementByWeight(def => def.GetWeight(ideo));
 
         public SuccessionDef SuccessionType
         {
             get
             {
                 if (successionType == null)
-                    successionType = GetRandomSuccessionDef();
+                    successionType = GetRandomSuccessionDef(Utility.NationPrimaryIdeo);
                 return successionType;
             }
             set => successionType = value;

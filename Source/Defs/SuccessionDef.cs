@@ -41,17 +41,13 @@ namespace Rimocracy
             }
         }
 
-        public float Weight
+        public float GetWeight(Ideo ideo)
         {
-            get
-            {
-                float res = weight;
-                Ideo ideo = Utility.NationPrimaryIdeo;
-                if (!memes.NullOrEmpty() && ideo != null)
-                    foreach (StatModifier meme in memes.Where(meme => ideo.memes.Exists(m => m.defName == meme.name)))
-                        meme.TransformValue(ref res);
-                return res;
-            }
+            float res = weight;
+            if (!memes.NullOrEmpty() && ideo != null)
+                foreach (StatModifier meme in memes.Where(meme => ideo.memes.Exists(m => m.defName == meme.name)))
+                    meme.TransformValue(ref res);
+            return res;
         }
     }
 }
