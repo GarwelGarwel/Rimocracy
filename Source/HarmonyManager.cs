@@ -230,7 +230,7 @@ namespace Rimocracy
             return true;
         }
 
-        // Resets succession type to a random one on primary ideologion change
+        // Resets succession type to a random one on primary ideoligion change
         public static void PrimaryIdeoChange_Postfix(Ideo __instance, Ideo newIdeo)
         {
             Utility.Log($"PrimaryIdeoChange_Postfix('{__instance.name}', '{newIdeo.name}')");
@@ -240,7 +240,7 @@ namespace Rimocracy
             if (newSuccession != Utility.RimocracyComp.SuccessionType)
             {
                 Utility.Log($"Succession type changed from {Utility.RimocracyComp.SuccessionType.LabelCap} to {newSuccession.LabelCap}.");
-                Find.LetterStack.ReceiveLetter("Succession type changed", $"Succession type changed to {newSuccession.LabelCap} due to change of primary ideologion.\n\n{newSuccession.description}", LetterDefOf.NeutralEvent);
+                Find.LetterStack.ReceiveLetter("Succession type changed", $"Succession type changed to {newSuccession.LabelCap} due to change of primary ideoligion.\n\n{newSuccession.description}", LetterDefOf.NeutralEvent);
                 Utility.RimocracyComp.SuccessionType = newSuccession;
             }
         }

@@ -73,10 +73,10 @@
     <Compile Include="RoleRequirement_Leader.cs" />
     <Compile Include="PawnDecisionOpinion.cs" />
     <Compile Include="SkillOperations.cs" />
-    <Compile Include="Stats\StatPart_StateIdeologion.cs" />
+    <Compile Include="Stats\StatPart_StateIdeoligion.cs" />
     <Compile Include="ThingComps\ThingComp_GoverningBench.cs" />
     <Compile Include="Thoughts\ThoughtWorker_Multiculturalism.cs" />
-    <Compile Include="Thoughts\ThoughtWorker_StateIdeologion.cs" />
+    <Compile Include="Thoughts\ThoughtWorker_StateIdeoligion.cs" />
     <Compile Include="ValueOperations.cs" />
     <Compile Include="Decision.cs" />
     <Compile Include="Defs\DecisionCategoryDef.cs" />

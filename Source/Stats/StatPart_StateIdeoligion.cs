@@ -3,7 +3,7 @@ using Verse;
 
 namespace Rimocracy
 {
-    public class StatPart_StateIdeologion : StatPart
+    public class StatPart_StateIdeoligion : StatPart
     {
         public float factor = 1;
 
@@ -15,9 +15,9 @@ namespace Rimocracy
             {
                 string res = "";
                 if (factor != 1)
-                    res = $"State ideologion: x{factor.ToStringPercent()}\n";
+                    res = $"State ideoligion: x{factor.ToStringPercent()}\n";
                 if (offset != 0)
-                    res = $"{res}State ideologion: {offset.ToStringWithSign()}";
+                    res = $"{res}State ideoligion: {offset.ToStringWithSign()}";
                 return res.TrimEndNewlines();
             }
             return null;
@@ -30,6 +30,6 @@ namespace Rimocracy
         }
 
         protected bool AppliesTo(StatRequest req) =>
-            Utility.PoliticsEnabled && Utility.RimocracyComp.DecisionActive(DecisionDef.StateIdeologion) && req.Pawn?.Ideo != null && req.Pawn.Ideo == Utility.NationPrimaryIdeo;
+            Utility.PoliticsEnabled && Utility.RimocracyComp.DecisionActive(DecisionDef.StateIdeoligion) && req.Pawn?.Ideo != null && req.Pawn.Ideo == Utility.NationPrimaryIdeo;
     }
 }

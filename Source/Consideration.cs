@@ -55,7 +55,7 @@ namespace Rimocracy
         ValueOperations medianOpinionOfTarget;
         ValueOperations targetAge;
         ValueOperations targetFactionGoodwill;
-        bool? sameIdeologion;
+        bool? sameIdeoligion;
 
         /// <summary>
         /// Returns true if this requirement is default
@@ -93,7 +93,7 @@ namespace Rimocracy
             && medianOpinionOfTarget == null
             && targetAge == null
             && targetFactionGoodwill == null
-            && sameIdeologion == null;
+            && sameIdeoligion == null;
 
         public static implicit operator bool(Consideration consideration) => consideration.IsSatisfied(target: Utility.RimocracyComp.Leader);
 
@@ -174,8 +174,8 @@ namespace Rimocracy
                 if (res && ideoCertainty != null && pawn?.ideo != null)
                     res &= ideoCertainty.Compare(pawn.ideo.Certainty);
                 Ideo targetIdeo = target?.Ideo ?? Utility.NationPrimaryIdeo;
-                if (res && sameIdeologion != null && ideo != null)
-                    res &= (ideo == targetIdeo) == sameIdeologion;
+                if (res && sameIdeoligion != null && ideo != null)
+                    res &= (ideo == targetIdeo) == sameIdeoligion;
             }
 
             if (res && !all.NullOrEmpty())
@@ -296,20 +296,20 @@ namespace Rimocracy
                 {
                     MemeDef m = DefDatabase<MemeDef>.GetNamed(meme, false);
                     if (m != null)
-                        AddLine($"Ideologion has '{m.LabelCap}' meme");
+                        AddLine($"Ideoligion has '{m.LabelCap}' meme");
                     else Utility.Log($"No MemeDef {meme} found for a consideration.", LogLevel.Error);
                 }
                 if (!precept.NullOrEmpty())
                 {
                     PreceptDef p = DefDatabase<PreceptDef>.GetNamed(precept, false);
                     if (p != null)
-                        AddLine($"Ideologion has '{p.issue.LabelCap}: {p.LabelCap}' precept");
+                        AddLine($"Ideoligion has '{p.issue.LabelCap}: {p.LabelCap}' precept");
                     else Utility.Log($"No PreceptDef {precept} found for a consideration.", LogLevel.Error);
                 }
                 if (ideoCertainty != null)
-                    AddLine(ideoCertainty.ToString($"{pawn.CapitalizeFirst()}'s certainty in their ideologion", "P0"));
-                if (sameIdeologion != null)
-                    AddLine($"{pawn.CapitalizeFirst()} {((bool)sameIdeologion ? "shares" : "doesn't share")} the primary or {target}'s ideologion");
+                    AddLine(ideoCertainty.ToString($"{pawn.CapitalizeFirst()}'s certainty in their ideoligion", "P0"));
+                if (sameIdeoligion != null)
+                    AddLine($"{pawn.CapitalizeFirst()} {((bool)sameIdeoligion ? "shares" : "doesn't share")} the primary or {target}'s ideoligion");
             }
 
             if (targetIsColonist != null)

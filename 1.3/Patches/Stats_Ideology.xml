@@ -99,7 +99,7 @@
 		<success>Always</success>
 		<xpath>/Defs/StatDef[defName="ConversionPower"]/parts</xpath>
 		<value>
-			<li Class="Rimocracy.StatPart_StateIdeologion">
+			<li Class="Rimocracy.StatPart_StateIdeoligion">
 				<factor>1.25</factor>
 			</li>
 		</value>
