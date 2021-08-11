@@ -234,8 +234,10 @@ namespace Rimocracy
         public static void PrimaryIdeoChange_Postfix(Ideo __instance, Ideo newIdeo)
         {
             Utility.Log($"PrimaryIdeoChange_Postfix('{__instance.name}', '{newIdeo.name}')");
-            SuccessionDef newSuccession = Utility.RimocracyComp?.GetRandomSuccessionDef(newIdeo);
-            if (Utility.RimocracyComp != null && newSuccession != Utility.RimocracyComp.SuccessionType)
+            if (Utility.RimocracyComp == null || Utility.RimocracyComp.DecisionActive(DecisionDef.Multiculturalism))
+                return;
+            SuccessionDef newSuccession = Utility.RimocracyComp.GetRandomSuccessionDef(newIdeo);
+            if (newSuccession != Utility.RimocracyComp.SuccessionType)
             {
                 Utility.Log($"Succession type changed from {Utility.RimocracyComp.SuccessionType.LabelCap} to {newSuccession.LabelCap}.");
                 Find.LetterStack.ReceiveLetter("Succession type changed", $"Succession type changed to {newSuccession.LabelCap} due to change of primary ideologion.\n\n{newSuccession.description}", LetterDefOf.NeutralEvent);
