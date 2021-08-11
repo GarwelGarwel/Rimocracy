@@ -31,6 +31,17 @@ namespace Rimocracy
 
         public static bool IsSimpleSlaveryInstalled => (bool)(simpleSlaveryInstalled ?? (simpleSlaveryInstalled = RimocracyDefOf.Enslaved != null));
 
+        public static bool IsFreeAdultColonist(this Pawn pawn) =>
+            pawn != null
+            && !pawn.Dead
+            && pawn.IsFreeNonSlaveColonist
+            && pawn.HomeFaction.IsPlayer
+            && pawn.ageTracker.AgeBiologicalYears >= Settings.CitizenshipAge
+            && (!IsSimpleSlaveryInstalled || !pawn.health.hediffSet.hediffs.Any(hediff => hediff.def == RimocracyDefOf.Enslaved));
+
+        public static bool IsCitizen(this Pawn pawn) =>
+            pawn.IsFreeAdultColonist() && (!ModsConfig.IdeologyActive || pawn?.Ideo == NationPrimaryIdeo || !RimocracyComp.DecisionActive(DecisionDef.StateIdeoligion));
+
         public static IEnumerable<Pawn> Citizens =>
             PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonists_NoCryptosleep.Where(p => p.IsCitizen());
 
@@ -57,16 +68,6 @@ namespace Rimocracy
 
         public static string DateFullStringWithHourAtHome(long tick) =>
             GenDate.DateFullStringWithHourAt(tick, Find.WorldGrid.LongLatOf(Find.AnyPlayerHomeMap.Tile));
-
-        public static bool IsFreeAdultColonist(this Pawn pawn)
-            => pawn != null
-            && !pawn.Dead
-            && pawn.IsFreeNonSlaveColonist
-            && pawn.ageTracker.AgeBiologicalYears >= Settings.CitizenshipAge
-            && (!IsSimpleSlaveryInstalled || !pawn.health.hediffSet.hediffs.Any(hediff => hediff.def == RimocracyDefOf.Enslaved));
-
-        public static bool IsCitizen(this Pawn pawn) =>
-            pawn.IsFreeAdultColonist() && (!ModsConfig.IdeologyActive || pawn?.Ideo == NationPrimaryIdeo || !RimocracyComp.DecisionActive(DecisionDef.StateIdeoligion));
 
         public static Precept_RoleSingle IdeologyLeaderPrecept(Ideo ideo = null) =>
             (ideo ?? NationPrimaryIdeo).GetAllPreceptsOfType<Precept_RoleSingle>().FirstOrDefault(p => p.def == PreceptDefOf.IdeoRole_Leader);
