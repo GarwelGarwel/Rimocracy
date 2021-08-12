@@ -11,10 +11,16 @@ namespace Rimocracy
 
         public override void DoWindowContents(Rect inRect)
         {
-            // Politics Disabled
-            if (!Utility.PoliticsEnabled)
+            if (Utility.RimocracyComp == null)
             {
-                Widgets.Label(inRect, $"You need at least {Settings.MinPopulation.ToStringCached()} free, adult colonists and a potential leader for politics.");
+                Utility.Log("RimocracyComp is null.", LogLevel.Error);
+                return;
+            }
+
+            // Politics Disabled
+            if (!Utility.RimocracyComp.IsEnabled)
+            {
+                Widgets.Label(inRect, $"You need at least {Settings.MinPopulation.ToStringCached()} free, adult colonists{(ModsConfig.IdeologyActive && Utility.RimocracyComp.DecisionActive(DecisionDef.StateIdeoligion) ? $" following {Utility.NationPrimaryIdeo?.name ?? "your primary ideoligion"}" : "")} and a potential leader for politics.");
                 return;
             }
 
@@ -29,7 +35,7 @@ namespace Rimocracy
             // Governance target, leader skills and next succession
             if (Utility.RimocracyComp.HasLeader)
             {
-                content.Label($"Governance quality: {Utility.RimocracyComp.Governance.ToStringPercent("F1")}. Decays at {Utility.RimocracyComp.GovernanceDecayPerDay.ToStringPercent()} per day.");
+                content.Label($"Governance quality: {Utility.RimocracyComp.Governance.ToStringPercent("F1")}. Falls at {Utility.RimocracyComp.GovernanceDecayPerDay.ToStringPercent()} per day.");
 
                 content.Label($"Governance target: {Utility.RimocracyComp.GovernanceTarget.ToStringPercent()}");
                 Utility.RimocracyComp.GovernanceTarget = GenMath.RoundedHundredth(content.Slider(Utility.RimocracyComp.GovernanceTarget, 0, 1));

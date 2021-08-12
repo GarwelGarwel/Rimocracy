@@ -25,7 +25,9 @@ namespace Rimocracy
     {
         static bool? simpleSlaveryInstalled;
 
-        public static RimocracyComp RimocracyComp => Find.World?.GetComponent<RimocracyComp>();
+        static RimocracyComp comp;
+
+        public static RimocracyComp RimocracyComp => comp ?? (comp = Find.World?.GetComponent<RimocracyComp>());
 
         public static bool PoliticsEnabled => RimocracyComp != null && RimocracyComp.IsEnabled;
 
