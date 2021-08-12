@@ -43,6 +43,7 @@ namespace Rimocracy
         ValueOperations medianOpinionOfMe;
         ValueOperations age;
         ValueOperations titleSeniority;
+        bool? primaryIdeoligion;
         string meme;
         string precept;
         ValueOperations ideoCertainty;
@@ -55,7 +56,6 @@ namespace Rimocracy
         ValueOperations medianOpinionOfTarget;
         ValueOperations targetAge;
         ValueOperations targetFactionGoodwill;
-        bool? sameIdeoligion;
 
         /// <summary>
         /// Returns true if this requirement is default
@@ -93,7 +93,7 @@ namespace Rimocracy
             && medianOpinionOfTarget == null
             && targetAge == null
             && targetFactionGoodwill == null
-            && sameIdeoligion == null;
+            && primaryIdeoligion == null;
 
         public static implicit operator bool(Consideration consideration) => consideration.IsSatisfied(target: Utility.RimocracyComp.Leader);
 
@@ -173,9 +173,8 @@ namespace Rimocracy
                     res &= ideo.PreceptsListForReading.Any(p => p.def.defName == precept);
                 if (res && ideoCertainty != null && pawn?.ideo != null)
                     res &= ideoCertainty.Compare(pawn.ideo.Certainty);
-                Ideo targetIdeo = target?.Ideo ?? Utility.NationPrimaryIdeo;
-                if (res && sameIdeoligion != null && ideo != null)
-                    res &= (ideo == targetIdeo) == sameIdeoligion;
+                if (res && primaryIdeoligion != null && ideo != null)
+                    res &= (ideo == Utility.NationPrimaryIdeo) == primaryIdeoligion;
             }
 
             if (res && !all.NullOrEmpty())
@@ -308,8 +307,8 @@ namespace Rimocracy
                 }
                 if (ideoCertainty != null)
                     AddLine(ideoCertainty.ToString($"{pawn.CapitalizeFirst()}'s certainty in their ideoligion", "P0"));
-                if (sameIdeoligion != null)
-                    AddLine($"{pawn.CapitalizeFirst()} {((bool)sameIdeoligion ? "shares" : "doesn't share")} the primary or {target}'s ideoligion");
+                if (primaryIdeoligion != null)
+                    AddLine($"{pawn.CapitalizeFirst()} {((bool)primaryIdeoligion ? "shares" : "doesn't share")} the primary ideoligion");
             }
 
             if (targetIsColonist != null)

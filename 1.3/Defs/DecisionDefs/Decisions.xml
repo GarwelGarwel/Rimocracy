@@ -1667,18 +1667,18 @@
 			<li>
 				<label>I have a different ideoligion</label>
 				<support>-10</support>
-				<sameIdeoligion>false</sameIdeoligion>
+				<primaryIdeoligion>false</primaryIdeoligion>
 			</li>
 			<li>
 				<label>proselytizer ideoligion</label>
 				<support>5</support>
-				<sameIdeoligion>true</sameIdeoligion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<meme>Proselytizer</meme>
 			</li>
 			<li>
 				<label>proselytizer ideoligion</label>
 				<support>-5</support>
-				<sameIdeoligion>false</sameIdeoligion>
+				<primaryIdeoligion>false</primaryIdeoligion>
 				<meme>Proselytizer</meme>
 			</li>
 			<li>
@@ -1689,72 +1689,72 @@
 			<li>
 				<label>intense bigotry</label>
 				<support>20</support>
-				<sameIdeoligion>true</sameIdeoligion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Abhorrent</precept>
 			</li>
 			<li>
 				<label>moderate bigotry</label>
 				<support>15</support>
-				<sameIdeoligion>true</sameIdeoligion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Horrible</precept>
 			</li>
 			<li>
 				<label>mild bigotry</label>
 				<support>10</support>
-				<sameIdeoligion>true</sameIdeoligion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Disapproved</precept>
 			</li>
 			<li>
 				<label>I share primary ideoligion</label>
 				<support>5</support>
-				<sameIdeoligion>true</sameIdeoligion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Standard</precept>
 			</li>
 			<li>
 				<label>diversity of thought appreciated</label>
 				<support>-5</support>
-				<sameIdeoligion>true</sameIdeoligion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Approved</precept>
 			</li>
 			<li>
 				<label>diversity of thought appreciated</label>
 				<support>-10</support>
-				<sameIdeoligion>true</sameIdeoligion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Approved</precept>
 			</li>
 			<li>
 				<label>diversity of thought highly appreciated</label>
 				<support>-15</support>
-				<sameIdeoligion>true</sameIdeoligion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Respected</precept>
 			</li>
 			<li>
 				<label>diversity of thought exalted</label>
 				<support>-20</support>
-				<sameIdeoligion>true</sameIdeoligion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Exalted</precept>
 			</li>
 			<li>
 				<label>occasionally proselytizing</label>
 				<support>3</support>
-				<sameIdeoligion>true</sameIdeoligion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>Proselytizing_Occasionally</precept>
 			</li>
 			<li>
 				<label>sometimes proselytizing</label>
 				<support>5</support>
-				<sameIdeoligion>true</sameIdeoligion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>Proselytizing_Sometimes</precept>
 			</li>
 			<li>
 				<label>frequently proselytizing</label>
 				<support>7</support>
-				<sameIdeoligion>true</sameIdeoligion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>Proselytizing_Frequently</precept>
 			</li>
 			<li>
 				<label>certainty in ideoligion</label>
-				<sameIdeoligion>true</sameIdeoligion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<ideoCertainty>
 					<offset>
 						<points>
@@ -1766,7 +1766,7 @@
 			</li>
 			<li>
 				<label>certainty in ideoligion</label>
-				<sameIdeoligion>false</sameIdeoligion>
+				<primaryIdeoligion>false</primaryIdeoligion>
 				<ideoCertainty>
 					<offset>
 						<points>
@@ -1801,12 +1801,12 @@
 			<li>
 				<label>I have a different ideoligion</label>
 				<support>50</support>
-				<sameIdeoligion>false</sameIdeoligion>
+				<primaryIdeoligion>false</primaryIdeoligion>
 			</li>
 			<li>
 				<label>proselytizer ideoligion</label>
 				<support>-5</support>
-				<sameIdeoligion>true</sameIdeoligion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<meme>Proselytizer</meme>
 			</li>
 			<li>
@@ -1817,72 +1817,72 @@
 			<li>
 				<label>intense bigotry</label>
 				<support>-20</support>
-				<sameIdeoligion>true</sameIdeoligion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Abhorrent</precept>
 			</li>
 			<li>
 				<label>moderate bigotry</label>
 				<support>-15</support>
-				<sameIdeoligion>true</sameIdeoligion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Horrible</precept>
 			</li>
 			<li>
 				<label>mild bigotry</label>
 				<support>-10</support>
-				<sameIdeoligion>true</sameIdeoligion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Disapproved</precept>
 			</li>
 			<li>
 				<label>I share primary ideoligion</label>
 				<support>-5</support>
-				<sameIdeoligion>true</sameIdeoligion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Standard</precept>
 			</li>
 			<li>
 				<label>diversity of thought appreciated</label>
 				<support>5</support>
-				<sameIdeoligion>true</sameIdeoligion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Approved</precept>
 			</li>
 			<li>
 				<label>diversity of thought appreciated</label>
 				<support>10</support>
-				<sameIdeoligion>true</sameIdeoligion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Approved</precept>
 			</li>
 			<li>
 				<label>diversity of thought highly appreciated</label>
 				<support>15</support>
-				<sameIdeoligion>true</sameIdeoligion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Respected</precept>
 			</li>
 			<li>
 				<label>diversity of thought exalted</label>
 				<support>20</support>
-				<sameIdeoligion>true</sameIdeoligion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Exalted</precept>
 			</li>
 			<li>
 				<label>occasionally proselytizing</label>
 				<support>-3</support>
-				<sameIdeoligion>true</sameIdeoligion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>Proselytizing_Occasionally</precept>
 			</li>
 			<li>
 				<label>sometimes proselytizing</label>
 				<support>-5</support>
-				<sameIdeoligion>true</sameIdeoligion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>Proselytizing_Sometimes</precept>
 			</li>
 			<li>
 				<label>frequently proselytizing</label>
 				<support>-7</support>
-				<sameIdeoligion>true</sameIdeoligion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>Proselytizing_Frequently</precept>
 			</li>
 			<li>
 				<label>certainty in ideoligion</label>
-				<sameIdeoligion>true</sameIdeoligion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<ideoCertainty>
 					<offset>
 						<points>
@@ -1926,7 +1926,7 @@
 				<label>I will lose ideoligion leadership</label>
 				<support>-10</support>
 				<isLeader>true</isLeader>
-				<sameIdeoligion>true</sameIdeoligion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 			</li>
 			<li>
 				<label>kind</label>
@@ -1936,59 +1936,59 @@
 			<li>
 				<label>I have a different ideoligion</label>
 				<support>10</support>
-				<sameIdeoligion>false</sameIdeoligion>
+				<primaryIdeoligion>false</primaryIdeoligion>
 			</li>
 			<li>
 				<label>intense bigotry</label>
 				<support>-20</support>
-				<sameIdeoligion>true</sameIdeoligion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Abhorrent</precept>
 			</li>
 			<li>
 				<label>moderate bigotry</label>
 				<support>-15</support>
-				<sameIdeoligion>true</sameIdeoligion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Horrible</precept>
 			</li>
 			<li>
 				<label>mild bigotry</label>
 				<support>-10</support>
-				<sameIdeoligion>true</sameIdeoligion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Disapproved</precept>
 			</li>
 			<li>
 				<label>I share primary ideoligion</label>
 				<support>-5</support>
-				<sameIdeoligion>true</sameIdeoligion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Standard</precept>
 			</li>
 			<li>
 				<label>diversity of thought appreciated</label>
 				<support>5</support>
-				<sameIdeoligion>true</sameIdeoligion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Approved</precept>
 			</li>
 			<li>
 				<label>diversity of thought appreciated</label>
 				<support>10</support>
-				<sameIdeoligion>true</sameIdeoligion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Approved</precept>
 			</li>
 			<li>
 				<label>diversity of thought highly appreciated</label>
 				<support>15</support>
-				<sameIdeoligion>true</sameIdeoligion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Respected</precept>
 			</li>
 			<li>
 				<label>diversity of thought exalted</label>
 				<support>20</support>
-				<sameIdeoligion>true</sameIdeoligion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Exalted</precept>
 			</li>
 			<li>
 				<label>certainty in ideoligion</label>
-				<sameIdeoligion>true</sameIdeoligion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<ideoCertainty>
 					<offset>
 						<points>
@@ -2000,7 +2000,7 @@
 			</li>
 			<li>
 				<label>certainty in ideoligion</label>
-				<sameIdeoligion>false</sameIdeoligion>
+				<primaryIdeoligion>false</primaryIdeoligion>
 				<ideoCertainty>
 					<offset>
 						<points>
@@ -2031,13 +2031,13 @@
 				<label>I lose a chance to become a leader</label>
 				<support>-10</support>
 				<isLeader>false</isLeader>
-				<sameIdeoligion>false</sameIdeoligion>
+				<primaryIdeoligion>false</primaryIdeoligion>
 			</li>
 			<li>
 				<label>I lose the title</label>
 				<support>-50</support>
 				<isLeader>true</isLeader>
-				<sameIdeoligion>false</sameIdeoligion>
+				<primaryIdeoligion>false</primaryIdeoligion>
 			</li>
 			<li>
 				<label>kind</label>
@@ -2048,59 +2048,59 @@
 				<label>I gain the Ideoligion leader title</label>
 				<support>15</support>
 				<isLeader>true</isLeader>
-				<sameIdeoligion>true</sameIdeoligion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 			</li>
 			<li>
 				<label>intense bigotry</label>
 				<support>20</support>
-				<sameIdeoligion>true</sameIdeoligion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Abhorrent</precept>
 			</li>
 			<li>
 				<label>moderate bigotry</label>
 				<support>15</support>
-				<sameIdeoligion>true</sameIdeoligion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Horrible</precept>
 			</li>
 			<li>
 				<label>mild bigotry</label>
 				<support>10</support>
-				<sameIdeoligion>true</sameIdeoligion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Disapproved</precept>
 			</li>
 			<li>
 				<label>I share primary ideoligion</label>
 				<support>5</support>
-				<sameIdeoligion>true</sameIdeoligion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Standard</precept>
 			</li>
 			<li>
 				<label>diversity of thought appreciated</label>
 				<support>-5</support>
-				<sameIdeoligion>true</sameIdeoligion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Approved</precept>
 			</li>
 			<li>
 				<label>diversity of thought appreciated</label>
 				<support>-10</support>
-				<sameIdeoligion>true</sameIdeoligion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Approved</precept>
 			</li>
 			<li>
 				<label>diversity of thought highly appreciated</label>
 				<support>-15</support>
-				<sameIdeoligion>true</sameIdeoligion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Respected</precept>
 			</li>
 			<li>
 				<label>diversity of thought exalted</label>
 				<support>-20</support>
-				<sameIdeoligion>true</sameIdeoligion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Exalted</precept>
 			</li>
 			<li>
 				<label>certainty in ideoligion</label>
-				<sameIdeoligion>true</sameIdeoligion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<ideoCertainty>
 					<offset>
 						<points>
