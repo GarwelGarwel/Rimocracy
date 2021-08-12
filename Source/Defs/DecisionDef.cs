@@ -1,4 +1,5 @@
 ﻿using RimWorld;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Verse;
@@ -118,7 +119,7 @@ namespace Rimocracy
             {
                 Utility.Log($"Setting term duration to {setTermDuration}.");
                 Utility.RimocracyComp.TermDuration = setTermDuration;
-                Utility.RimocracyComp.RecalcTermExpiration();
+                Utility.RimocracyComp.TermExpiration = Math.Min(Utility.RimocracyComp.TermExpiration, Utility.RimocracyComp.UpdatedTermExpiration());
             }
 
             if (impeachLeader && Utility.RimocracyComp.HasLeader)

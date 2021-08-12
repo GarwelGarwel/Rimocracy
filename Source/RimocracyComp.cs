@@ -141,7 +141,7 @@ namespace Rimocracy
             set => termExpiration = value;
         }
 
-        public void RecalcTermExpiration() => TermExpiration = TermDuration == TermDuration.Indefinite ? int.MaxValue : Find.TickManager.TicksAbs + Utility.TermDurationTicks;
+        public int UpdatedTermExpiration() => TermDuration == TermDuration.Indefinite ? int.MaxValue : Find.TickManager.TicksAbs + Utility.TermDurationTicks;
 
         public int ElectionTick
         {
@@ -338,8 +338,7 @@ namespace Rimocracy
                 if ((!ModsConfig.IdeologyActive || DecisionActive(DecisionDef.Multiculturalism)) && (LeaderTitleDef == null || !LeaderTitleDef.IsApplicable || (Leader != oldLeader && Rand.Chance(0.2f))))
                     ChooseLeaderTitle();
 
-                RecalcTermExpiration();
-                //TermExpiration = TermDuration == TermDuration.Indefinite ? int.MaxValue : Find.TickManager.TicksAbs + Utility.TermDurationTicks;
+                TermExpiration = UpdatedTermExpiration();
                 ElectionTick = int.MaxValue;
                 FocusSkill = Leader.GetCampaign()?.FocusSkill ?? SkillsUtility.GetRandomSkill(Leader.skills.skills, Leader == oldLeader ? FocusSkill : null);
 
