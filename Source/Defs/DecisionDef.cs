@@ -115,11 +115,12 @@ namespace Rimocracy
                 Utility.RimocracyComp.SuccessionType = setSuccession;
             }
 
-            if (setTermDuration != TermDuration.Undefined && !cheat)
+            if (setTermDuration != TermDuration.Undefined)
             {
                 Utility.Log($"Setting term duration to {setTermDuration}.");
                 Utility.RimocracyComp.TermDuration = setTermDuration;
-                Utility.RimocracyComp.TermExpiration = Math.Min(Utility.RimocracyComp.TermExpiration, Utility.RimocracyComp.UpdatedTermExpiration());
+                if (!cheat)
+                    Utility.RimocracyComp.TermExpiration = Math.Min(Utility.RimocracyComp.TermExpiration, Utility.RimocracyComp.UpdatedTermExpiration());
             }
 
             if (impeachLeader && Utility.RimocracyComp.HasLeader)
