@@ -67,7 +67,8 @@
   <ItemGroup>
     <Compile Include="DecisionVoteResults.cs" />
     <Compile Include="Defs\PoliticalActionDef.cs" />
-    <Compile Include="Dialog_PoliticalAction.cs" />
+    <Compile Include="UI\Dialog_DecisionDetails.cs" />
+    <Compile Include="UI\Dialog_PoliticalAction.cs" />
     <Compile Include="GoodwillSituationWorker_Multiculturalism.cs" />
     <Compile Include="HarmonyManager.cs" />
     <Compile Include="RoleRequirement_Leader.cs" />
@@ -82,7 +83,7 @@
     <Compile Include="Defs\DecisionCategoryDef.cs" />
     <Compile Include="Defs\DecisionDef.cs" />
     <Compile Include="Defs\SuccessionDef.cs" />
-    <Compile Include="Dialog_DecisionList.cs" />
+    <Compile Include="UI\Dialog_DecisionList.cs" />
     <Compile Include="ElectionUtility.cs" />
     <Compile Include="Defs\LeaderTitleDef.cs" />
     <Compile Include="Consideration.cs" />
@@ -102,7 +103,7 @@
     <Compile Include="ThingComps\CompProperties_AffectedByGovernance.cs" />
     <Compile Include="ElectionCampaign.cs" />
     <Compile Include="JobDriver_Govern.cs" />
-    <Compile Include="MainTabWindow_Politics.cs" />
+    <Compile Include="UI\MainTabWindow_Politics.cs" />
     <Compile Include="RecordWorker_TimeAsLeader.cs" />
     <Compile Include="Succession\SuccessionWorker.cs" />
     <Compile Include="Succession\SuccessionWorker_Election.cs" />
