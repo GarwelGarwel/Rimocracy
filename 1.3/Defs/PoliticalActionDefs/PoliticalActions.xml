@@ -31,11 +31,19 @@
 				<targetInAggroMentalState>false</targetInAggroMentalState>
 			</li>
 			<li>
-				<label>act of aggression</label>
+				<label>ally</label>
 				<support>-5</support>
 				<targetIsColonist>false</targetIsColonist>
 				<targetFactionGoodwill>
-					<greaterOrEqual>0</greaterOrEqual>
+					<greaterOrEqual>75</greaterOrEqual>
+				</targetFactionGoodwill>
+			</li>
+			<li>
+				<label>enemy</label>
+				<support>5</support>
+				<targetIsColonist>false</targetIsColonist>
+				<targetFactionGoodwill>
+					<lessOrEqual>-75</lessOrEqual>
 				</targetFactionGoodwill>
 			</li>
 			<li>
@@ -56,23 +64,8 @@
 				<targetIsLeader>true</targetIsLeader>
 			</li>
 			<li>
-				<label>slavery is abhorrent</label>
-				<support>-10</support>
-				<precept>Slavery_Abhorrent</precept>
-			</li>
-			<li>
-				<label>slavery is horrible</label>
-				<support>-7</support>
-				<precept>Slavery_Horrible</precept>
-			</li>
-			<li>
-				<label>slavery is disapproved</label>
-				<support>-3</support>
-				<precept>Slavery_Disapproved</precept>
-			</li>
-			<li>
 				<label>slavery is honorable</label>
-				<support>5</support>
+				<support>3</support>
 				<precept>Slavery_Honorable</precept>
 			</li>
 		</considerations>
@@ -325,7 +318,7 @@
 		<label>settlement attack</label>
 		<considerations>
 			<li>
-				<label>I don't fight</label>
+				<label>I'm against violence</label>
 				<support>-20</support>
 				<isCapableOfViolence>false</isCapableOfViolence>
 			</li>
@@ -334,8 +327,10 @@
 				<targetFactionGoodwill>
 					<offset>
 						<points>
-							<li>(-100, 10)</li>
-							<li>(100, -10)</li>
+							<li>(-100, 20)</li>
+							<li>(-75, 10)</li>
+							<li>(75, -10)</li>
+							<li>(100, -20)</li>
 						</points>
 					</offset>
 				</targetFactionGoodwill>
@@ -454,13 +449,13 @@
 				<trait>Kind</trait>
 			</li>
 			<li>
-				<label>we need food</label>
+				<label>low on food</label>
 				<daysOfFood>
 					<lessThan>5</lessThan>
 					<offset>
 						<points>
-							<li>(0, 10)</li>
-							<li>(3, 5)</li>
+							<li>(0, 6)</li>
+							<li>(3, 3)</li>
 							<li>(15, 0)</li>
 						</points>
 					</offset>
@@ -470,21 +465,6 @@
 				<label>raider ideology</label>
 				<support>-5</support>
 				<meme>Raider</meme>
-			</li>
-			<li>
-				<label>charity is essential</label>
-				<support>6</support>
-				<precept>Charity_Essential</precept>
-			</li>
-			<li>
-				<label>charity is important</label>
-				<support>4</support>
-				<precept>Charity_Important</precept>
-			</li>
-			<li>
-				<label>charity is worthwhile</label>
-				<support>2</support>
-				<precept>Charity_Worthwhile</precept>
 			</li>
 		</considerations>
 		<supportThought>LikeTrade</supportThought>
