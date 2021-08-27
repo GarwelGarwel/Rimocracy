@@ -15,7 +15,7 @@ namespace Rimocracy
         Vector2 scrollPosition = new Vector2();
         Rect viewRect;
 
-        DecisionDef decisionToShowVoteDetails;
+        DecisionDef decisionToShowDetails;
         List<DecisionDef> availableDecisions;
 
         public Dialog_DecisionList()
@@ -38,7 +38,7 @@ namespace Rimocracy
             if (viewRect.height < rect.height)
             {
                 viewRect.width = rect.width - GenUI.ScrollBarWidth - 4;
-                viewRect.height = 500 + availableDecisions.Count * 300;
+                viewRect.height = 500 + availableDecisions.Count * 100;
             }
             Widgets.BeginScrollView(rect.AtZero(), ref scrollPosition, viewRect);
             Listing_Standard content = new Listing_Standard();
@@ -73,73 +73,79 @@ namespace Rimocracy
                 Text.Font = GameFont.Small;
                 Text.Anchor = TextAnchor.UpperLeft;
                 
-                foreach (DecisionDef d in group.OrderBy(def => def.displayPriorityInCategory))
+                foreach (DecisionDef def in group.OrderBy(def => def.displayPriorityInCategory))
                 {
-                    //Text.Anchor = TextAnchor.MiddleCenter;
-                    //content.Label(d.LabelTitleCase);
-                    if (!d.IsValid)
-                        GUI.contentColor = Color.gray;
-                    if (content.ButtonTextLabeled(d.LabelTitleCase, "Details"))
-                        Find.WindowStack.Add(new Dialog_DecisionDetails(d));
-                    GUI.contentColor = Color.white;
-                    //Text.Anchor = TextAnchor.UpperLeft;
-                    //content.Label(d.description);
-                    //if (d.governanceCost != 0)
-                    //    content.Label($"Will {(d.governanceCost > 0 ? "reduce" : "increase")} Governance by {Math.Abs(d.GovernanceCost).ToStringPercent()}.");
-                    //if (d.regimeEffect != 0)
-                    //    content.Label($"Will move the regime {Math.Abs(d.regimeEffect).ToStringPercent()} towards {(d.regimeEffect > 0 ? "democracy" : "authoritarianism")}.");
-                    //if (!d.effectRequirements.IsTrivial)
-                    //    content.Label($"Requirements:\n{d.effectRequirements.ToString(target: Utility.RimocracyComp.Leader?.NameShortColored)}");
+                    if (!def.IsValid)
+                        GUI.color = Color.gray;
+                    if (content.ButtonTextLabeled(def.LabelTitleCase, "Details"))
+                        decisionToShowDetails = decisionToShowDetails == def ? null : def;
+                    GUI.color = Color.white;
+                    if (decisionToShowDetails == def)
+                    {
+                        content.Label(def.description);
+                        if (def.governanceCost != 0)
+                            content.Label($"Will {(def.governanceCost > 0 ? "reduce" : "increase")} Governance by {Math.Abs(def.GovernanceCost).ToStringPercent()}.");
+                        if (def.regimeEffect != 0)
+                            content.Label($"Will move the regime {Math.Abs(def.regimeEffect).ToStringPercent()} towards {(def.regimeEffect > 0 ? "democracy" : "authoritarianism")}.");
+                        if (!def.effectRequirements.IsTrivial)
+                            content.Label($"Requirements:\n{def.effectRequirements.ToString(target: Utility.RimocracyComp.Leader?.NameShortColored)}");
 
-                    //DecisionVoteResults votingResult = d.GetVotingResults();
-                    //switch (d.enactment)
-                    //{
-                    //    case DecisionEnactmentRule.Decree:
-                    //        if (votingResult.Any())
-                    //            content.Label($"{Utility.LeaderTitle}'s support: {votingResult.First().support.ToStringWithSign("0")}", tooltip: votingResult.First().explanation);
-                    //        break;
+                        switch (def.enactment)
+                        {
+                            case DecisionEnactmentRule.Decree:
+                                content.Label($"Requires {Utility.LeaderTitle}'s approval.");
+                                break;
 
-                    //    case DecisionEnactmentRule.Law:
-                    //    case DecisionEnactmentRule.Referendum:
-                    //        if (content.ButtonTextLabeled($"Support: {votingResult.Yea.ToStringCached()} - {votingResult.Nay.ToStringCached()}", decisionToShowVoteDetails == d ? "Hide Details" : "Show Details"))
-                    //            decisionToShowVoteDetails = decisionToShowVoteDetails != d ? d : null;
-                    //        if (decisionToShowVoteDetails == d)
-                    //            foreach (PawnDecisionOpinion opinion in votingResult)
-                    //                content.Label($"  {opinion.voter.NameShortColored}: {opinion.support.ToStringWithSign("0")}", tooltip: opinion.explanation);
-                    //        break;
-                    //}
+                            case DecisionEnactmentRule.Law:
+                            case DecisionEnactmentRule.Referendum:
+                                content.Label($"Requires approval of a majority of citizens.");
+                                break;
+                        }
+                        
+                        DecisionVoteResults votingResult = def.GetVotingResults(Utility.Citizens.ToList());
+                        if (def.enactment == DecisionEnactmentRule.Decree && Utility.RimocracyComp.HasLeader)
+                        {
+                            PawnDecisionOpinion leaderOpinion = votingResult[Utility.RimocracyComp.Leader];
+                            content.Label($"{Utility.LeaderTitle.CapitalizeFirst()}'s support: {leaderOpinion.support.ToStringWithSign("0")}", tooltip: leaderOpinion.explanation);
+                        }
 
-                    //// Display Activate button for valid decisions
-                    //if (d.IsValid && d.IsPassed(votingResult))
-                    //{
-                    //    if (content.ButtonText("Activate"))
-                    //    {
-                    //        Utility.Log($"Activating {d.defName}.");
-                    //        if (d.allCitizensReact && d.enactment != DecisionEnactmentRule.Referendum)
-                    //            votingResult = d.GetVotingResults(Utility.Citizens.ToList());
-                    //        if (d.Activate())
-                    //        {
-                    //            foreach (PawnDecisionOpinion opinion in votingResult.Where(opinion => opinion.Vote != DecisionVote.Abstain))
-                    //            {
-                    //                Utility.Log($"{opinion.voter}'s opinion is {opinion.support.ToStringWithSign()}.");
-                    //                opinion.voter.needs.mood.thoughts.memories.TryGainMemory(opinion.Vote == DecisionVote.Yea ? RimocracyDefOf.LikeDecision : RimocracyDefOf.DislikeDecision);
-                    //            }
-                    //            Find.LetterStack.ReceiveLetter($"{d.LabelTitleCase} Decision Taken", d.description, LetterDefOf.NeutralEvent, null);
-                    //        }
-                    //        else Messages.Message($"Could not take {d.LabelTitleCase} decision: requirements are not met.", MessageTypeDefOf.NegativeEvent, false);
-                    //        Close();
-                    //    }
-                    //}
-                    //else content.Label("Requirements are not met.");
+                        if ((def.allCitizensReact || def.enactment == DecisionEnactmentRule.Law || def.enactment == DecisionEnactmentRule.Referendum) && votingResult.Any(opinion => opinion.Vote != DecisionVote.Abstain))
+                        {
+                            content.Label($"Citizens' support: {votingResult.Yea.ToStringCached()} - {votingResult.Nay.ToStringCached()}");
+                            foreach (PawnDecisionOpinion opinion in votingResult)
+                                content.Label($"  {opinion.voter.NameShortColored}: {opinion.support.ToStringWithSign("0")}", tooltip: opinion.explanation);
+                        }
 
-                    //// Display devmode (cheat) Activate button
-                    //if (Prefs.DevMode && content.ButtonText("Activate (DevMode)"))
-                    //{
-                    //    d.Activate(true);
-                    //    Close();
-                    //}
+                        // Display Activate button for valid decisions
+                        if (def.IsValid && def.IsPassed(votingResult))
+                        {
+                            if (content.ButtonText("Activate"))
+                            {
+                                Utility.Log($"Activating {def.defName}.");
+                                if (def.Activate())
+                                {
+                                    foreach (PawnDecisionOpinion opinion in votingResult.Where(opinion => opinion.Vote != DecisionVote.Abstain))
+                                    {
+                                        Utility.Log($"{opinion.voter}'s opinion is {opinion.support.ToStringWithSign()}.");
+                                        opinion.voter.needs.mood.thoughts.memories.TryGainMemory(opinion.Vote == DecisionVote.Yea ? RimocracyDefOf.LikeDecision : RimocracyDefOf.DislikeDecision);
+                                    }
+                                    Find.LetterStack.ReceiveLetter($"{def.LabelTitleCase} Decision Taken", def.description, LetterDefOf.NeutralEvent, null);
+                                }
+                                else Messages.Message($"Could not take {def.LabelTitleCase} decision: requirements are not met.", MessageTypeDefOf.NegativeEvent, false);
+                                Close();
+                            }
+                        }
+                        else content.Label("Requirements are not met.");
 
-                    //content.GapLine();
+                        // Display devmode (cheat) Activate button
+                        if (Prefs.DevMode && content.ButtonText("Activate (DevMode)"))
+                        {
+                            def.Activate(true);
+                            Close();
+                        }
+
+                        content.GapLine();
+                    }
                 }
             }
 

@@ -224,7 +224,8 @@ namespace Rimocracy
             {
                 Utility.Log($"Blocked unassignment of role {__instance.def} from {p}.");
                 Messages.Message($"{Utility.LeaderTitle} can only be unassigned via Impeachment decision.", MessageTypeDefOf.RejectInput);
-                Find.WindowStack.Add(new Dialog_DecisionDetails(RimocracyDefOf.Impeachment));
+                if (RimocracyDefOf.Impeachment.IsDisplayable)
+                    Find.WindowStack.Add(new Dialog_DecisionList());
                 return false;
             }
             return true;

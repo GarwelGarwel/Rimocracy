@@ -67,7 +67,6 @@
   <ItemGroup>
     <Compile Include="DecisionVoteResults.cs" />
     <Compile Include="Defs\PoliticalActionDef.cs" />
-    <Compile Include="UI\Dialog_DecisionDetails.cs" />
     <Compile Include="UI\Dialog_PoliticalAction.cs" />
     <Compile Include="GoodwillSituationWorker_Multiculturalism.cs" />
     <Compile Include="HarmonyManager.cs" />

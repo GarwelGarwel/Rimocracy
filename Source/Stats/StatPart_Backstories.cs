@@ -11,7 +11,6 @@ namespace Rimocracy
         public override string ExplanationPart(StatRequest req)
         {
             Pawn pawn = req.Thing as Pawn;
-
             if (modifiers == null || pawn?.story == null)
                 return null;
 
@@ -22,16 +21,14 @@ namespace Rimocracy
             mod = GetStatModifier(pawn.story.adulthood);
             if (mod != null)
                 res += $"\n{mod}";
-            return res == "" ? null : res.Trim();
+            return res.Length == 0 ? null : res.Trim();
         }
 
         public override void TransformValue(StatRequest req, ref float val)
         {
             Pawn pawn = req.Thing as Pawn;
-            
             if (modifiers == null || pawn?.story == null)
                 return;
-
             BackstoryEffect(pawn.story.childhood, ref val);
             BackstoryEffect(pawn.story.adulthood, ref val);
         }
@@ -40,10 +37,8 @@ namespace Rimocracy
 
         void BackstoryEffect(Backstory backstory, ref float val)
         {
-            if (backstory?.identifier == null)
-                return;
-
-            GetStatModifier(backstory)?.TransformValue(ref val);
+            if (backstory?.identifier != null)
+                GetStatModifier(backstory)?.TransformValue(ref val);
         }
     }
 }

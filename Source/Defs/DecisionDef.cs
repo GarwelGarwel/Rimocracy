@@ -68,32 +68,28 @@ namespace Rimocracy
         /// </summary>
         public int Expiration => Duration != 0 ? Find.TickManager.TicksAbs + Duration : (tag == null ? 0 : int.MaxValue);
 
-        public List<Pawn> Decisionmakers
-        {
-            get
-            {
-                switch (enactment)
-                {
-                    case DecisionEnactmentRule.Decree:
-                        Pawn leader = Utility.RimocracyComp.Leader;
-                        if (leader != null)
-                            return new List<Pawn>(1) { leader };
-                        break;
-
-                    case DecisionEnactmentRule.Law:
-                    case DecisionEnactmentRule.Referendum:
-                        return Utility.Citizens.ToList();
-                }
-
-                return new List<Pawn>();
-            }
-        }
+        public List<Pawn> Stakeholders =>
+            allCitizensReact || enactment == DecisionEnactmentRule.Law || enactment == DecisionEnactmentRule.Referendum
+            ? Utility.Citizens.ToList()
+            : (Utility.RimocracyComp.HasLeader ? new List<Pawn>(1) { Utility.RimocracyComp.Leader } : new List<Pawn>());
 
         public DecisionVoteResults GetVotingResults(List<Pawn> voters) => new DecisionVoteResults(voters.Select(pawn => new PawnDecisionOpinion(pawn, considerations, Utility.RimocracyComp.Leader)));
 
-        public DecisionVoteResults GetVotingResults() => GetVotingResults(Decisionmakers);
+        public DecisionVoteResults GetVotingResults() => GetVotingResults(Stakeholders);
 
-        public bool IsPassed(DecisionVoteResults votingResult) => enactment == DecisionEnactmentRule.None || votingResult.Passed;
+        public bool IsPassed(DecisionVoteResults votingResult)
+        {
+            switch (enactment)
+            {
+                case DecisionEnactmentRule.Decree:
+                    return Utility.RimocracyComp.HasLeader && votingResult[Utility.RimocracyComp.Leader].Vote == DecisionVote.Yea;
+
+                case DecisionEnactmentRule.Law:
+                case DecisionEnactmentRule.Referendum:
+                    return votingResult.MajoritySupport;
+            }
+            return true;
+        }
 
         public bool Activate(bool cheat = false)
         {

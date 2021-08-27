@@ -763,7 +763,7 @@
 
 	<Rimocracy.DecisionDef>
 		<defName>Populism_Cancel</defName>
-		<label>cancel "consent of the governed"</label>
+		<label>cancel "Consent of the Governed"</label>
 		<description>These fools just can't appreciate what the leader is really doing. We shouldn't care about their opinions any more.</description>
 		<category>Democratic</category>
 		<displayPriorityInCategory>10</displayPriorityInCategory>
