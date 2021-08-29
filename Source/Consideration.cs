@@ -196,34 +196,27 @@ namespace Rimocracy
                 return 0;
             float s = support;
 
-            if (governance != null)
-                governance.TransformValue(Utility.RimocracyComp.Governance, ref s);
-            if (regime != null)
-                regime.TransformValue(Utility.RimocracyComp.RegimeFinal, ref s);
-            if (population != null)
-                population.TransformValue(Utility.Population, ref s);
-            if (daysOfFood != null)
-                daysOfFood.TransformValue(Utility.DaysOfFood, ref s);
+            governance?.TransformValue(Utility.RimocracyComp.Governance, ref s);
+            regime?.TransformValue(Utility.RimocracyComp.RegimeFinal, ref s);
+            population?.TransformValue(Utility.Population, ref s);
+            daysOfFood?.TransformValue(Utility.DaysOfFood, ref s);
             foreach (SkillOperations so in skills)
                 so.TransformValue(pawn, ref s);
-            if (medianOpinionOfMe != null)
-                medianOpinionOfMe.TransformValue(pawn.MedianCitizensOpinion(), ref s);
-            if (age != null && pawn?.ageTracker != null)
-                age.TransformValue(pawn.ageTracker.AgeBiologicalYears, ref s);
-            if (titleSeniority != null && pawn?.royalty != null)
-                titleSeniority.TransformValue(pawn.GetTitleSeniority(), ref s);
-            if (ideoCertainty != null && ModsConfig.IdeologyActive && pawn?.ideo != null)
-                ideoCertainty.TransformValue(pawn.ideo.Certainty, ref s);
+            medianOpinionOfMe?.TransformValue(pawn.MedianCitizensOpinion(), ref s);
+            if (pawn?.ageTracker != null)
+                age?.TransformValue(pawn.ageTracker.AgeBiologicalYears, ref s);
+            if (pawn?.royalty != null)
+                titleSeniority?.TransformValue(pawn.GetTitleSeniority(), ref s);
+            if (ModsConfig.IdeologyActive && pawn?.ideo != null)
+                ideoCertainty?.TransformValue(pawn.ideo.Certainty, ref s);
             if (target != null)
             {
-                if (opinionOfTarget != null)
-                    opinionOfTarget.TransformValue(pawn.GetOpinionOf(target), ref s);
-                if (medianOpinionOfTarget != null && target != null)
-                    medianOpinionOfTarget.TransformValue(target.MedianCitizensOpinion(), ref s);
-                if (targetAge != null && target.ageTracker != null)
-                    targetAge.TransformValue(target.ageTracker.AgeBiologicalYears, ref s);
-                if (targetFactionGoodwill != null && target.Faction != null && !target.Faction.IsPlayer)
-                    targetFactionGoodwill.TransformValue(target.Faction.PlayerGoodwill, ref s);
+                opinionOfTarget?.TransformValue(pawn.GetOpinionOf(target), ref s);
+                medianOpinionOfTarget?.TransformValue(target.MedianCitizensOpinion(), ref s);
+                if (target.ageTracker != null)
+                    targetAge?.TransformValue(target.ageTracker.AgeBiologicalYears, ref s);
+                if (target.Faction != null && !target.Faction.IsPlayer)
+                    targetFactionGoodwill?.TransformValue(target.Faction.PlayerGoodwill, ref s);
             }
             return s;
         }
