@@ -41,6 +41,7 @@ namespace Rimocracy
 
             // Ideology compatibility patch
             Patch("RimWorld.Precept_RoleSingle:Unassign", "RoleUnassign_Prefix");
+            Patch("RimWorld.Ideo:Notify_NotPrimaryAnymore", postfix: "PrimaryIdeoChange_Postfix");
 
             Utility.Log($"{harmony.GetPatchedMethods().EnumerableCount()} methods patched with Harmony.");
         }
@@ -223,10 +224,26 @@ namespace Rimocracy
             {
                 Utility.Log($"Blocked unassignment of role {__instance.def} from {p}.");
                 Messages.Message($"{Utility.LeaderTitle} can only be unassigned via Impeachment decision.", MessageTypeDefOf.RejectInput);
-                Find.WindowStack.Add(new Dialog_DecisionList());
+                if (RimocracyDefOf.Impeachment.IsDisplayable)
+                    Find.WindowStack.Add(new Dialog_DecisionList());
                 return false;
             }
             return true;
+        }
+
+        // Resets succession type to a random one on primary ideoligion change
+        public static void PrimaryIdeoChange_Postfix(Ideo __instance, Ideo newIdeo)
+        {
+            Utility.Log($"PrimaryIdeoChange_Postfix('{__instance.name}', '{newIdeo.name}')");
+            if (Utility.RimocracyComp == null || Utility.RimocracyComp.DecisionActive(DecisionDef.Multiculturalism))
+                return;
+            SuccessionDef newSuccession = Utility.RimocracyComp.GetRandomSuccessionDef(newIdeo);
+            if (newSuccession != Utility.RimocracyComp.SuccessionType)
+            {
+                Utility.Log($"Succession type changed from {Utility.RimocracyComp.SuccessionType.LabelCap} to {newSuccession.LabelCap}.");
+                Find.LetterStack.ReceiveLetter("Succession type changed", $"Succession type changed to {newSuccession.LabelCap} due to change of primary ideoligion.\n\n{newSuccession.description}", LetterDefOf.NeutralEvent);
+                Utility.RimocracyComp.SuccessionType = newSuccession;
+            }
         }
 
         #endregion IDEOLOGY PATCHES

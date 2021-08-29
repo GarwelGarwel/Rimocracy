@@ -174,7 +174,7 @@
 		</stages>
 		<stackLimit>3</stackLimit>
 		<stackedEffectMultiplier>1</stackedEffectMultiplier>
-		<durationDays>15</durationDays>
+		<durationDays>6</durationDays>
 		<nullifiedIfNotColonist>true</nullifiedIfNotColonist>
 	</ThoughtDef>
 
@@ -189,7 +189,7 @@
 		</stages>
 		<stackLimit>3</stackLimit>
 		<stackedEffectMultiplier>1</stackedEffectMultiplier>
-		<durationDays>15</durationDays>
+		<durationDays>6</durationDays>
 		<nullifiedIfNotColonist>true</nullifiedIfNotColonist>
 	</ThoughtDef>
 
@@ -202,7 +202,7 @@
 				<baseMoodEffect>2</baseMoodEffect>
 			</li>
 		</stages>
-		<durationDays>5</durationDays>
+		<durationDays>3</durationDays>
 		<nullifiedIfNotColonist>true</nullifiedIfNotColonist>
 	</ThoughtDef>
 
@@ -215,7 +215,7 @@
 				<baseMoodEffect>-3</baseMoodEffect>
 			</li>
 		</stages>
-		<durationDays>5</durationDays>
+		<durationDays>3</durationDays>
 		<nullifiedIfNotColonist>true</nullifiedIfNotColonist>
 	</ThoughtDef>
 

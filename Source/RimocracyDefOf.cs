@@ -6,6 +6,8 @@ namespace Rimocracy
     [DefOf]
     public static class RimocracyDefOf
     {
+        public static DecisionDef Impeachment;
+
         internal static HediffDef Enslaved = DefDatabase<HediffDef>.GetNamedSilentFail("Enslaved");
 
         public static JobDef Govern;

@@ -101,17 +101,17 @@
 				</skills>
 			</li>
 			<li>
-				<label>raider ideologion</label>
+				<label>raider ideoligion</label>
 				<support>-5</support>
 				<meme>Raider</meme>
 			</li>
 			<li>
-				<label>individualist ideologion</label>
+				<label>individualist ideoligion</label>
 				<support>5</support>
 				<meme>Individualist</meme>
 			</li>
 			<li>
-				<label>collectivist ideologion</label>
+				<label>collectivist ideoligion</label>
 				<support>-5</support>
 				<meme>Collectivist</meme>
 			</li>
@@ -289,7 +289,7 @@
 				</skills>
 			</li>
 			<li>
-				<label>loyalist ideologion</label>
+				<label>loyalist ideoligion</label>
 				<support>5</support>
 				<meme>Loyalist</meme>
 			</li>
@@ -385,7 +385,7 @@
 				</skills>
 			</li>
 			<li>
-				<label>loyalist ideologion</label>
+				<label>loyalist ideoligion</label>
 				<support>5</support>
 				<meme>Loyalist</meme>
 			</li>
@@ -508,12 +508,12 @@
 				</any>
 			</li>
 			<li>
-				<label>raider ideologion</label>
+				<label>raider ideoligion</label>
 				<support>5</support>
 				<meme>Raider</meme>
 			</li>
 			<li>
-				<label>supremacist ideologion</label>
+				<label>supremacist ideoligion</label>
 				<support>10</support>
 				<meme>Supremacist</meme>
 			</li>
@@ -627,7 +627,7 @@
 				</opinionOfTarget>
 			</li>
 			<li>
-				<label>loyalist ideologion</label>
+				<label>loyalist ideoligion</label>
 				<support>3</support>
 				<meme>Loyalist</meme>
 			</li>
@@ -708,7 +708,7 @@
 				</medianOpinionOfTarget>
 			</li>
 			<li>
-				<label>loyalist ideologion</label>
+				<label>loyalist ideoligion</label>
 				<support>-5</support>
 				<meme>Loyalist</meme>
 			</li>
@@ -746,12 +746,12 @@
 				<isLeader>false</isLeader>
 			</li>
 			<li>
-				<label>individualist ideologion</label>
+				<label>individualist ideoligion</label>
 				<support>10</support>
 				<meme>Individualist</meme>
 			</li>
 			<li>
-				<label>collectivist ideologion</label>
+				<label>collectivist ideoligion</label>
 				<support>-10</support>
 				<meme>Collectivist</meme>
 			</li>
@@ -763,7 +763,7 @@
 
 	<Rimocracy.DecisionDef>
 		<defName>Populism_Cancel</defName>
-		<label>cancel "consent of the governed"</label>
+		<label>cancel "Consent of the Governed"</label>
 		<description>These fools just can't appreciate what the leader is really doing. We shouldn't care about their opinions any more.</description>
 		<category>Democratic</category>
 		<displayPriorityInCategory>10</displayPriorityInCategory>
@@ -777,12 +777,12 @@
 				<isLeader>false</isLeader>
 			</li>
 			<li>
-				<label>individualist ideologion</label>
+				<label>individualist ideoligion</label>
 				<support>-10</support>
 				<meme>Individualist</meme>
 			</li>
 			<li>
-				<label>collectivist ideologion</label>
+				<label>collectivist ideoligion</label>
 				<support>10</support>
 				<meme>Collectivist</meme>
 			</li>
@@ -819,12 +819,12 @@
 				<isLeader>false</isLeader>
 			</li>
 			<li>
-				<label>individualist ideologion</label>
+				<label>individualist ideoligion</label>
 				<support>5</support>
 				<meme>Individualist</meme>
 			</li>
 			<li>
-				<label>collectivist ideologion</label>
+				<label>collectivist ideoligion</label>
 				<support>-5</support>
 				<meme>Collectivist</meme>
 			</li>
@@ -839,7 +839,7 @@
 				<meme>PainIsVirtue</meme>
 			</li>
 			<li>
-				<label>guilty ideologion</label>
+				<label>guilty ideoligion</label>
 				<support>-5</support>
 				<meme>Guilty</meme>
 			</li>
@@ -870,12 +870,12 @@
 				<isLeader>false</isLeader>
 			</li>
 			<li>
-				<label>individualist ideologion</label>
+				<label>individualist ideoligion</label>
 				<support>-5</support>
 				<meme>Individualist</meme>
 			</li>
 			<li>
-				<label>collectivist ideologion</label>
+				<label>collectivist ideoligion</label>
 				<support>5</support>
 				<meme>Collectivist</meme>
 			</li>
@@ -890,7 +890,7 @@
 				<meme>PainIsVirtue</meme>
 			</li>
 			<li>
-				<label>guilty ideologion</label>
+				<label>guilty ideoligion</label>
 				<support>5</support>
 				<meme>Guilty</meme>
 			</li>
@@ -1094,17 +1094,17 @@
 		</effectRequirements>
 		<considerations>
 			<li>
-				<label>individualist ideologion</label>
+				<label>individualist ideoligion</label>
 				<support>-5</support>
 				<meme>Individualist</meme>
 			</li>
 			<li>
-				<label>collectivist ideologion</label>
+				<label>collectivist ideoligion</label>
 				<support>5</support>
 				<meme>Collectivist</meme>
 			</li>
 			<li>
-				<label>loyalist ideologion</label>
+				<label>loyalist ideoligion</label>
 				<support>5</support>
 				<meme>Loyalist</meme>
 			</li>
@@ -1204,17 +1204,17 @@
 				</opinionOfTarget>
 			</li>
 			<li>
-				<label>individualist ideologion</label>
+				<label>individualist ideoligion</label>
 				<support>-5</support>
 				<meme>Individualist</meme>
 			</li>
 			<li>
-				<label>collectivist ideologion</label>
+				<label>collectivist ideoligion</label>
 				<support>5</support>
 				<meme>Collectivist</meme>
 			</li>
 			<li>
-				<label>loyalist ideologion</label>
+				<label>loyalist ideoligion</label>
 				<support>5</support>
 				<meme>Loyalist</meme>
 			</li>
@@ -1253,17 +1253,17 @@
 				</opinionOfTarget>
 			</li>
 			<li>
-				<label>individualist ideologion</label>
+				<label>individualist ideoligion</label>
 				<support>5</support>
 				<meme>Individualist</meme>
 			</li>
 			<li>
-				<label>collectivist ideologion</label>
+				<label>collectivist ideoligion</label>
 				<support>-5</support>
 				<meme>Collectivist</meme>
 			</li>
 			<li>
-				<label>loyalist ideologion</label>
+				<label>loyalist ideoligion</label>
 				<support>-5</support>
 				<meme>Loyalist</meme>
 			</li>
@@ -1332,12 +1332,12 @@
 				</opinionOfTarget>
 			</li>
 			<li>
-				<label>individualist ideologion</label>
+				<label>individualist ideoligion</label>
 				<support>-5</support>
 				<meme>Individualist</meme>
 			</li>
 			<li>
-				<label>collectivist ideologion</label>
+				<label>collectivist ideoligion</label>
 				<support>5</support>
 				<meme>Collectivist</meme>
 			</li>
@@ -1347,7 +1347,7 @@
 				<meme>PainIsVirtue</meme>
 			</li>
 			<li>
-				<label>guilty ideologion</label>
+				<label>guilty ideoligion</label>
 				<support>-5</support>
 				<meme>Guilty</meme>
 			</li>
@@ -1397,12 +1397,12 @@
 				</opinionOfTarget>
 			</li>
 			<li>
-				<label>individualist ideologion</label>
+				<label>individualist ideoligion</label>
 				<support>-5</support>
 				<meme>Individualist</meme>
 			</li>
 			<li>
-				<label>collectivist ideologion</label>
+				<label>collectivist ideoligion</label>
 				<support>5</support>
 				<meme>Collectivist</meme>
 			</li>
@@ -1412,7 +1412,7 @@
 				<meme>PainIsVirtue</meme>
 			</li>
 			<li>
-				<label>guilty ideologion</label>
+				<label>guilty ideoligion</label>
 				<support>5</support>
 				<meme>Guilty</meme>
 			</li>
@@ -1606,7 +1606,7 @@
 				<campaigning>true</campaigning>
 			</li>
 			<li>
-				<label>raider ideologion</label>
+				<label>raider ideoligion</label>
 				<support>5</support>
 				<meme>Raider</meme>
 			</li>
@@ -1634,12 +1634,12 @@
 		<cancelDecision>StateOfEmergency</cancelDecision>
 	</Rimocracy.DecisionDef>
 	
-	<!-- State Ideologion -->
+	<!-- State Ideoligion -->
 
 	<Rimocracy.DecisionDef>
-		<defName>StateIdeologion</defName>
-		<label>state ideologion</label>
-		<description>Only colonists that share the primary belief system have citizenship rights. This ideologion will become more attractive, but disenfranchised colonists will be unhappy. Note: Canceling this decision later may be hard, especially if the state ideologion opposes freedom of thought.</description>
+		<defName>StateIdeoligion</defName>
+		<label>state ideoligion</label>
+		<description>Only colonists that share the primary belief system have citizenship rights. This ideoligion will become more attractive, but disenfranchised colonists will be unhappy. Note: Canceling this decision later may be hard, especially if the state ideoligion opposes freedom of thought.</description>
 		<category>Ideology</category>
 		<enactment>Referendum</enactment>
 		<displayPriorityInCategory>10</displayPriorityInCategory>
@@ -1649,7 +1649,7 @@
 					<modActive>Ideology</modActive>
 				</li>
 				<li>
-					<decision>StateIdeologion</decision>
+					<decision>StateIdeoligion</decision>
 					<inverted>true</inverted>
 				</li>
 				<li>
@@ -1665,96 +1665,96 @@
 				<trait>Kind</trait>
 			</li>
 			<li>
-				<label>I have a different ideologion</label>
+				<label>I have a different ideoligion</label>
 				<support>-10</support>
-				<sameIdeologion>false</sameIdeologion>
+				<primaryIdeoligion>false</primaryIdeoligion>
 			</li>
 			<li>
-				<label>proselytizer ideologion</label>
+				<label>proselytizer ideoligion</label>
 				<support>5</support>
-				<sameIdeologion>true</sameIdeologion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<meme>Proselytizer</meme>
 			</li>
 			<li>
-				<label>proselytizer ideologion</label>
+				<label>proselytizer ideoligion</label>
 				<support>-5</support>
-				<sameIdeologion>false</sameIdeologion>
+				<primaryIdeoligion>false</primaryIdeoligion>
 				<meme>Proselytizer</meme>
 			</li>
 			<li>
-				<label>collectivist ideologion</label>
+				<label>collectivist ideoligion</label>
 				<support>5</support>
 				<meme>Collectivist</meme>
 			</li>
 			<li>
 				<label>intense bigotry</label>
 				<support>20</support>
-				<sameIdeologion>true</sameIdeologion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Abhorrent</precept>
 			</li>
 			<li>
 				<label>moderate bigotry</label>
 				<support>15</support>
-				<sameIdeologion>true</sameIdeologion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Horrible</precept>
 			</li>
 			<li>
 				<label>mild bigotry</label>
 				<support>10</support>
-				<sameIdeologion>true</sameIdeologion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Disapproved</precept>
 			</li>
 			<li>
-				<label>I share primary ideologion</label>
+				<label>I share primary ideoligion</label>
 				<support>5</support>
-				<sameIdeologion>true</sameIdeologion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Standard</precept>
 			</li>
 			<li>
 				<label>diversity of thought appreciated</label>
 				<support>-5</support>
-				<sameIdeologion>true</sameIdeologion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Approved</precept>
 			</li>
 			<li>
 				<label>diversity of thought appreciated</label>
 				<support>-10</support>
-				<sameIdeologion>true</sameIdeologion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Approved</precept>
 			</li>
 			<li>
 				<label>diversity of thought highly appreciated</label>
 				<support>-15</support>
-				<sameIdeologion>true</sameIdeologion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Respected</precept>
 			</li>
 			<li>
 				<label>diversity of thought exalted</label>
 				<support>-20</support>
-				<sameIdeologion>true</sameIdeologion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Exalted</precept>
 			</li>
 			<li>
 				<label>occasionally proselytizing</label>
 				<support>3</support>
-				<sameIdeologion>true</sameIdeologion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>Proselytizing_Occasionally</precept>
 			</li>
 			<li>
 				<label>sometimes proselytizing</label>
 				<support>5</support>
-				<sameIdeologion>true</sameIdeologion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>Proselytizing_Sometimes</precept>
 			</li>
 			<li>
 				<label>frequently proselytizing</label>
 				<support>7</support>
-				<sameIdeologion>true</sameIdeologion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>Proselytizing_Frequently</precept>
 			</li>
 			<li>
-				<label>certainty in ideologion</label>
-				<sameIdeologion>true</sameIdeologion>
+				<label>certainty in ideoligion</label>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<ideoCertainty>
 					<offset>
 						<points>
@@ -1765,8 +1765,8 @@
 				</ideoCertainty>
 			</li>
 			<li>
-				<label>certainty in ideologion</label>
-				<sameIdeologion>false</sameIdeologion>
+				<label>certainty in ideoligion</label>
+				<primaryIdeoligion>false</primaryIdeoligion>
 				<ideoCertainty>
 					<offset>
 						<points>
@@ -1777,20 +1777,20 @@
 				</ideoCertainty>
 			</li>
 		</considerations>
-		<tag>StateIdeologion</tag>
+		<tag>StateIdeoligion</tag>
 		<governanceCost>0.20</governanceCost>
 	</Rimocracy.DecisionDef>
 
 	<Rimocracy.DecisionDef>
-		<defName>StateIdeologion_Cancel</defName>
-		<label>abolish state ideologion</label>
-		<description>All free, adult colonists shall have citizenship rights regardless of their ideologion.</description>
+		<defName>StateIdeoligion_Cancel</defName>
+		<label>abolish state ideoligion</label>
+		<description>All free, adult colonists shall have citizenship rights regardless of their ideoligion.</description>
 		<category>Ideology</category>
 		<enactment>Referendum</enactment>
 		<displayPriorityInCategory>10</displayPriorityInCategory>
 		<displayRequirements>
 			<modActive>Ideology</modActive>
-			<decision>StateIdeologion</decision>
+			<decision>StateIdeoligion</decision>
 		</displayRequirements>
 		<considerations>
 			<li>
@@ -1799,90 +1799,90 @@
 				<trait>Kind</trait>
 			</li>
 			<li>
-				<label>I have a different ideologion</label>
+				<label>I have a different ideoligion</label>
 				<support>50</support>
-				<sameIdeologion>false</sameIdeologion>
+				<primaryIdeoligion>false</primaryIdeoligion>
 			</li>
 			<li>
-				<label>proselytizer ideologion</label>
+				<label>proselytizer ideoligion</label>
 				<support>-5</support>
-				<sameIdeologion>true</sameIdeologion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<meme>Proselytizer</meme>
 			</li>
 			<li>
-				<label>collectivist ideologion</label>
+				<label>collectivist ideoligion</label>
 				<support>-5</support>
 				<meme>Collectivist</meme>
 			</li>
 			<li>
 				<label>intense bigotry</label>
 				<support>-20</support>
-				<sameIdeologion>true</sameIdeologion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Abhorrent</precept>
 			</li>
 			<li>
 				<label>moderate bigotry</label>
 				<support>-15</support>
-				<sameIdeologion>true</sameIdeologion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Horrible</precept>
 			</li>
 			<li>
 				<label>mild bigotry</label>
 				<support>-10</support>
-				<sameIdeologion>true</sameIdeologion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Disapproved</precept>
 			</li>
 			<li>
-				<label>I share primary ideologion</label>
+				<label>I share primary ideoligion</label>
 				<support>-5</support>
-				<sameIdeologion>true</sameIdeologion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Standard</precept>
 			</li>
 			<li>
 				<label>diversity of thought appreciated</label>
 				<support>5</support>
-				<sameIdeologion>true</sameIdeologion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Approved</precept>
 			</li>
 			<li>
 				<label>diversity of thought appreciated</label>
 				<support>10</support>
-				<sameIdeologion>true</sameIdeologion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Approved</precept>
 			</li>
 			<li>
 				<label>diversity of thought highly appreciated</label>
 				<support>15</support>
-				<sameIdeologion>true</sameIdeologion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Respected</precept>
 			</li>
 			<li>
 				<label>diversity of thought exalted</label>
 				<support>20</support>
-				<sameIdeologion>true</sameIdeologion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Exalted</precept>
 			</li>
 			<li>
 				<label>occasionally proselytizing</label>
 				<support>-3</support>
-				<sameIdeologion>true</sameIdeologion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>Proselytizing_Occasionally</precept>
 			</li>
 			<li>
 				<label>sometimes proselytizing</label>
 				<support>-5</support>
-				<sameIdeologion>true</sameIdeologion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>Proselytizing_Sometimes</precept>
 			</li>
 			<li>
 				<label>frequently proselytizing</label>
 				<support>-7</support>
-				<sameIdeologion>true</sameIdeologion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>Proselytizing_Frequently</precept>
 			</li>
 			<li>
-				<label>certainty in ideologion</label>
-				<sameIdeologion>true</sameIdeologion>
+				<label>certainty in ideoligion</label>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<ideoCertainty>
 					<offset>
 						<points>
@@ -1894,7 +1894,7 @@
 			</li>
 		</considerations>
 		<governanceCost>0.20</governanceCost>
-		<cancelDecision>StateIdeologion</cancelDecision>
+		<cancelDecision>StateIdeoligion</cancelDecision>
 	</Rimocracy.DecisionDef>
 
 	<!-- Multiculturalism -->
@@ -1902,7 +1902,7 @@
 	<Rimocracy.DecisionDef>
 		<defName>Multiculturalism</defName>
 		<label>multiculturalism</label>
-		<description>Citizens' beliefs shall have no effect on their civil rights. Follower of any ideologion can become the nation's political leader, but there will be no ideologion leader. Followers of non-primary ideologion will appreciate this equality.</description>
+		<description>Citizens' beliefs shall have no effect on their civil rights. Follower of any ideoligion can become the nation's political leader, but there will be no ideoligion leader. Followers of non-primary ideoligion will appreciate this equality.</description>
 		<category>Ideology</category>
 		<enactment>Referendum</enactment>
 		<displayPriorityInCategory>20</displayPriorityInCategory>
@@ -1916,17 +1916,17 @@
 					<inverted>true</inverted>
 				</li>
 				<li>
-					<decision>StateIdeologion</decision>
+					<decision>StateIdeoligion</decision>
 					<inverted>true</inverted>
 				</li>
 			</all>
 		</displayRequirements>
 		<considerations>
 			<li>
-				<label>I will lose ideologion leadership</label>
+				<label>I will lose ideoligion leadership</label>
 				<support>-10</support>
 				<isLeader>true</isLeader>
-				<sameIdeologion>true</sameIdeologion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 			</li>
 			<li>
 				<label>kind</label>
@@ -1934,61 +1934,61 @@
 				<trait>Kind</trait>
 			</li>
 			<li>
-				<label>I have a different ideologion</label>
+				<label>I have a different ideoligion</label>
 				<support>10</support>
-				<sameIdeologion>false</sameIdeologion>
+				<primaryIdeoligion>false</primaryIdeoligion>
 			</li>
 			<li>
 				<label>intense bigotry</label>
 				<support>-20</support>
-				<sameIdeologion>true</sameIdeologion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Abhorrent</precept>
 			</li>
 			<li>
 				<label>moderate bigotry</label>
 				<support>-15</support>
-				<sameIdeologion>true</sameIdeologion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Horrible</precept>
 			</li>
 			<li>
 				<label>mild bigotry</label>
 				<support>-10</support>
-				<sameIdeologion>true</sameIdeologion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Disapproved</precept>
 			</li>
 			<li>
-				<label>I share primary ideologion</label>
+				<label>I share primary ideoligion</label>
 				<support>-5</support>
-				<sameIdeologion>true</sameIdeologion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Standard</precept>
 			</li>
 			<li>
 				<label>diversity of thought appreciated</label>
 				<support>5</support>
-				<sameIdeologion>true</sameIdeologion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Approved</precept>
 			</li>
 			<li>
 				<label>diversity of thought appreciated</label>
 				<support>10</support>
-				<sameIdeologion>true</sameIdeologion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Approved</precept>
 			</li>
 			<li>
 				<label>diversity of thought highly appreciated</label>
 				<support>15</support>
-				<sameIdeologion>true</sameIdeologion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Respected</precept>
 			</li>
 			<li>
 				<label>diversity of thought exalted</label>
 				<support>20</support>
-				<sameIdeologion>true</sameIdeologion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Exalted</precept>
 			</li>
 			<li>
-				<label>certainty in ideologion</label>
-				<sameIdeologion>true</sameIdeologion>
+				<label>certainty in ideoligion</label>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<ideoCertainty>
 					<offset>
 						<points>
@@ -1999,8 +1999,8 @@
 				</ideoCertainty>
 			</li>
 			<li>
-				<label>certainty in ideologion</label>
-				<sameIdeologion>false</sameIdeologion>
+				<label>certainty in ideoligion</label>
+				<primaryIdeoligion>false</primaryIdeoligion>
 				<ideoCertainty>
 					<offset>
 						<points>
@@ -2018,7 +2018,7 @@
 	<Rimocracy.DecisionDef>
 		<defName>Multiculturalism_Cancel</defName>
 		<label>abolish multiculturalism</label>
-		<description>Only representatives of the primary ideologion shall be allowed to lead the nation. The political leader will also become his or her ideologion's leader.</description>
+		<description>Only representatives of the primary ideoligion shall be allowed to lead the nation. The political leader will also become his or her ideoligion's leader.</description>
 		<category>Ideology</category>
 		<enactment>Referendum</enactment>
 		<displayPriorityInCategory>20</displayPriorityInCategory>
@@ -2031,13 +2031,13 @@
 				<label>I lose a chance to become a leader</label>
 				<support>-10</support>
 				<isLeader>false</isLeader>
-				<sameIdeologion>false</sameIdeologion>
+				<primaryIdeoligion>false</primaryIdeoligion>
 			</li>
 			<li>
 				<label>I lose the title</label>
 				<support>-50</support>
 				<isLeader>true</isLeader>
-				<sameIdeologion>false</sameIdeologion>
+				<primaryIdeoligion>false</primaryIdeoligion>
 			</li>
 			<li>
 				<label>kind</label>
@@ -2045,62 +2045,62 @@
 				<trait>Kind</trait>
 			</li>
 			<li>
-				<label>I gain the Ideologion leader title</label>
+				<label>I gain the Ideoligion leader title</label>
 				<support>15</support>
 				<isLeader>true</isLeader>
-				<sameIdeologion>true</sameIdeologion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 			</li>
 			<li>
 				<label>intense bigotry</label>
 				<support>20</support>
-				<sameIdeologion>true</sameIdeologion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Abhorrent</precept>
 			</li>
 			<li>
 				<label>moderate bigotry</label>
 				<support>15</support>
-				<sameIdeologion>true</sameIdeologion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Horrible</precept>
 			</li>
 			<li>
 				<label>mild bigotry</label>
 				<support>10</support>
-				<sameIdeologion>true</sameIdeologion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Disapproved</precept>
 			</li>
 			<li>
-				<label>I share primary ideologion</label>
+				<label>I share primary ideoligion</label>
 				<support>5</support>
-				<sameIdeologion>true</sameIdeologion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Standard</precept>
 			</li>
 			<li>
 				<label>diversity of thought appreciated</label>
 				<support>-5</support>
-				<sameIdeologion>true</sameIdeologion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Approved</precept>
 			</li>
 			<li>
 				<label>diversity of thought appreciated</label>
 				<support>-10</support>
-				<sameIdeologion>true</sameIdeologion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Approved</precept>
 			</li>
 			<li>
 				<label>diversity of thought highly appreciated</label>
 				<support>-15</support>
-				<sameIdeologion>true</sameIdeologion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Respected</precept>
 			</li>
 			<li>
 				<label>diversity of thought exalted</label>
 				<support>-20</support>
-				<sameIdeologion>true</sameIdeologion>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Exalted</precept>
 			</li>
 			<li>
-				<label>certainty in ideologion</label>
-				<sameIdeologion>true</sameIdeologion>
+				<label>certainty in ideoligion</label>
+				<primaryIdeoligion>true</primaryIdeoligion>
 				<ideoCertainty>
 					<offset>
 						<points>

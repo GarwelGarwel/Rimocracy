@@ -67,22 +67,22 @@
   <ItemGroup>
     <Compile Include="DecisionVoteResults.cs" />
     <Compile Include="Defs\PoliticalActionDef.cs" />
-    <Compile Include="Dialog_PoliticalAction.cs" />
+    <Compile Include="UI\Dialog_PoliticalAction.cs" />
     <Compile Include="GoodwillSituationWorker_Multiculturalism.cs" />
     <Compile Include="HarmonyManager.cs" />
     <Compile Include="RoleRequirement_Leader.cs" />
     <Compile Include="PawnDecisionOpinion.cs" />
     <Compile Include="SkillOperations.cs" />
-    <Compile Include="Stats\StatPart_StateIdeologion.cs" />
+    <Compile Include="Stats\StatPart_StateIdeoligion.cs" />
     <Compile Include="ThingComps\ThingComp_GoverningBench.cs" />
     <Compile Include="Thoughts\ThoughtWorker_Multiculturalism.cs" />
-    <Compile Include="Thoughts\ThoughtWorker_StateIdeologion.cs" />
+    <Compile Include="Thoughts\ThoughtWorker_StateIdeoligion.cs" />
     <Compile Include="ValueOperations.cs" />
     <Compile Include="Decision.cs" />
     <Compile Include="Defs\DecisionCategoryDef.cs" />
     <Compile Include="Defs\DecisionDef.cs" />
     <Compile Include="Defs\SuccessionDef.cs" />
-    <Compile Include="Dialog_DecisionList.cs" />
+    <Compile Include="UI\Dialog_DecisionList.cs" />
     <Compile Include="ElectionUtility.cs" />
     <Compile Include="Defs\LeaderTitleDef.cs" />
     <Compile Include="Consideration.cs" />
@@ -90,7 +90,7 @@
     <Compile Include="RimocracyMod.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="SkillsUtility.cs" />
-    <Compile Include="StatModifierString.cs" />
+    <Compile Include="StatModifier.cs" />
     <Compile Include="Stats\StatPart_Backstories.cs" />
     <Compile Include="Stats\StatPart_Elitism.cs" />
     <Compile Include="Stats\StatPart_Leader.cs" />
@@ -102,7 +102,7 @@
     <Compile Include="ThingComps\CompProperties_AffectedByGovernance.cs" />
     <Compile Include="ElectionCampaign.cs" />
     <Compile Include="JobDriver_Govern.cs" />
-    <Compile Include="MainTabWindow_Politics.cs" />
+    <Compile Include="UI\MainTabWindow_Politics.cs" />
     <Compile Include="RecordWorker_TimeAsLeader.cs" />
     <Compile Include="Succession\SuccessionWorker.cs" />
     <Compile Include="Succession\SuccessionWorker_Election.cs" />
@@ -118,6 +118,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Stats\StatPart_Governance.cs" />
     <Compile Include="Utility.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".editorconfig" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

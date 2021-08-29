@@ -14,7 +14,7 @@ namespace Rimocracy
 
         public int Abstentions => GetVotesNum(DecisionVote.Abstain);
 
-        public bool Passed => Yea > Nay;
+        public bool MajoritySupport => Yea > Nay;
 
         public bool Vetoed => Utility.RimocracyComp.HasLeader && this[Utility.RimocracyComp.Leader].Vote == DecisionVote.Nay;
 

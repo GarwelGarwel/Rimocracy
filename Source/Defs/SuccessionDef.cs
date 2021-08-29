@@ -1,4 +1,7 @@
-﻿using System;
+﻿using RimWorld;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Verse;
 
 namespace Rimocracy
@@ -8,6 +11,10 @@ namespace Rimocracy
         public string noun = "succession";
 
         public Type workerClass;
+
+        public float weight = 1;
+
+        List<StatModifier> memes = new List<StatModifier>();
 
         public float regimeEffect;
 
@@ -21,8 +28,6 @@ namespace Rimocracy
 
         private SuccessionWorker worker;
 
-        public static SuccessionDef Named(string defName) => DefDatabase<SuccessionDef>.GetNamed(defName);
-
         public SuccessionWorker Worker
         {
             get
@@ -34,6 +39,15 @@ namespace Rimocracy
                 }
                 return worker;
             }
+        }
+
+        public float GetWeight(Ideo ideo)
+        {
+            float res = weight;
+            if (!memes.NullOrEmpty() && ideo != null)
+                foreach (StatModifier meme in memes.Where(meme => ideo.memes.Exists(m => m.defName == meme.name)))
+                    meme.TransformValue(ref res);
+            return res;
         }
     }
 }

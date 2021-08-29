@@ -1,4 +1,5 @@
 ﻿using RimWorld;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Verse;
@@ -16,7 +17,8 @@ namespace Rimocracy
     public class DecisionDef : Def
     {
         public const string Multiculturalism = "Multiculturalism";
-        public const string StateIdeologion = "StateIdeologion";
+        public const string StateIdeoligion = "StateIdeoligion";
+        public const string StateOfEmergency = "StateOfEmergency";
 
         public DecisionCategoryDef category;
         public int displayPriorityInCategory;
@@ -66,32 +68,28 @@ namespace Rimocracy
         /// </summary>
         public int Expiration => Duration != 0 ? Find.TickManager.TicksAbs + Duration : (tag == null ? 0 : int.MaxValue);
 
-        public List<Pawn> Decisionmakers
-        {
-            get
-            {
-                switch (enactment)
-                {
-                    case DecisionEnactmentRule.Decree:
-                        Pawn leader = Utility.RimocracyComp.Leader;
-                        if (leader != null)
-                            return new List<Pawn>(1) { leader };
-                        break;
-
-                    case DecisionEnactmentRule.Law:
-                    case DecisionEnactmentRule.Referendum:
-                        return Utility.Citizens.ToList();
-                }
-
-                return new List<Pawn>();
-            }
-        }
+        public List<Pawn> Stakeholders =>
+            allCitizensReact || enactment == DecisionEnactmentRule.Law || enactment == DecisionEnactmentRule.Referendum
+            ? Utility.Citizens.ToList()
+            : (Utility.RimocracyComp.HasLeader ? new List<Pawn>(1) { Utility.RimocracyComp.Leader } : new List<Pawn>());
 
         public DecisionVoteResults GetVotingResults(List<Pawn> voters) => new DecisionVoteResults(voters.Select(pawn => new PawnDecisionOpinion(pawn, considerations, Utility.RimocracyComp.Leader)));
 
-        public DecisionVoteResults GetVotingResults() => GetVotingResults(Decisionmakers);
+        public DecisionVoteResults GetVotingResults() => GetVotingResults(Stakeholders);
 
-        public bool IsPassed(DecisionVoteResults votingResult) => enactment == DecisionEnactmentRule.None || votingResult.Passed;
+        public bool IsPassed(DecisionVoteResults votingResult)
+        {
+            switch (enactment)
+            {
+                case DecisionEnactmentRule.Decree:
+                    return Utility.RimocracyComp.HasLeader && votingResult[Utility.RimocracyComp.Leader].Vote == DecisionVote.Yea;
+
+                case DecisionEnactmentRule.Law:
+                case DecisionEnactmentRule.Referendum:
+                    return votingResult.MajoritySupport;
+            }
+            return true;
+        }
 
         public bool Activate(bool cheat = false)
         {
@@ -113,10 +111,12 @@ namespace Rimocracy
                 Utility.RimocracyComp.SuccessionType = setSuccession;
             }
 
-            if (setTermDuration != TermDuration.Undefined && !cheat)
+            if (setTermDuration != TermDuration.Undefined)
             {
                 Utility.Log($"Setting term duration to {setTermDuration}.");
                 Utility.RimocracyComp.TermDuration = setTermDuration;
+                if (!cheat)
+                    Utility.RimocracyComp.TermExpiration = Math.Min(Utility.RimocracyComp.TermExpiration, Utility.RimocracyComp.UpdatedTermExpiration());
             }
 
             if (impeachLeader && Utility.RimocracyComp.HasLeader)

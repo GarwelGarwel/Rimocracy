@@ -57,7 +57,7 @@ namespace Rimocracy
             // Preparing a list of potential targets for swaying with randomized weights
             Dictionary<Pawn, float> potentialTargets = Utility.Citizens
                     .Where(p =>
-                    !Utility.RimocracyComp.Candidates.Contains(p)
+                    !Utility.RimocracyComp.CampaigningCandidates.Contains(p)
                     && !p.InMentalState
                     && !p.Downed
                     && p.needs.mood.thoughts.memories.NumMemoriesOfDef(RimocracyDefOf.PoliticalSympathy) < RimocracyDefOf.PoliticalSympathy.stackLimit)
@@ -76,7 +76,7 @@ namespace Rimocracy
                 if (pawn != Candidate)
                 {
                     float defectionChance = 1 - ElectionUtility.VoteWeight(pawn, candidate) / 100;
-                    if (!pawn.IsCitizen() || Rand.Chance(defectionChance) || Utility.RimocracyComp.Candidates.MaxBy(p => ElectionUtility.VoteWeight(pawn, p)) != candidate)
+                    if (!pawn.IsCitizen() || Rand.Chance(defectionChance) || Utility.RimocracyComp.CampaigningCandidates.MaxBy(p => ElectionUtility.VoteWeight(pawn, p)) != candidate)
                     {
                         Utility.Log($"{pawn} is no longer a core supporter for {candidate}. Their defection chance was {defectionChance:P1}.");
                         defectors.Add(pawn);

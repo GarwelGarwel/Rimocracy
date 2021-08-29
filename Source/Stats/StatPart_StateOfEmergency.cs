@@ -21,7 +21,7 @@ namespace Rimocracy
             Utility.PoliticsEnabled
             && req.HasThing
             && (req.Thing as Pawn).IsCitizen()
-            && Utility.RimocracyComp.DecisionActive("StateOfEmergency")
+            && Utility.RimocracyComp.DecisionActive(DecisionDef.StateOfEmergency)
             ? 0.25f : 1;
     }
 }

@@ -43,6 +43,7 @@ namespace Rimocracy
         ValueOperations medianOpinionOfMe;
         ValueOperations age;
         ValueOperations titleSeniority;
+        bool? primaryIdeoligion;
         string meme;
         string precept;
         ValueOperations ideoCertainty;
@@ -55,7 +56,6 @@ namespace Rimocracy
         ValueOperations medianOpinionOfTarget;
         ValueOperations targetAge;
         ValueOperations targetFactionGoodwill;
-        bool? sameIdeologion;
 
         /// <summary>
         /// Returns true if this requirement is default
@@ -93,7 +93,7 @@ namespace Rimocracy
             && medianOpinionOfTarget == null
             && targetAge == null
             && targetFactionGoodwill == null
-            && sameIdeologion == null;
+            && primaryIdeoligion == null;
 
         public static implicit operator bool(Consideration consideration) => consideration.IsSatisfied(target: Utility.RimocracyComp.Leader);
 
@@ -173,9 +173,8 @@ namespace Rimocracy
                     res &= ideo.PreceptsListForReading.Any(p => p.def.defName == precept);
                 if (res && ideoCertainty != null && pawn?.ideo != null)
                     res &= ideoCertainty.Compare(pawn.ideo.Certainty);
-                Ideo targetIdeo = target?.Ideo ?? Utility.NationPrimaryIdeo;
-                if (res && sameIdeologion != null && ideo != null)
-                    res &= (ideo == targetIdeo) == sameIdeologion;
+                if (res && primaryIdeoligion != null && ideo != null)
+                    res &= (ideo == Utility.NationPrimaryIdeo) == primaryIdeoligion;
             }
 
             if (res && !all.NullOrEmpty())
@@ -197,34 +196,27 @@ namespace Rimocracy
                 return 0;
             float s = support;
 
-            if (governance != null)
-                governance.TransformValue(Utility.RimocracyComp.Governance, ref s);
-            if (regime != null)
-                regime.TransformValue(Utility.RimocracyComp.RegimeFinal, ref s);
-            if (population != null)
-                population.TransformValue(Utility.Population, ref s);
-            if (daysOfFood != null)
-                daysOfFood.TransformValue(Utility.DaysOfFood, ref s);
+            governance?.TransformValue(Utility.RimocracyComp.Governance, ref s);
+            regime?.TransformValue(Utility.RimocracyComp.RegimeFinal, ref s);
+            population?.TransformValue(Utility.Population, ref s);
+            daysOfFood?.TransformValue(Utility.DaysOfFood, ref s);
             foreach (SkillOperations so in skills)
                 so.TransformValue(pawn, ref s);
-            if (medianOpinionOfMe != null)
-                medianOpinionOfMe.TransformValue(pawn.MedianCitizensOpinion(), ref s);
-            if (age != null && pawn?.ageTracker != null)
-                age.TransformValue(pawn.ageTracker.AgeBiologicalYears, ref s);
-            if (titleSeniority != null && pawn?.royalty != null)
-                titleSeniority.TransformValue(pawn.GetTitleSeniority(), ref s);
-            if (ideoCertainty != null && ModsConfig.IdeologyActive && pawn?.ideo != null)
-                ideoCertainty.TransformValue(pawn.ideo.Certainty, ref s);
+            medianOpinionOfMe?.TransformValue(pawn.MedianCitizensOpinion(), ref s);
+            if (pawn?.ageTracker != null)
+                age?.TransformValue(pawn.ageTracker.AgeBiologicalYears, ref s);
+            if (pawn?.royalty != null)
+                titleSeniority?.TransformValue(pawn.GetTitleSeniority(), ref s);
+            if (ModsConfig.IdeologyActive && pawn?.ideo != null)
+                ideoCertainty?.TransformValue(pawn.ideo.Certainty, ref s);
             if (target != null)
             {
-                if (opinionOfTarget != null)
-                    opinionOfTarget.TransformValue(pawn.GetOpinionOf(target), ref s);
-                if (medianOpinionOfTarget != null && target != null)
-                    medianOpinionOfTarget.TransformValue(target.MedianCitizensOpinion(), ref s);
-                if (targetAge != null && target.ageTracker != null)
-                    targetAge.TransformValue(target.ageTracker.AgeBiologicalYears, ref s);
-                if (targetFactionGoodwill != null && target.Faction != null && !target.Faction.IsPlayer)
-                    targetFactionGoodwill.TransformValue(target.Faction.PlayerGoodwill, ref s);
+                opinionOfTarget?.TransformValue(pawn.GetOpinionOf(target), ref s);
+                medianOpinionOfTarget?.TransformValue(target.MedianCitizensOpinion(), ref s);
+                if (target.ageTracker != null)
+                    targetAge?.TransformValue(target.ageTracker.AgeBiologicalYears, ref s);
+                if (target.Faction != null && !target.Faction.IsPlayer)
+                    targetFactionGoodwill?.TransformValue(target.Faction.PlayerGoodwill, ref s);
             }
             return s;
         }
@@ -296,20 +288,20 @@ namespace Rimocracy
                 {
                     MemeDef m = DefDatabase<MemeDef>.GetNamed(meme, false);
                     if (m != null)
-                        AddLine($"Ideologion has '{m.LabelCap}' meme");
+                        AddLine($"Ideoligion has '{m.LabelCap}' meme");
                     else Utility.Log($"No MemeDef {meme} found for a consideration.", LogLevel.Error);
                 }
                 if (!precept.NullOrEmpty())
                 {
                     PreceptDef p = DefDatabase<PreceptDef>.GetNamed(precept, false);
                     if (p != null)
-                        AddLine($"Ideologion has '{p.issue.LabelCap}: {p.LabelCap}' precept");
+                        AddLine($"Ideoligion has '{p.issue.LabelCap}: {p.LabelCap}' precept");
                     else Utility.Log($"No PreceptDef {precept} found for a consideration.", LogLevel.Error);
                 }
                 if (ideoCertainty != null)
-                    AddLine(ideoCertainty.ToString($"{pawn.CapitalizeFirst()}'s certainty in their ideologion", "P0"));
-                if (sameIdeologion != null)
-                    AddLine($"{pawn.CapitalizeFirst()} {((bool)sameIdeologion ? "shares" : "doesn't share")} the primary or {target}'s ideologion");
+                    AddLine(ideoCertainty.ToString($"{pawn.CapitalizeFirst()}'s certainty in their ideoligion", "P0"));
+                if (primaryIdeoligion != null)
+                    AddLine($"{pawn.CapitalizeFirst()} {((bool)primaryIdeoligion ? "shares" : "doesn't share")} the primary ideoligion");
             }
 
             if (targetIsColonist != null)
