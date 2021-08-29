@@ -194,6 +194,7 @@ namespace Rimocracy
             base.FinalizeInit();
             if (Decisions == null)
                 Decisions = new List<Decision>();
+            else Decisions.RemoveAll(d => d.def == null);
         }
 
         public override void ExposeData()
