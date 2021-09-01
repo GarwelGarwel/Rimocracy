@@ -168,7 +168,7 @@ namespace Rimocracy
             switch (logLevel)
             {
                 case LogLevel.Message:
-                    if (Settings.DebugLogging)
+                    if (Settings.DebugLogging || Prefs.LogVerbose)
                         Verse.Log.Message(message);
                     break;
 
