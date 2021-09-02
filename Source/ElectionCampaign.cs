@@ -12,7 +12,7 @@ namespace Rimocracy
 
         Pawn candidate;
         SkillDef focusSkill;
-        List<Pawn> supporters;
+        List<Pawn> supporters = new List<Pawn>();
 
         public Pawn Candidate => candidate;
 
@@ -28,13 +28,15 @@ namespace Rimocracy
             set => supporters = value;
         }
 
+        public ElectionCampaign()
+        { }
+
         public ElectionCampaign(Pawn candidate, SkillDef focusSkill)
         {
             this.candidate = candidate;
-            this.focusSkill = focusSkill;
-            supporters = new List<Pawn>();
+            FocusSkill = focusSkill;
             if (candidate != null)
-                supporters.Add(candidate);
+                Supporters.Add(candidate);
         }
 
         public void ExposeData()
@@ -125,6 +127,6 @@ namespace Rimocracy
         }
 
         public override string ToString() =>
-            $"{Candidate.NameShortColored}, {focusSkill?.LabelCap.RawText ?? "no"} focus{(Supporters.Count > 1 ? $", {(Supporters.Count - 1).ToStringCached()} core supporters" : "")}";
+            $"{Candidate.NameShortColored}, {FocusSkill?.LabelCap.RawText ?? "no"} focus{(Supporters.Count > 1 ? $", {(Supporters.Count - 1).ToStringCached()} core supporters" : "")}";
     }
 }

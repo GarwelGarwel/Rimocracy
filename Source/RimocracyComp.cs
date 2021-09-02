@@ -32,6 +32,8 @@ namespace Rimocracy
         List<Decision> decisions = new List<Decision>();
         bool actionsNeedApproval;
 
+        bool justLoaded = true;
+
         public bool IsEnabled
         {
             get => isEnabled;
@@ -69,8 +71,6 @@ namespace Rimocracy
             get => leaderTitle;
             set => leaderTitle = value;
         }
-
-        public SuccessionDef GetRandomSuccessionDef(Ideo ideo) => DefDatabase<SuccessionDef>.AllDefs.Where(def => def.Worker.IsValid).RandomElementByWeight(def => def.GetWeight(ideo));
 
         public SuccessionDef SuccessionType
         {
@@ -141,8 +141,6 @@ namespace Rimocracy
             set => termExpiration = value;
         }
 
-        public int UpdatedTermExpiration() => TermDuration == TermDuration.Indefinite ? int.MaxValue : Find.TickManager.TicksAbs + Utility.TermDurationTicks;
-
         public int ElectionTick
         {
             get => electionTick;
@@ -189,6 +187,10 @@ namespace Rimocracy
             : base(world)
         { }
 
+        public SuccessionDef GetRandomSuccessionDef(Ideo ideo) => DefDatabase<SuccessionDef>.AllDefs.Where(def => def.Worker.IsValid).RandomElementByWeight(def => def.GetWeight(ideo));
+
+        public int UpdatedTermExpiration() => TermDuration == TermDuration.Indefinite ? int.MaxValue : Find.TickManager.TicksAbs + Utility.TermDurationTicks;
+
         public override void FinalizeInit()
         {
             base.FinalizeInit();
@@ -218,6 +220,25 @@ namespace Rimocracy
 
         public override void WorldComponentTick()
         {
+            if (justLoaded)
+            {
+                justLoaded = false;
+                if (Settings.DebugLogging || Prefs.LogVerbose)
+                {
+                    Utility.Log($"Politics: {(IsEnabled ? "enabled" : "disabled")}");
+                    Utility.Log($"Leader: {(Leader != null ? Leader.Name.ToStringShort : "none")}");
+                    Utility.Log($"Succession: {SuccessionType.defName} @ {TermExpiration} (in {(TermExpiration - Find.TickManager.TicksAbs).ToStringTicksToPeriod(false, true)})");
+                    Utility.Log($"Election tick: {ElectionTick} (in {(ElectionTick - Find.TickManager.TicksAbs).ToStringTicksToPeriod(false, true)})");
+                    Utility.Log($"Term duration: {TermDuration}");
+                    if (IsCampaigning)
+                        Utility.Log($"Campaigns:\r\n{campaigns.Select(campaign => campaign.ToString()).ToLineList()}");
+                    Utility.Log($"Governance: {Governance.ToStringPercent()}");
+                    Utility.Log($"Governance decay: {GovernanceDecayPerDay.ToStringPercent()}/day");
+                    Utility.Log($"Focus skill: {FocusSkill}");
+                    Utility.Log($"Decisions: {Decisions.Select(decision => decision.Tag).ToCommaList()}");
+                }
+            }
+
             if (!IsUpdateTick)
                 return;
 
@@ -343,7 +364,7 @@ namespace Rimocracy
                 ElectionTick = int.MaxValue;
                 FocusSkill = Leader.GetCampaign()?.FocusSkill ?? SkillsUtility.GetRandomSkill(Leader.skills.skills, Leader == oldLeader ? FocusSkill : null);
 
-                // Campaigning candidates and their supporters gain their thoughts 
+                // Campaigning candidates and their supporters gain their thoughts
                 if (IsCampaigning)
                     foreach (ElectionCampaign campaign in Campaigns)
                     {
