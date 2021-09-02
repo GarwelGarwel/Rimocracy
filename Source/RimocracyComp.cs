@@ -231,11 +231,11 @@ namespace Rimocracy
                     Utility.Log($"Election tick: {ElectionTick} (in {(ElectionTick - Find.TickManager.TicksAbs).ToStringTicksToPeriod(false, true)})");
                     Utility.Log($"Term duration: {TermDuration}");
                     if (IsCampaigning)
-                        Utility.Log($"Campaigns:\r\n{campaigns.Select(campaign => campaign.ToString()).ToLineList()}");
+                        Utility.Log($"Campaigns:\r\n{Campaigns.Select(campaign => campaign?.ToString()).ToLineList("- ")}");
                     Utility.Log($"Governance: {Governance.ToStringPercent()}");
                     Utility.Log($"Governance decay: {GovernanceDecayPerDay.ToStringPercent()}/day");
                     Utility.Log($"Focus skill: {FocusSkill}");
-                    Utility.Log($"Decisions: {Decisions.Select(decision => decision.Tag).ToCommaList()}");
+                    Utility.Log($"Decisions: {Decisions.Select(decision => decision?.Tag).ToCommaList()}");
                 }
             }
 
@@ -277,12 +277,11 @@ namespace Rimocracy
                         CallElection();
                     else if (IsCampaigning)
                     {
-                        // If at least one of the candidates is no longer eligible, campaign starts over
-                        ElectionCampaign invalidCampaign = Campaigns.Find(ec => !SuccessionWorker.CanBeCandidate(ec.Candidate));
-                        if (invalidCampaign != null)
+                        // If at least one of the candidates is no longer eligible, the entire campaign starts over
+                        if (Campaigns.Any(ec => ec == null || !SuccessionWorker.CanBeCandidate(ec.Candidate)))
                         {
-                            Utility.Log($"Campaign restarted because {invalidCampaign.Candidate} is ineligible to be a candidate.");
-                            Messages.Message($"{(invalidCampaign.Candidate != null ? invalidCampaign.Candidate.NameShortColored : new TaggedString("One of the candidates"))} can't be a candidate, so the election is started over.", MessageTypeDefOf.NegativeEvent);
+                            Utility.Log($"Campaign restarted because a candidate is ineligible.");
+                            Messages.Message($"One or more candidates are ineligible, so the election is starting over.", MessageTypeDefOf.NegativeEvent);
                             Campaigns = null;
                             CallElection();
                         }
