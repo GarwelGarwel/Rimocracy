@@ -19,11 +19,13 @@ Leader's term can be limited (possible options are Quadrum, Half-year or Year) o
 
 There are several succession types that you can choose from in the settings:
 
-- *Election*: default type, when the candidate who gets the most votes is chosen (see details below)
+- *Election*: when the candidate who gets the most votes is chosen (see details below)
 - *Lot*: the leader is chosen randomly from all eligible candidates
 - *Seniority*: the oldest (by biological age) citizen is chosen
-- *Nobility*: the highest-ranking noble pawn is chosen; if several are available, the one with the oldest title is selected
+- *Nobility*: the highest-ranking noble pawn is chosen; if several are available, the one with the oldest title is selected (requires Royalcy DLC)
 - *Martial*: the pawn who killed and downed the most enemies and caused the most damage (with certain weights) is chosen
+
+A succession type is first selected when you start the game with Rimocracy or, sometimes, after your primary ideoligion changes (with Ideology DLC). It is based on your ideoligion (again, if you have Ideology).
 
 ## Elections
 
