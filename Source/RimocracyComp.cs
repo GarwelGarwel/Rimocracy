@@ -231,7 +231,7 @@ namespace Rimocracy
                     Utility.Log($"Election tick: {ElectionTick} (in {(ElectionTick - Find.TickManager.TicksAbs).ToStringTicksToPeriod(false, true)})");
                     Utility.Log($"Term duration: {TermDuration}");
                     if (IsCampaigning)
-                        Utility.Log($"Campaigns:\r\n{Campaigns.Select(campaign => campaign?.ToString()).ToLineList("- ")}");
+                        Utility.Log($"Campaigns:\r\n{Campaigns.Select(campaign => $"- {campaign}").ToLineList()}");
                     Utility.Log($"Governance: {Governance.ToStringPercent()}");
                     Utility.Log($"Governance decay: {GovernanceDecayPerDay.ToStringPercent()}/day");
                     Utility.Log($"Focus skill: {FocusSkill}");
@@ -278,7 +278,7 @@ namespace Rimocracy
                     else if (IsCampaigning)
                     {
                         // If at least one of the candidates is no longer eligible, the entire campaign starts over
-                        if (Campaigns.Any(ec => ec == null || !SuccessionWorker.CanBeCandidate(ec.Candidate)))
+                        if (Campaigns.Any(campaign => campaign == null || !SuccessionWorker.CanBeCandidate(campaign.Candidate)))
                         {
                             Utility.Log($"Campaign restarted because a candidate is ineligible.");
                             Messages.Message($"One or more candidates are ineligible, so the election is starting over.", MessageTypeDefOf.NegativeEvent);
@@ -303,14 +303,14 @@ namespace Rimocracy
             governance = Math.Max(Governance - GovernanceDecayPerDay / GenDate.TicksPerDay * UpdateInterval, 0);
         }
 
-        public void ImproveGovernance(float amount) => Governance = Math.Min(governance + amount, 1);
+        public void ImproveGovernance(float amount) => Governance = Math.Min(Governance + amount, 1);
 
         public bool DecisionActive(string tag) => Decisions.Any(decision => decision.Tag == tag);
 
         internal void CancelDecision(string tag)
         {
-            foreach (Decision d in Decisions.Where(decision => decision.Tag == tag || decision.def.defName == tag))
-                d.def.Cancel();
+            foreach (Decision decision in Decisions.Where(decision => decision.Tag == tag || decision.def.defName == tag))
+                decision.def.Cancel();
             Decisions.RemoveAll(decision => decision.Tag == tag || decision.def.defName == tag);
         }
 
@@ -342,7 +342,7 @@ namespace Rimocracy
             if (ElectionUtility.CampaigningEnabled)
             {
                 CampaigningCandidates = ((SuccessionWorker_Election)SuccessionWorker).ChooseLeaders();
-                Utility.Log($"Candidates in the campaign: {campaigns.Select(ec => $"- {ec}").ToCommaList(true, true)}");
+                Utility.Log($"Campaigns:\n{Campaigns.Select(campaign => $"- {campaign.ToString()}").ToLineList()}");
                 Messages.Message($"The election campaign is on! {CampaigningCandidates.Select(p => p.LabelShortCap).ToCommaList(true)} are competing to be the {Utility.LeaderTitle} of {Utility.NationName}.", new LookTargets(CampaigningCandidates), MessageTypeDefOf.NeutralEvent);
             }
         }
@@ -385,7 +385,7 @@ namespace Rimocracy
                         Utility.Log($"Tale recorded: {tale}");
                 }
                 else Find.LetterStack.ReceiveLetter(SuccessionWorker.SameLeaderMessageTitle(Leader), $"{SuccessionWorker.SameLeaderMessageText(Leader)}\n\n{FocusSkillMessage}", LetterDefOf.NeutralEvent);
-                Utility.Log($"New leader is {Leader} (chosen from {SuccessionWorker.Candidates.Count().ToStringCached()} candidates). Their term expires on {GenDate.DateFullStringAt(termExpiration, Find.WorldGrid.LongLatOf(leader.Tile))}. The focus skill is {focusSkill.defName}.");
+                Utility.Log($"New leader is {Leader} (chosen from {SuccessionWorker.Candidates.Count().ToStringCached()} candidates). Their term expires on {GenDate.DateFullStringAt(TermExpiration, Find.WorldGrid.LongLatOf(Leader.Tile))}. The focus skill is {FocusSkill.defName}.");
             }
             else Utility.Log("Could not choose a new leader.", LogLevel.Warning);
             Campaigns = null;
