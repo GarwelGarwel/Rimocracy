@@ -7,6 +7,6 @@ namespace Rimocracy
     {
         public override bool IsDisabledFor(Thing thing) => !(thing as Pawn).IsLeader();
 
-        public override bool ShouldShowFor(StatRequest req) => base.ShouldShowFor(req) && req.Pawn.IsLeader();
+        public override bool ShouldShowFor(StatRequest req) => req.Pawn.IsLeader();
     }
 }

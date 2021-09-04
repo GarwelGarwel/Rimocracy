@@ -66,11 +66,7 @@ namespace Rimocracy
                     .ToDictionary(p => p, p => Rand.Range(0, ElectionUtility.VoteWeight(p, Candidate) + 100));
 
             if (Settings.DebugLogging && potentialTargets.Count > 0)
-            {
-                Utility.Log($"Potential targets for {Candidate}:");
-                foreach (KeyValuePair<Pawn, float> kvp in potentialTargets)
-                    Utility.Log($"- {kvp.Key}\t{kvp.Value:N0}");
-            }
+                Utility.Log($"Potential targets for {Candidate}:\r\n{potentialTargets.Select(kvp => $"- {kvp.Key}\t{kvp.Value:N0}").ToLineList()}");
 
             foreach (Pawn pawn in Supporters.Where(pawn => !pawn.InMentalState && !pawn.Downed))
             {
@@ -126,7 +122,10 @@ namespace Rimocracy
             Supporters.AddRange(recruits);
         }
 
+        public TaggedString ToTaggedString() =>
+            $"{Candidate.NameShortColored}, {FocusSkill?.LabelCap ?? "no"} focus{(Supporters.Count > 1 ? $", {(Supporters.Count - 1).ToStringCached()} core supporters" : "")}";
+
         public override string ToString() =>
-            $"{Candidate.NameShortColored}, {FocusSkill?.LabelCap.RawText ?? "no"} focus{(Supporters.Count > 1 ? $", {(Supporters.Count - 1).ToStringCached()} core supporters" : "")}";
+            ToTaggedString().RawText.StripTags();
     }
 }

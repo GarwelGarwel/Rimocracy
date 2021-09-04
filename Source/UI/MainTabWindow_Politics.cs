@@ -59,7 +59,7 @@ namespace Rimocracy
             if (Utility.RimocracyComp.IsCampaigning)
             {
                 content.Gap();
-                content.Label($"Candidates:\r\n{Utility.RimocracyComp.Campaigns.Select(ec => ec.ToString()).ToLineList("- ")}");
+                content.Label($"Candidates:\r\n{Utility.RimocracyComp.Campaigns.Select(ec => $"- {ec.ToTaggedString()}").ToLineList()}");
             }
 
             content.Gap();
