@@ -92,6 +92,7 @@
 		</operations>
 	</Operation>
 	<Operation Class="PatchOperationAdd">
+		<success>Always</success>
 		<xpath>/Defs/ThingDef[defName="Throne"]/comps</xpath>
 		<value>
 			<li>
@@ -124,6 +125,7 @@
 		</operations>
 	</Operation>
 	<Operation Class="PatchOperationAdd">
+		<success>Always</success>
 		<xpath>/Defs/ThingDef[defName="GrandThrone"]/comps</xpath>
 		<value>
 			<li>
@@ -426,6 +428,140 @@
 	<Operation Class="PatchOperationAdd">
 		<success>Always</success>
 		<xpath>/Defs/ThingDef[defName="GrandThroneC"]/comps</xpath>
+		<value>
+			<li>
+				<compClass>Rimocracy.ThingComp_GoverningBench</compClass>
+			</li>
+		</value>
+	</Operation>
+	
+	<!-- Mod: Primitive Workbenches -->
+
+	<Operation Class="PatchOperationAdd">
+		<success>Always</success>
+		<xpath>/Defs/ThingDef[defName="VBY_NeolithicManagerSpot"]/statBases</xpath>
+		<value>
+			<GovernEfficiencyFactor>0.25</GovernEfficiencyFactor>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationSequence">
+		<success>Always</success>
+		<operations>
+			<li Class="PatchOperationTest">
+				<xpath>/Defs/ThingDef[defName="VBY_NeolithicManagerSpot"]/comps</xpath>
+				<success>Invert</success>
+			</li>
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/ThingDef[defName="VBY_NeolithicManagerSpot"]</xpath>
+				<value>
+					<comps/>
+				</value>
+			</li>
+		</operations>
+	</Operation>
+	<Operation Class="PatchOperationAdd">
+		<success>Always</success>
+		<xpath>/Defs/ThingDef[defName="VBY_NeolithicManagerSpot"]/comps</xpath>
+		<value>
+			<li>
+				<compClass>Rimocracy.ThingComp_GoverningBench</compClass>
+			</li>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<success>Always</success>
+		<xpath>/Defs/ThingDef[defName="VBY_PrimitiveResearchSpot"]/statBases</xpath>
+		<value>
+			<GovernEfficiencyFactor>0.25</GovernEfficiencyFactor>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationSequence">
+		<success>Always</success>
+		<operations>
+			<li Class="PatchOperationTest">
+				<xpath>/Defs/ThingDef[defName="VBY_PrimitiveResearchSpot"]/comps</xpath>
+				<success>Invert</success>
+			</li>
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/ThingDef[defName="VBY_PrimitiveResearchSpot"]</xpath>
+				<value>
+					<comps/>
+				</value>
+			</li>
+		</operations>
+	</Operation>
+	<Operation Class="PatchOperationAdd">
+		<success>Always</success>
+		<xpath>/Defs/ThingDef[defName="VBY_PrimitiveResearchSpot"]/comps</xpath>
+		<value>
+			<li>
+				<compClass>Rimocracy.ThingComp_GoverningBench</compClass>
+			</li>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<success>Always</success>
+		<xpath>/Defs/ThingDef[defName="VBY_StoneManagerBench"]/statBases</xpath>
+		<value>
+			<GovernEfficiencyFactor>0.4</GovernEfficiencyFactor>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationSequence">
+		<success>Always</success>
+		<operations>
+			<li Class="PatchOperationTest">
+				<xpath>/Defs/ThingDef[defName="VBY_StoneManagerBench"]/comps</xpath>
+				<success>Invert</success>
+			</li>
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/ThingDef[defName="VBY_StoneManagerBench"]</xpath>
+				<value>
+					<comps/>
+				</value>
+			</li>
+		</operations>
+	</Operation>
+	<Operation Class="PatchOperationAdd">
+		<success>Always</success>
+		<xpath>/Defs/ThingDef[defName="VBY_StoneManagerBench"]/comps</xpath>
+		<value>
+			<li>
+				<compClass>Rimocracy.ThingComp_GoverningBench</compClass>
+			</li>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<success>Always</success>
+		<xpath>/Defs/ThingDef[defName="VBY_PrimitiveResearchTable"]/statBases</xpath>
+		<value>
+			<GovernEfficiencyFactor>0.6</GovernEfficiencyFactor>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationSequence">
+		<success>Always</success>
+		<operations>
+			<li Class="PatchOperationTest">
+				<xpath>/Defs/ThingDef[defName="VBY_PrimitiveResearchTable"]/comps</xpath>
+				<success>Invert</success>
+			</li>
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/ThingDef[defName="VBY_PrimitiveResearchTable"]</xpath>
+				<value>
+					<comps/>
+				</value>
+			</li>
+		</operations>
+	</Operation>
+	<Operation Class="PatchOperationAdd">
+		<success>Always</success>
+		<xpath>/Defs/ThingDef[defName="VBY_PrimitiveResearchTable"]/comps</xpath>
 		<value>
 			<li>
 				<compClass>Rimocracy.ThingComp_GoverningBench</compClass>

@@ -143,7 +143,7 @@
 		<description>Relative speed at which governance deteriorates while this pawn is the leader.</description>
 		<category>PawnSocial</category>
 		<workerClass>Rimocracy.StatWorker_GovernanceDecay</workerClass>
-		<showOnDefaultValue>false</showOnDefaultValue>
+		<showIfUndefined>false</showIfUndefined>
 		<minValue>0.25</minValue>
 		<maxValue>4</maxValue>
 		<toStringStyle>PercentZero</toStringStyle>

@@ -7,7 +7,7 @@ namespace Rimocracy
     {
         protected override ThoughtState CurrentSocialStateInternal(Pawn p, Pawn otherPawn)
         {
-            if (Utility.RimocracyComp?.Campaigns == null)
+            if (!Utility.PoliticsEnabled || !Utility.RimocracyComp.IsCampaigning)
                 return false;
 
             Pawn myCandidate = p.GetSupportedCandidate();

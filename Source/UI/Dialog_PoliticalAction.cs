@@ -51,7 +51,7 @@ namespace Rimocracy
                     else if (opinion.Vote == DecisionVote.Nay && action.governanceChangeIfOpposed != 0)
                         govChange = action.governanceChangeIfOpposed * governanceChangeFactor;
                     if (Mathf.Abs(govChange) >= 0.001f)
-                        content.Label($"Governance changed by {govChange.ToStringPercent()}, because the {Utility.LeaderTitle} {(opinion.Vote == DecisionVote.Yea ? "spearheaded" : "opposed")} the action.");
+                        content.Label($"Governance changed by {govChange.ToStringPercent()}, because the {Utility.LeaderTitle} {(opinion.Vote == DecisionVote.Yea ? "spearheaded" : "protested")} the action.");
                 }
                 content.Label($"{Utility.LeaderTitle.CapitalizeFirst()} {Utility.RimocracyComp.Leader.NameShortColored}: {opinion.support.ToStringWithSign("0")}", tooltip: opinion.explanation);
             }

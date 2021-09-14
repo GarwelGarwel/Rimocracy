@@ -12,7 +12,7 @@ namespace Rimocracy
 
         Pawn candidate;
         SkillDef focusSkill;
-        List<Pawn> supporters;
+        List<Pawn> supporters = new List<Pawn>();
 
         public Pawn Candidate => candidate;
 
@@ -29,16 +29,14 @@ namespace Rimocracy
         }
 
         public ElectionCampaign()
-            : this(null)
         { }
 
-        public ElectionCampaign(Pawn candidate, SkillDef focusSkill = null)
+        public ElectionCampaign(Pawn candidate, SkillDef focusSkill)
         {
             this.candidate = candidate;
-            this.focusSkill = focusSkill;
-            supporters = new List<Pawn>();
+            FocusSkill = focusSkill;
             if (candidate != null)
-                supporters.Add(candidate);
+                Supporters.Add(candidate);
         }
 
         public void ExposeData()
@@ -61,18 +59,14 @@ namespace Rimocracy
             // Preparing a list of potential targets for swaying with randomized weights
             Dictionary<Pawn, float> potentialTargets = Utility.Citizens
                     .Where(p =>
-                    !Utility.RimocracyComp.Candidates.Contains(p)
+                    !Utility.RimocracyComp.CampaigningCandidates.Contains(p)
                     && !p.InMentalState
                     && !p.Downed
                     && p.needs.mood.thoughts.memories.NumMemoriesOfDef(RimocracyDefOf.PoliticalSympathy) < RimocracyDefOf.PoliticalSympathy.stackLimit)
                     .ToDictionary(p => p, p => Rand.Range(0, ElectionUtility.VoteWeight(p, Candidate) + 100));
 
             if (Settings.DebugLogging && potentialTargets.Count > 0)
-            {
-                Utility.Log($"Potential targets for {Candidate}:");
-                foreach (KeyValuePair<Pawn, float> kvp in potentialTargets)
-                    Utility.Log($"- {kvp.Key}\t{kvp.Value:N0}");
-            }
+                Utility.Log($"Potential targets for {Candidate}:\r\n{potentialTargets.Select(kvp => $"- {kvp.Key}\t{kvp.Value:N0}").ToLineList()}");
 
             foreach (Pawn pawn in Supporters.Where(pawn => !pawn.InMentalState && !pawn.Downed))
             {
@@ -80,7 +74,7 @@ namespace Rimocracy
                 if (pawn != Candidate)
                 {
                     float defectionChance = 1 - ElectionUtility.VoteWeight(pawn, candidate) / 100;
-                    if (!pawn.IsCitizen() || Rand.Chance(defectionChance) || Utility.RimocracyComp.Candidates.MaxBy(p => ElectionUtility.VoteWeight(pawn, p)) != candidate)
+                    if (!pawn.IsCitizen() || Rand.Chance(defectionChance) || Utility.RimocracyComp.CampaigningCandidates.MaxBy(p => ElectionUtility.VoteWeight(pawn, p)) != candidate)
                     {
                         Utility.Log($"{pawn} is no longer a core supporter for {candidate}. Their defection chance was {defectionChance:P1}.");
                         defectors.Add(pawn);
@@ -128,7 +122,10 @@ namespace Rimocracy
             Supporters.AddRange(recruits);
         }
 
+        public TaggedString ToTaggedString() =>
+            $"{Candidate.NameShortColored}, {FocusSkill?.LabelCap ?? "no"} focus{(Supporters.Count > 1 ? $", {(Supporters.Count - 1).ToStringCached()} core supporters" : "")}";
+
         public override string ToString() =>
-            $"{Candidate.NameShortColored}, {focusSkill?.LabelCap.RawText ?? "no"} focus{(Supporters.Count > 1 ? $", {(Supporters.Count - 1).ToStringCached()} core supporters" : "")}";
+            ToTaggedString().RawText.StripTags();
     }
 }

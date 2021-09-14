@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Defs>
+
+	<ThoughtDef>
+		<defName>StateIdeoligion</defName>
+		<thoughtClass>Thought_Situational</thoughtClass>
+		<workerClass>Rimocracy.ThoughtWorker_StateIdeoligion</workerClass>
+		<validWhileDespawned>true</validWhileDespawned>
+		<nullifiedIfNotColonist>true</nullifiedIfNotColonist>
+		<nullifyingTraits>
+			<li>Psychopath</li>
+		</nullifyingTraits>
+		<stages>
+			<li>
+				<label>no citizenship</label>
+				<description>I am discriminated against due to not sharing the state ideoligion.</description>
+				<baseMoodEffect>-6</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+
+	<ThoughtDef>
+		<defName>Multiculturalism</defName>
+		<thoughtClass>Thought_Situational</thoughtClass>
+		<workerClass>Rimocracy.ThoughtWorker_Multiculturalism</workerClass>
+		<validWhileDespawned>true</validWhileDespawned>
+		<nullifiedIfNotColonist>true</nullifiedIfNotColonist>
+		<nullifyingTraits>
+			<li>Psychopath</li>
+		</nullifyingTraits>
+		<stages>
+			<li>
+				<label>multiculturalism</label>
+				<description>I enjoy full equality despite my ideoligion.</description>
+				<baseMoodEffect>4</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+
+</Defs>

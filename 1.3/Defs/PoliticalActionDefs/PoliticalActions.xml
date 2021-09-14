@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<Defs>
+
+	<Rimocracy.PoliticalActionDef Abstract="True" Name="BasePoliticalAction">
+		<supportThought>LikeDecision</supportThought>
+		<opposeThought>DislikeDecision</opposeThought>
+	</Rimocracy.PoliticalActionDef>
+
+	<Rimocracy.PoliticalActionDef ParentName="BasePoliticalAction">
+		<defName>Arrest</defName>
+		<label>arrest</label>
+		<considerations>
+			<li>
+				<label>I don't want to be arrested!</label>
+				<support>-50</support>
+				<all>
+					<li>
+						<isTarget>true</isTarget>
+					</li>
+					<li>
+						<trait>Masochist</trait>
+						<inverted>true</inverted>
+					</li>
+				</all>
+			</li>
+			<li>
+				<label>no reason for arrest</label>
+				<support>-10</support>
+				<targetIsColonist>true</targetIsColonist>
+				<targetInAggroMentalState>false</targetInAggroMentalState>
+			</li>
+			<li>
+				<label>ally</label>
+				<support>-5</support>
+				<targetIsColonist>false</targetIsColonist>
+				<targetFactionGoodwill>
+					<greaterOrEqual>75</greaterOrEqual>
+				</targetFactionGoodwill>
+			</li>
+			<li>
+				<label>enemy</label>
+				<support>5</support>
+				<targetIsColonist>false</targetIsColonist>
+				<targetFactionGoodwill>
+					<lessOrEqual>-75</lessOrEqual>
+				</targetFactionGoodwill>
+			</li>
+			<li>
+				<label>opinion of {TARGET}</label>
+				<isTarget>false</isTarget>
+				<opinionOfTarget>
+					<offset>
+						<points>
+							<li>(-100, 25)</li>
+							<li>(100, -25)</li>
+						</points>
+					</offset>
+				</opinionOfTarget>
+			</li>
+			<li>
+				<label>{TARGET} is our leader</label>
+				<support>-10</support>
+				<targetIsLeader>true</targetIsLeader>
+			</li>
+			<li>
+				<label>slavery is honorable</label>
+				<support>3</support>
+				<precept>Slavery_Honorable</precept>
+			</li>
+		</considerations>
+		<governanceChangeIfSupported>0.04</governanceChangeIfSupported>
+		<governanceChangeIfOpposed>-0.05</governanceChangeIfOpposed>
+	</Rimocracy.PoliticalActionDef>
+
+	<Rimocracy.PoliticalActionDef ParentName="BasePoliticalAction">
+		<defName>Execution</defName>
+		<label>execution</label>
+		<considerations>
+			<li>
+				<label>I want to live!</label>
+				<support>-100</support>
+				<isTarget>true</isTarget>
+			</li>
+			<li>
+				<label>killing people is bad</label>
+				<support>-10</support>
+				<all>
+					<li Class="Rimocracy.Consideration">
+						<trait>Psychopath</trait>
+						<inverted>true</inverted>
+					</li>
+					<li Class="Rimocracy.Consideration">
+						<trait>Bloodlust</trait>
+						<inverted>true</inverted>
+					</li>
+				</all>
+			</li>
+			<li>
+				<label>opinion of {TARGET}</label>
+				<isTarget>false</isTarget>
+				<opinionOfTarget>
+					<offset>
+						<points>
+							<li>(-100, 20)</li>
+							<li>(100, -20)</li>
+						</points>
+					</offset>
+				</opinionOfTarget>
+			</li>
+			<li>
+				<label>I like hurting people</label>
+				<support>15</support>
+				<trait>Bloodlust</trait>
+				<isTarget>false</isTarget>
+			</li>
+			<li>
+				<label>kind</label>
+				<support>-10</support>
+				<trait>Kind</trait>
+			</li>
+			<li>
+				<label>{TARGET} is a fellow colonist</label>
+				<support>-10</support>
+				<all>
+					<li>
+						<targetIsColonist>true</targetIsColonist>
+						<isTarget>false</isTarget>
+					</li>
+					<li>
+						<trait>Psychopath</trait>
+						<inverted>true</inverted>
+					</li>
+				</all>
+			</li>
+			<li>
+				<label>food shortage</label>
+				<isTarget>false</isTarget>
+				<daysOfFood>
+					<offset>
+						<points>
+							<li>(0, 10)</li>
+							<li>(3, 5)</li>
+							<li>(15, 0)</li>
+						</points>
+					</offset>
+				</daysOfFood>
+			</li>
+			<li>
+				<label>execution is abhorrent</label>
+				<support>-10</support>
+				<precept>Execution_Abhorrent</precept>
+			</li>
+			<li>
+				<label>execution is horrible</label>
+				<support>-7</support>
+				<any>
+					<li>
+						<precept>Execution_Horrible</precept>
+					</li>
+					<li>
+						<precept>Execution_HorribleIfInnocent</precept>
+					</li>
+				</any>
+			</li>
+			<li>
+				<label>execution is required</label>
+				<support>5</support>
+				<precept>Execution_Required</precept>
+			</li>
+		</considerations>
+		<governanceChangeIfSupported>0.08</governanceChangeIfSupported>
+		<governanceChangeIfOpposed>-0.10</governanceChangeIfOpposed>
+	</Rimocracy.PoliticalActionDef>
+
+	<Rimocracy.PoliticalActionDef ParentName="BasePoliticalAction">
+		<defName>Release</defName>
+		<label>release</label>
+		<considerations>
+			<li>
+				<label>I want to be free!</label>
+				<support>50</support>
+				<isTarget>true</isTarget>
+			</li>
+			<li>
+				<label>Kind</label>
+				<support>10</support>
+				<trait>Kind</trait>
+			</li>
+			<li>
+				<label>{TARGET} is a fellow colonist</label>
+				<support>5</support>
+				<all>
+					<li>
+						<targetIsColonist>true</targetIsColonist>
+						<isTarget>false</isTarget>
+					</li>
+					<li>
+						<trait>Psychopath</trait>
+						<inverted>true</inverted>
+					</li>
+				</all>
+			</li>
+			<li>
+				<label>opinion of {TARGET}</label>
+				<isTarget>false</isTarget>
+				<opinionOfTarget>
+					<offset>
+						<points>
+							<li>(-100, -20)</li>
+							<li>(100, 20)</li>
+						</points>
+					</offset>
+				</opinionOfTarget>
+			</li>
+			<li>
+				<label>food shortage</label>
+				<targetIsColonist>false</targetIsColonist>
+				<daysOfFood>
+					<offset>
+						<points>
+							<li>(0, 10)</li>
+							<li>(3, 5)</li>
+							<li>(15, 0)</li>
+						</points>
+					</offset>
+				</daysOfFood>
+			</li>
+			<li>
+				<label>slavery is abhorrent</label>
+				<support>10</support>
+				<precept>Slavery_Abhorrent</precept>
+			</li>
+			<li>
+				<label>slavery is horrible</label>
+				<support>7</support>
+				<precept>Slavery_Horrible</precept>
+			</li>
+			<li>
+				<label>slavery is disapproved</label>
+				<support>3</support>
+				<precept>Slavery_Disapproved</precept>
+			</li>
+			<li>
+				<label>slavery is honorable</label>
+				<support>-5</support>
+				<precept>Slavery_Honorable</precept>
+			</li>
+		</considerations>
+		<governanceChangeIfSupported>0.04</governanceChangeIfSupported>
+		<governanceChangeIfOpposed>-0.05</governanceChangeIfOpposed>
+	</Rimocracy.PoliticalActionDef>
+
+	<Rimocracy.PoliticalActionDef ParentName="BasePoliticalAction">
+		<defName>Banishment</defName>
+		<label>banishment</label>
+		<considerations>
+			<li>
+				<label>I don't want to be banished!</label>
+				<support>-50</support>
+				<isTarget>true</isTarget>
+			</li>
+			<li>
+				<label>banishment is cruel</label>
+				<support>-10</support>
+				<trait>Psychopath</trait>
+				<inverted>true</inverted>
+			</li>
+			<li>
+				<label>kind</label>
+				<support>-10</support>
+				<trait>Kind</trait>
+			</li>
+			<li>
+				<label>opinion of {TARGET}</label>
+				<isTarget>false</isTarget>
+				<opinionOfTarget>
+					<offset>
+						<points>
+							<li>(-100, 20)</li>
+							<li>(100, -20)</li>
+						</points>
+					</offset>
+				</opinionOfTarget>
+			</li>
+			<li>
+				<label>population</label>
+				<population>
+					<offset>
+						<points>
+							<li>(2, -20)</li>
+							<li>(6, 0)</li>
+							<li>(15, 0)</li>
+							<li>(35, 20)</li>
+						</points>
+					</offset>
+				</population>
+			</li>
+			<li>
+				<label>food shortage</label>
+				<daysOfFood>
+					<offset>
+						<points>
+							<li>(0, 10)</li>
+							<li>(3, 5)</li>
+							<li>(15, 0)</li>
+						</points>
+					</offset>
+				</daysOfFood>
+			</li>
+		</considerations>
+		<governanceChangeIfSupported>0.08</governanceChangeIfSupported>
+		<governanceChangeIfOpposed>-0.10</governanceChangeIfOpposed>
+	</Rimocracy.PoliticalActionDef>
+
+	<Rimocracy.PoliticalActionDef ParentName="BasePoliticalAction">
+		<defName>SettlementAttack</defName>
+		<label>settlement attack</label>
+		<considerations>
+			<li>
+				<label>I'm against violence</label>
+				<support>-20</support>
+				<isCapableOfViolence>false</isCapableOfViolence>
+			</li>
+			<li>
+				<label>goodwill</label>
+				<targetFactionGoodwill>
+					<offset>
+						<points>
+							<li>(-100, 20)</li>
+							<li>(-75, 10)</li>
+							<li>(75, -10)</li>
+							<li>(100, -20)</li>
+						</points>
+					</offset>
+				</targetFactionGoodwill>
+			</li>
+			<li>
+				<label>opinion of faction leader</label>
+				<opinionOfTarget>
+					<offset>
+						<points>
+							<li>(-100, 10)</li>
+							<li>(100, -10)</li>
+						</points>
+					</offset>
+				</opinionOfTarget>
+			</li>
+			<li>
+				<label>bloodlust</label>
+				<support>10</support>
+				<trait>Bloodlust</trait>
+			</li>
+			<li>
+				<label>brawler</label>
+				<support>10</support>
+				<trait>Brawler</trait>
+			</li>
+			<li>
+				<label>tough</label>
+				<support>5</support>
+				<trait>Tough</trait>
+			</li>
+			<li>
+				<label>kind</label>
+				<support>-10</support>
+				<trait>Kind</trait>
+			</li>
+			<li>
+				<label>wimp</label>
+				<support>-5</support>
+				<trait>Wimp</trait>
+			</li>
+			<li>
+				<label>chance to prove my worth</label>
+				<support>5</support>
+				<succession>Martial</succession>
+				<isCapableOfViolence>true</isCapableOfViolence>
+			</li>
+			<li>
+				<label>supremacist ideology</label>
+				<support>10</support>
+				<meme>Supremacist</meme>
+			</li>
+			<li>
+				<label>raider ideology</label>
+				<support>10</support>
+				<meme>Raider</meme>
+			</li>
+			<li>
+				<label>cannibalism ideology</label>
+				<support>5</support>
+				<meme>Cannibal</meme>
+			</li>
+			<li>
+				<label>guilty ideology</label>
+				<support>-5</support>
+				<meme>Guilty</meme>
+			</li>
+			<li>
+				<label>raiding is respected</label>
+				<support>3</support>
+				<precept>Raiding_Respected</precept>
+			</li>
+			<li>
+				<label>raiding is required</label>
+				<support>6</support>
+				<precept>Raiding_Required</precept>
+			</li>
+		</considerations>
+		<governanceChangeIfSupported>0.08</governanceChangeIfSupported>
+		<governanceChangeIfOpposed>-0.10</governanceChangeIfOpposed>
+	</Rimocracy.PoliticalActionDef>
+
+	<Rimocracy.PoliticalActionDef ParentName="BasePoliticalAction">
+		<defName>Trade</defName>
+		<label>trade</label>
+		<considerations>
+			<li>
+				<label>goodwill</label>
+				<targetFactionGoodwill>
+					<offset>
+						<points>
+							<li>(-100, -10)</li>
+							<li>(100, 10)</li>
+						</points>
+					</offset>
+				</targetFactionGoodwill>
+			</li>
+			<li>
+				<label>opinion of faction leader</label>
+				<opinionOfTarget>
+					<offset>
+						<points>
+							<li>(-100, -10)</li>
+							<li>(100, 10)</li>
+						</points>
+					</offset>
+				</opinionOfTarget>
+			</li>
+			<li>
+				<label>bloodlust</label>
+				<support>-5</support>
+				<trait>Bloodlust</trait>
+			</li>
+			<li>
+				<label>kind</label>
+				<support>5</support>
+				<trait>Kind</trait>
+			</li>
+			<li>
+				<label>low on food</label>
+				<daysOfFood>
+					<lessThan>5</lessThan>
+					<offset>
+						<points>
+							<li>(0, 6)</li>
+							<li>(3, 3)</li>
+							<li>(15, 0)</li>
+						</points>
+					</offset>
+				</daysOfFood>
+			</li>
+			<li>
+				<label>raider ideology</label>
+				<support>-5</support>
+				<meme>Raider</meme>
+			</li>
+		</considerations>
+		<supportThought>LikeTrade</supportThought>
+		<opposeThought>DislikeTrade</opposeThought>
+		<governanceChangeIfSupported>0.20</governanceChangeIfSupported>
+		<governanceChangeIfOpposed>-0.25</governanceChangeIfOpposed>
+	</Rimocracy.PoliticalActionDef>
+
+</Defs>

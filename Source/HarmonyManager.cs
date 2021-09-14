@@ -12,39 +12,43 @@ namespace Rimocracy
     {
         internal static Harmony harmony;
 
-        static bool initialized = false;
-
         public static void Initialize()
         {
-            if (initialized)
+            if (harmony != null)
                 return;
+
             harmony = new Harmony("Garwel.Rimocracy");
             Type type = typeof(HarmonyManager);
 
+            void Patch(string methodToPatch, string prefix = null, string postfix = null) =>
+                harmony.Patch(
+                    AccessTools.Method(methodToPatch),
+                    prefix != null ? new HarmonyMethod(type.GetMethod(prefix)) : null,
+                    postfix != null ? new HarmonyMethod(type.GetMethod(postfix)) : null);
+
             Utility.Log($"Applying Harmony patches...");
-            harmony.Patch(AccessTools.Method("RimWorld.JobDriver_TakeToBed:MakeNewToils"),
-                prefix: new HarmonyMethod(type.GetMethod("Arrest_Prefix")),
-                postfix: new HarmonyMethod(type.GetMethod("Arrest_Postfix")));
-            harmony.Patch(AccessTools.Method("RimWorld.JobDriver_Execute:MakeNewToils"), prefix: new HarmonyMethod(type.GetMethod("Execution_Prefix")));
-            harmony.Patch(AccessTools.Method("RimWorld.ExecutionUtility:DoExecutionByCut"), postfix: new HarmonyMethod(type.GetMethod("Execution_Postfix")));
-            harmony.Patch(AccessTools.Method("Verse.AI.JobDriver_ReleasePrisoner:MakeNewToils"), prefix: new HarmonyMethod(type.GetMethod("Release_Prefix")));
-            harmony.Patch(AccessTools.Method("RimWorld.GenGuest:PrisonerRelease"), postfix: new HarmonyMethod(type.GetMethod("Release_Postfix")));
-            harmony.Patch(AccessTools.Method("RimWorld.PawnBanishUtility:Banish"),
-                prefix: new HarmonyMethod(type.GetMethod("Banishment_Prefix")),
-                postfix: new HarmonyMethod(type.GetMethod("Banishment_Postfix")));
-            harmony.Patch(AccessTools.Method("RimWorld.Planet.SettlementUtility:Attack"),
-                prefix: new HarmonyMethod(type.GetMethod("SettlementAttack_Prefix")),
-                postfix: new HarmonyMethod(type.GetMethod("SettlementAttack_Postfix")));
-            harmony.Patch(AccessTools.Method("RimWorld.Dialog_Trade:PostOpen"), postfix: new HarmonyMethod(type.GetMethod("Trade_Prefix")));
-            harmony.Patch(AccessTools.Method("RimWorld.Faction:Notify_PlayerTraded"), postfix: new HarmonyMethod(type.GetMethod("Trade_Postfix")));
+
+            // Patches for political actions
+            Patch("RimWorld.JobDriver_TakeToBed:MakeNewToils", "Arrest_Prefix", "Arrest_Postfix");
+            Patch("RimWorld.JobDriver_Execute:MakeNewToils", "Execution_Prefix");
+            Patch("RimWorld.ExecutionUtility:DoExecutionByCut", postfix: "Execution_Postfix");
+            Patch("Verse.AI.JobDriver_ReleasePrisoner:MakeNewToils", "Release_Prefix");
+            Patch("RimWorld.GenGuest:PrisonerRelease", postfix: "Release_Postfix");
+            Patch("RimWorld.PawnBanishUtility:Banish", "Banishment_Prefix", "Banishment_Postfix");
+            Patch("RimWorld.Planet.SettlementUtility:Attack", "SettlementAttack_Prefix", "SettlementAttack_Postfix");
+            Patch("RimWorld.Dialog_Trade:PostOpen", postfix: "Trade_Prefix");
+            Patch("RimWorld.Faction:Notify_PlayerTraded", postfix: "Trade_Postfix");
+
+            // Ideology compatibility patch
+            Patch("RimWorld.Precept_RoleSingle:Unassign", "RoleUnassign_Prefix");
+            Patch("RimWorld.Ideo:Notify_NotPrimaryAnymore", postfix: "PrimaryIdeoChange_Postfix");
 
             Utility.Log($"{harmony.GetPatchedMethods().EnumerableCount()} methods patched with Harmony.");
-            initialized = true;
         }
 
         static bool Vetoed(PoliticalActionDef politicalAction, out DecisionVoteResults opinions, Pawn target = null)
         {
-            if (!Utility.RimocracyComp.IsEnabled)
+            if (!Utility.PoliticsEnabled)
             {
                 opinions = null;
                 return false;
@@ -71,9 +75,13 @@ namespace Rimocracy
 
         #region ARREST
 
+        // Check is the TakeToBed job is in fact to arrest a non-prisoner for the colony (to prevent it from firing for relocating prisoners etc.)
+        static bool IsActualArrestJob(JobDriver_TakeToBed jobDriver) =>
+            jobDriver.job.def.makeTargetPrisoner && jobDriver.pawn.IsColonist && !jobDriver.job.targetA.Pawn.IsPrisonerOfColony;
+
         public static void Arrest_Prefix(JobDriver_TakeToBed __instance, out DecisionVoteResults __state)
         {
-            if (!__instance.job.def.makeTargetPrisoner)
+            if (!IsActualArrestJob(__instance))
             {
                 __state = null;
                 return;
@@ -86,7 +94,7 @@ namespace Rimocracy
 
         public static void Arrest_Postfix(JobDriver_TakeToBed __instance, DecisionVoteResults __state)
         {
-            if (!Utility.RimocracyComp.IsEnabled || !__instance.job.def.makeTargetPrisoner)
+            if (!Utility.PoliticsEnabled || !IsActualArrestJob(__instance))
                 return;
             Pawn target = __instance.job.targetA.Pawn;
             Utility.Log($"Arrest_Postfix for {target}");
@@ -108,7 +116,7 @@ namespace Rimocracy
 
         public static void Execution_Postfix(Pawn executioner, Pawn victim)
         {
-            if (!Utility.RimocracyComp.IsEnabled || victim.AnimalOrWildMan())
+            if (!Utility.PoliticsEnabled || victim.AnimalOrWildMan())
                 return;
             Utility.Log($"Execution_Postfix('{executioner}', '{victim}')");
             RimocracyDefOf.Execution.Activate(victim);
@@ -128,7 +136,7 @@ namespace Rimocracy
 
         public static void Release_Postfix(Pawn p)
         {
-            if (!Utility.RimocracyComp.IsEnabled || p.AnimalOrWildMan())
+            if (!Utility.PoliticsEnabled || p.AnimalOrWildMan())
                 return;
             Utility.Log($"Release_Postfix('{p}')");
             RimocracyDefOf.Release.Activate(p);
@@ -151,7 +159,7 @@ namespace Rimocracy
 
         public static void Banishment_Postfix(Pawn pawn, DecisionVoteResults __state)
         {
-            if (!Utility.RimocracyComp.IsEnabled)
+            if (!Utility.PoliticsEnabled)
                 return;
             Utility.Log($"Banishment_Postfix for {pawn}");
             if (!Utility.RimocracyComp.ActionsNeedApproval || (__state != null && !__state.Vetoed))
@@ -175,7 +183,7 @@ namespace Rimocracy
 
         public static void SettlementAttack_Postfix(Caravan caravan, Settlement settlement, DecisionVoteResults __state)
         {
-            if (!caravan.Faction.IsPlayer)
+            if (!caravan.Faction.IsPlayer || !Utility.PoliticsEnabled)
                 return;
             Utility.Log($"SettlementAttack_Postfix({caravan}, {settlement})");
             if (!Utility.RimocracyComp.ActionsNeedApproval || (__state != null && !__state.Vetoed))
@@ -186,7 +194,7 @@ namespace Rimocracy
 
         #region TRADE
 
-        // This is technically a postfix that does the job of prefixes, i.e. checks if the PoliticalAction (Trade in this case) is vetoed
+        // This is technically a postfix that does the job of a prefix, i.e. checks if the PoliticalAction (Trade in this case) is vetoed
         public static void Trade_Prefix(Dialog_Trade __instance)
         {
             Utility.Log($"Trade_Prefix for trader {TradeSession.trader} ({TradeSession.trader?.Faction})");
@@ -198,7 +206,7 @@ namespace Rimocracy
 
         public static void Trade_Postfix(float marketValueSentByPlayer, Faction __instance)
         {
-            if (marketValueSentByPlayer <= 0)
+            if (marketValueSentByPlayer <= 0 || !Utility.PoliticsEnabled)
                 return;
             Utility.Log($"Trade_Postfix({marketValueSentByPlayer}) for {__instance}");
             // Governance is changed in direct proportion to the amount traded and reverse proportion to the total items' wealth of the player
@@ -206,5 +214,38 @@ namespace Rimocracy
         }
 
         #endregion TRADE
+
+        #region IDEOLOGY PATCHES
+
+        public static bool RoleUnassign_Prefix(Precept_RoleSingle __instance, Pawn p)
+        {
+            Utility.Log($"RoleUnassign_Prefix({__instance.def}, {p})");
+            if (__instance.def.leaderRole && p != null && p.IsLeader())
+            {
+                Utility.Log($"Blocked unassignment of role {__instance.def} from {p}.");
+                Messages.Message($"{Utility.LeaderTitle} can only be unassigned via Impeachment decision.", MessageTypeDefOf.RejectInput);
+                if (RimocracyDefOf.Impeachment.IsDisplayable)
+                    Find.WindowStack.Add(new Dialog_DecisionList());
+                return false;
+            }
+            return true;
+        }
+
+        // Resets succession type to a random one on primary ideoligion change
+        public static void PrimaryIdeoChange_Postfix(Ideo __instance, Ideo newIdeo)
+        {
+            Utility.Log($"PrimaryIdeoChange_Postfix('{__instance.name}', '{newIdeo.name}')");
+            if (Utility.RimocracyComp == null || Utility.RimocracyComp.DecisionActive(DecisionDef.Multiculturalism))
+                return;
+            SuccessionDef newSuccession = Utility.RimocracyComp.GetRandomSuccessionDef(newIdeo);
+            if (newSuccession != Utility.RimocracyComp.SuccessionType)
+            {
+                Utility.Log($"Succession type changed from {Utility.RimocracyComp.SuccessionType.LabelCap} to {newSuccession.LabelCap}.");
+                Find.LetterStack.ReceiveLetter("Succession type changed", $"Succession type changed to {newSuccession.LabelCap} due to change of primary ideoligion.\n\n{newSuccession.description}", LetterDefOf.NeutralEvent);
+                Utility.RimocracyComp.SuccessionType = newSuccession;
+            }
+        }
+
+        #endregion IDEOLOGY PATCHES
     }
 }
