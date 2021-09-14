@@ -6,7 +6,7 @@ namespace Rimocracy
     public class RoleRequirement_Leader : RoleRequirement
     {
         public override bool Met(Pawn p, Precept_Role role) =>
-            !p.HomeFaction.IsPlayer || (role.def.leaderRole == (p.IsLeader() && !Utility.RimocracyComp.DecisionActive(DecisionDef.Multiculturalism))) || Utility.RimocracyComp == null;
+            Utility.RimocracyComp == null || p.HomeFaction == null || !p.HomeFaction.IsPlayer || (role.def.leaderRole == (p.IsLeader() && !Utility.RimocracyComp.DecisionActive(DecisionDef.Multiculturalism)));
 
         public override string GetLabel(Precept_Role role) =>
             role.def.leaderRole

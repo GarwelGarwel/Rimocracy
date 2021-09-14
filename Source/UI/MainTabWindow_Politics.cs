@@ -9,7 +9,7 @@ namespace Rimocracy
     {
         public override Vector2 InitialSize => new Vector2(455, 320);
 
-        public override void DoWindowContents(Rect inRect)
+        public override void DoWindowContents(Rect rect)
         {
             if (Utility.RimocracyComp == null)
             {
@@ -20,12 +20,12 @@ namespace Rimocracy
             // Politics Disabled
             if (!Utility.RimocracyComp.IsEnabled)
             {
-                Widgets.Label(inRect, $"You need at least {Settings.MinPopulation.ToStringCached()} free, adult colonists{(ModsConfig.IdeologyActive && Utility.RimocracyComp.DecisionActive(DecisionDef.StateIdeoligion) ? $" following {Utility.NationPrimaryIdeo?.name ?? "your primary ideoligion"}" : "")} and a potential leader for politics.");
+                Widgets.Label(rect, $"You need at least {Settings.MinPopulation.ToStringCached()} free, adult colonists{(ModsConfig.IdeologyActive && Utility.RimocracyComp.DecisionActive(DecisionDef.StateIdeoligion) ? $" following {Utility.NationPrimaryIdeo?.name ?? "your primary ideoligion"}" : "")} and a potential leader for politics.");
                 return;
             }
 
             Listing_Standard content = new Listing_Standard();
-            content.Begin(inRect);
+            content.Begin(rect);
 
             string leaderTitle = Utility.LeaderTitle.CapitalizeFirst(Utility.RimocracyComp.LeaderTitleDef);
 
@@ -35,7 +35,7 @@ namespace Rimocracy
             // Governance target, leader skills and next succession
             if (Utility.RimocracyComp.HasLeader)
             {
-                content.Label($"Governance quality: {Utility.RimocracyComp.Governance.ToStringPercent("F1")}. Falls at {Utility.RimocracyComp.GovernanceDecayPerDay.ToStringPercent()} per day.");
+                content.Label($"Governance quality: {Utility.RimocracyComp.Governance.ToStringPercent("F1")}. Falls by {Utility.RimocracyComp.GovernanceDecayPerDay.ToStringPercent()} per day.");
 
                 content.Label($"Governance target: {Utility.RimocracyComp.GovernanceTarget.ToStringPercent()}");
                 Utility.RimocracyComp.GovernanceTarget = GenMath.RoundedHundredth(content.Slider(Utility.RimocracyComp.GovernanceTarget, 0, 1));

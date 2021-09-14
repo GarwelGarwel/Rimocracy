@@ -226,7 +226,7 @@ namespace Rimocracy
                 if (Settings.DebugLogging || Prefs.LogVerbose)
                 {
                     Utility.Log($"Politics: {(IsEnabled ? "enabled" : "disabled")}");
-                    Utility.Log($"Leader: {(Leader != null ? Leader.Name.ToStringShort : "none")}");
+                    Utility.Log($"Leader: {(HasLeader ? Leader.Name.ToStringShort : "none")}");
                     Utility.Log($"Succession: {SuccessionType.defName} @ {TermExpiration} (in {(TermExpiration - Find.TickManager.TicksAbs).ToStringTicksToPeriod(false, true)})");
                     Utility.Log($"Election tick: {ElectionTick} (in {(ElectionTick - Find.TickManager.TicksAbs).ToStringTicksToPeriod(false, true)})");
                     Utility.Log($"Term duration: {TermDuration}");

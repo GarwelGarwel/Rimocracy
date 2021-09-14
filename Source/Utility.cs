@@ -25,7 +25,29 @@ namespace Rimocracy
     {
         static bool? simpleSlaveryInstalled;
 
-        public static RimocracyComp RimocracyComp => Find.World?.GetComponent<RimocracyComp>();
+        static int rimocracyCompIndex = -1;
+
+        public static RimocracyComp RimocracyComp
+        {
+            get
+            {
+                RimocracyComp comp;
+                if (rimocracyCompIndex >= 0 && rimocracyCompIndex < Find.World.components.Count)
+                {
+                    comp = Find.World.components[rimocracyCompIndex] as RimocracyComp;
+                    if (comp != null)
+                        return comp;
+                }
+                for (rimocracyCompIndex = 0; rimocracyCompIndex < Find.World.components.Count; rimocracyCompIndex++)
+                {
+                    comp = Find.World.components[rimocracyCompIndex] as RimocracyComp;
+                    if (comp != null)
+                        return comp;
+                }
+                rimocracyCompIndex = -1;
+                return null;
+            }
+        }
 
         public static bool PoliticsEnabled => RimocracyComp != null && RimocracyComp.IsEnabled;
 
@@ -66,8 +88,11 @@ namespace Rimocracy
 
         public static int TermDurationTicks => RimocracyComp.TermDuration.GetDurationTicks();
 
-        public static string DateFullStringWithHourAtHome(long tick) =>
-            GenDate.DateFullStringWithHourAt(tick, Find.WorldGrid.LongLatOf(Find.AnyPlayerHomeMap.Tile));
+        public static string DateFullStringWithHourAtHome(long tick)
+        {
+            Map playerMap = Find.AnyPlayerHomeMap;
+            return GenDate.DateFullStringWithHourAt(tick, playerMap != null ? Find.WorldGrid.LongLatOf(playerMap.Tile) : default);
+        }
 
         public static Precept_RoleSingle IdeologyLeaderPrecept(Ideo ideo = null) =>
             (ideo ?? NationPrimaryIdeo).GetAllPreceptsOfType<Precept_RoleSingle>().FirstOrDefault(p => p.def == PreceptDefOf.IdeoRole_Leader);
