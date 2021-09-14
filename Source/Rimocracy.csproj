@@ -74,6 +74,7 @@
     <Compile Include="PawnDecisionOpinion.cs" />
     <Compile Include="SkillOperations.cs" />
     <Compile Include="Stats\StatPart_StateIdeoligion.cs" />
+    <Compile Include="ThingComps\CompCitizen.cs" />
     <Compile Include="ThingComps\ThingComp_GoverningBench.cs" />
     <Compile Include="Thoughts\ThoughtWorker_Multiculturalism.cs" />
     <Compile Include="Thoughts\ThoughtWorker_StateIdeoligion.cs" />
