@@ -12,6 +12,8 @@ namespace Rimocracy
 
         public int Nay => GetVotesNum(DecisionVote.Nay);
 
+        public int Tolerates => GetVotesNum(DecisionVote.Tolerate);
+
         public int Abstentions => GetVotesNum(DecisionVote.Abstain);
 
         public bool MajoritySupport => Yea > Nay;

@@ -1,6 +1,7 @@
 ﻿using RimWorld;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 using Verse;
 
 namespace Rimocracy
@@ -70,6 +71,20 @@ namespace Rimocracy
         public static int CitizensCount => Citizens.Count();
 
         public static int Population => PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonistsAndPrisoners_NoCryptosleep.Count();
+
+        public static float GetLoyalty(this Pawn pawn)
+        {
+            CompCitizen comp = pawn.TryGetComp<CompCitizen>();
+            return comp != null ? comp.Loyalty : 0;
+        }
+
+        public static void ChangeLoyalty(this Pawn pawn, float value)
+        {
+            CompCitizen comp = pawn.TryGetComp<CompCitizen>();
+            if (comp != null)
+                comp.Loyalty += value;
+            else Log($"SetLoyalty: {pawn} hsa no CompCitizen.", LogLevel.Error);
+        }
 
         public static float TotalNutrition => Find.Maps.Where(map => map.mapPawns.AnyColonistSpawned).Sum(map => map.resourceCounter.TotalHumanEdibleNutrition);
 
@@ -184,6 +199,8 @@ namespace Rimocracy
             int count = list.Count;
             return count % 2 == 0 ? (list[count / 2 - 1] + list[count / 2]) / 2 : list[count / 2];
         }
+
+        public static string ColorizeOpinion(this string text, float support) => text.Colorize(support > 0.5f ? Color.green : (support < -0.5f ? Color.red : Color.gray));
 
         internal static void Log(string message, LogLevel logLevel = LogLevel.Message)
         {

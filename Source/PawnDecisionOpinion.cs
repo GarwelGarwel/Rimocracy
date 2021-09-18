@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 using Verse;
 
 namespace Rimocracy
@@ -9,7 +10,29 @@ namespace Rimocracy
         public float support;
         public string explanation;
 
-        public DecisionVote Vote => support > 0.5f ? DecisionVote.Yea : (support < -0.5f ? DecisionVote.Nay : DecisionVote.Abstain);
+        public DecisionVote Vote => support > 0.5f ? DecisionVote.Yea : (support + voter.GetLoyalty() < -0.5f ? DecisionVote.Nay : (support < -0.5f ? DecisionVote.Tolerate : DecisionVote.Abstain));
+
+        public string VoteStringColor
+        {
+            get
+            {
+                switch (Vote)
+                {
+                    case DecisionVote.Abstain:
+                        return "abstains".Colorize(Color.gray);
+
+                    case DecisionVote.Tolerate:
+                        return "tolerates".Colorize(Color.yellow);
+
+                    case DecisionVote.Yea:
+                        return "supports".Colorize(Color.green);
+
+                    case DecisionVote.Nay:
+                        return "opposes".Colorize(Color.red);
+                }
+                return null;
+            }
+        }
 
         public PawnDecisionOpinion(Pawn voter, IEnumerable<Consideration> considerations, Pawn target)
         {
@@ -25,6 +48,9 @@ namespace Rimocracy
                     explanations.Add(supportExplanation.explanation.Resolve());
                 }
             }
+            explanations.Add($"Overall support: {support.ToStringWithSign("0").ColorizeOpinion(support)}");
+            if (support < -0.5f)
+                explanations.Add($"Loyalty: {voter.GetLoyalty().ToStringWithSign("0").ColorizeOpinion(voter.GetLoyalty())}");
             explanation = explanations.ToLineList();
         }
     }
@@ -32,6 +58,7 @@ namespace Rimocracy
     public enum DecisionVote
     {
         Abstain = 0,
+        Tolerate,
         Yea,
         Nay
     }

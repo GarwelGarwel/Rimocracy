@@ -89,7 +89,6 @@ namespace Rimocracy
                             content.Label($"Will move the regime {Math.Abs(def.regimeEffect).ToStringPercent()} towards {(def.regimeEffect > 0 ? "democracy" : "authoritarianism")}.");
                         if (!def.effectRequirements.IsTrivial)
                             content.Label($"Requirements:\n{def.effectRequirements.ToString(target: Utility.RimocracyComp.Leader?.NameShortColored)}");
-
                         switch (def.enactment)
                         {
                             case DecisionEnactmentRule.Decree:
@@ -101,19 +100,21 @@ namespace Rimocracy
                                 content.Label($"Requires approval of a majority of citizens.");
                                 break;
                         }
-                        
+
                         DecisionVoteResults votingResult = def.GetVotingResults(Utility.Citizens.ToList());
                         if (def.enactment == DecisionEnactmentRule.Decree && Utility.RimocracyComp.HasLeader)
                         {
                             PawnDecisionOpinion leaderOpinion = votingResult[Utility.RimocracyComp.Leader];
-                            content.Label($"{Utility.LeaderTitle.CapitalizeFirst()}'s support: {leaderOpinion.support.ToStringWithSign("0")}", tooltip: leaderOpinion.explanation);
+                            content.Label($"{Utility.LeaderTitle.CapitalizeFirst()} {leaderOpinion.VoteStringColor} this decision.", tooltip: leaderOpinion.explanation);
                         }
 
                         if ((def.allCitizensReact || def.enactment == DecisionEnactmentRule.Law || def.enactment == DecisionEnactmentRule.Referendum) && votingResult.Any(opinion => opinion.Vote != DecisionVote.Abstain))
                         {
-                            content.Label($"Citizens' support: {votingResult.Yea.ToStringCached()} - {votingResult.Nay.ToStringCached()}");
+                            content.Label($"Citizens' support: {votingResult.Yea.ToStringCached().Colorize(Color.green)} - {votingResult.Nay.ToStringCached().Colorize(Color.red)}");
                             foreach (PawnDecisionOpinion opinion in votingResult)
-                                content.Label($"  {opinion.voter.NameShortColored}: {opinion.support.ToStringWithSign("0")}", tooltip: opinion.explanation);
+                                content.Label($"   {opinion.voter.NameShortColored}: {opinion.VoteStringColor}", tooltip: opinion.explanation);
+                            if (def.loyaltyEffect != 0)
+                                content.Label($"Loyalty of citizens who support this decision will increase, and of those who oppose or tolerate it, decrease by {def.loyaltyEffect:N0}.");
                         }
 
                         // Display Activate button for valid decisions
@@ -128,6 +129,7 @@ namespace Rimocracy
                                     {
                                         Utility.Log($"{opinion.voter}'s opinion is {opinion.support.ToStringWithSign()}.");
                                         opinion.voter.needs.mood.thoughts.memories.TryGainMemory(opinion.Vote == DecisionVote.Yea ? RimocracyDefOf.LikeDecision : RimocracyDefOf.DislikeDecision);
+                                        opinion.voter.ChangeLoyalty(opinion.Vote == DecisionVote.Yea ? def.loyaltyEffect : -def.loyaltyEffect);
                                     }
                                     Find.LetterStack.ReceiveLetter($"{def.LabelTitleCase} Decision Taken", def.description, LetterDefOf.NeutralEvent, null);
                                 }

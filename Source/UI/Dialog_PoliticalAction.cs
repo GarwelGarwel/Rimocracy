@@ -38,7 +38,7 @@ namespace Rimocracy
             Text.Anchor = TextAnchor.UpperLeft;
 
             if (opinions.Count > 1)
-                content.Label($"{opinions.Yea.ToStringCached()} citizens support the action, {opinions.Nay.ToStringCached()} oppose it, and {opinions.Abstentions.ToStringCached()} are indiffirent.");
+                content.Label($"{opinions.Yea.ToStringCached()} citizens {"support".Colorize(Color.green)} the action, {opinions.Nay.ToStringCached()} {"oppose".Colorize(Color.red)} it, and {opinions.Tolerates.ToStringCached()} are unhappy but {"tolerate".Colorize(Color.yellow)} it.");
 
             if (Utility.RimocracyComp.HasLeader)
             {
@@ -53,11 +53,11 @@ namespace Rimocracy
                     if (Mathf.Abs(govChange) >= 0.001f)
                         content.Label($"Governance changed by {govChange.ToStringPercent()}, because the {Utility.LeaderTitle} {(opinion.Vote == DecisionVote.Yea ? "spearheaded" : "protested")} the action.");
                 }
-                content.Label($"{Utility.LeaderTitle.CapitalizeFirst()} {Utility.RimocracyComp.Leader.NameShortColored}: {opinion.support.ToStringWithSign("0")}", tooltip: opinion.explanation);
+                content.Label($"{Utility.LeaderTitle.CapitalizeFirst()} {Utility.RimocracyComp.Leader.NameShortColored}: {opinion.VoteStringColor}", tooltip: opinion.explanation);
             }
 
             foreach (PawnDecisionOpinion opinion in opinions.Where(opinion => opinion.voter != Utility.RimocracyComp.Leader))
-                content.Label($"{opinion.voter.NameShortColored}: {opinion.support.ToStringWithSign("0")}", tooltip: opinion.explanation);
+                content.Label($"{opinion.voter.NameShortColored}: {opinion.VoteStringColor}", tooltip: opinion.explanation);
 
             content.Gap();
             content.CheckboxLabeled("Always show action details", ref Settings.ShowActionSupportDetails, "Uncheck to disable this dialog from popping up. You may re-enable it in the Settings.");

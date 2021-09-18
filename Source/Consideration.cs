@@ -187,7 +187,7 @@ namespace Rimocracy
         public (float support, TaggedString explanation) GetSupportAndExplanation(Pawn pawn, Pawn target)
         {
             float s = GetSupport(pawn, target);
-            return (s, s != 0 ? $"{label.Formatted(pawn.Named("PAWN"), target.Named("TARGET")).Resolve().CapitalizeFirst()}: {s.ToStringWithSign("0")}" : null);
+            return (s, s != 0 ? $"{label.Formatted(pawn.Named("PAWN"), target.Named("TARGET")).Resolve().CapitalizeFirst()}: {s.ToStringWithSign("0").ColorizeOpinion(s)}" : null);
         }
 
         public float GetSupport(Pawn pawn, Pawn target = null)

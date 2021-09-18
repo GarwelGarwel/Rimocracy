@@ -17,6 +17,7 @@ namespace Rimocracy
         public ThoughtDef opposeThought;
         public float governanceChangeIfSupported;
         public float governanceChangeIfOpposed;
+        public float loyaltyEffect = 3;
 
         public string LabelTitleCase => GenText.ToTitleCaseSmart(label);
 
@@ -30,10 +31,18 @@ namespace Rimocracy
             Utility.Log($"{defName} activated.");
             foreach (PawnDecisionOpinion opinion in opinions.Where(opinion => opinion.Vote != DecisionVote.Abstain))
             {
-                if (opinion.Vote == DecisionVote.Yea && supportThought != null)
-                    opinion.voter.needs.mood.thoughts.memories.TryGainMemory(supportThought);
-                else if (opinion.Vote == DecisionVote.Nay && opposeThought != null)
-                    opinion.voter.needs.mood.thoughts.memories.TryGainMemory(opposeThought);
+                if (opinion.Vote == DecisionVote.Yea)
+                {
+                    if (supportThought != null)
+                        opinion.voter.needs.mood.thoughts.memories.TryGainMemory(supportThought);
+                    opinion.voter.ChangeLoyalty(loyaltyEffect);
+                }
+                else if (opinion.Vote == DecisionVote.Nay || opinion.Vote == DecisionVote.Tolerate)
+                {
+                    if (opposeThought != null)
+                        opinion.voter.needs.mood.thoughts.memories.TryGainMemory(opposeThought);
+                    opinion.voter.ChangeLoyalty(-loyaltyEffect);
+                }
                 if (opinion.voter == Utility.RimocracyComp.Leader)
                     Utility.RimocracyComp.Governance = Mathf.Clamp(
                         Utility.RimocracyComp.Governance + (opinion.Vote == DecisionVote.Yea ? governanceChangeIfSupported : governanceChangeIfOpposed) * governanceChangeFactor,
