@@ -5,6 +5,8 @@ namespace Rimocracy
 {
     public class CompCitizen : ThingComp
     {
+        public const float LoyaltyChangeBase = 0.05f;
+
         float loyalty;
 
         public CompCitizen()
@@ -44,7 +46,7 @@ namespace Rimocracy
                 return;
             }
 
-            loyalty += (Pawn.needs.mood.CurLevelPercentage - 0.5f) / 18;
+            loyalty += (Pawn.needs.mood.CurLevelPercentage - 0.5f) * LoyaltyChangeBase * Settings.LoyaltyChangeSpeed;
         }
     }
 }
