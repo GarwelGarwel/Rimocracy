@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<Defs>
+
+	<Rimocracy.SuccessionDef>
+		<defName>Election</defName>
+		<label>election</label>
+		<description>All adult, free, able-bodied citizens vote for candidates of their choice. When there are enough citizens, only two most popular candidates compete.</description>
+		<noun>election</noun>
+		<workerClass>Rimocracy.SuccessionWorker_Election</workerClass>
+		<weight>3</weight>
+		<memes>
+			<li>
+				<name>Structure_Ideological</name>
+				<offset>4</offset>
+			</li>
+			<li>
+				<name>Individualist</name>
+				<offset>3</offset>
+			</li>
+			<li>
+				<name>HumanPrimacy</name>
+				<offset>2</offset>
+			</li>
+		</memes>
+		<loyaltyEffect>5</loyaltyEffect>
+		<newLeaderMessageText>{PAWN} has been elected as the new {LEADERTITLE} of {NATIONNAME} with {VOTESNUM}. Vox populi, vox dei!</newLeaderMessageText>
+		<sameLeaderMessageTitle>{PAWN} reelected</sameLeaderMessageTitle>
+		<sameLeaderMessageText>{PAWN} has been reelected as the {LEADERTITLE} of {NATIONNAME} with {VOTESNUM}.</sameLeaderMessageText>
+	</Rimocracy.SuccessionDef>
+
+	<Rimocracy.SuccessionDef>
+		<defName>Lot</defName>
+		<label>lot</label>
+		<description>A random citizen is chosen to lead the nation.</description>
+		<noun>lottery</noun>
+		<workerClass>Rimocracy.SuccessionWorker_Lot</workerClass>
+		<weight>1</weight>
+		<memes>
+			<li>
+				<name>Structure_TheistAbstract</name>
+				<offset>4</offset>
+			</li>
+			<li>
+				<name>Blindsight</name>
+				<offset>3</offset>
+			</li>
+			<li>
+				<name>Guilty</name>
+				<offset>2</offset>
+			</li>
+		</memes>
+		<newLeaderMessageText>{PAWN} drew the short straw and will rule {NATIONNAME} from now on!</newLeaderMessageText>
+		<sameLeaderMessageText>{PAWN} has a lucky hand! {PAWN_pronoun} won the {LEADERTITLE} lottery again.</sameLeaderMessageText>
+		<regimeEffect>-0.05</regimeEffect>
+	</Rimocracy.SuccessionDef>
+
+	<Rimocracy.SuccessionDef>
+		<defName>Seniority</defName>
+		<label>Seniority</label>
+		<description>The oldest citizen becomes the leader.</description>
+		<workerClass>Rimocracy.SuccessionWorker_Seniority</workerClass>
+		<weight>1</weight>
+		<memes>
+			<li>
+				<name>Structure_Animist</name>
+				<offset>4</offset>
+			</li>
+			<li>
+				<name>Loyalist</name>
+				<offset>3</offset>
+			</li>
+			<li>
+				<name>Collectivist</name>
+				<offset>2</offset>
+			</li>
+		</memes>
+		<newLeaderMessageText>{PAWN} will rule {NATIONNAME} now as the oldest colonist.</newLeaderMessageText>
+		<sameLeaderMessageText>{PAWN} is still the oldest colonist in {NATIONNAME}. {PAWN_pronoun} remains our {LEADERTITLE}.</sameLeaderMessageText>
+		<regimeEffect>-0.10</regimeEffect>
+	</Rimocracy.SuccessionDef>
+
+	<Rimocracy.SuccessionDef>
+		<defName>Nobility</defName>
+		<label>nobility</label>
+		<description>The citizen with the highest, and oldest, nobility title is chosen.</description>
+		<workerClass>Rimocracy.SuccessionWorker_Nobility</workerClass>
+		<weight>1</weight>
+		<memes>
+			<li>
+				<name>Structure_Archist</name>
+				<offset>4</offset>
+			</li>
+			<li>
+				<name>Loyalist</name>
+				<offset>3</offset>
+			</li>
+			<li>
+				<name>Supremacist</name>
+				<offset>2</offset>
+			</li>
+		</memes>
+		<regimeEffect>-0.10</regimeEffect>
+	</Rimocracy.SuccessionDef>
+
+	<Rimocracy.SuccessionDef>
+		<defName>Martial</defName>
+		<label>martial</label>
+		<description>Most accomplished warrior becomes the leader.</description>
+		<workerClass>Rimocracy.SuccessionWorker_Martial</workerClass>
+		<weight>1</weight>
+		<memes>
+			<li>
+				<name>Structure_TheistEmbodied</name>
+				<offset>4</offset>
+			</li>
+			<li>
+				<name>Raider</name>
+				<offset>3</offset>
+			</li>
+			<li>
+				<name>Supremacist</name>
+				<offset>2</offset>
+			</li>
+		</memes>
+		<newLeaderMessageText>{PAWN} will now lead {NATIONNAME} to glory as its most renowned warrior.</newLeaderMessageText>
+		<sameLeaderMessageTitle>{PAWN} reelected</sameLeaderMessageTitle>
+		<sameLeaderMessageText>{PAWN} is still the most able worrior of {NATIONNAME}. Friends and foes alike bow before {PAWN_objective}!</sameLeaderMessageText>
+		<regimeEffect>-0.10</regimeEffect>
+	</Rimocracy.SuccessionDef>
+
+</Defs>
