@@ -415,7 +415,7 @@
 		<considerations>
 			<li>
 				<label>incapable of violence</label>
-				<support>-20</support>
+				<support>-15</support>
 				<isCapableOfViolence>false</isCapableOfViolence>
 			</li>
 			<li>
@@ -425,9 +425,9 @@
 						<skill>Shooting</skill>
 						<offset>
 							<points>
-								<li>(0, -10)</li>
+								<li>(0, -5)</li>
 								<li>(10, 0)</li>
-								<li>(20, 20)</li>
+								<li>(20, 10)</li>
 							</points>
 						</offset>
 					</li>
@@ -435,9 +435,9 @@
 						<skill>Melee</skill>
 						<offset>
 							<points>
-								<li>(0, -10)</li>
+								<li>(0, -5)</li>
 								<li>(10, 0)</li>
-								<li>(20, 20)</li>
+								<li>(20, 10)</li>
 							</points>
 						</offset>
 					</li>
@@ -445,27 +445,27 @@
 			</li>
 			<li>
 				<label>bloodlust</label>
-				<support>10</support>
+				<support>5</support>
 				<trait>Bloodlust</trait>
 			</li>
 			<li>
 				<label>kind</label>
-				<support>-10</support>
+				<support>-5</support>
 				<trait>Kind</trait>
 			</li>
 			<li>
 				<label>brawler</label>
-				<support>15</support>
+				<support>8</support>
 				<trait>Brawler</trait>
 			</li>
 			<li>
 				<label>tough</label>
-				<support>10</support>
+				<support>5</support>
 				<trait>Tough</trait>
 			</li>
 			<li>
 				<label>wimp</label>
-				<support>-15</support>
+				<support>-8</support>
 				<trait>Wimp</trait>
 			</li>
 			<li>
@@ -474,8 +474,8 @@
 				<medianOpinionOfMe>
 					<offset>
 						<points>
-							<li>(-100, 10)</li>
-							<li>(100, -10)</li>
+							<li>(-100, 5)</li>
+							<li>(100, -5)</li>
 						</points>
 					</offset>
 				</medianOpinionOfMe>
@@ -486,8 +486,8 @@
 				<age>
 					<offset>
 						<points>
-							<li>(18, 10)</li>
-							<li>(80, -10)</li>
+							<li>(18, 5)</li>
+							<li>(80, -5)</li>
 						</points>
 					</offset>
 				</age>
@@ -509,27 +509,27 @@
 			</li>
 			<li>
 				<label>raider ideoligion</label>
-				<support>5</support>
+				<support>3</support>
 				<meme>Raider</meme>
 			</li>
 			<li>
 				<label>supremacist ideoligion</label>
-				<support>10</support>
+				<support>5</support>
 				<meme>Supremacist</meme>
 			</li>
 			<li>
 				<label>raiding respected</label>
-				<support>5</support>
+				<support>3</support>
 				<precept>Raiding_Respected</precept>
 			</li>
 			<li>
 				<label>raiding required</label>
-				<support>10</support>
+				<support>5</support>
 				<precept>Raiding_Required</precept>
 			</li>
 			<li>
 				<label>research not allowed</label>
-				<support>4</support>
+				<support>2</support>
 				<precept>Research_None</precept>
 			</li>
 		</considerations>
@@ -620,7 +620,8 @@
 				<opinionOfTarget>
 					<offset>
 						<points>
-							<li>(-100, -10)</li>
+							<li>(-100, -20)</li>
+							<li>(0, 0)</li>
 							<li>(100, 10)</li>
 						</points>
 					</offset>
@@ -691,7 +692,7 @@
 					<offset>
 						<points>
 							<li>(-100, 10)</li>
-							<li>(100, -20)</li>
+							<li>(100, -15)</li>
 						</points>
 					</offset>
 				</opinionOfTarget>
@@ -701,8 +702,8 @@
 				<medianOpinionOfTarget>
 					<offset>
 						<points>
-							<li>(-100, 5)</li>
-							<li>(100, -10)</li>
+							<li>(-100, 4)</li>
+							<li>(100, -8)</li>
 						</points>
 					</offset>
 				</medianOpinionOfTarget>
