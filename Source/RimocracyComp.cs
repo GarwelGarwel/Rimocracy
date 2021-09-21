@@ -154,7 +154,7 @@ namespace Rimocracy
         }
 
         public float BaseGovernanceDecayPerDay =>
-            (0.03f + Governance * 0.1f - (0.06f + Governance * 0.25f) / Utility.CitizensCount) * Settings.GovernanceDecaySpeed;
+            (0.03f + Governance * 0.1f - (0.06f + Governance * 0.25f) / Utility.Citizens.Sum(pawn => Utility.CitizenGovernanceWeight(pawn))) * Settings.GovernanceDecaySpeed;
 
         public float GovernanceDecayPerDay =>
             Math.Max(0,
@@ -362,12 +362,14 @@ namespace Rimocracy
             {
                 Utility.Log($"{Leader} was chosen to be the leader.");
 
+                // Chance to choose a new leader title
                 if ((!ModsConfig.IdeologyActive || DecisionActive(DecisionDef.Multiculturalism)) && (LeaderTitleDef == null || !LeaderTitleDef.IsApplicable || (Leader != oldLeader && Rand.Chance(0.2f))))
                     ChooseLeaderTitle();
 
                 TermExpiration = UpdatedTermExpiration();
                 ElectionTick = int.MaxValue;
                 FocusSkill = Leader.GetCampaign()?.FocusSkill ?? SkillsUtility.GetRandomSkill(Leader.skills.skills, Leader == oldLeader ? FocusSkill : null);
+                Utility.Log($"New leader is {Leader} (chosen from {SuccessionWorker.Candidates.Count().ToStringCached()} candidates). Their term expires on {GenDate.DateFullStringAt(TermExpiration, Find.WorldGrid.LongLatOf(Leader.Tile))}. The focus skill is {FocusSkill.defName}.");
 
                 // Campaigning candidates and their supporters gain their thoughts
                 if (IsCampaigning)
@@ -381,17 +383,25 @@ namespace Rimocracy
                             p.needs.mood.thoughts.memories.TryGainMemory(ThoughtMaker.MakeThought(RimocracyDefOf.ElectionOutcome, stage));
                     }
 
-                // If the leader has changed, partially reset Governance; show message
+                // If the leader has changed, partially reset Governance and loyalty; show message; record tale
                 if (Leader != oldLeader)
                 {
-                    Governance = Mathf.Lerp(DecisionActive("Stability") ? 0 : 0.5f, Governance, 0.5f);
+                    Governance = Mathf.Lerp(DecisionActive(DecisionDef.Stability) ? 0 : 0.5f, Governance, 0.5f);
+                    foreach (Pawn pawn in Utility.Citizens)
+                        pawn.ChangeLoyalty(-pawn.GetLoyalty() * CompCitizen.LeaderChangeLoyaltyResetBase * (DecisionActive(DecisionDef.Stability) ? 2 : 1));
                     Find.LetterStack.ReceiveLetter(SuccessionWorker.NewLeaderMessageTitle(Leader), $"{SuccessionWorker.NewLeaderMessageText(Leader)}\n\n{FocusSkillMessage}", LetterDefOf.NeutralEvent);
                     Tale tale = TaleRecorder.RecordTale(RimocracyDefOf.BecameLeader, Leader);
-                    if (tale != null)
-                        Utility.Log($"Tale recorded: {tale}");
                 }
                 else Find.LetterStack.ReceiveLetter(SuccessionWorker.SameLeaderMessageTitle(Leader), $"{SuccessionWorker.SameLeaderMessageText(Leader)}\n\n{FocusSkillMessage}", LetterDefOf.NeutralEvent);
-                Utility.Log($"New leader is {Leader} (chosen from {SuccessionWorker.Candidates.Count().ToStringCached()} candidates). Their term expires on {GenDate.DateFullStringAt(TermExpiration, Find.WorldGrid.LongLatOf(Leader.Tile))}. The focus skill is {FocusSkill.defName}.");
+
+                // Apply succession's loyalty effect
+                float loyaltyEffect = SuccessionWorker.LoyaltyEffect;
+                if (loyaltyEffect != 0)
+                {
+                    Utility.Log($"All citizens gain {loyaltyEffect:N0} loyalty due to the succession.");
+                    foreach (Pawn pawn in Utility.Citizens)
+                        pawn.ChangeLoyalty(loyaltyEffect);
+                }
             }
             else Utility.Log("Could not choose a new leader.", LogLevel.Warning);
             Campaigns = null;

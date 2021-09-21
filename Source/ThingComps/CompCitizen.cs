@@ -6,6 +6,7 @@ namespace Rimocracy
     public class CompCitizen : ThingComp
     {
         public const float LoyaltyChangeBase = 0.05f;
+        public const float LeaderChangeLoyaltyResetBase = 0.25f;
 
         float loyalty;
 

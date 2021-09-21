@@ -18,6 +18,8 @@ namespace Rimocracy
 
         public float regimeEffect;
 
+        public float loyaltyEffect;
+
         public string newLeaderMessageTitle = "New {LEADERTITLE}";
 
         public string newLeaderMessageText = "{NATIONNAME} has a new {LEADERTITLE}: {PAWN}. May {PAWN_possessive} reign be long and prosperous!";

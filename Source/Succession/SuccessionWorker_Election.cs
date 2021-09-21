@@ -46,6 +46,8 @@ namespace Rimocracy
         /// </summary>
         public IEnumerable<Pawn> ChooseLeaders(int num = campaignsNumber) => GetVotes().OrderByDescending(kvp => kvp.Value).Take(num).Select(kvp => kvp.Key);
 
+        public override float LoyaltyEffect => Candidates.Count() > 1 ? def.loyaltyEffect : 0;
+
         Dictionary<Pawn, int> GetVotes()
         {
             Dictionary<Pawn, int> votes = new Dictionary<Pawn, int>();

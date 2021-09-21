@@ -17,6 +17,7 @@ namespace Rimocracy
     public class DecisionDef : Def
     {
         public const string Multiculturalism = "Multiculturalism";
+        public const string Stability = "Stability";
         public const string StateIdeoligion = "StateIdeoligion";
         public const string StateOfEmergency = "StateOfEmergency";
 
