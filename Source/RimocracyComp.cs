@@ -198,11 +198,11 @@ namespace Rimocracy
                 Decisions = new List<Decision>();
             else Decisions.RemoveAll(d => d.def == null);
 
-            foreach (ThingDef def in DefDatabase<ThingDef>.AllDefs.Where(def => def.thingClass == typeof(Pawn) && def.race.intelligence == Intelligence.Humanlike && !def.HasComp(typeof(CompCitizen))))
-            {
-                Utility.Log($"Adding CompCitizen to {def.defName}.");
-                def.comps.Add(new CompProperties(typeof(CompCitizen)));
-            }
+            //foreach (ThingDef def in DefDatabase<ThingDef>.AllDefs.Where(def => def.thingClass == typeof(Pawn) && def.race.intelligence == Intelligence.Humanlike && !def.HasComp(typeof(CompCitizen))))
+            //{
+            //    Utility.Log($"Adding CompCitizen to {def.defName}.");
+            //    def.comps.Add(new CompProperties(typeof(CompCitizen)));
+            //}
         }
 
         public override void ExposeData()
@@ -388,7 +388,7 @@ namespace Rimocracy
                 {
                     Governance = Mathf.Lerp(DecisionActive(DecisionDef.Stability) ? 0 : 0.5f, Governance, 0.5f);
                     foreach (Pawn pawn in Utility.Citizens)
-                        pawn.ChangeLoyalty(-pawn.GetLoyalty() * CompCitizen.LeaderChangeLoyaltyResetBase * (DecisionActive(DecisionDef.Stability) ? 2 : 1));
+                        pawn.ChangeLoyalty((0.5f - pawn.GetLoyalty()) * Need_Loyalty.LeaderChangeLoyaltyResetBase * (DecisionActive(DecisionDef.Stability) ? 2 : 1));
                     Find.LetterStack.ReceiveLetter(SuccessionWorker.NewLeaderMessageTitle(Leader), $"{SuccessionWorker.NewLeaderMessageText(Leader)}\n\n{FocusSkillMessage}", LetterDefOf.NeutralEvent);
                     Tale tale = TaleRecorder.RecordTale(RimocracyDefOf.BecameLeader, Leader);
                 }

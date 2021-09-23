@@ -17,7 +17,7 @@ namespace Rimocracy
         public ThoughtDef opposeThought;
         public float governanceChangeIfSupported;
         public float governanceChangeIfOpposed;
-        public float loyaltyEffect = 3;
+        public float loyaltyEffect = 0.03f;
 
         public string LabelTitleCase => GenText.ToTitleCaseSmart(label);
 

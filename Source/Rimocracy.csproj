@@ -67,6 +67,7 @@
   <ItemGroup>
     <Compile Include="DecisionVoteResults.cs" />
     <Compile Include="Defs\PoliticalActionDef.cs" />
+    <Compile Include="Need_Loyalty.cs" />
     <Compile Include="UI\Dialog_PoliticalAction.cs" />
     <Compile Include="GoodwillSituationWorker_Multiculturalism.cs" />
     <Compile Include="HarmonyManager.cs" />
@@ -74,7 +75,6 @@
     <Compile Include="PawnDecisionOpinion.cs" />
     <Compile Include="SkillOperations.cs" />
     <Compile Include="Stats\StatPart_StateIdeoligion.cs" />
-    <Compile Include="ThingComps\CompCitizen.cs" />
     <Compile Include="ThingComps\ThingComp_GoverningBench.cs" />
     <Compile Include="Thoughts\ThoughtWorker_Multiculturalism.cs" />
     <Compile Include="Thoughts\ThoughtWorker_StateIdeoligion.cs" />

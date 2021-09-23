@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<Defs>
+
+	<NeedDef>
+		<defName>Rimocracy_Loyalty</defName>
+		<needClass>Rimocracy.Need_Loyalty</needClass>
+		<label>loyalty</label>
+		<description>Sense of the citizen's belonging to the community and their satisfaction with it. It slowly changes according to the mood and is affected by decisions, successions and other events. High Loyalty allows passing of unpopular decisions while low Loyalty can be dangerous.</description>
+		<minIntelligence>Humanlike</minIntelligence>
+		<colonistsOnly>true</colonistsOnly>
+		<listPriority>60</listPriority>
+		<showForCaravanMembers>true</showForCaravanMembers>
+		<fallPerDay>0</fallPerDay>
+		<freezeWhileSleeping>true</freezeWhileSleeping>
+	</NeedDef>
+
+</Defs>

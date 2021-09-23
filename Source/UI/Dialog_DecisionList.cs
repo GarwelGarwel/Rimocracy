@@ -114,7 +114,7 @@ namespace Rimocracy
                             foreach (PawnDecisionOpinion opinion in votingResult)
                                 content.Label($"   {opinion.voter.NameShortColored}: {opinion.VoteStringColor}", tooltip: opinion.explanation);
                             if (def.loyaltyEffect != 0)
-                                content.Label($"Loyalty of citizens who support this decision will increase, and of those who oppose or tolerate it, decrease by {def.loyaltyEffect:N0}.");
+                                content.Label($"Loyalty of citizens who support this decision will increase, and of those who oppose or tolerate it, decrease by {def.loyaltyEffect.ToStringPercent()}.");
                         }
 
                         // Display Activate button for valid decisions

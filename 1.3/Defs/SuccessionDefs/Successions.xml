@@ -23,7 +23,7 @@
 				<offset>2</offset>
 			</li>
 		</memes>
-		<loyaltyEffect>5</loyaltyEffect>
+		<loyaltyEffect>0.025</loyaltyEffect>
 		<newLeaderMessageText>{PAWN} has been elected as the new {LEADERTITLE} of {NATIONNAME} with {VOTESNUM}. Vox populi, vox dei!</newLeaderMessageText>
 		<sameLeaderMessageTitle>{PAWN} reelected</sameLeaderMessageTitle>
 		<sameLeaderMessageText>{PAWN} has been reelected as the {LEADERTITLE} of {NATIONNAME} with {VOTESNUM}.</sameLeaderMessageText>

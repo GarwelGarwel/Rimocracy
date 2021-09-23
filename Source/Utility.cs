@@ -70,22 +70,24 @@ namespace Rimocracy
 
         public static int CitizensCount => Citizens.Count();
 
-        public static float CitizenGovernanceWeight(Pawn pawn) => 1 - pawn.GetLoyalty() / 200;
-
         public static int Population => PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonistsAndPrisoners_NoCryptosleep.Count();
+
+        public static float CitizenGovernanceWeight(Pawn pawn) => 1.5f - pawn.GetLoyalty();
+
+        public static float GetLoyaltySupportOffset(this Pawn pawn) => pawn.GetLoyalty() * 200 - 100;
 
         public static float GetLoyalty(this Pawn pawn)
         {
-            CompCitizen comp = pawn.TryGetComp<CompCitizen>();
-            return comp != null ? comp.Loyalty : 0;
+            Need_Loyalty loyalty = pawn.needs.TryGetNeed<Need_Loyalty>();
+            return loyalty != null ? loyalty.CurLevel : 0.5f;
         }
 
         public static void ChangeLoyalty(this Pawn pawn, float value)
         {
-            CompCitizen comp = pawn.TryGetComp<CompCitizen>();
-            if (comp != null)
-                comp.Loyalty += value;
-            else Log($"SetLoyalty: {pawn} hsa no CompCitizen.", LogLevel.Error);
+            Need_Loyalty loyalty = pawn.needs.TryGetNeed<Need_Loyalty>();
+            if (loyalty != null)
+                loyalty.CurLevel += value;
+            else Log($"ChangeLoyalty: {pawn} has no Need_Loyalty.", LogLevel.Error);
         }
 
         public static float TotalNutrition => Find.Maps.Where(map => map.mapPawns.AnyColonistSpawned).Sum(map => map.resourceCounter.TotalHumanEdibleNutrition);
@@ -121,7 +123,7 @@ namespace Rimocracy
             && !p.GetDisabledWorkTypes(true).Contains(RimocracyDefOf.Governing)
             && (!ModsConfig.IdeologyActive || RimocracyComp.DecisionActive(DecisionDef.Multiculturalism) || RoleRequirementsMetPotentially(p, IdeologyLeaderPrecept()));
 
-        public static bool IsLeader(this Pawn p) => PoliticsEnabled && RimocracyComp.Leader == p;
+        public static bool IsLeader(this Pawn p) => p != null && RimocracyComp?.Leader == p;
 
         /// <summary>
         /// Returns pawn's most senior title's seniority, with no titles at all being -100
@@ -203,6 +205,8 @@ namespace Rimocracy
         }
 
         public static string ColorizeOpinion(this string text, float support) => text.Colorize(support > 0.5f ? Color.green : (support < -0.5f ? Color.red : Color.gray));
+
+        public static string ColorizeOpinion(this float support) => support.ToStringWithSign("0").ColorizeOpinion(support);
 
         internal static void Log(string message, LogLevel logLevel = LogLevel.Message)
         {

@@ -41,7 +41,7 @@ namespace Rimocracy
         public bool? actionsNeedApproval;
         public string cancelDecision;
         public float regimeEffect;
-        public float loyaltyEffect = 10;
+        public float loyaltyEffect = 0.1f;
 
         public string LabelTitleCase => GenText.ToTitleCaseSmart(label.Formatted(new NamedArgument(Utility.RimocracyComp.Leader, "TARGET")));
 

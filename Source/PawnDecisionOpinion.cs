@@ -10,7 +10,8 @@ namespace Rimocracy
         public float support;
         public string explanation;
 
-        public DecisionVote Vote => support > 0.5f ? DecisionVote.Yea : (support + voter.GetLoyalty() < -0.5f ? DecisionVote.Nay : (support < -0.5f ? DecisionVote.Tolerate : DecisionVote.Abstain));
+        public DecisionVote Vote =>
+            support > 0.5f ? DecisionVote.Yea : (support + voter.GetLoyaltySupportOffset() < -0.5f ? DecisionVote.Nay : (support < -0.5f ? DecisionVote.Tolerate : DecisionVote.Abstain));
 
         public string VoteStringColor
         {
@@ -48,9 +49,9 @@ namespace Rimocracy
                     explanations.Add(supportExplanation.explanation.Resolve());
                 }
             }
-            explanations.Add($"Overall support: {support.ToStringWithSign("0").ColorizeOpinion(support)}");
+            explanations.Add($"Overall support: {Utility.ColorizeOpinion(support)}");
             if (support < -0.5f)
-                explanations.Add($"Loyalty: {voter.GetLoyalty().ToStringWithSign("0").ColorizeOpinion(voter.GetLoyalty())}");
+                explanations.Add($"Loyalty {voter.GetLoyalty().ToStringPercent()}: {Utility.ColorizeOpinion(voter.GetLoyaltySupportOffset())}");
             explanation = explanations.ToLineList();
         }
     }
