@@ -16,8 +16,6 @@ namespace Rimocracy
 
         List<StatModifier> memes = new List<StatModifier>();
 
-        public float regimeEffect;
-
         public float loyaltyEffect;
 
         public string newLeaderMessageTitle = "New {LEADERTITLE}";

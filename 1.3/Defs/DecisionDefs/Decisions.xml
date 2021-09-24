@@ -8,7 +8,7 @@
 		<category>SuccessionTypes</category>
 		<enactment>Law</enactment>
 		<tag>Succession</tag>
-		<durationTicks>1000000</durationTicks>
+		<durationDays>20</durationDays>
 		<governanceCost>0.25</governanceCost>
 	</Rimocracy.DecisionDef>
 	
@@ -128,11 +128,6 @@
 			<succession>Lot</succession>
 			<inverted>true</inverted>
 		</displayRequirements>
-		<effectRequirements>
-			<regime>
-				<lessOrEqual>0.10</lessOrEqual>
-			</regime>
-		</effectRequirements>
 		<considerations>
 			<li>
 				<label>I don't want to take chances</label>
@@ -221,9 +216,8 @@
 			<inverted>true</inverted>
 		</displayRequirements>
 		<effectRequirements>
-			<regime>
-				<lessOrEqual>-0.10</lessOrEqual>
-			</regime>
+			<decision>Egalitarianism</decision>
+			<inverted>true</inverted>
 		</effectRequirements>
 		<considerations>
 			<li>
@@ -319,9 +313,8 @@
 			</any>
 		</displayRequirements>
 		<effectRequirements>
-			<regime>
-				<lessOrEqual>-0.10</lessOrEqual>
-			</regime>
+			<decision>Egalitarianism</decision>
+			<inverted>true</inverted>
 		</effectRequirements>
 		<considerations>
 			<li>
@@ -407,11 +400,6 @@
 			<succession>Martial</succession>
 			<inverted>true</inverted>
 		</displayRequirements>
-		<effectRequirements>
-			<regime>
-				<lessOrEqual>-0.10</lessOrEqual>
-			</regime>
-		</effectRequirements>
 		<considerations>
 			<li>
 				<label>incapable of violence</label>
@@ -603,15 +591,10 @@
 		<displayRequirements>
 			<termDuration>Year</termDuration>
 		</displayRequirements>
-		<effectRequirements>
-			<regime>
-				<lessOrEqual>-0.20</lessOrEqual>
-			</regime>
-		</effectRequirements>
 		<considerations>
 			<li>
 				<label>I want to rule forever</label>
-				<support>50</support>
+				<support>100</support>
 				<isLeader>true</isLeader>
 			</li>
 			<li>
@@ -653,9 +636,6 @@
 		<displayPriorityInCategory>50</displayPriorityInCategory>
 		<displayRequirements>
 			<leaderExists>true</leaderExists>
-			<regime>
-				<greaterOrEqual>-0.50</greaterOrEqual>
-			</regime>
 			<all>
 				<li>
 					<succession>Seniority</succession>
@@ -663,6 +643,10 @@
 				</li>
 				<li>
 					<decision>Stability</decision>
+					<inverted>true</inverted>
+				</li>
+				<li>
+					<decision>CultOfPersonality</decision>
 					<inverted>true</inverted>
 				</li>
 			</all>
@@ -730,11 +714,6 @@
 		<effectRequirements>
 			<all>
 				<li>
-					<regime>
-						<greaterOrEqual>-0.15</greaterOrEqual>
-					</regime>
-				</li>
-				<li>
 					<decision>CultOfPersonality</decision>
 					<inverted>true</inverted>
 				</li>
@@ -759,7 +738,6 @@
 		</considerations>
 		<tag/>
 		<governanceCost>0.25</governanceCost>
-		<regimeEffect>0.20</regimeEffect>
 	</Rimocracy.DecisionDef>
 
 	<Rimocracy.DecisionDef>
@@ -803,12 +781,11 @@
 		<effectRequirements>
 			<all>
 				<li>
-					<regime>
-						<greaterOrEqual>0.10</greaterOrEqual>
-					</regime>
+					<decision>Elitism</decision>
+					<inverted>true</inverted>
 				</li>
 				<li>
-					<decision>Elitism</decision>
+					<decision>CultOfPersonality</decision>
 					<inverted>true</inverted>
 				</li>
 			</all>
@@ -852,7 +829,6 @@
 		</considerations>
 		<tag/>
 		<governanceCost>0.25</governanceCost>
-		<regimeEffect>0.30</regimeEffect>
 	</Rimocracy.DecisionDef>
 
 	<Rimocracy.DecisionDef>
@@ -915,9 +891,6 @@
 		<displayPriorityInCategory>30</displayPriorityInCategory>
 		<effectRequirements>
 			<succession>Election</succession>
-			<regime>
-				<greaterOrEqual>0.20</greaterOrEqual>
-			</regime>
 		</effectRequirements>
 		<considerations>
 			<li>
@@ -1055,7 +1028,6 @@
 			</li>
 		</considerations>
 		<tag/>
-		<regimeEffect>0.20</regimeEffect>
 		<governanceCost>0.25</governanceCost>
 	</Rimocracy.DecisionDef>
 
@@ -1081,17 +1053,8 @@
 		<category>Democratic</category>
 		<displayPriorityInCategory>40</displayPriorityInCategory>
 		<effectRequirements>
-			<all>
-				<li>
-					<regime>
-						<greaterOrEqual>0.25</greaterOrEqual>
-					</regime>
-				</li>
-				<li>
-					<decision>StateOfEmergency</decision>
-					<inverted>true</inverted>
-				</li>
-			</all>
+			<decision>StateOfEmergency</decision>
+			<inverted>true</inverted>
 		</effectRequirements>
 		<considerations>
 			<li>
@@ -1117,7 +1080,7 @@
 			</li>
 			<li>
 				<label>loyalist ideoligion</label>
-				<support>20</support>
+				<support>10</support>
 				<meme>Loyalist</meme>
 			</li>
 			<li>
@@ -1127,7 +1090,6 @@
 			</li>
 		</considerations>
 		<tag/>
-		<regimeEffect>0.30</regimeEffect>
 		<governanceCost>0.25</governanceCost>
 	</Rimocracy.DecisionDef>
 
@@ -1164,7 +1126,7 @@
 			</li>
 			<li>
 				<label>loyalist ideoligion</label>
-				<support>-20</support>
+				<support>-10</support>
 				<meme>Loyalist</meme>
 			</li>
 			<li>
@@ -1182,14 +1144,9 @@
 	<Rimocracy.DecisionDef>
 		<defName>Stability</defName>
 		<label>stability doctrine</label>
-		<description>While the same leader is in charge, governance decay rate is much lower. But if leadership changes, for whatever reason, governance will halve.</description>
+		<description>While the same leader is in charge, governance decay rate is much lower. But if leadership changes, for whatever reason, governance will drop by half.</description>
 		<category>Authoritarian</category>
 		<displayPriorityInCategory>10</displayPriorityInCategory>
-		<effectRequirements>
-			<regime>
-				<lessOrEqual>0.10</lessOrEqual>
-			</regime>
-		</effectRequirements>
 		<considerations>
 			<li>
 				<label>I want to stay in charge</label>
@@ -1226,7 +1183,6 @@
 			</li>
 		</considerations>
 		<tag/>
-		<regimeEffect>-0.20</regimeEffect>
 		<governanceCost>0.25</governanceCost>
 	</Rimocracy.DecisionDef>
 
@@ -1289,9 +1245,7 @@
 		<effectRequirements>
 			<all>
 				<li>
-					<regime>
-						<lessOrEqual>-0.10</lessOrEqual>
-					</regime>
+					<leaderExists>true</leaderExists>
 				</li>
 				<li>
 					<decision>Egalitarianism</decision>
@@ -1372,7 +1326,6 @@
 			</li>
 		</considerations>
 		<tag/>
-		<regimeEffect>-0.20</regimeEffect>
 		<governanceCost>0.25</governanceCost>
 	</Rimocracy.DecisionDef>
 
@@ -1451,12 +1404,14 @@
 		<effectRequirements>
 			<all>
 				<li>
-					<regime>
-						<lessOrEqual>-0.20</lessOrEqual>
-					</regime>
+					<leaderExists>true</leaderExists>
 				</li>
 				<li>
 					<decision>Populism</decision>
+					<inverted>true</inverted>
+				</li>
+				<li>
+					<decision>Egalitarianism</decision>
 					<inverted>true</inverted>
 				</li>
 			</all>
@@ -1513,7 +1468,6 @@
 			</li>
 		</considerations>
 		<tag/>
-		<regimeEffect>-0.20</regimeEffect>
 		<governanceCost>0.15</governanceCost>
 	</Rimocracy.DecisionDef>
 
@@ -1584,11 +1538,6 @@
 		<effectRequirements>
 			<all>
 				<li>
-					<regime>
-						<lessOrEqual>-0.20</lessOrEqual>
-					</regime>
-				</li>
-				<li>
 					<decision>ResPublica</decision>
 					<inverted>true</inverted>
 				</li>
@@ -1630,8 +1579,7 @@
 				<precept>Comfort_Ignored</precept>
 			</li>
 		</considerations>
-		<durationTicks>180000</durationTicks>
-		<regimeEffect>-0.30</regimeEffect>
+		<durationDays>3</durationDays>
 		<governanceCost>0.25</governanceCost>
 	</Rimocracy.DecisionDef>
 

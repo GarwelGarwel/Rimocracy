@@ -28,7 +28,6 @@ namespace Rimocracy
         TermDuration termDuration = TermDuration.Undefined;
         bool? campaigning;
         ValueOperations governance;
-        ValueOperations regime;
         ValueOperations population;
         ValueOperations daysOfFood;
         List<TechLevel> techLevels = new List<TechLevel>();
@@ -69,7 +68,6 @@ namespace Rimocracy
             && termDuration == TermDuration.Undefined
             && campaigning == null
             && governance == null
-            && regime == null
             && population == null
             && daysOfFood == null
             && techLevels.EnumerableNullOrEmpty()
@@ -111,8 +109,6 @@ namespace Rimocracy
                 res &= Utility.RimocracyComp.IsCampaigning == campaigning;
             if (res && governance != null)
                 res &= governance.Compare(Utility.RimocracyComp.Governance);
-            if (res && regime != null)
-                res &= regime.Compare(Utility.RimocracyComp.RegimeFinal);
             if (res && population != null)
                 res &= population.Compare(Utility.Population);
             if (res && daysOfFood != null)
@@ -197,7 +193,6 @@ namespace Rimocracy
             float s = support;
 
             governance?.TransformValue(Utility.RimocracyComp.Governance, ref s);
-            regime?.TransformValue(Utility.RimocracyComp.RegimeFinal, ref s);
             population?.TransformValue(Utility.Population, ref s);
             daysOfFood?.TransformValue(Utility.DaysOfFood, ref s);
             foreach (SkillOperations so in skills)
@@ -252,8 +247,6 @@ namespace Rimocracy
                 AddLine($"Campaign is {((bool)campaigning ? "on" : "off")}");
             if (governance != null)
                 AddLine(governance.ToString("Governance", "P0"));
-            if (regime != null)
-                AddLine(regime.ToString("Regime (democracy)", "P0"));
             if (population != null)
                 AddLine(population.ToString("Population"));
             if (daysOfFood != null)

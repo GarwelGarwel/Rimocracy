@@ -21,8 +21,6 @@ namespace Rimocracy
         float governance = 0.5f;
         float governanceTarget = 1;
 
-        float regime;
-
         SkillDef focusSkill;
         TermDuration termDuration = TermDuration.Halfyear;
         SuccessionDef successionType;
@@ -120,15 +118,6 @@ namespace Rimocracy
             set => governanceTarget = value;
         }
 
-        public float RegimeBase
-        {
-            get => regime;
-            set => regime = value;
-        }
-
-        public float RegimeFinal =>
-            Mathf.Clamp(RegimeBase + (SuccessionType != null ? SuccessionType.regimeEffect : 0) + TermDuration.GetRegimeEffect(), -1, 1);
-
         public TermDuration TermDuration
         {
             get => termDuration;
@@ -218,7 +207,6 @@ namespace Rimocracy
             Scribe_Values.Look(ref electionTick, "electionTick", int.MaxValue);
             Scribe_Values.Look(ref governance, "governance", 0.5f);
             Scribe_Values.Look(ref governanceTarget, "governanceTarget", 1);
-            Scribe_Values.Look(ref regime, "regime");
             Scribe_Defs.Look(ref focusSkill, "focusSkill");
             Scribe_Collections.Look(ref decisions, "decisions", LookMode.Deep);
             Scribe_Values.Look(ref actionsNeedApproval, "actionsNeedApproval");

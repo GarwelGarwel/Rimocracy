@@ -11,7 +11,7 @@ namespace Rimocracy
         public string explanation;
 
         public DecisionVote Vote =>
-            support > 0.5f ? DecisionVote.Yea : (support < 0.5f ? (support + voter.GetLoyaltySupportOffset() < -0.5f ? DecisionVote.Nay : DecisionVote.Tolerate) : DecisionVote.Abstain);
+            support > 0.5f ? DecisionVote.Yea : (support < -0.5f ? (support + voter.GetLoyaltySupportOffset() < -0.5f ? DecisionVote.Nay : DecisionVote.Tolerate) : DecisionVote.Abstain);
 
         public string VoteStringColor
         {

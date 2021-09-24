@@ -41,7 +41,6 @@ namespace Rimocracy
         public bool impeachLeader;
         public bool? actionsNeedApproval;
         public string cancelDecision;
-        public float regimeEffect;
         public float changeLoyalty;
         public float loyaltyEffect = 0.1f;
 
@@ -156,12 +155,6 @@ namespace Rimocracy
                 Utility.RimocracyComp.CancelDecision(cancelDecision);
             }
 
-            if (regimeEffect != 0)
-            {
-                Utility.Log($"Changing regime by {regimeEffect}.");
-                Utility.RimocracyComp.RegimeBase += regimeEffect;
-            }
-
             if (changeLoyalty != 0)
             {
                 Utility.Log($"Changing all pawns' loyalty by {changeLoyalty.ToStringPercent()}.");
@@ -173,12 +166,6 @@ namespace Rimocracy
         }
 
         public void Cancel()
-        {
-            if (regimeEffect != 0)
-            {
-                Utility.Log($"Changing regime by {(-regimeEffect).ToStringWithSign()}.");
-                Utility.RimocracyComp.RegimeBase -= regimeEffect;
-            }
-        }
+        { }
     }
 }

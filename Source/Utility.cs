@@ -98,8 +98,6 @@ namespace Rimocracy
 
         public static (Map map, int silver) GetMaxSilver()
         {
-            //Map map = TradeUtility.PlayerHomeMapWithMostLaunchableSilver();
-            //int silver = TradeUtility.AllLaunchableThingsForTrade(map).Where(thing => thing.def == ThingDefOf.Silver).Sum(thing => thing.stackCount);
             int silver = 0;
             Map map = null;
             foreach (Map m in Find.Maps.Where(m => m.IsPlayerHome))
@@ -111,8 +109,6 @@ namespace Rimocracy
                     map = m;
                 }
             }
-            if (Find.TickManager.TicksAbs % 60 == 0 && map != null)
-                Log($"Map {map} contains {silver} silver.");
             return (map, silver);
         }
 

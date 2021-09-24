@@ -171,7 +171,7 @@
 		</considerations>
 		<governanceChangeIfSupported>0.08</governanceChangeIfSupported>
 		<governanceChangeIfOpposed>-0.10</governanceChangeIfOpposed>
-		<loyaltyEffect>5</loyaltyEffect>
+		<loyaltyEffect>0.05</loyaltyEffect>
 	</Rimocracy.PoliticalActionDef>
 
 	<Rimocracy.PoliticalActionDef ParentName="BasePoliticalAction">

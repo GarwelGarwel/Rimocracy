@@ -54,11 +54,6 @@ namespace Rimocracy
                     content.Label($"- {decision.def.LabelTitleCase}{(decision.def.Expiration != int.MaxValue ? $" (expires in {(decision.expiration - Find.TickManager.TicksAbs).ToStringTicksToPeriod()})" : "")}", tooltip: decision.def.description);
             }
 
-            // Display regime type
-            if (Utility.RimocracyComp.RegimeFinal != 0)
-                content.Label($"The current regime is {Math.Abs(Utility.RimocracyComp.RegimeFinal).ToStringPercent()} {(Utility.RimocracyComp.RegimeFinal > 0 ? "democratic" : "authoritarian")}.");
-            else content.Label("The current regime is neither democratic nor authoritarian.");
-
             content.GapLine();
 
             // Display decision categories and available decisions
@@ -85,8 +80,6 @@ namespace Rimocracy
                         content.Label(def.description);
                         if (def.governanceCost != 0)
                             content.Label($"Will {(def.governanceCost > 0 ? "reduce" : "increase")} Governance by {Math.Abs(def.GovernanceCost).ToStringPercent()}.");
-                        if (def.regimeEffect != 0)
-                            content.Label($"Will move the regime {Math.Abs(def.regimeEffect).ToStringPercent()} towards {(def.regimeEffect > 0 ? "democracy" : "authoritarianism")}.");
                         if (!def.effectRequirements.IsTrivial)
                             content.Label($"Requirements:\n{def.effectRequirements.ToString(target: Utility.RimocracyComp.Leader?.NameShortColored)}");
                         switch (def.enactment)
