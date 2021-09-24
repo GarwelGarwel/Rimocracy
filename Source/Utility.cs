@@ -1,4 +1,5 @@
 ﻿using RimWorld;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -90,10 +91,44 @@ namespace Rimocracy
             else Log($"ChangeLoyalty: {pawn} has no Need_Loyalty.", LogLevel.Error);
         }
 
-        public static float TotalNutrition => Find.Maps.Where(map => map.mapPawns.AnyColonistSpawned).Sum(map => map.resourceCounter.TotalHumanEdibleNutrition);
+        public static float TotalNutrition => Find.Maps.Where(map => map.IsPlayerHome).Sum(map => map.resourceCounter.TotalHumanEdibleNutrition);
 
         public static float FoodConsumptionPerDay =>
             PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonistsAndPrisoners_NoCryptosleep.Sum(pawn => pawn.needs.food.FoodFallPerTick) * GenDate.TicksPerDay;
+
+        public static (Map map, int silver) GetMaxSilver()
+        {
+            //Map map = TradeUtility.PlayerHomeMapWithMostLaunchableSilver();
+            //int silver = TradeUtility.AllLaunchableThingsForTrade(map).Where(thing => thing.def == ThingDefOf.Silver).Sum(thing => thing.stackCount);
+            int silver = 0;
+            Map map = null;
+            foreach (Map m in Find.Maps.Where(m => m.IsPlayerHome))
+            {
+                int s = m.resourceCounter.Silver;
+                if (s > silver)
+                {
+                    silver = s;
+                    map = m;
+                }
+            }
+            if (Find.TickManager.TicksAbs % 60 == 0 && map != null)
+                Log($"Map {map} contains {silver} silver.");
+            return (map, silver);
+        }
+
+        public static void RemoveSilver(Map map, int amount)
+        {
+            foreach (Thing t in map.spawnedThings.Where(thing => thing.def == ThingDefOf.Silver).ToList())
+            {
+                int count = Math.Min(amount, t.stackCount);
+                Log($"Removing {count} silver from {t}...");
+                t.SplitOff(count);
+                amount -= count;
+                if (amount <= 0)
+                    return;
+            }
+            Log($"Not enough silver: {amount} units short!", LogLevel.Error);
+        }
 
         public static float DaysOfFood => TotalNutrition / FoodConsumptionPerDay;
 
@@ -124,7 +159,7 @@ namespace Rimocracy
             && (!ModsConfig.IdeologyActive || RimocracyComp.DecisionActive(DecisionDef.Multiculturalism) || RoleRequirementsMetPotentially(p, IdeologyLeaderPrecept()));
 
         public static bool IsLeader(this Pawn p) => p != null && RimocracyComp?.Leader == p;
-
+        
         /// <summary>
         /// Returns pawn's most senior title's seniority, with no titles at all being -100
         /// </summary>

@@ -1098,8 +1098,10 @@
 				<label>governance</label>
 				<governance>
 					<offset>
-						<li>(0, -20)</li>
-						<li>(1, 20)</li>
+						<points>
+							<li>(0, -20)</li>
+							<li>(1, 20)</li>
+						</points>
 					</offset>
 				</governance>
 			</li>
@@ -1143,8 +1145,10 @@
 				<label>governance</label>
 				<governance>
 					<offset>
-						<li>(0, 20)</li>
-						<li>(1, -20)</li>
+						<points>
+							<li>(0, 20)</li>
+							<li>(1, -20)</li>
+						</points>
 					</offset>
 				</governance>
 			</li>
@@ -2125,6 +2129,21 @@
 		<cancelDecision>Multiculturalism</cancelDecision>
 	</Rimocracy.DecisionDef>
 
+	<!-- Loyalty Decisions -->
+	
+	<Rimocracy.DecisionDef>
+		<defName>SocialWelfare</defName>
+		<label>social welfare</label>
+		<description>Spend 100 silver per colonist to raise their loyalty by 10%.</description>
+		<category>Misc</category>
+		<allCitizensReact>false</allCitizensReact>
+		<displayPriorityInCategory>50</displayPriorityInCategory>
+		<durationDays>3</durationDays>
+		<silverCostPerCitizen>100</silverCostPerCitizen>
+		<changeLoyalty>0.10</changeLoyalty>
+		<loyaltyEffect>0</loyaltyEffect>
+	</Rimocracy.DecisionDef>
+	
 	<!-- Action Veto Power -->
 	
 	<Rimocracy.DecisionDef>
@@ -2132,7 +2151,6 @@
 		<label>enable veto for actions</label>
 		<description>If the leader opposes a game action such as arresting or banishing pawns, he/she can stop it. Without veto power, such actions will be taken but at a cost of Governance.</description>
 		<category>Misc</category>
-		<enactment>None</enactment>
 		<displayPriorityInCategory>100</displayPriorityInCategory>
 		<displayRequirements>
 			<all>

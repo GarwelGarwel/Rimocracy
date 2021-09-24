@@ -35,12 +35,14 @@ namespace Rimocracy
         public int durationTicks;
 
         public float governanceCost;
+        public int silverCostPerCitizen;
         public SuccessionDef setSuccession;
         public TermDuration setTermDuration = TermDuration.Undefined;
         public bool impeachLeader;
         public bool? actionsNeedApproval;
         public string cancelDecision;
         public float regimeEffect;
+        public float changeLoyalty;
         public float loyaltyEffect = 0.1f;
 
         public string LabelTitleCase => GenText.ToTitleCaseSmart(label.Formatted(new NamedArgument(Utility.RimocracyComp.Leader, "TARGET")));
@@ -49,7 +51,10 @@ namespace Rimocracy
             (!IsPersistent || !Utility.RimocracyComp.DecisionActive(Tag)) && (displayRequirements == null || displayRequirements);
 
         public bool IsValid =>
-            IsDisplayable && (effectRequirements == null || effectRequirements) && Utility.RimocracyComp.Governance >= GovernanceCost;
+            IsDisplayable
+            && (effectRequirements == null || effectRequirements)
+            && Utility.RimocracyComp.Governance >= GovernanceCost
+            && (silverCostPerCitizen <= 0 || Utility.GetMaxSilver().silver >= SilverCost); //TradeUtility.ColonyHasEnoughSilver(TradeUtility.PlayerHomeMapWithMostLaunchableSilver(), SilverCost));
 
         /// <summary>
         /// Tells if this decision tag should be stored
@@ -62,6 +67,8 @@ namespace Rimocracy
         public string Tag => tag.NullOrEmpty() ? defName : tag;
 
         public float GovernanceCost => governanceCost * Settings.GovernanceCostFactor;
+
+        public int SilverCost => silverCostPerCitizen * Utility.CitizensCount;
 
         public int Duration => durationDays * GenDate.TicksPerDay + durationTicks;
 
@@ -105,7 +112,16 @@ namespace Rimocracy
                 Utility.RimocracyComp.Decisions.Add(new Decision(this));
 
             if (!cheat)
+            {
                 Utility.RimocracyComp.Governance -= GovernanceCost;
+                if (silverCostPerCitizen > 0)
+                {
+                    int cost = SilverCost;
+                    (Map map, int silver) = Utility.GetMaxSilver();
+                    Utility.Log($"Available silver: {silver}. Cost: {cost}.");
+                    Utility.RemoveSilver(map, cost);
+                }
+            }
 
             if (setSuccession != null)
             {
@@ -144,6 +160,13 @@ namespace Rimocracy
             {
                 Utility.Log($"Changing regime by {regimeEffect}.");
                 Utility.RimocracyComp.RegimeBase += regimeEffect;
+            }
+
+            if (changeLoyalty != 0)
+            {
+                Utility.Log($"Changing all pawns' loyalty by {changeLoyalty.ToStringPercent()}.");
+                foreach (Pawn pawn in Utility.Citizens)
+                    pawn.ChangeLoyalty(changeLoyalty);
             }
 
             return true;
