@@ -25,8 +25,6 @@ namespace Rimocracy
 
     public static class Utility
     {
-        static bool? simpleSlaveryInstalled;
-
         static int rimocracyCompIndex = -1;
 
         public static RimocracyComp RimocracyComp
@@ -53,7 +51,7 @@ namespace Rimocracy
 
         public static bool PoliticsEnabled => RimocracyComp != null && RimocracyComp.IsEnabled;
 
-        public static bool IsSimpleSlaveryInstalled => (bool)(simpleSlaveryInstalled ?? (simpleSlaveryInstalled = RimocracyDefOf.Enslaved != null));
+        public static bool IsSimpleSlaveryInstalled => RimocracyDefOf.Enslaved != null;
 
         public static bool IsFreeAdultColonist(this Pawn pawn) =>
             pawn != null
@@ -114,11 +112,11 @@ namespace Rimocracy
 
         public static void RemoveSilver(Map map, int amount)
         {
-            foreach (Thing t in map.spawnedThings.Where(thing => thing.def == ThingDefOf.Silver).ToList())
+            foreach (Thing thing in map.spawnedThings.Where(thing => thing.def == ThingDefOf.Silver).ToList())
             {
-                int count = Math.Min(amount, t.stackCount);
-                Log($"Removing {count} silver from {t}...");
-                t.SplitOff(count);
+                int count = Math.Min(amount, thing.stackCount);
+                Log($"Removing {count} silver from {thing}...");
+                thing.SplitOff(count);
                 amount -= count;
                 if (amount <= 0)
                     return;
@@ -191,24 +189,6 @@ namespace Rimocracy
 
                 default:
                     return int.MaxValue;
-            }
-        }
-
-        public static float GetRegimeEffect(this TermDuration termDuration)
-        {
-            switch (termDuration)
-            {
-                case TermDuration.Quadrum:
-                    return 0.05f;
-
-                case TermDuration.Halfyear:
-                    return 0;
-
-                case TermDuration.Year:
-                    return -0.05f;
-
-                default:
-                    return -0.10f;
             }
         }
 

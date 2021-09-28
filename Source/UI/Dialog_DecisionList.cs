@@ -98,14 +98,14 @@ namespace Rimocracy
                         if (def.enactment == DecisionEnactmentRule.Decree && Utility.RimocracyComp.HasLeader)
                         {
                             PawnDecisionOpinion leaderOpinion = votingResult[Utility.RimocracyComp.Leader];
-                            content.Label($"{Utility.LeaderTitle.CapitalizeFirst()} {leaderOpinion.VoteStringColor} this decision.", tooltip: leaderOpinion.explanation);
+                            content.Label($"{Utility.LeaderTitle.CapitalizeFirst()} {leaderOpinion.VoteStringColored} this decision.", tooltip: leaderOpinion.explanation);
                         }
 
                         if ((def.allCitizensReact || def.enactment == DecisionEnactmentRule.Law || def.enactment == DecisionEnactmentRule.Referendum) && votingResult.Any(opinion => opinion.Vote != DecisionVote.Abstain))
                         {
                             content.Label($"Citizens' support: {votingResult.Yea.ToStringCached().Colorize(Color.green)} - {votingResult.Nay.ToStringCached().Colorize(Color.red)}");
                             foreach (PawnDecisionOpinion opinion in votingResult)
-                                content.Label($"   {opinion.voter.NameShortColored}: {opinion.VoteStringColor}", tooltip: opinion.explanation);
+                                content.Label($"   {opinion.voter.NameShortColored}: {opinion.VoteStringColored}", tooltip: opinion.explanation);
                             if (def.loyaltyEffect != 0)
                                 content.Label($"Loyalty of citizens who support this decision will increase, and of those who oppose or tolerate it, decrease by {def.loyaltyEffect.ToStringPercent()}.");
                         }

@@ -10,10 +10,21 @@ namespace Rimocracy
         public float support;
         public string explanation;
 
-        public DecisionVote Vote =>
-            support > 0.5f ? DecisionVote.Yea : (support < -0.5f ? (support + voter.GetLoyaltySupportOffset() < -0.5f ? DecisionVote.Nay : DecisionVote.Tolerate) : DecisionVote.Abstain);
+        public DecisionVote Vote
+        {
+            get
+            {
+                if (support > 0.5f)
+                    return DecisionVote.Yea;
+                if (support < -0.5f)
+                    if (support + voter.GetLoyaltySupportOffset() < -0.5f)
+                        return DecisionVote.Nay;
+                    else return DecisionVote.Tolerate;
+                return DecisionVote.Abstain;
+            }
+        }
 
-        public string VoteStringColor
+        public string VoteStringColored
         {
             get
             {
