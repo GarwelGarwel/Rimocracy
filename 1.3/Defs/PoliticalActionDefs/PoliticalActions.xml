@@ -29,9 +29,10 @@
 				<support>-20</support>
 				<targetIsColonist>true</targetIsColonist>
 				<targetInAggroMentalState>false</targetInAggroMentalState>
+				<targetIsGuilty>false</targetIsGuilty>
 			</li>
 			<li>
-				<label>ally</label>
+				<label>friendly faction</label>
 				<support>-10</support>
 				<targetIsColonist>false</targetIsColonist>
 				<targetFactionGoodwill>
@@ -39,7 +40,7 @@
 				</targetFactionGoodwill>
 			</li>
 			<li>
-				<label>enemy</label>
+				<label>hosile faction</label>
 				<support>10</support>
 				<targetIsColonist>false</targetIsColonist>
 				<targetFactionGoodwill>
@@ -83,18 +84,36 @@
 				<isTarget>true</isTarget>
 			</li>
 			<li>
-				<label>killing people is bad</label>
+				<label>killing an innocent</label>
 				<support>-20</support>
 				<all>
-					<li Class="Rimocracy.Consideration">
+					<li>
 						<trait>Psychopath</trait>
 						<inverted>true</inverted>
 					</li>
-					<li Class="Rimocracy.Consideration">
+					<li>
 						<trait>Bloodlust</trait>
 						<inverted>true</inverted>
 					</li>
+					<li>
+						<targetIsGuilty>false</targetIsGuilty>
+					</li>
 				</all>
+			</li>
+			<li>
+				<label>friendly faction</label>
+				<support>-10</support>
+				<targetIsColonist>false</targetIsColonist>
+				<targetFactionGoodwill>
+					<greaterOrEqual>75</greaterOrEqual>
+				</targetFactionGoodwill>
+			</li>
+			<li>
+				<label>hostile faction</label>
+				<support>10</support>
+				<targetFactionGoodwill>
+					<lessOrEqual>-75</lessOrEqual>
+				</targetFactionGoodwill>
 			</li>
 			<li>
 				<label>opinion of {TARGET}</label>
@@ -107,17 +126,6 @@
 						</points>
 					</offset>
 				</opinionOfTarget>
-			</li>
-			<li>
-				<label>I like hurting people</label>
-				<support>30</support>
-				<trait>Bloodlust</trait>
-				<isTarget>false</isTarget>
-			</li>
-			<li>
-				<label>kind</label>
-				<support>-20</support>
-				<trait>Kind</trait>
 			</li>
 			<li>
 				<label>{TARGET} is a fellow colonist</label>
@@ -134,17 +142,28 @@
 				</all>
 			</li>
 			<li>
-				<label>food shortage</label>
+				<label>fewer mouths to feed</label>
 				<isTarget>false</isTarget>
 				<daysOfFood>
 					<offset>
 						<points>
-							<li>(0, 20)</li>
-							<li>(3, 10)</li>
+							<li>(0, 10)</li>
+							<li>(3, 5)</li>
 							<li>(15, 0)</li>
 						</points>
 					</offset>
 				</daysOfFood>
+			</li>
+			<li>
+				<label>I like hurting people</label>
+				<support>30</support>
+				<trait>Bloodlust</trait>
+				<isTarget>false</isTarget>
+			</li>
+			<li>
+				<label>kind</label>
+				<support>-20</support>
+				<trait>Kind</trait>
 			</li>
 			<li>
 				<label>execution is abhorrent</label>
@@ -184,9 +203,9 @@
 				<isTarget>true</isTarget>
 			</li>
 			<li>
-				<label>Kind</label>
-				<support>20</support>
-				<trait>Kind</trait>
+				<label>releasing a criminal</label>
+				<support>-10</support>
+				<targetIsGuilty>true</targetIsGuilty>
 			</li>
 			<li>
 				<label>{TARGET} is a fellow colonist</label>
@@ -228,23 +247,28 @@
 				</daysOfFood>
 			</li>
 			<li>
-				<label>slavery is abhorrent</label>
+				<label>Kind</label>
 				<support>20</support>
+				<trait>Kind</trait>
+			</li>
+			<li>
+				<label>slavery is abhorrent</label>
+				<support>10</support>
 				<precept>Slavery_Abhorrent</precept>
 			</li>
 			<li>
 				<label>slavery is horrible</label>
-				<support>15</support>
+				<support>7</support>
 				<precept>Slavery_Horrible</precept>
 			</li>
 			<li>
 				<label>slavery is disapproved</label>
-				<support>5</support>
+				<support>3</support>
 				<precept>Slavery_Disapproved</precept>
 			</li>
 			<li>
 				<label>slavery is honorable</label>
-				<support>-10</support>
+				<support>-5</support>
 				<precept>Slavery_Honorable</precept>
 			</li>
 		</considerations>
@@ -264,13 +288,15 @@
 			<li>
 				<label>banishment is cruel</label>
 				<support>-20</support>
-				<trait>Psychopath</trait>
-				<inverted>true</inverted>
-			</li>
-			<li>
-				<label>kind</label>
-				<support>-20</support>
-				<trait>Kind</trait>
+				<all>
+					<li>
+						<trait>Psychopath</trait>
+						<inverted>true</inverted>
+					</li>
+					<li>
+						<targetIsGuilty>true</targetIsGuilty>
+					</li>
+				</all>
 			</li>
 			<li>
 				<label>opinion of {TARGET}</label>
@@ -308,6 +334,11 @@
 						</points>
 					</offset>
 				</daysOfFood>
+			</li>
+			<li>
+				<label>kind</label>
+				<support>-20</support>
+				<trait>Kind</trait>
 			</li>
 		</considerations>
 		<governanceChangeIfSupported>0.08</governanceChangeIfSupported>

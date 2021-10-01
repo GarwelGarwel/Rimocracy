@@ -186,12 +186,6 @@ namespace Rimocracy
             if (Decisions == null)
                 Decisions = new List<Decision>();
             else Decisions.RemoveAll(d => d.def == null);
-
-            //foreach (ThingDef def in DefDatabase<ThingDef>.AllDefs.Where(def => def.thingClass == typeof(Pawn) && def.race.intelligence == Intelligence.Humanlike && !def.HasComp(typeof(CompCitizen))))
-            //{
-            //    Utility.Log($"Adding CompCitizen to {def.defName}.");
-            //    def.comps.Add(new CompProperties(typeof(CompCitizen)));
-            //}
         }
 
         public override void ExposeData()

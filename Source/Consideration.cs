@@ -50,6 +50,7 @@ namespace Rimocracy
         bool? targetIsColonist;
         bool? targetIsLeader;
         bool? targetInAggroMentalState;
+        bool? targetIsGuilty;
         TraitDef targetTrait;
         ValueOperations opinionOfTarget;
         ValueOperations medianOpinionOfTarget;
@@ -86,6 +87,7 @@ namespace Rimocracy
             && targetIsColonist == null
             && targetIsLeader == null
             && targetInAggroMentalState == null
+            && targetIsGuilty == null
             && targetTrait == null
             && medianOpinionOfTarget == null
             && medianOpinionOfTarget == null
@@ -148,6 +150,8 @@ namespace Rimocracy
                     res &= target.IsLeader() == targetIsLeader;
                 if (res && targetInAggroMentalState != null)
                     res &= target.InAggroMentalState == targetInAggroMentalState;
+                if (res && targetIsGuilty != null)
+                    res &= target.guilt.IsGuilty == targetIsGuilty;
                 if (res && targetTrait != null && target.story?.traits != null)
                     res &= target.story.traits.HasTrait(targetTrait);
                 if (res && opinionOfTarget != null && pawn != null)
@@ -156,8 +160,8 @@ namespace Rimocracy
                     res &= medianOpinionOfTarget.Compare(target.MedianCitizensOpinion());
                 if (res && targetAge != null && target.ageTracker != null)
                     res &= targetAge.Compare(target.ageTracker.AgeBiologicalYears);
-                if (res && targetFactionGoodwill != null && target.Faction != null && !target.Faction.IsPlayer)
-                    res &= targetFactionGoodwill.Compare(target.Faction.PlayerGoodwill);
+                if (res && targetFactionGoodwill != null && target.HomeFaction != null && !target.HomeFaction.IsPlayer)
+                    res &= targetFactionGoodwill.Compare(target.HomeFaction.PlayerGoodwill);
             }
 
             Ideo ideo = pawn?.Ideo ?? Utility.NationPrimaryIdeo;
@@ -303,6 +307,8 @@ namespace Rimocracy
                 AddLine($"{target.CapitalizeFirst()} is {((bool)targetIsLeader ? "" : "not ")}the leader");
             if (targetInAggroMentalState != null)
                 AddLine($"{target.CapitalizeFirst()} is {((bool)targetInAggroMentalState ? "" : "not ")}in an aggressive mental break");
+            if (targetIsGuilty != null)
+                AddLine($"{target.CapitalizeFirst()} is {((bool)targetIsGuilty ? "" : "not ")}guilty");
             if (targetTrait != null)
                 AddLine($"{target.CapitalizeFirst()} has trait {targetTrait}");
             if (opinionOfTarget != null)

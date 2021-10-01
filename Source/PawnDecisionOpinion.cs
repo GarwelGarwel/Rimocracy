@@ -8,6 +8,7 @@ namespace Rimocracy
     {
         public Pawn voter;
         public float support;
+        public float loyaltyOffset;
         public string explanation;
 
         public DecisionVote Vote
@@ -17,7 +18,7 @@ namespace Rimocracy
                 if (support > 0.5f)
                     return DecisionVote.Yea;
                 if (support < -0.5f)
-                    if (support + voter.GetLoyaltySupportOffset() < -0.5f)
+                    if (support + loyaltyOffset < -0.5f)
                         return DecisionVote.Nay;
                     else return DecisionVote.Tolerate;
                 return DecisionVote.Abstain;
@@ -62,7 +63,11 @@ namespace Rimocracy
             }
             explanations.Add($"Overall support: {Utility.ColorizeOpinion(support)}");
             if (support < -0.5f)
-                explanations.Add($"Loyalty {voter.GetLoyalty().ToStringPercent()}: {Utility.ColorizeOpinion(voter.GetLoyaltySupportOffset())}");
+            {
+                loyaltyOffset = voter.GetLoyaltySupportOffset();
+                explanations.Add($"Loyalty {voter.GetLoyalty().ToStringPercent()}: {Utility.ColorizeOpinion(loyaltyOffset)}");
+            }
+            else loyaltyOffset = 0;
             explanation = explanations.ToLineList();
         }
     }
