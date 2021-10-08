@@ -71,7 +71,7 @@
 			</li>
 			<li>
 				<label>different ideology</label>
-				<support>-20</support>
+				<support>20</support>
 				<targetShareIdeoligion>false</targetShareIdeoligion>
 			</li>
 		</considerations>
