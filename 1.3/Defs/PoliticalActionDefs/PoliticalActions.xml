@@ -29,6 +29,7 @@
 				<support>-10</support>
 				<targetIsColonist>true</targetIsColonist>
 				<targetInAggroMentalState>false</targetInAggroMentalState>
+				<targetShareIdeoligion>true</targetShareIdeoligion>
 			</li>
 			<li>
 				<label>ally</label>
@@ -67,6 +68,11 @@
 				<label>slavery is honorable</label>
 				<support>3</support>
 				<precept>Slavery_Honorable</precept>
+			</li>
+			<li>
+				<label>different ideology</label>
+				<support>20</support>
+				<targetShareIdeoligion>false</targetShareIdeoligion>
 			</li>
 		</considerations>
 		<governanceChangeIfSupported>0.04</governanceChangeIfSupported>

@@ -51,6 +51,7 @@ namespace Rimocracy
         bool? targetIsColonist;
         bool? targetIsLeader;
         bool? targetInAggroMentalState;
+        bool? targetShareIdeoligion;
         TraitDef targetTrait;
         ValueOperations opinionOfTarget;
         ValueOperations medianOpinionOfTarget;
@@ -162,6 +163,8 @@ namespace Rimocracy
                     res &= targetAge.Compare(target.ageTracker.AgeBiologicalYears);
                 if (res && targetFactionGoodwill != null && target.Faction != null && !target.Faction.IsPlayer)
                     res &= targetFactionGoodwill.Compare(target.Faction.PlayerGoodwill);
+                if (res && targetShareIdeoligion != null && target.Ideo != null)
+                    res &= (Utility.RimocracyComp.DecisionActive(DecisionDef.StateIdeoligion) ? (target.Ideo == Utility.NationPrimaryIdeo) : true) == targetShareIdeoligion;
             }
 
             Ideo ideo = pawn?.Ideo ?? Utility.NationPrimaryIdeo;
