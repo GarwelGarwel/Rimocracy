@@ -51,6 +51,7 @@ namespace Rimocracy
         bool? targetIsLeader;
         bool? targetInAggroMentalState;
         bool? targetIsGuilty;
+        bool? targetIsWild;
         TraitDef targetTrait;
         ValueOperations opinionOfTarget;
         ValueOperations medianOpinionOfTarget;
@@ -88,6 +89,7 @@ namespace Rimocracy
             && targetIsLeader == null
             && targetInAggroMentalState == null
             && targetIsGuilty == null
+            && targetIsWild == null
             && targetTrait == null
             && medianOpinionOfTarget == null
             && medianOpinionOfTarget == null
@@ -152,6 +154,8 @@ namespace Rimocracy
                     res &= target.InAggroMentalState == targetInAggroMentalState;
                 if (res && targetIsGuilty != null)
                     res &= target.guilt.IsGuilty == targetIsGuilty;
+                if (res && targetIsWild != null)
+                    res &= target.IsWildMan() == targetIsWild;
                 if (res && targetTrait != null && target.story?.traits != null)
                     res &= target.story.traits.HasTrait(targetTrait);
                 if (res && opinionOfTarget != null && pawn != null)
@@ -309,6 +313,8 @@ namespace Rimocracy
                 AddLine($"{target.CapitalizeFirst()} is {((bool)targetInAggroMentalState ? "" : "not ")}in an aggressive mental break");
             if (targetIsGuilty != null)
                 AddLine($"{target.CapitalizeFirst()} is {((bool)targetIsGuilty ? "" : "not ")}guilty");
+            if (targetIsWild != null)
+                AddLine($"{target.CapitalizeFirst()} is {((bool)targetIsWild ? "" : "not ")}wild");
             if (targetTrait != null)
                 AddLine($"{target.CapitalizeFirst()} has trait {targetTrait}");
             if (opinionOfTarget != null)
