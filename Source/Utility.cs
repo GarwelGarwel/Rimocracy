@@ -38,13 +38,12 @@ namespace Rimocracy
                     if (comp != null)
                         return comp;
                 }
-                for (rimocracyCompIndex = 0; rimocracyCompIndex < Find.World.components.Count; rimocracyCompIndex++)
+                for (rimocracyCompIndex = Find.World.components.Count - 1; rimocracyCompIndex >= 0; rimocracyCompIndex--)
                 {
                     comp = Find.World.components[rimocracyCompIndex] as RimocracyComp;
                     if (comp != null)
                         return comp;
                 }
-                rimocracyCompIndex = -1;
                 return null;
             }
         }
@@ -78,7 +77,7 @@ namespace Rimocracy
         public static float GetLoyalty(this Pawn pawn)
         {
             Need_Loyalty loyalty = pawn.needs.TryGetNeed<Need_Loyalty>();
-            return loyalty != null ? loyalty.CurLevel : 0.5f;
+            return loyalty != null ? loyalty.CurLevel : Need_Loyalty.DefaultLevel;
         }
 
         public static void ChangeLoyalty(this Pawn pawn, float value)
