@@ -122,7 +122,7 @@
 	<Rimocracy.DecisionDef ParentName="BaseSuccessionDecision">
 		<defName>SuccessionLot</defName>
 		<label>lot succession</label>
-		<description>The leader shall be chosen randomly from all citizens. Considered not very democratic.</description>
+		<description>The leader shall be chosen randomly from all citizens.</description>
 		<displayPriorityInCategory>20</displayPriorityInCategory>
 		<displayRequirements>
 			<succession>Lot</succession>
@@ -209,7 +209,7 @@
 	<Rimocracy.DecisionDef ParentName="BaseSuccessionDecision">
 		<defName>SuccessionSeniority</defName>
 		<label>seniority succession</label>
-		<description>The oldest, and therefore most experienced, colonist shall be the leader. Considered non-democratic.</description>
+		<description>The oldest, and therefore most experienced, colonist shall be the leader.</description>
 		<displayPriorityInCategory>30</displayPriorityInCategory>
 		<displayRequirements>
 			<succession>Seniority</succession>
@@ -299,7 +299,7 @@
 	<Rimocracy.DecisionDef ParentName="BaseSuccessionDecision">
 		<defName>SuccessionNobility</defName>
 		<label>nobility succession</label>
-		<description>The pawn with the highest, and oldest, nobility title will be the leader. Considered non-democratic.</description>
+		<description>The pawn with the highest, and oldest, nobility title will be the leader.</description>
 		<displayPriorityInCategory>40</displayPriorityInCategory>
 		<displayRequirements>
 			<inverted>true</inverted>
@@ -394,7 +394,7 @@
 	<Rimocracy.DecisionDef ParentName="BaseSuccessionDecision">
 		<defName>SuccessionMartial</defName>
 		<label>martial succession</label>
-		<description>The most accomplished warrior will become our leader. Considered non-democratic.</description>
+		<description>The most accomplished warrior will become our leader.</description>
 		<displayPriorityInCategory>50</displayPriorityInCategory>
 		<displayRequirements>
 			<succession>Martial</succession>
