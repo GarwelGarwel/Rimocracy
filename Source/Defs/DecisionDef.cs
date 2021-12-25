@@ -42,7 +42,7 @@ namespace Rimocracy
         public bool? actionsNeedApproval;
         public string cancelDecision;
         public float changeLoyalty;
-        public float loyaltyEffect = 0.1f;
+        public float loyaltyEffect = 0.10f;
 
         public string LabelTitleCase => GenText.ToTitleCaseSmart(label.Formatted(new NamedArgument(Utility.RimocracyComp.Leader, "TARGET")));
 
@@ -53,7 +53,7 @@ namespace Rimocracy
             IsDisplayable
             && (effectRequirements == null || effectRequirements)
             && Utility.RimocracyComp.Governance >= GovernanceCost
-            && (silverCostPerCitizen <= 0 || Utility.GetMaxSilver().silver >= SilverCost); //TradeUtility.ColonyHasEnoughSilver(TradeUtility.PlayerHomeMapWithMostLaunchableSilver(), SilverCost));
+            && (silverCostPerCitizen <= 0 || Utility.GetMaxSilver().silver >= SilverCost);
 
         /// <summary>
         /// Tells if this decision tag should be stored

@@ -118,7 +118,7 @@ namespace Rimocracy
             if (res && daysOfFood != null)
                 res &= daysOfFood.Compare(Utility.DaysOfFood);
             if (res && techLevels.Any())
-                res &= techLevels.Contains(Find.FactionManager.OfPlayer.def.techLevel);
+                res &= techLevels.Contains(Faction.OfPlayer.def.techLevel);
             if (res && !modActive.NullOrEmpty())
                 res &= ModsConfig.IsActive(modActive.Contains('.') ? modActive : $"Ludeon.RimWorld.{modActive}");
             if (res && !decision.NullOrEmpty())

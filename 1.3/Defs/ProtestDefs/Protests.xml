@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<Defs>
+
+	<Rimocracy.ProtestDef>
+		<defName>Emigration</defName>
+		<description>{PAWN} is disloyal to {NATION} and decides to emigrate.</description>
+		<weight>0.5</weight>
+		<mentalState>GiveUpExit</mentalState>
+		<mustBeCritical>true</mustBeCritical>
+	</Rimocracy.ProtestDef>
+	
+	<Rimocracy.ProtestDef>
+		<defName>Riot</defName>
+		<description>{PAWN} decides to crush a few things in protest.</description>
+		<mentalState>Tantrum</mentalState>
+		<mustBeCritical>true</mustBeCritical>
+	</Rimocracy.ProtestDef>
+	
+	<Rimocracy.ProtestDef>
+		<defName>Strike</defName>
+		<description>{PAWN} refuses to work in protest.</description>
+		<mentalState>Wander_Sad</mentalState>
+	</Rimocracy.ProtestDef>
+
+	<Rimocracy.ProtestDef>
+		<defName>SitIn</defName>
+		<description>{PAWN} refuses to work and locks in {PAWN_possessive} room in protest.</description>
+		<mentalState>Wander_OwnRoom</mentalState>
+	</Rimocracy.ProtestDef>
+
+</Defs>

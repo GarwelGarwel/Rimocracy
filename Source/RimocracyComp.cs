@@ -370,7 +370,7 @@ namespace Rimocracy
                 {
                     Governance = Mathf.Lerp(DecisionActive(DecisionDef.Stability) ? 0 : 0.5f, Governance, 0.5f);
                     foreach (Pawn pawn in Utility.Citizens)
-                        pawn.ChangeLoyalty((0.5f - pawn.GetLoyalty()) * Need_Loyalty.LeaderChangeLoyaltyResetBase * (DecisionActive(DecisionDef.Stability) ? 2 : 1));
+                        pawn.ChangeLoyalty((Need_Loyalty.DefaultLevel - pawn.GetLoyalty()) * Need_Loyalty.LoyaltyResetOnLeaderChange * (DecisionActive(DecisionDef.Stability) ? 2 : 1));
                     Find.LetterStack.ReceiveLetter(SuccessionWorker.NewLeaderMessageTitle(Leader), $"{SuccessionWorker.NewLeaderMessageText(Leader)}\n\n{FocusSkillMessage}", LetterDefOf.NeutralEvent);
                     Tale tale = TaleRecorder.RecordTale(RimocracyDefOf.BecameLeader, Leader);
                 }

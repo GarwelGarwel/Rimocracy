@@ -67,6 +67,7 @@
   <ItemGroup>
     <Compile Include="DecisionVoteResults.cs" />
     <Compile Include="Defs\PoliticalActionDef.cs" />
+    <Compile Include="Defs\ProtestDef.cs" />
     <Compile Include="Need_Loyalty.cs" />
     <Compile Include="UI\Dialog_PoliticalAction.cs" />
     <Compile Include="GoodwillSituationWorker_Multiculturalism.cs" />
