@@ -16,12 +16,14 @@ namespace Rimocracy
         const string indentSymbol = "  ";
 
         public string label;
-        public float value;
-
+        float value;
         bool inverted = false;
 
         List<Consideration> all = new List<Consideration>();
         List<Consideration> any = new List<Consideration>();
+
+        List<Consideration> factors = new List<Consideration>();
+        List<Consideration> offsets = new List<Consideration>();
 
         SuccessionDef succession;
         bool? leaderExists;
@@ -37,6 +39,7 @@ namespace Rimocracy
         bool? isLeader;
         bool? isTarget;
         TraitDef trait;
+        int traitDegree;
         List<SkillOperations> skills = new List<SkillOperations>();
         bool? isCapableOfViolence;
         ValueOperations medianOpinionOfMe;
@@ -53,6 +56,7 @@ namespace Rimocracy
         bool? targetIsGuilty;
         bool? targetIsWild;
         TraitDef targetTrait;
+        int targetTraitDegree;
         ValueOperations opinionOfTarget;
         ValueOperations medianOpinionOfTarget;
         ValueOperations targetAge;
@@ -65,6 +69,8 @@ namespace Rimocracy
             !inverted
             && all.NullOrEmpty()
             && any.NullOrEmpty()
+            && factors.NullOrEmpty()
+            && offsets.NullOrEmpty()
             && succession == null
             && leaderExists == null
             && termDuration == TermDuration.Undefined
@@ -136,7 +142,7 @@ namespace Rimocracy
                 if (res && isTarget != null)
                     res &= (pawn == target) == isTarget;
                 if (res && trait != null && pawn?.story?.traits != null)
-                    res &= pawn.story.traits.HasTrait(trait);
+                    res &= pawn.story.traits.HasTrait(trait, traitDegree);
                 if (res && !skills.NullOrEmpty())
                     res &= skills.TrueForAll(so => so.Compare(pawn));
                 if (res && isCapableOfViolence != null)
@@ -162,7 +168,7 @@ namespace Rimocracy
                 if (res && targetIsWild != null)
                     res &= target.IsWildMan() == targetIsWild;
                 if (res && targetTrait != null && target.story?.traits != null)
-                    res &= target.story.traits.HasTrait(targetTrait);
+                    res &= target.story.traits.HasTrait(targetTrait, targetTraitDegree);
                 if (res && opinionOfTarget != null && pawn != null)
                     res &= opinionOfTarget.Compare(pawn.GetOpinionOf(target));
                 if (res && medianOpinionOfTarget != null)
@@ -226,6 +232,11 @@ namespace Rimocracy
                 if (target.Faction != null && !target.Faction.IsPlayer)
                     targetFactionGoodwill?.TransformValue(target.Faction.PlayerGoodwill, ref s);
             }
+
+            foreach (Consideration factor in factors.Where(factor => factor.IsSatisfied(pawn, target)))
+                s *= factor.GetValue(pawn, target);
+            foreach (Consideration offset in offsets)
+                s += offset.GetValue(pawn, target);
             return s;
         }
 
@@ -272,16 +283,16 @@ namespace Rimocracy
                 AddLine($"{GenText.SplitCamelCase(decision)} is active");
 
             if (isLeader != null)
-                AddLine($"{pawn.CapitalizeFirst()} is {((bool)isLeader ? $"" :"not ")}the leader");
+                AddLine($"{pawn.CapitalizeFirst()} is {((bool)isLeader ? "" :"not ")}the leader");
             if (isTarget != null)
-                AddLine($"{pawn.CapitalizeFirst()} is {((bool)isTarget ? $"" : $"not ")}the target");
+                AddLine($"{pawn.CapitalizeFirst()} is {((bool)isTarget ? "" : "not ")}the target");
             if (trait != null)
-                AddLine($"{pawn.CapitalizeFirst()} has trait {trait}");
+                AddLine($"{pawn.CapitalizeFirst()} has trait {trait.LabelCap}{(traitDegree != 0 ? $" of {trait.DataAtDegree(traitDegree)?.LabelCap}" : "")}");
             if (!skills.EnumerableNullOrEmpty())
                 foreach (SkillOperations skill in skills)
                     AddLine(skill.ToString(skill.skill.LabelCap));
             if (isCapableOfViolence != null)
-                AddLine($"{pawn.CapitalizeFirst()} is {((bool)isCapableOfViolence ? $"" : "in")}capable of violence");
+                AddLine($"{pawn.CapitalizeFirst()} is {((bool)isCapableOfViolence ? "" : "in")}capable of violence");
             if (medianOpinionOfMe != null)
                 AddLine(medianOpinionOfMe.ToString($"Median citizens' opinion of {pawn}"));
             if (age != null)
@@ -321,7 +332,7 @@ namespace Rimocracy
             if (targetIsWild != null)
                 AddLine($"{target.CapitalizeFirst()} is {((bool)targetIsWild ? "" : "not ")}wild");
             if (targetTrait != null)
-                AddLine($"{target.CapitalizeFirst()} has trait {targetTrait}");
+                AddLine($"{target.CapitalizeFirst()} has trait {targetTrait.LabelCap}{(targetTraitDegree != 0 ? $" of {targetTrait.DataAtDegree(targetTraitDegree)?.LabelCap}" : "")}");
             if (opinionOfTarget != null)
                 AddLine($"{opinionOfTarget.ToString($"{pawn.CapitalizeFirst()}'s opinion of {target}")}");
             if (medianOpinionOfTarget != null)
