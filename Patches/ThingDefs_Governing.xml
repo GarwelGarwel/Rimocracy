@@ -2,7 +2,9 @@
 
 <Patch>
 
-	<!-- Ruling Efficiency -->
+	<!-- VANILLA -->
+	
+	<!-- SimpleResearchBench -->
 
 	<Operation Class="PatchOperationAdd">
 		<xpath>/Defs/ThingDef[defName="SimpleResearchBench"]/statBases</xpath>
@@ -34,6 +36,8 @@
 			</li>
 		</value>
 	</Operation>
+	
+	<!-- HiTechResearchBench -->
 
 	<Operation Class="PatchOperationAdd">
 		<xpath>/Defs/ThingDef[defName="HiTechResearchBench"]/statBases</xpath>
@@ -66,7 +70,9 @@
 		</value>
 	</Operation>
 
-	<!-- Royalty -->
+	<!-- ROYALTY -->
+	
+	<!-- Throne -->
 
 	<Operation Class="PatchOperationAdd">
 		<success>Always</success>
@@ -101,6 +107,8 @@
 		</value>
 	</Operation>
 
+	<!-- GrandThrone -->
+
 	<Operation Class="PatchOperationAdd">
 		<success>Always</success>
 		<xpath>/Defs/ThingDef[defName="GrandThrone"]/statBases</xpath>
@@ -134,7 +142,7 @@
 		</value>
 	</Operation>
 
-	<!-- Mod: Colony Manager -->
+	<!-- MOD: COLONY MANAGER -->
 
 	<Operation Class="PatchOperationAdd">
 		<success>Always</success>
@@ -235,7 +243,7 @@
 		</value>
 	</Operation>
 
-	<!-- Mod: Thrones plus -->
+	<!-- MOD: THRONES PLUS -->
 
 	<Operation Class="PatchOperationAdd">
 		<success>Always</success>
@@ -435,7 +443,7 @@
 		</value>
 	</Operation>
 	
-	<!-- Mod: Primitive Workbenches -->
+	<!-- MOD: PRIMITIVE WORKBENCHES -->
 
 	<Operation Class="PatchOperationAdd">
 		<success>Always</success>
@@ -536,6 +544,21 @@
 		</value>
 	</Operation>
 
+	<Operation Class="PatchOperationSequence">
+		<success>Always</success>
+		<operations>
+			<li Class="PatchOperationTest">
+				<xpath>/Defs/ThingDef[defName="VBY_PrimitiveResearchTable"]/statBases</xpath>
+				<success>Invert</success>
+			</li>
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/ThingDef[defName="VBY_PrimitiveResearchTable"]</xpath>
+				<value>
+					<statBases/>
+				</value>
+			</li>
+		</operations>
+	</Operation>
 	<Operation Class="PatchOperationAdd">
 		<success>Always</success>
 		<xpath>/Defs/ThingDef[defName="VBY_PrimitiveResearchTable"]/statBases</xpath>
