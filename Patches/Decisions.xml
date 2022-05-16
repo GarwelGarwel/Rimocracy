@@ -13,7 +13,7 @@
 			<value>
 				<li>
 					<label>silver tongue</label>
-					<support>5</support>
+					<value>5</value>
 					<trait>SYR_Haggler</trait>
 				</li>
 			</value>
@@ -29,7 +29,7 @@
 			<value>
 				<li>
 					<label>gun nut</label>
-					<support>5</support>
+					<value>5</value>
 					<trait>SYR_GunNut</trait>
 				</li>
 			</value>
@@ -50,17 +50,17 @@
 					<value>
 						<li>
 							<label>rebel</label>
-							<support>-10</support>
+							<value>-10</value>
 							<trait>VTE_Rebel</trait>
 						</li>
 						<li>
 							<label>submissive</label>
-							<support>5</support>
+							<value>5</value>
 							<trait>VTE_Submissive</trait>
 						</li>
 						<li>
 							<label>snob</label>
-							<support>5</support>
+							<value>5</value>
 							<trait>VTE_Snob</trait>
 							<age>
 								<greaterThan>50</greaterThan>
@@ -74,17 +74,17 @@
 					<value>
 						<li>
 							<label>rebel</label>
-							<support>-10</support>
+							<value>-10</value>
 							<trait>VTE_Rebel</trait>
 						</li>
 						<li>
 							<label>submissive</label>
-							<support>5</support>
+							<value>5</value>
 							<trait>VTE_Submissive</trait>
 						</li>
 						<li>
 							<label>snob</label>
-							<support>10</support>
+							<value>10</value>
 							<trait>VTE_Snob</trait>
 							<titleSeniority>
 								<greaterOrEqual>0</greaterOrEqual>
@@ -98,27 +98,27 @@
 					<value>
 						<li>
 							<label>coward</label>
-							<support>-10</support>
+							<value>-10</value>
 							<trait>VTE_Coward</trait>
 						</li>
 						<li>
 							<label>brave</label>
-							<support>10</support>
+							<value>10</value>
 							<trait>VTE_Brave</trait>
 						</li>
 						<li>
 							<label>rebel</label>
-							<support>-10</support>
+							<value>-10</value>
 							<trait>VTE_Rebel</trait>
 						</li>
 						<li>
 							<label>submissive</label>
-							<support>5</support>
+							<value>5</value>
 							<trait>VTE_Submissive</trait>
 						</li>
 						<li>
 							<label>martial artist</label>
-							<support>10</support>
+							<value>10</value>
 							<trait>VTE_MartialArtist</trait>
 						</li>
 					</value>
@@ -129,19 +129,19 @@
 					<value>
 						<li>
 							<label>rebel</label>
-							<support>10</support>
+							<value>10</value>
 							<isTarget>false</isTarget>
 							<trait>VTE_Rebel</trait>
 						</li>
 						<li>
 							<label>submissive</label>
-							<support>-5</support>
+							<value>-5</value>
 							<isTarget>false</isTarget>
 							<trait>VTE_Submissive</trait>
 						</li>
 						<li>
 							<label>snob</label>
-							<support>10</support>
+							<value>10</value>
 							<isTarget>false</isTarget>
 							<trait>VTE_Snob</trait>
 						</li>
@@ -153,7 +153,7 @@
 					<value>
 						<li>
 							<label>snob</label>
-							<support>-10</support>
+							<value>-10</value>
 							<trait>VTE_Snob</trait>
 						</li>
 					</value>
@@ -164,7 +164,7 @@
 					<value>
 						<li>
 							<label>snob</label>
-							<support>5</support>
+							<value>5</value>
 							<trait>VTE_Snob</trait>
 						</li>
 					</value>
@@ -175,12 +175,12 @@
 					<value>
 						<li>
 							<label>rebel</label>
-							<support>-10</support>
+							<value>-10</value>
 							<trait>VTE_Rebel</trait>
 						</li>
 						<li>
 							<label>submissive</label>
-							<support>5</support>
+							<value>5</value>
 							<trait>VTE_Submissive</trait>
 						</li>
 					</value>
@@ -191,18 +191,18 @@
 					<value>
 						<li>
 							<label>rebel</label>
-							<support>-10</support>
+							<value>-10</value>
 							<isTarget>false</isTarget>
 							<trait>VTE_Rebel</trait>
 						</li>
 						<li>
 							<label>submissive</label>
-							<support>5</support>
+							<value>5</value>
 							<trait>VTE_Submissive</trait>
 						</li>
 						<li>
 							<label>snob</label>
-							<support>20</support>
+							<value>20</value>
 							<isTarget>true</isTarget>
 							<trait>VTE_Snob</trait>
 						</li>
@@ -214,18 +214,18 @@
 					<value>
 						<li>
 							<label>rebel</label>
-							<support>-10</support>
+							<value>-10</value>
 							<isTarget>false</isTarget>
 							<trait>VTE_Rebel</trait>
 						</li>
 						<li>
 							<label>submissive</label>
-							<support>5</support>
+							<value>5</value>
 							<trait>VTE_Submissive</trait>
 						</li>
 						<li>
 							<label>snob</label>
-							<support>20</support>
+							<value>20</value>
 							<isTarget>true</isTarget>
 							<trait>VTE_Snob</trait>
 						</li>
@@ -237,13 +237,13 @@
 					<value>
 						<li>
 							<label>rebel</label>
-							<support>-10</support>
+							<value>-10</value>
 							<isTarget>false</isTarget>
 							<trait>VTE_Rebel</trait>
 						</li>
 						<li>
 							<label>submissive</label>
-							<support>5</support>
+							<value>5</value>
 							<trait>VTE_Submissive</trait>
 						</li>
 					</value>
@@ -254,18 +254,18 @@
 					<value>
 						<li>
 							<label>rebel</label>
-							<support>-10</support>
+							<value>-10</value>
 							<isTarget>false</isTarget>
 							<trait>VTE_Rebel</trait>
 						</li>
 						<li>
 							<label>submissive</label>
-							<support>5</support>
+							<value>5</value>
 							<trait>VTE_Submissive</trait>
 						</li>
 						<li>
 							<label>snob</label>
-							<support>10</support>
+							<value>10</value>
 							<isTarget>true</isTarget>
 							<trait>VTE_Snob</trait>
 						</li>

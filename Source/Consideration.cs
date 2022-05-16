@@ -16,7 +16,7 @@ namespace Rimocracy
         const string indentSymbol = "  ";
 
         public string label;
-        public float support;
+        public float value;
 
         bool inverted = false;
 
@@ -96,6 +96,11 @@ namespace Rimocracy
             && targetAge == null
             && targetFactionGoodwill == null
             && primaryIdeoligion == null;
+
+        public Consideration()
+        { }
+
+        public Consideration(float value) => this.value = value;
 
         public static implicit operator bool(Consideration consideration) => consideration.IsSatisfied(target: Utility.RimocracyComp.Leader);
 
@@ -188,17 +193,17 @@ namespace Rimocracy
             return res ^ inverted;
         }
 
-        public (float support, TaggedString explanation) GetSupportAndExplanation(Pawn pawn, Pawn target)
+        public (float value, TaggedString explanation) GetSupportAndExplanation(Pawn pawn, Pawn target)
         {
-            float s = GetSupport(pawn, target);
+            float s = GetValue(pawn, target);
             return (s, s != 0 ? $"{label.Formatted(pawn.Named("PAWN"), target.Named("TARGET")).Resolve().CapitalizeFirst()}: {s.ToStringWithSign("0").ColorizeOpinion(s)}" : null);
         }
 
-        public float GetSupport(Pawn pawn, Pawn target = null)
+        public float GetValue(Pawn pawn, Pawn target = null)
         {
             if (!IsSatisfied(pawn, target))
                 return 0;
-            float s = support;
+            float s = value;
 
             governance?.TransformValue(Utility.RimocracyComp.Governance, ref s);
             population?.TransformValue(Utility.Population, ref s);

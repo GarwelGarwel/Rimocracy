@@ -13,7 +13,7 @@
 		<considerations>
 			<li>
 				<label>I don't want to be arrested!</label>
-				<support>-100</support>
+				<value>-100</value>
 				<all>
 					<li>
 						<isTarget>true</isTarget>
@@ -26,7 +26,7 @@
 			</li>
 			<li>
 				<label>no reason for arrest</label>
-				<support>-20</support>
+				<value>-20</value>
 				<targetIsColonist>true</targetIsColonist>
 				<targetInAggroMentalState>false</targetInAggroMentalState>
 				<targetIsGuilty>false</targetIsGuilty>
@@ -34,7 +34,7 @@
 			</li>
 			<li>
 				<label>friendly faction</label>
-				<support>-10</support>
+				<value>-10</value>
 				<targetIsColonist>false</targetIsColonist>
 				<targetIsWild>false</targetIsWild>
 				<targetFactionGoodwill>
@@ -43,7 +43,7 @@
 			</li>
 			<li>
 				<label>hosile faction</label>
-				<support>10</support>
+				<value>10</value>
 				<targetIsColonist>false</targetIsColonist>
 				<targetIsWild>false</targetIsWild>
 				<targetFactionGoodwill>
@@ -52,7 +52,7 @@
 			</li>
 			<li>
 				<label>{TARGET} is wild</label>
-				<support>10</support>
+				<value>10</value>
 				<targetIsWild>true</targetIsWild>
 				<all>
 					<li>
@@ -79,12 +79,12 @@
 			</li>
 			<li>
 				<label>{TARGET} is our leader</label>
-				<support>-20</support>
+				<value>-20</value>
 				<targetIsLeader>true</targetIsLeader>
 			</li>
 			<li>
 				<label>slavery is honorable</label>
-				<support>5</support>
+				<value>5</value>
 				<precept>Slavery_Honorable</precept>
 			</li>
 		</considerations>
@@ -98,12 +98,12 @@
 		<considerations>
 			<li>
 				<label>I want to live!</label>
-				<support>-100</support>
+				<value>-100</value>
 				<isTarget>true</isTarget>
 			</li>
 			<li>
 				<label>killing an innocent</label>
-				<support>-20</support>
+				<value>-20</value>
 				<all>
 					<li>
 						<trait>Psychopath</trait>
@@ -120,7 +120,7 @@
 			</li>
 			<li>
 				<label>friendly faction</label>
-				<support>-10</support>
+				<value>-10</value>
 				<targetIsColonist>false</targetIsColonist>
 				<targetIsWild>false</targetIsWild>
 				<targetFactionGoodwill>
@@ -129,7 +129,7 @@
 			</li>
 			<li>
 				<label>hostile faction</label>
-				<support>10</support>
+				<value>10</value>
 				<targetIsWild>false</targetIsWild>
 				<targetFactionGoodwill>
 					<lessOrEqual>-75</lessOrEqual>
@@ -149,7 +149,7 @@
 			</li>
 			<li>
 				<label>{TARGET} is a fellow colonist</label>
-				<support>-20</support>
+				<value>-20</value>
 				<all>
 					<li>
 						<targetIsColonist>true</targetIsColonist>
@@ -182,23 +182,23 @@
 			</li>
 			<li>
 				<label>I like hurting people</label>
-				<support>30</support>
+				<value>30</value>
 				<trait>Bloodlust</trait>
 				<isTarget>false</isTarget>
 			</li>
 			<li>
 				<label>kind</label>
-				<support>-20</support>
+				<value>-20</value>
 				<trait>Kind</trait>
 			</li>
 			<li>
 				<label>execution is abhorrent</label>
-				<support>-20</support>
+				<value>-20</value>
 				<precept>Execution_Abhorrent</precept>
 			</li>
 			<li>
 				<label>execution is horrible</label>
-				<support>-15</support>
+				<value>-15</value>
 				<any>
 					<li>
 						<precept>Execution_Horrible</precept>
@@ -210,7 +210,7 @@
 			</li>
 			<li>
 				<label>execution is required</label>
-				<support>20</support>
+				<value>20</value>
 				<precept>Execution_Required</precept>
 			</li>
 		</considerations>
@@ -225,17 +225,17 @@
 		<considerations>
 			<li>
 				<label>I want to be free!</label>
-				<support>100</support>
+				<value>100</value>
 				<isTarget>true</isTarget>
 			</li>
 			<li>
 				<label>releasing a criminal</label>
-				<support>-10</support>
+				<value>-10</value>
 				<targetIsGuilty>true</targetIsGuilty>
 			</li>
 			<li>
 				<label>{TARGET} is a fellow colonist</label>
-				<support>10</support>
+				<value>10</value>
 				<all>
 					<li>
 						<targetIsColonist>true</targetIsColonist>
@@ -274,27 +274,27 @@
 			</li>
 			<li>
 				<label>Kind</label>
-				<support>20</support>
+				<value>20</value>
 				<trait>Kind</trait>
 			</li>
 			<li>
 				<label>slavery is abhorrent</label>
-				<support>10</support>
+				<value>10</value>
 				<precept>Slavery_Abhorrent</precept>
 			</li>
 			<li>
 				<label>slavery is horrible</label>
-				<support>7</support>
+				<value>7</value>
 				<precept>Slavery_Horrible</precept>
 			</li>
 			<li>
 				<label>slavery is disapproved</label>
-				<support>3</support>
+				<value>3</value>
 				<precept>Slavery_Disapproved</precept>
 			</li>
 			<li>
 				<label>slavery is honorable</label>
-				<support>-5</support>
+				<value>-5</value>
 				<precept>Slavery_Honorable</precept>
 			</li>
 		</considerations>
@@ -308,12 +308,12 @@
 		<considerations>
 			<li>
 				<label>I don't want to be banished!</label>
-				<support>-100</support>
+				<value>-100</value>
 				<isTarget>true</isTarget>
 			</li>
 			<li>
 				<label>banishment is cruel</label>
-				<support>-20</support>
+				<value>-20</value>
 				<all>
 					<li>
 						<trait>Psychopath</trait>
@@ -363,7 +363,7 @@
 			</li>
 			<li>
 				<label>kind</label>
-				<support>-20</support>
+				<value>-20</value>
 				<trait>Kind</trait>
 			</li>
 		</considerations>
@@ -377,7 +377,7 @@
 		<considerations>
 			<li>
 				<label>I'm against violence</label>
-				<support>-40</support>
+				<value>-40</value>
 				<isCapableOfViolence>false</isCapableOfViolence>
 			</li>
 			<li>
@@ -406,63 +406,63 @@
 			</li>
 			<li>
 				<label>bloodlust</label>
-				<support>20</support>
+				<value>20</value>
 				<trait>Bloodlust</trait>
 			</li>
 			<li>
 				<label>brawler</label>
-				<support>20</support>
+				<value>20</value>
 				<trait>Brawler</trait>
 			</li>
 			<li>
 				<label>tough</label>
-				<support>10</support>
+				<value>10</value>
 				<trait>Tough</trait>
 			</li>
 			<li>
 				<label>kind</label>
-				<support>-20</support>
+				<value>-20</value>
 				<trait>Kind</trait>
 			</li>
 			<li>
 				<label>wimp</label>
-				<support>-10</support>
+				<value>-10</value>
 				<trait>Wimp</trait>
 			</li>
 			<li>
 				<label>chance to prove my worth</label>
-				<support>10</support>
+				<value>10</value>
 				<succession>Martial</succession>
 				<isCapableOfViolence>true</isCapableOfViolence>
 			</li>
 			<li>
 				<label>supremacist ideology</label>
-				<support>20</support>
+				<value>20</value>
 				<meme>Supremacist</meme>
 			</li>
 			<li>
 				<label>raider ideology</label>
-				<support>20</support>
+				<value>20</value>
 				<meme>Raider</meme>
 			</li>
 			<li>
 				<label>cannibalism ideology</label>
-				<support>10</support>
+				<value>10</value>
 				<meme>Cannibal</meme>
 			</li>
 			<li>
 				<label>guilty ideology</label>
-				<support>-10</support>
+				<value>-10</value>
 				<meme>Guilty</meme>
 			</li>
 			<li>
 				<label>raiding is respected</label>
-				<support>6</support>
+				<value>6</value>
 				<precept>Raiding_Respected</precept>
 			</li>
 			<li>
 				<label>raiding is required</label>
-				<support>12</support>
+				<value>12</value>
 				<precept>Raiding_Required</precept>
 			</li>
 		</considerations>
@@ -498,12 +498,12 @@
 			</li>
 			<li>
 				<label>bloodlust</label>
-				<support>-10</support>
+				<value>-10</value>
 				<trait>Bloodlust</trait>
 			</li>
 			<li>
 				<label>kind</label>
-				<support>10</support>
+				<value>10</value>
 				<trait>Kind</trait>
 			</li>
 			<li>
@@ -521,7 +521,7 @@
 			</li>
 			<li>
 				<label>raider ideology</label>
-				<support>-10</support>
+				<value>-10</value>
 				<meme>Raider</meme>
 			</li>
 		</considerations>

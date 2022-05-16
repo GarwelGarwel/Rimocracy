@@ -61,7 +61,7 @@
 			</li>
 			<li>
 				<label>I want a right to vote</label>
-				<support>10</support>
+				<value>10</value>
 				<isLeader>false</isLeader>
 			</li>
 			<li>
@@ -102,17 +102,17 @@
 			</li>
 			<li>
 				<label>raider ideoligion</label>
-				<support>-10</support>
+				<value>-10</value>
 				<meme>Raider</meme>
 			</li>
 			<li>
 				<label>individualist ideoligion</label>
-				<support>10</support>
+				<value>10</value>
 				<meme>Individualist</meme>
 			</li>
 			<li>
 				<label>collectivist ideoligion</label>
-				<support>-10</support>
+				<value>-10</value>
 				<meme>Collectivist</meme>
 			</li>
 		</considerations>
@@ -131,12 +131,12 @@
 		<considerations>
 			<li>
 				<label>I don't want to take chances</label>
-				<support>-10</support>
+				<value>-10</value>
 				<isLeader>true</isLeader>
 			</li>
 			<li>
 				<label>I'll have a chance to rule</label>
-				<support>10</support>
+				<value>10</value>
 				<isLeader>false</isLeader>
 			</li>
 			<li>
@@ -165,7 +165,7 @@
 			</li>
 			<li>
 				<label>I don't want to lose my noble privileges</label>
-				<support>-20</support>
+				<value>-20</value>
 				<titleSeniority>
 					<greaterThan>0</greaterThan>
 				</titleSeniority>
@@ -245,7 +245,7 @@
 			</li>
 			<li>
 				<label>I don't want to lose my noble privileges</label>
-				<support>-10</support>
+				<value>-10</value>
 				<titleSeniority>
 					<greaterThan>0</greaterThan>
 				</titleSeniority>
@@ -284,12 +284,12 @@
 			</li>
 			<li>
 				<label>loyalist ideoligion</label>
-				<support>10</support>
+				<value>10</value>
 				<meme>Loyalist</meme>
 			</li>
 			<li>
 				<label>research not allowed</label>
-				<support>8</support>
+				<value>8</value>
 				<precept>Research_None</precept>
 			</li>
 		</considerations>
@@ -379,12 +379,12 @@
 			</li>
 			<li>
 				<label>loyalist ideoligion</label>
-				<support>10</support>
+				<value>10</value>
 				<meme>Loyalist</meme>
 			</li>
 			<li>
 				<label>research not allowed</label>
-				<support>8</support>
+				<value>8</value>
 				<precept>Research_None</precept>
 			</li>
 		</considerations>
@@ -403,7 +403,7 @@
 		<considerations>
 			<li>
 				<label>incapable of violence</label>
-				<support>-30</support>
+				<value>-30</value>
 				<isCapableOfViolence>false</isCapableOfViolence>
 			</li>
 			<li>
@@ -433,27 +433,27 @@
 			</li>
 			<li>
 				<label>bloodlust</label>
-				<support>10</support>
+				<value>10</value>
 				<trait>Bloodlust</trait>
 			</li>
 			<li>
 				<label>kind</label>
-				<support>-10</support>
+				<value>-10</value>
 				<trait>Kind</trait>
 			</li>
 			<li>
 				<label>brawler</label>
-				<support>15</support>
+				<value>15</value>
 				<trait>Brawler</trait>
 			</li>
 			<li>
 				<label>tough</label>
-				<support>10</support>
+				<value>10</value>
 				<trait>Tough</trait>
 			</li>
 			<li>
 				<label>wimp</label>
-				<support>-15</support>
+				<value>-15</value>
 				<trait>Wimp</trait>
 			</li>
 			<li>
@@ -482,7 +482,7 @@
 			</li>
 			<li>
 				<label>I don't want to lose my noble privileges</label>
-				<support>-10</support>
+				<value>-10</value>
 				<titleSeniority>
 					<greaterThan>0</greaterThan>
 				</titleSeniority>
@@ -497,27 +497,27 @@
 			</li>
 			<li>
 				<label>raider ideoligion</label>
-				<support>6</support>
+				<value>6</value>
 				<meme>Raider</meme>
 			</li>
 			<li>
 				<label>supremacist ideoligion</label>
-				<support>10</support>
+				<value>10</value>
 				<meme>Supremacist</meme>
 			</li>
 			<li>
 				<label>raiding respected</label>
-				<support>6</support>
+				<value>6</value>
 				<precept>Raiding_Respected</precept>
 			</li>
 			<li>
 				<label>raiding required</label>
-				<support>10</support>
+				<value>10</value>
 				<precept>Raiding_Required</precept>
 			</li>
 			<li>
 				<label>research not allowed</label>
-				<support>4</support>
+				<value>4</value>
 				<precept>Research_None</precept>
 			</li>
 		</considerations>
@@ -594,7 +594,7 @@
 		<considerations>
 			<li>
 				<label>I want to rule forever</label>
-				<support>100</support>
+				<value>100</value>
 				<isLeader>true</isLeader>
 			</li>
 			<li>
@@ -612,12 +612,12 @@
 			</li>
 			<li>
 				<label>loyalist ideoligion</label>
-				<support>6</support>
+				<value>6</value>
 				<meme>Loyalist</meme>
 			</li>
 			<li>
 				<label>research not allowed</label>
-				<support>4</support>
+				<value>4</value>
 				<precept>Research_None</precept>
 			</li>
 		</considerations>
@@ -666,7 +666,7 @@
 			</li>
 			<li>
 				<label>this is a witch-hunt</label>
-				<support>-100</support>
+				<value>-100</value>
 				<isLeader>true</isLeader>
 			</li>
 			<li>
@@ -694,7 +694,7 @@
 			</li>
 			<li>
 				<label>loyalist ideoligion</label>
-				<support>-10</support>
+				<value>-10</value>
 				<meme>Loyalist</meme>
 			</li>
 		</considerations>
@@ -722,17 +722,17 @@
 		<considerations>
 			<li>
 				<label>my opinion will count</label>
-				<support>20</support>
+				<value>20</value>
 				<isLeader>false</isLeader>
 			</li>
 			<li>
 				<label>individualist ideoligion</label>
-				<support>20</support>
+				<value>20</value>
 				<meme>Individualist</meme>
 			</li>
 			<li>
 				<label>collectivist ideoligion</label>
-				<support>-20</support>
+				<value>-20</value>
 				<meme>Collectivist</meme>
 			</li>
 		</considerations>
@@ -752,17 +752,17 @@
 		<considerations>
 			<li>
 				<label>my opinion won't matter anymore</label>
-				<support>-20</support>
+				<value>-20</value>
 				<isLeader>false</isLeader>
 			</li>
 			<li>
 				<label>individualist ideoligion</label>
-				<support>-20</support>
+				<value>-20</value>
 				<meme>Individualist</meme>
 			</li>
 			<li>
 				<label>collectivist ideoligion</label>
-				<support>20</support>
+				<value>20</value>
 				<meme>Collectivist</meme>
 			</li>
 		</considerations>
@@ -793,37 +793,37 @@
 		<considerations>
 			<li>
 				<label>the government should care about all citizens</label>
-				<support>20</support>
+				<value>20</value>
 				<isLeader>false</isLeader>
 			</li>
 			<li>
 				<label>individualist ideoligion</label>
-				<support>10</support>
+				<value>10</value>
 				<meme>Individualist</meme>
 			</li>
 			<li>
 				<label>collectivist ideoligion</label>
-				<support>-10</support>
+				<value>-10</value>
 				<meme>Collectivist</meme>
 			</li>
 			<li>
 				<label>human primacy</label>
-				<support>10</support>
+				<value>10</value>
 				<meme>HumanPrimacy</meme>
 			</li>
 			<li>
 				<label>pain is virtue</label>
-				<support>-10</support>
+				<value>-10</value>
 				<meme>PainIsVirtue</meme>
 			</li>
 			<li>
 				<label>guilty ideoligion</label>
-				<support>-10</support>
+				<value>-10</value>
 				<meme>Guilty</meme>
 			</li>
 			<li>
 				<label>comfort ignored</label>
-				<support>-10</support>
+				<value>-10</value>
 				<precept>Comfort_Ignored</precept>
 			</li>
 		</considerations>
@@ -843,37 +843,37 @@
 		<considerations>
 			<li>
 				<label>I wish the government cared more about my happiness</label>
-				<support>-20</support>
+				<value>-20</value>
 				<isLeader>false</isLeader>
 			</li>
 			<li>
 				<label>individualist ideoligion</label>
-				<support>-10</support>
+				<value>-10</value>
 				<meme>Individualist</meme>
 			</li>
 			<li>
 				<label>collectivist ideoligion</label>
-				<support>10</support>
+				<value>10</value>
 				<meme>Collectivist</meme>
 			</li>
 			<li>
 				<label>human primacy</label>
-				<support>-10</support>
+				<value>-10</value>
 				<meme>HumanPrimacy</meme>
 			</li>
 			<li>
 				<label>pain is virtue</label>
-				<support>10</support>
+				<value>10</value>
 				<meme>PainIsVirtue</meme>
 			</li>
 			<li>
 				<label>guilty ideoligion</label>
-				<support>10</support>
+				<value>10</value>
 				<meme>Guilty</meme>
 			</li>
 			<li>
 				<label>comfort ignored</label>
-				<support>10</support>
+				<value>10</value>
 				<precept>Comfort_Ignored</precept>
 			</li>
 		</considerations>
@@ -1008,22 +1008,22 @@
 			</li>
 			<li>
 				<label>research not allowed</label>
-				<support>-12</support>
+				<value>-12</value>
 				<precept>Research_None</precept>
 			</li>
 			<li>
 				<label>extremely slow research</label>
-				<support>-8</support>
+				<value>-8</value>
 				<precept>Research_ExtremelySlow</precept>
 			</li>
 			<li>
 				<label>very slow research</label>
-				<support>-4</support>
+				<value>-4</value>
 				<precept>Research_VerySlow</precept>
 			</li>
 			<li>
 				<label>very fast research</label>
-				<support>4</support>
+				<value>4</value>
 				<precept>Research_VeryFast</precept>
 			</li>
 		</considerations>
@@ -1070,22 +1070,22 @@
 			</li>
 			<li>
 				<label>individualist ideoligion</label>
-				<support>-20</support>
+				<value>-20</value>
 				<meme>Individualist</meme>
 			</li>
 			<li>
 				<label>collectivist ideoligion</label>
-				<support>20</support>
+				<value>20</value>
 				<meme>Collectivist</meme>
 			</li>
 			<li>
 				<label>loyalist ideoligion</label>
-				<support>10</support>
+				<value>10</value>
 				<meme>Loyalist</meme>
 			</li>
 			<li>
 				<label>human primacy</label>
-				<support>20</support>
+				<value>20</value>
 				<meme>HumanPrimacy</meme>
 			</li>
 		</considerations>
@@ -1116,22 +1116,22 @@
 			</li>
 			<li>
 				<label>individualist ideoligion</label>
-				<support>20</support>
+				<value>20</value>
 				<meme>Individualist</meme>
 			</li>
 			<li>
 				<label>collectivist ideoligion</label>
-				<support>-20</support>
+				<value>-20</value>
 				<meme>Collectivist</meme>
 			</li>
 			<li>
 				<label>loyalist ideoligion</label>
-				<support>-10</support>
+				<value>-10</value>
 				<meme>Loyalist</meme>
 			</li>
 			<li>
 				<label>human primacy</label>
-				<support>-20</support>
+				<value>-20</value>
 				<meme>HumanPrimacy</meme>
 			</li>
 		</considerations>
@@ -1150,7 +1150,7 @@
 		<considerations>
 			<li>
 				<label>I want to stay in charge</label>
-				<support>100</support>
+				<value>100</value>
 				<isLeader>true</isLeader>
 			</li>
 			<li>
@@ -1168,17 +1168,17 @@
 			</li>
 			<li>
 				<label>individualist ideoligion</label>
-				<support>-10</support>
+				<value>-10</value>
 				<meme>Individualist</meme>
 			</li>
 			<li>
 				<label>collectivist ideoligion</label>
-				<support>10</support>
+				<value>10</value>
 				<meme>Collectivist</meme>
 			</li>
 			<li>
 				<label>loyalist ideoligion</label>
-				<support>10</support>
+				<value>10</value>
 				<meme>Loyalist</meme>
 			</li>
 		</considerations>
@@ -1198,7 +1198,7 @@
 		<considerations>
 			<li>
 				<label>I want to stay in charge</label>
-				<support>-100</support>
+				<value>-100</value>
 				<isLeader>true</isLeader>
 			</li>
 			<li>
@@ -1216,17 +1216,17 @@
 			</li>
 			<li>
 				<label>individualist ideoligion</label>
-				<support>10</support>
+				<value>10</value>
 				<meme>Individualist</meme>
 			</li>
 			<li>
 				<label>collectivist ideoligion</label>
-				<support>-10</support>
+				<value>-10</value>
 				<meme>Collectivist</meme>
 			</li>
 			<li>
 				<label>loyalist ideoligion</label>
-				<support>-10</support>
+				<value>-10</value>
 				<meme>Loyalist</meme>
 			</li>
 		</considerations>
@@ -1256,7 +1256,7 @@
 		<considerations>
 			<li>
 				<label>I like it!</label>
-				<support>100</support>
+				<value>100</value>
 				<all>
 					<li>
 						<isLeader>true</isLeader>
@@ -1277,12 +1277,12 @@
 			</li>
 			<li>
 				<label>greedy</label>
-				<support>20</support>
+				<value>20</value>
 				<isLeader>true</isLeader>
 			</li>
 			<li>
 				<label>jealous</label>
-				<support>-20</support>
+				<value>-20</value>
 				<isLeader>false</isLeader>
 				<trait>Jealous</trait>
 			</li>
@@ -1301,27 +1301,27 @@
 			</li>
 			<li>
 				<label>individualist ideoligion</label>
-				<support>-10</support>
+				<value>-10</value>
 				<meme>Individualist</meme>
 			</li>
 			<li>
 				<label>collectivist ideoligion</label>
-				<support>10</support>
+				<value>10</value>
 				<meme>Collectivist</meme>
 			</li>
 			<li>
 				<label>pain is virtue</label>
-				<support>-10</support>
+				<value>-10</value>
 				<meme>PainIsVirtue</meme>
 			</li>
 			<li>
 				<label>guilty ideoligion</label>
-				<support>-10</support>
+				<value>-10</value>
 				<meme>Guilty</meme>
 			</li>
 			<li>
 				<label>comfort ignored</label>
-				<support>-10</support>
+				<value>-10</value>
 				<precept>Comfort_Ignored</precept>
 			</li>
 		</considerations>
@@ -1341,12 +1341,12 @@
 		<considerations>
 			<li>
 				<label>my interests</label>
-				<support>-100</support>
+				<value>-100</value>
 				<isLeader>true</isLeader>
 			</li>
 			<li>
 				<label>jealous</label>
-				<support>20</support>
+				<value>20</value>
 				<isLeader>false</isLeader>
 				<trait>Jealous</trait>
 			</li>
@@ -1365,27 +1365,27 @@
 			</li>
 			<li>
 				<label>individualist ideoligion</label>
-				<support>-10</support>
+				<value>-10</value>
 				<meme>Individualist</meme>
 			</li>
 			<li>
 				<label>collectivist ideoligion</label>
-				<support>10</support>
+				<value>10</value>
 				<meme>Collectivist</meme>
 			</li>
 			<li>
 				<label>pain is virtue</label>
-				<support>10</support>
+				<value>10</value>
 				<meme>PainIsVirtue</meme>
 			</li>
 			<li>
 				<label>guilty ideoligion</label>
-				<support>10</support>
+				<value>10</value>
 				<meme>Guilty</meme>
 			</li>
 			<li>
 				<label>comfort ignored</label>
-				<support>10</support>
+				<value>10</value>
 				<precept>Comfort_Ignored</precept>
 			</li>
 		</considerations>
@@ -1419,7 +1419,7 @@
 		<considerations>
 			<li>
 				<label>I am the leader</label>
-				<support>100</support>
+				<value>100</value>
 				<all>
 					<li>
 						<isLeader>true</isLeader>
@@ -1432,7 +1432,7 @@
 			</li>
 			<li>
 				<label>jealous</label>
-				<support>-20</support>
+				<value>-20</value>
 				<isLeader>false</isLeader>
 				<trait>Jealous</trait>
 			</li>
@@ -1463,7 +1463,7 @@
 			</li>
 			<li>
 				<label>ideological structure</label>
-				<support>10</support>
+				<value>10</value>
 				<meme>Structure_Ideological</meme>
 			</li>
 		</considerations>
@@ -1483,12 +1483,12 @@
 		<considerations>
 			<li>
 				<label>I am the leader</label>
-				<support>-40</support>
+				<value>-40</value>
 				<isLeader>true</isLeader>
 			</li>
 			<li>
 				<label>jealous</label>
-				<support>20</support>
+				<value>20</value>
 				<isLeader>false</isLeader>
 				<trait>Jealous</trait>
 			</li>
@@ -1519,7 +1519,7 @@
 			</li>
 			<li>
 				<label>ideological structure</label>
-				<support>-10</support>
+				<value>-10</value>
 				<meme>Structure_Ideological</meme>
 			</li>
 		</considerations>
@@ -1546,7 +1546,7 @@
 		<considerations>
 			<li>
 				<label>I am the leader</label>
-				<support>20</support>
+				<value>20</value>
 				<isLeader>true</isLeader>
 			</li>
 			<li>
@@ -1565,17 +1565,17 @@
 			</li>
 			<li>
 				<label>Campaign is on</label>
-				<support>-10</support>
+				<value>-10</value>
 				<campaigning>true</campaigning>
 			</li>
 			<li>
 				<label>raider ideoligion</label>
-				<support>10</support>
+				<value>10</value>
 				<meme>Raider</meme>
 			</li>
 			<li>
 				<label>comfort ignored</label>
-				<support>10</support>
+				<value>10</value>
 				<precept>Comfort_Ignored</precept>
 			</li>
 		</considerations>
@@ -1623,94 +1623,94 @@
 		<considerations>
 			<li>
 				<label>kind</label>
-				<support>-10</support>
+				<value>-10</value>
 				<trait>Kind</trait>
 			</li>
 			<li>
 				<label>I have a different ideoligion</label>
-				<support>-20</support>
+				<value>-20</value>
 				<primaryIdeoligion>false</primaryIdeoligion>
 			</li>
 			<li>
 				<label>proselytizer ideoligion</label>
-				<support>10</support>
+				<value>10</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<meme>Proselytizer</meme>
 			</li>
 			<li>
 				<label>proselytizer ideoligion</label>
-				<support>-10</support>
+				<value>-10</value>
 				<primaryIdeoligion>false</primaryIdeoligion>
 				<meme>Proselytizer</meme>
 			</li>
 			<li>
 				<label>collectivist ideoligion</label>
-				<support>10</support>
+				<value>10</value>
 				<meme>Collectivist</meme>
 			</li>
 			<li>
 				<label>intense bigotry</label>
-				<support>40</support>
+				<value>40</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Abhorrent</precept>
 			</li>
 			<li>
 				<label>moderate bigotry</label>
-				<support>30</support>
+				<value>30</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Horrible</precept>
 			</li>
 			<li>
 				<label>mild bigotry</label>
-				<support>20</support>
+				<value>20</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Disapproved</precept>
 			</li>
 			<li>
 				<label>I share primary ideoligion</label>
-				<support>10</support>
+				<value>10</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Standard</precept>
 			</li>
 			<li>
 				<label>diversity of thought appreciated</label>
-				<support>-10</support>
+				<value>-10</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Approved</precept>
 			</li>
 			<li>
 				<label>diversity of thought appreciated</label>
-				<support>-20</support>
+				<value>-20</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Approved</precept>
 			</li>
 			<li>
 				<label>diversity of thought highly appreciated</label>
-				<support>-30</support>
+				<value>-30</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Respected</precept>
 			</li>
 			<li>
 				<label>diversity of thought exalted</label>
-				<support>-40</support>
+				<value>-40</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Exalted</precept>
 			</li>
 			<li>
 				<label>occasionally proselytizing</label>
-				<support>5</support>
+				<value>5</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>Proselytizing_Occasionally</precept>
 			</li>
 			<li>
 				<label>sometimes proselytizing</label>
-				<support>10</support>
+				<value>10</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>Proselytizing_Sometimes</precept>
 			</li>
 			<li>
 				<label>frequently proselytizing</label>
-				<support>15</support>
+				<value>15</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>Proselytizing_Frequently</precept>
 			</li>
@@ -1757,88 +1757,88 @@
 		<considerations>
 			<li>
 				<label>I have a different ideoligion</label>
-				<support>100</support>
+				<value>100</value>
 				<primaryIdeoligion>false</primaryIdeoligion>
 			</li>
 			<li>
 				<label>kind</label>
-				<support>10</support>
+				<value>10</value>
 				<trait>Kind</trait>
 			</li>
 			<li>
 				<label>proselytizer ideoligion</label>
-				<support>-10</support>
+				<value>-10</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<meme>Proselytizer</meme>
 			</li>
 			<li>
 				<label>collectivist ideoligion</label>
-				<support>-10</support>
+				<value>-10</value>
 				<meme>Collectivist</meme>
 			</li>
 			<li>
 				<label>intense bigotry</label>
-				<support>-40</support>
+				<value>-40</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Abhorrent</precept>
 			</li>
 			<li>
 				<label>moderate bigotry</label>
-				<support>-30</support>
+				<value>-30</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Horrible</precept>
 			</li>
 			<li>
 				<label>mild bigotry</label>
-				<support>-20</support>
+				<value>-20</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Disapproved</precept>
 			</li>
 			<li>
 				<label>I share primary ideoligion</label>
-				<support>-10</support>
+				<value>-10</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Standard</precept>
 			</li>
 			<li>
 				<label>diversity of thought appreciated</label>
-				<support>10</support>
+				<value>10</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Approved</precept>
 			</li>
 			<li>
 				<label>diversity of thought appreciated</label>
-				<support>20</support>
+				<value>20</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Approved</precept>
 			</li>
 			<li>
 				<label>diversity of thought highly appreciated</label>
-				<support>30</support>
+				<value>30</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Respected</precept>
 			</li>
 			<li>
 				<label>diversity of thought exalted</label>
-				<support>40</support>
+				<value>40</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Exalted</precept>
 			</li>
 			<li>
 				<label>occasionally proselytizing</label>
-				<support>-5</support>
+				<value>-5</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>Proselytizing_Occasionally</precept>
 			</li>
 			<li>
 				<label>sometimes proselytizing</label>
-				<support>-10</support>
+				<value>-10</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>Proselytizing_Sometimes</precept>
 			</li>
 			<li>
 				<label>frequently proselytizing</label>
-				<support>-15</support>
+				<value>-15</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>Proselytizing_Frequently</precept>
 			</li>
@@ -1886,65 +1886,65 @@
 		<considerations>
 			<li>
 				<label>I will lose ideoligion leadership</label>
-				<support>-20</support>
+				<value>-20</value>
 				<isLeader>true</isLeader>
 				<primaryIdeoligion>true</primaryIdeoligion>
 			</li>
 			<li>
 				<label>kind</label>
-				<support>10</support>
+				<value>10</value>
 				<trait>Kind</trait>
 			</li>
 			<li>
 				<label>I have a minority ideoligion</label>
-				<support>20</support>
+				<value>20</value>
 				<primaryIdeoligion>false</primaryIdeoligion>
 			</li>
 			<li>
 				<label>intense bigotry</label>
-				<support>-40</support>
+				<value>-40</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Abhorrent</precept>
 			</li>
 			<li>
 				<label>moderate bigotry</label>
-				<support>-30</support>
+				<value>-30</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Horrible</precept>
 			</li>
 			<li>
 				<label>mild bigotry</label>
-				<support>-20</support>
+				<value>-20</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Disapproved</precept>
 			</li>
 			<li>
 				<label>I share primary ideoligion</label>
-				<support>-10</support>
+				<value>-10</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Standard</precept>
 			</li>
 			<li>
 				<label>diversity of thought appreciated</label>
-				<support>10</support>
+				<value>10</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Approved</precept>
 			</li>
 			<li>
 				<label>diversity of thought appreciated</label>
-				<support>20</support>
+				<value>20</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Approved</precept>
 			</li>
 			<li>
 				<label>diversity of thought highly appreciated</label>
-				<support>30</support>
+				<value>30</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Respected</precept>
 			</li>
 			<li>
 				<label>diversity of thought exalted</label>
-				<support>40</support>
+				<value>40</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Exalted</precept>
 			</li>
@@ -1991,72 +1991,72 @@
 		<considerations>
 			<li>
 				<label>I lose a chance to become a leader</label>
-				<support>-20</support>
+				<value>-20</value>
 				<isLeader>false</isLeader>
 				<primaryIdeoligion>false</primaryIdeoligion>
 			</li>
 			<li>
 				<label>I lose the title</label>
-				<support>-100</support>
+				<value>-100</value>
 				<isLeader>true</isLeader>
 				<primaryIdeoligion>false</primaryIdeoligion>
 			</li>
 			<li>
 				<label>kind</label>
-				<support>-10</support>
+				<value>-10</value>
 				<trait>Kind</trait>
 			</li>
 			<li>
 				<label>I gain the ideoligion leader title</label>
-				<support>30</support>
+				<value>30</value>
 				<isLeader>true</isLeader>
 				<primaryIdeoligion>true</primaryIdeoligion>
 			</li>
 			<li>
 				<label>intense bigotry</label>
-				<support>40</support>
+				<value>40</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Abhorrent</precept>
 			</li>
 			<li>
 				<label>moderate bigotry</label>
-				<support>30</support>
+				<value>30</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Horrible</precept>
 			</li>
 			<li>
 				<label>mild bigotry</label>
-				<support>20</support>
+				<value>20</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Disapproved</precept>
 			</li>
 			<li>
 				<label>I share primary ideoligion</label>
-				<support>10</support>
+				<value>10</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Standard</precept>
 			</li>
 			<li>
 				<label>diversity of thought appreciated</label>
-				<support>-10</support>
+				<value>-10</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Approved</precept>
 			</li>
 			<li>
 				<label>diversity of thought appreciated</label>
-				<support>-20</support>
+				<value>-20</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Approved</precept>
 			</li>
 			<li>
 				<label>diversity of thought highly appreciated</label>
-				<support>-30</support>
+				<value>-30</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Respected</precept>
 			</li>
 			<li>
 				<label>diversity of thought exalted</label>
-				<support>-40</support>
+				<value>-40</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Exalted</precept>
 			</li>
@@ -2091,7 +2091,7 @@
 		<changeLoyalty>0.10</changeLoyalty>
 		<loyaltyEffect>0</loyaltyEffect>
 	</Rimocracy.DecisionDef>
-	
+
 	<!-- Action Veto Power -->
 	
 	<Rimocracy.DecisionDef>
@@ -2114,7 +2114,7 @@
 		<considerations>
 			<li>
 				<label>I want more authority</label>
-				<support>100</support>
+				<value>100</value>
 				<isLeader>true</isLeader>
 			</li>
 			<li>
@@ -2149,7 +2149,7 @@
 		<considerations>
 			<li>
 				<label>my authority will be reduced</label>
-				<support>-100</support>
+				<value>-100</value>
 				<isLeader>true</isLeader>
 			</li>
 			<li>

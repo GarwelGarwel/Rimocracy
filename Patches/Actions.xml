@@ -13,7 +13,7 @@
 			<value>
 				<li>
 					<label>gun nut</label>
-					<support>10</support>
+					<value>10</value>
 					<trait>SYR_GunNut</trait>
 				</li>
 			</value>
@@ -31,7 +31,7 @@
 			<value>
 				<li>
 					<label>peacemaker</label>
-					<support>-10</support>
+					<value>-10</value>
 					<trait>Peacemaker</trait>
 					<targetIsColonist>true</targetIsColonist>
 					<isTarget>false</isTarget>
@@ -54,12 +54,12 @@
 					<value>
 						<li>
 							<label>rebel</label>
-							<support>-20</support>
+							<value>-20</value>
 							<trait>VTE_Rebel</trait>
 						</li>
 						<li>
 							<label>submissive</label>
-							<support>10</support>
+							<value>10</value>
 							<trait>VTE_Submissive</trait>
 						</li>
 						<li>
@@ -83,12 +83,12 @@
 					<value>
 						<li>
 							<label>rebel</label>
-							<support>-20</support>
+							<value>-20</value>
 							<trait>VTE_Rebel</trait>
 						</li>
 						<li>
 							<label>submissive</label>
-							<support>10</support>
+							<value>10</value>
 							<trait>VTE_Submissive</trait>
 						</li>
 						<li>
@@ -163,12 +163,12 @@
 					<value>
 						<li>
 							<label>rebel</label>
-							<support>-20</support>
+							<value>-20</value>
 							<trait>VTE_Rebel</trait>
 						</li>
 						<li>
 							<label>submissive</label>
-							<support>10</support>
+							<value>10</value>
 							<trait>VTE_Submissive</trait>
 						</li>
 						<li>
@@ -186,7 +186,7 @@
 						</li>
 						<li>
 							<label>snob</label>
-							<support>10</support>
+							<value>10</value>
 							<isTarget>false</isTarget>
 							<trait>VTE_Snob</trait>
 							<opinionOfTarget>
@@ -223,17 +223,17 @@
 					<value>
 						<li>
 							<label>coward</label>
-							<support>-20</support>
+							<value>-20</value>
 							<trait>VTE_Coward</trait>
 						</li>
 						<li>
 							<label>brave</label>
-							<support>20</support>
+							<value>20</value>
 							<trait>VTE_Brave</trait>
 						</li>
 						<li>
 							<label>martial artist</label>
-							<support>10</support>
+							<value>10</value>
 							<trait>VTE_MartialArtist</trait>
 						</li>
 					</value>
