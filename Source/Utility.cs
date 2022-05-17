@@ -70,7 +70,15 @@ namespace Rimocracy
 
         public static int Population => PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonistsAndPrisoners_NoCryptosleep.Count();
 
-        public static float CitizenGovernanceWeight(Pawn pawn) => 1.5f - pawn.GetLoyalty();
+        public static float CitizenGovernanceWeight(Pawn pawn)
+        {
+            Need_Loyalty loyalty = pawn.needs.TryGetNeed<Need_Loyalty>();
+            if (loyalty == null)
+                return 1;
+            if (loyalty.IsProtesting)
+                return 2;
+            return 1.5f - loyalty.CurLevel;
+        }
 
         public static float GetLoyaltySupportOffset(this Pawn pawn) => pawn.GetLoyalty() * 200 - 100;
 
