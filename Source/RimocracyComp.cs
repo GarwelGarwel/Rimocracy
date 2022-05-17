@@ -258,17 +258,24 @@ namespace Rimocracy
                 ChooseLeaderTitle();
 
             // Clean up protesters list
-            for (int i = protesters.Count - 1; i >= 0; i--)
+            int oldProtestersCount = protesters.Count;
+            for (int i = oldProtestersCount - 1; i >= 0; i--)
             {
                 if (protesters[i] == null || !protesters[i].IsCitizen())
                 {
+                    Utility.Log($"Removing invalid protester record {(protesters[i] != null ? protesters[i].Name.ToStringShort : "The record is null.")} (index {i}).");
                     protesters.RemoveAt(i);
                     continue;
                 }
                 Need_Loyalty loyalty = protesters[i].needs.TryGetNeed<Need_Loyalty>();
                 if (loyalty == null || !loyalty.IsProtesting)
+                {
+                    Utility.Log($"Removing invalid protester {protesters[i]} (loyalty {protesters[i].GetLoyalty().ToStringPercent()}.");
                     protesters.RemoveAt(i);
+                }
             }
+            if (protesters.Count != oldProtestersCount)
+                Need_Loyalty.RecalculateThreshPercents();
 
             // Remove expired or invalid decisions
             for (int i = Decisions.Count - 1; i >= 0; i--)

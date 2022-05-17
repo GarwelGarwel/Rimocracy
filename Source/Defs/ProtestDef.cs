@@ -11,7 +11,7 @@ namespace Rimocracy
         public bool AppliesTo(Pawn pawn)
         {
             Need_Loyalty loyalty = pawn.needs.TryGetNeed<Need_Loyalty>();
-            if (loyalty == null || loyalty.CurLevel >= loyalty.JoinProtestLevel || (critical && loyalty.CurLevel >= loyalty.StartProtestLevel))
+            if (loyalty == null || loyalty.CurLevel >= Need_Loyalty.ProtestLevel || (critical && loyalty.CurLevel >= Need_Loyalty.ProtestLevel))
                 return false;
             return mentalState.Worker.StateCanOccur(pawn) && weight.IsSatisfied(pawn);
         }
