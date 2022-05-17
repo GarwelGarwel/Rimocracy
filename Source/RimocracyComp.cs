@@ -211,7 +211,7 @@ namespace Rimocracy
             Scribe_Defs.Look(ref focusSkill, "focusSkill");
             Scribe_Collections.Look(ref decisions, "decisions", LookMode.Deep);
             Scribe_Values.Look(ref actionsNeedApproval, "actionsNeedApproval");
-            Scribe_Collections.Look(ref protesters, "protesters");
+            Scribe_Collections.Look(ref protesters, "protesters", LookMode.Reference);
         }
 
         public override void WorldComponentTick()
