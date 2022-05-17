@@ -29,6 +29,7 @@ namespace Rimocracy
         int electionTick = int.MaxValue;
         List<Decision> decisions = new List<Decision>();
         bool actionsNeedApproval;
+        List<Pawn> protesters = new List<Pawn>();
 
         bool justLoaded = true;
 
@@ -166,6 +167,12 @@ namespace Rimocracy
             set => decisions = value;
         }
 
+        internal List<Pawn> Protesters
+        {
+            get => protesters;
+            set => protesters = value;
+        }
+
         string FocusSkillMessage => $"The focus skill is {FocusSkill.LabelCap}.";
 
         public RimocracyComp()
@@ -204,6 +211,7 @@ namespace Rimocracy
             Scribe_Defs.Look(ref focusSkill, "focusSkill");
             Scribe_Collections.Look(ref decisions, "decisions", LookMode.Deep);
             Scribe_Values.Look(ref actionsNeedApproval, "actionsNeedApproval");
+            Scribe_Collections.Look(ref protesters, "protesters");
         }
 
         public override void WorldComponentTick()
@@ -224,6 +232,7 @@ namespace Rimocracy
                     Utility.Log($"Governance decay: {GovernanceDecayPerDay.ToStringPercent()}/day");
                     Utility.Log($"Focus skill: {FocusSkill}");
                     Utility.Log($"Decisions: {Decisions.Select(decision => decision?.Tag).ToCommaList()}");
+                    Utility.Log($"Protesters: {protesters.Select(pawn => pawn.LabelCap).ToCommaList()}");
                 }
             }
 
@@ -247,6 +256,19 @@ namespace Rimocracy
 
             if ((!ModsConfig.IdeologyActive || DecisionActive(DecisionDef.Multiculturalism)) && LeaderTitleDef == null)
                 ChooseLeaderTitle();
+
+            // Clean up protesters list
+            for (int i = protesters.Count - 1; i >= 0; i--)
+            {
+                if (protesters[i] == null || !protesters[i].IsCitizen())
+                {
+                    protesters.RemoveAt(i);
+                    continue;
+                }
+                Need_Loyalty loyalty = protesters[i].needs.TryGetNeed<Need_Loyalty>();
+                if (loyalty == null || !loyalty.IsProtesting)
+                    protesters.RemoveAt(i);
+            }
 
             // Remove expired or invalid decisions
             for (int i = Decisions.Count - 1; i >= 0; i--)

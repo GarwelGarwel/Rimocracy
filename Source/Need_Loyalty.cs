@@ -10,8 +10,8 @@ namespace Rimocracy
     {
         const int TicksPerInterval = 150;
 
-        public const float MoodChangeBase = 0.1f * TicksPerInterval / GenDate.TicksPerDay;
-        public const float OpinionOfLeaderChangeBase = 0.0005f * TicksPerInterval / GenDate.TicksPerDay;
+        public const float MoodChangeBase = 0.1f;
+        public const float OpinionOfLeaderChangeBase = 0.0005f;
         public const float LoyaltyResetOnLeaderChange = 0.25f;
         public const float CriticalLevel = 0.10f;
         public const float DisloyalLevel = 0.30f;
@@ -19,6 +19,8 @@ namespace Rimocracy
 
         float lastChange;
         bool isProtesting;
+
+        public bool IsProtesting => isProtesting;
 
         public override int GUIChangeArrow => IsFrozen ? 0 : Math.Sign(lastChange);
 
@@ -64,6 +66,7 @@ namespace Rimocracy
             if (pawn.mindState.mentalStateHandler.TryStartMentalState(protest.mentalState, transitionSilently: true))
             {
                 isProtesting = true;
+                Utility.RimocracyComp.Protesters.Add(pawn);
                 List<Pawn> protesters = new List<Pawn>() { pawn };
                 TaggedString message = protest.DescriptionFor(pawn);
 
@@ -93,6 +96,7 @@ namespace Rimocracy
             Utility.Log($"{pawn} stops protesting.");
             pawn.mindState.mentalStateHandler.Reset();
             isProtesting = false;
+            Utility.RimocracyComp.Protesters.Remove(pawn);
             Messages.Message($"{pawn} is no longer protesting.", pawn, MessageTypeDefOf.PositiveEvent);
         }
 
@@ -102,8 +106,8 @@ namespace Rimocracy
                 isProtesting = false;
             if (!IsFrozen)
             {
-                lastChange = (pawn.needs.mood.CurLevelPercentage - 0.50f) * MoodChangeBase + pawn.GetOpinionOf(Utility.RimocracyComp.Leader) * OpinionOfLeaderChangeBase;
-                CurLevel += lastChange * Settings.LoyaltyChangeSpeed;
+                lastChange = ((pawn.needs.mood.CurLevelPercentage - 0.50f) * MoodChangeBase + pawn.GetOpinionOf(Utility.RimocracyComp.Leader) * OpinionOfLeaderChangeBase) * Settings.LoyaltyChangeSpeed;
+                CurLevel += lastChange * TicksPerInterval / GenDate.TicksPerDay;
 
                 if (!isProtesting && CurLevel < StartProtestLevel)
                 {
@@ -118,9 +122,20 @@ namespace Rimocracy
             }
         }
 
-        public override string GetTipString() =>
-            CurLevel >= StartProtestLevel
-            ? base.GetTipString()
-            : $"{base.GetTipString()}\n<color=red>Will protest in {GenDate.ToStringTicksToPeriodVague((int)(StartProtestMTB * GenDate.TicksPerHour))}.</color>";
+        public override string GetTipString()
+        {
+            string tip = base.GetTipString();
+            if (lastChange != 0)
+                tip += $"\n\nChange: {lastChange.ToStringWithSign("0.#%")} per day";
+            if (CurLevel < StartProtestLevel)
+                tip += $"\n\n<color=red>Will protest in {GenDate.ToStringTicksToPeriodVague((int)(StartProtestMTB * GenDate.TicksPerHour))}.</color>";
+            return tip;
+        }
+
+        public override void ExposeData()
+        {
+            base.ExposeData();
+            Scribe_Values.Look(ref isProtesting, "protesting");
+        }
     }
 }
