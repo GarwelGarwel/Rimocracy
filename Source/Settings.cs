@@ -17,7 +17,6 @@ namespace Rimocracy
         public static float SwayChanceFactor = 1;
         public static float RecruitmentChanceFactor = 1;
         public static float GovernanceCostFactor = 1;
-        public static float LoyaltyChangeSpeed = 1;
         public static bool ShowActionSupportDetails = true;
         public static bool DebugLogging = true;
 
@@ -47,7 +46,6 @@ namespace Rimocracy
             Scribe_Values.Look(ref SwayChanceFactor, "SwayChanceFactor", 1);
             Scribe_Values.Look(ref RecruitmentChanceFactor, "RecruitmentChanceFactor", 1);
             Scribe_Values.Look(ref GovernanceCostFactor, "GovernanceCostFactor", 1);
-            Scribe_Values.Look(ref LoyaltyChangeSpeed, "LoyaltyChangeSpeed", 1);
             Scribe_Values.Look(ref ShowActionSupportDetails, "ShowActionSupportDetails", true);
             Scribe_Values.Look(ref DebugLogging, "DebugLogging");
         }

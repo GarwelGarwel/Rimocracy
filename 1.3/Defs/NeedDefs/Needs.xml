@@ -12,6 +12,8 @@
 		<listPriority>60</listPriority>
 		<showForCaravanMembers>true</showForCaravanMembers>
 		<fallPerDay>0</fallPerDay>
+		<seekerRisePerHour>0.002</seekerRisePerHour>
+		<seekerFallPerHour>0.002</seekerFallPerHour>
 		<freezeWhileSleeping>true</freezeWhileSleeping>
 	</NeedDef>
 

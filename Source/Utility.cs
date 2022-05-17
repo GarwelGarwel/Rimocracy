@@ -99,7 +99,8 @@ namespace Rimocracy
         public static float TotalNutrition => Find.Maps.Where(map => map.IsPlayerHome).Sum(map => map.resourceCounter.TotalHumanEdibleNutrition);
 
         public static float FoodConsumptionPerDay =>
-            PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonistsAndPrisoners_NoCryptosleep.Sum(pawn => pawn.needs.food.FoodFallPerTick) * GenDate.TicksPerDay;
+            PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonistsAndPrisoners_NoCryptosleep
+            .Sum(pawn => pawn.needs.food.FoodFallPerTick) * GenDate.TicksPerDay;
 
         public static (Map map, int silver) GetMaxSilver()
         {
@@ -139,7 +140,10 @@ namespace Rimocracy
 
         public static IEnumerable<LeaderTitleDef> ApplicableLeaderTitles => DefDatabase<LeaderTitleDef>.AllDefs.Where(def => def.IsApplicable);
 
-        public static string LeaderTitle => (ModsConfig.IdeologyActive && !RimocracyComp.DecisionActive(DecisionDef.Multiculturalism) ? IdeologyLeaderPrecept()?.Label : RimocracyComp?.LeaderTitleDef?.GetTitle(RimocracyComp.Leader)) ?? "leader";
+        public static string LeaderTitle =>
+            (ModsConfig.IdeologyActive && !RimocracyComp.DecisionActive(DecisionDef.Multiculturalism)
+            ? IdeologyLeaderPrecept()?.Label
+            : RimocracyComp?.LeaderTitleDef?.GetTitle(RimocracyComp.Leader)) ?? "leader";
 
         public static int TermDurationTicks => RimocracyComp.TermDuration.GetDurationTicks();
 
@@ -152,7 +156,8 @@ namespace Rimocracy
         public static Precept_RoleSingle IdeologyLeaderPrecept(Ideo ideo = null) =>
             (ideo ?? NationPrimaryIdeo).GetAllPreceptsOfType<Precept_RoleSingle>().FirstOrDefault(p => p.def == PreceptDefOf.IdeoRole_Leader);
 
-        public static bool RoleRequirementsMetPotentially(Pawn pawn, Precept_Role role) => role.def.roleRequirements.All(req => req is RoleRequirement_Leader || req.Met(pawn, role));
+        public static bool RoleRequirementsMetPotentially(Pawn pawn, Precept_Role role) =>
+            role.def.roleRequirements.All(req => req is RoleRequirement_Leader || req.Met(pawn, role));
 
         public static bool CanBeLeader(this Pawn p) =>
             p.IsCitizen()

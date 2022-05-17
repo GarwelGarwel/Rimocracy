@@ -64,9 +64,6 @@ namespace Rimocracy
             content.Label($"Governance Cost Factor: {Settings.GovernanceCostFactor.ToStringPercent()}", tooltip: "Adjust the Governance cost of decisions");
             Settings.GovernanceCostFactor = (float)Math.Round(content.Slider(Settings.GovernanceCostFactor, 0, 2), 2);
 
-            content.Label($"Loyalty Change Speed: {Settings.LoyaltyChangeSpeed.ToStringPercent()}", tooltip: "Adjust the speed at which pawns' mood affects their loyalty");
-            Settings.LoyaltyChangeSpeed = (float)Math.Round(content.Slider(Settings.LoyaltyChangeSpeed, 0, 2), 2);
-
             content.CheckboxLabeled("Show Action Support Details", ref Settings.ShowActionSupportDetails, "Show a dialog with info about who supported or opposed various actions (e.g. arrest) and why");
 
             content.CheckboxLabeled("Debug Logging", ref Settings.DebugLogging, "Check to enable verbose logging; it is super useful for catching bugs");
