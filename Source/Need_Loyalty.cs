@@ -41,7 +41,7 @@ namespace Rimocracy
             }
         }
 
-        public float StartProtestMTB => GenDate.HoursPerDay * 12 * (1 + CurLevel / ProtestLevel) * (1 + Utility.RimocracyComp.Governance);
+        public float StartProtestMTB => GenDate.HoursPerDay * 5 * (1 + CurLevel / ProtestLevel) * (1 + Utility.RimocracyComp.Governance);
 
         public Need_Loyalty(Pawn pawn) : base(pawn) => threshPercents = threshPercentsCommon;
 
@@ -68,7 +68,7 @@ namespace Rimocracy
             }
             Utility.Log($"{pawn} initiates {chosenProtest}.");
 
-            if (pawn.mindState.mentalStateHandler.TryStartMentalState(protest.mentalState, transitionSilently: true))
+            if (pawn.mindState.mentalStateHandler.TryStartMentalState(chosenProtest.mentalState, transitionSilently: true))
             {
                 protest = chosenProtest;
                 Utility.RimocracyComp.Protesters.Add(pawn);

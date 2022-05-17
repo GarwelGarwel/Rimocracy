@@ -65,6 +65,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Alert_Protest.cs" />
+    <Compile Include="Alert_ProtestRisk.cs" />
     <Compile Include="Debug.cs" />
     <Compile Include="DecisionVoteResults.cs" />
     <Compile Include="Defs\PoliticalActionDef.cs" />
