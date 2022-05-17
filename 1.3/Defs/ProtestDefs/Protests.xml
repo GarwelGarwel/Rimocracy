@@ -6,19 +6,38 @@
 		<defName>Emigration</defName>
 		<description>{PAWN} is disloyal to {NATION} and decides to emigrate.</description>
 		<weight>
-			<value>0.5</value>
+			<value>0.4</value>
 			<population>
 				<greaterThan>1</greaterThan>
 			</population>
+			<isLeader>false</isLeader>
+			<factors>
+				<li>
+					<value>1.5</value>
+					<trait>Psychopath</trait>
+				</li>
+				<li>
+					<value>0.75</value>
+					<meme>Collectivist</meme>
+				</li>
+				<li>
+					<value>1.25</value>
+					<meme>Individualist</meme>
+				</li>
+				<li>
+					<value>0.75</value>
+					<meme>Loyalist</meme>
+				</li>
+			</factors>
 		</weight>
 		<mentalState>GiveUpExit</mentalState>
-		<critical>true</critical>
 	</Rimocracy.ProtestDef>
 	
 	<Rimocracy.ProtestDef>
 		<defName>Riot</defName>
 		<description>{PAWN} decides to crush things in protest.</description>
 		<weight>
+			<value>0.5</value>
 			<factors>
 				<li>
 					<value>2</value>
@@ -39,12 +58,60 @@
 			</factors>
 		</weight>
 		<mentalState>Tantrum</mentalState>
-		<critical>true</critical>
+	</Rimocracy.ProtestDef>
+	
+	<Rimocracy.ProtestDef>
+		<defName>FireRiot</defName>
+		<description>{PAWN} decides to burn things down in protest.</description>
+		<weight>
+			<value>0.5</value>
+			<factors>
+				<li>
+					<value>2</value>
+					<trait>Pyromaniac</trait>
+				</li>
+				<li>
+					<value>0.5</value>
+					<trait>Kind</trait>
+				</li>
+			</factors>
+		</weight>
+		<mentalState>FireStartingSpree</mentalState>
 	</Rimocracy.ProtestDef>
 	
 	<Rimocracy.ProtestDef>
 		<defName>Strike</defName>
-		<description>{PAWN} refuses to work in protest.</description>
+		<description>{PAWN} refuses to work and declares a strike.</description>
+		<weight>
+			<factors>
+				<li>
+					<value>0.33</value>
+					<trait>Industriousness</trait>
+					<traitDegree>2</traitDegree>
+				</li>
+				<li>
+					<value>0.5</value>
+					<trait>Industriousness</trait>
+					<traitDegree>1</traitDegree>
+				</li>
+				<li>
+					<value>2</value>
+					<trait>Industriousness</trait>
+					<traitDegree>-1</traitDegree>
+				</li>
+				<li>
+					<value>3</value>
+					<trait>Industriousness</trait>
+					<traitDegree>-2</traitDegree>
+				</li>
+			</factors>
+		</weight>
+		<mentalState>Wander_Psychotic</mentalState>
+	</Rimocracy.ProtestDef>
+
+	<Rimocracy.ProtestDef>
+		<defName>Walkout</defName>
+		<description>{PAWN} refuses to work and walks out in protest.</description>
 		<weight>
 			<factors>
 				<li>
@@ -58,12 +125,12 @@
 					<traitDegree>1</traitDegree>
 				</li>
 				<li>
-					<value>1.25</value>
+					<value>1.33</value>
 					<trait>Industriousness</trait>
 					<traitDegree>-1</traitDegree>
 				</li>
 				<li>
-					<value>1.5</value>
+					<value>2</value>
 					<trait>Industriousness</trait>
 					<traitDegree>-2</traitDegree>
 				</li>
@@ -75,6 +142,30 @@
 	<Rimocracy.ProtestDef>
 		<defName>SitIn</defName>
 		<description>{PAWN} refuses to work and locks in {PAWN_possessive} room in protest.</description>
+		<weight>
+			<factors>
+				<li>
+					<value>0.75</value>
+					<trait>Industriousness</trait>
+					<traitDegree>2</traitDegree>
+				</li>
+				<li>
+					<value>0.9</value>
+					<trait>Industriousness</trait>
+					<traitDegree>1</traitDegree>
+				</li>
+				<li>
+					<value>1.1</value>
+					<trait>Industriousness</trait>
+					<traitDegree>-1</traitDegree>
+				</li>
+				<li>
+					<value>1.33</value>
+					<trait>Industriousness</trait>
+					<traitDegree>-2</traitDegree>
+				</li>
+			</factors>
+		</weight>
 		<mentalState>Wander_OwnRoom</mentalState>
 	</Rimocracy.ProtestDef>
 

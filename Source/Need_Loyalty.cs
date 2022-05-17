@@ -46,8 +46,7 @@ namespace Rimocracy
 
         public float StartProtestMTB => Prefs.DevMode? 3 : GenDate.HoursPerDay * 5 * (1 + CurLevel / ProtestLevel) * (1 + Utility.RimocracyComp.Governance);
 
-        public Need_Loyalty(Pawn pawn) : base(pawn) =>
-            threshPercents = threshPercentsCommon;
+        public Need_Loyalty(Pawn pawn) : base(pawn) => threshPercents = threshPercentsCommon;
 
         public static void RecalculateThreshPercents() => threshPercentsCommon[0] = ProtestLevel;
 
