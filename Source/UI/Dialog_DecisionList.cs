@@ -56,8 +56,6 @@ namespace Rimocracy
 
             content.GapLine();
 
-            Pawn leader = Utility.RimocracyComp.Leader;
-
             // Display decision categories and available decisions
             foreach (IGrouping<DecisionCategoryDef, DecisionDef> group in availableDecisions
                 .GroupBy(def => def.category)
@@ -79,7 +77,7 @@ namespace Rimocracy
                     GUI.color = Color.white;
                     if (decisionToShowDetails == def)
                     {
-                        content.Label(def.description.Formatted(new NamedArgument(leader, "LEADER"), new NamedArgument(leader, "LEADERTITLE"), new NamedArgument(Utility.NationName, "NATION")));
+                        content.Label(def.description.Formatted(new NamedArgument(Utility.LeaderTitle, "LEADER"), new NamedArgument(Utility.NationName, "NATION")));
                         if (def.governanceCost != 0)
                             content.Label($"Will {(def.governanceCost > 0 ? "reduce" : "increase")} Governance by {Math.Abs(def.GovernanceCost).ToStringPercent()}.");
                         if (!def.effectRequirements.IsTrivial)
