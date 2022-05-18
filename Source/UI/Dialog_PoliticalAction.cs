@@ -12,19 +12,18 @@ namespace Rimocracy
 
         bool actionTaken;
 
-        float governanceChangeFactor;
+        float scaleFactor;
 
-        public Dialog_PoliticalAction(PoliticalActionDef action, DecisionVoteResults opinions, bool actionTaken, float governanceChangeFactor = 1)
+        public Dialog_PoliticalAction(PoliticalActionDef action, DecisionVoteResults opinions, bool actionTaken, float scaleFactor = 1)
         {
             this.action = action;
             this.opinions = opinions;
             this.actionTaken = actionTaken;
-            this.governanceChangeFactor = governanceChangeFactor;
+            this.scaleFactor = scaleFactor;
             doCloseX = true;
             doCloseButton = true;
             closeOnClickedOutside = true;
             forcePause = true;
-            Utility.Log($"Opinions of {action.defName}: {opinions}");
         }
 
         public override void DoWindowContents(Rect inRect)
@@ -46,10 +45,10 @@ namespace Rimocracy
                 if (actionTaken)
                 {
                     float govChange = 0;
-                    if (opinion.Vote == DecisionVote.Yea && action.governanceChangeIfSupported != 0)
-                        govChange = action.governanceChangeIfSupported * governanceChangeFactor;
-                    else if (opinion.Vote == DecisionVote.Nay && action.governanceChangeIfOpposed != 0)
-                        govChange = action.governanceChangeIfOpposed * governanceChangeFactor;
+                    if (opinion.Vote == DecisionVote.Yea)
+                        govChange = action.governanceChangeIfSupported * scaleFactor;
+                    else if (opinion.Vote == DecisionVote.Nay)
+                        govChange = action.governanceChangeIfOpposed * scaleFactor;
                     if (Mathf.Abs(govChange) >= 0.001f)
                         content.Label($"Governance changed by {govChange.ToStringPercent()}, because the {Utility.LeaderTitle} {(opinion.Vote == DecisionVote.Yea ? "spearheaded" : "protested")} the action.");
                 }
@@ -65,10 +64,10 @@ namespace Rimocracy
             content.End();
         }
 
-        public static void Show(PoliticalActionDef action, DecisionVoteResults opinions, bool actionTaken, float governanceChangeFactor = 1)
+        public static void Show(PoliticalActionDef action, DecisionVoteResults opinions, bool actionTaken, float scaleFactor = 1)
         {
             if (opinions.Any(opinion => opinion.Vote != DecisionVote.Abstain))
-                Find.WindowStack.Add(new Dialog_PoliticalAction(action, opinions, actionTaken, governanceChangeFactor));
+                Find.WindowStack.Add(new Dialog_PoliticalAction(action, opinions, actionTaken, scaleFactor));
         }
     }
 }

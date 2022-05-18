@@ -4,7 +4,7 @@
 
 	<Rimocracy.ProtestDef>
 		<defName>Emigration</defName>
-		<description>{PAWN} is disloyal to {NATION} and decides to emigrate.</description>
+		<description>{PAWN} hates to belong to {NATION} and decides to emigrate.</description>
 		<weight>
 			<value>0.4</value>
 			<population>
@@ -64,14 +64,14 @@
 		<defName>FireRiot</defName>
 		<description>{PAWN} decides to burn things down in protest.</description>
 		<weight>
-			<value>0.5</value>
+			<value>0.4</value>
 			<factors>
 				<li>
-					<value>2</value>
+					<value>3</value>
 					<trait>Pyromaniac</trait>
 				</li>
 				<li>
-					<value>0.5</value>
+					<value>0.3</value>
 					<trait>Kind</trait>
 				</li>
 			</factors>
@@ -85,7 +85,7 @@
 		<weight>
 			<factors>
 				<li>
-					<value>0.33</value>
+					<value>0.25</value>
 					<trait>Industriousness</trait>
 					<traitDegree>2</traitDegree>
 				</li>
@@ -100,7 +100,7 @@
 					<traitDegree>-1</traitDegree>
 				</li>
 				<li>
-					<value>3</value>
+					<value>4</value>
 					<trait>Industriousness</trait>
 					<traitDegree>-2</traitDegree>
 				</li>
@@ -115,22 +115,22 @@
 		<weight>
 			<factors>
 				<li>
-					<value>0.5</value>
+					<value>0.4</value>
 					<trait>Industriousness</trait>
 					<traitDegree>2</traitDegree>
 				</li>
 				<li>
-					<value>0.75</value>
+					<value>0.6</value>
 					<trait>Industriousness</trait>
 					<traitDegree>1</traitDegree>
 				</li>
 				<li>
-					<value>1.33</value>
+					<value>1.6</value>
 					<trait>Industriousness</trait>
 					<traitDegree>-1</traitDegree>
 				</li>
 				<li>
-					<value>2</value>
+					<value>2.5</value>
 					<trait>Industriousness</trait>
 					<traitDegree>-2</traitDegree>
 				</li>
@@ -145,22 +145,22 @@
 		<weight>
 			<factors>
 				<li>
-					<value>0.75</value>
+					<value>0.5</value>
 					<trait>Industriousness</trait>
 					<traitDegree>2</traitDegree>
 				</li>
 				<li>
-					<value>0.9</value>
+					<value>0.7</value>
 					<trait>Industriousness</trait>
 					<traitDegree>1</traitDegree>
 				</li>
 				<li>
-					<value>1.1</value>
+					<value>1.5</value>
 					<trait>Industriousness</trait>
 					<traitDegree>-1</traitDegree>
 				</li>
 				<li>
-					<value>1.33</value>
+					<value>2</value>
 					<trait>Industriousness</trait>
 					<traitDegree>-2</traitDegree>
 				</li>

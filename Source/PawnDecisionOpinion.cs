@@ -4,6 +4,14 @@ using Verse;
 
 namespace Rimocracy
 {
+    public enum DecisionVote
+    {
+        Abstain = 0,
+        Tolerate,
+        Yea,
+        Nay
+    }
+
     public struct PawnDecisionOpinion
     {
         public Pawn voter;
@@ -70,13 +78,5 @@ namespace Rimocracy
             else loyaltyOffset = 0;
             explanation = explanations.ToLineList();
         }
-    }
-
-    public enum DecisionVote
-    {
-        Abstain = 0,
-        Tolerate,
-        Yea,
-        Nay
     }
 }

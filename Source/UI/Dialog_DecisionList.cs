@@ -118,15 +118,29 @@ namespace Rimocracy
                                 Utility.Log($"Activating {def.defName}.");
                                 if (def.Activate())
                                 {
-                                    foreach (PawnDecisionOpinion opinion in votingResult.Where(opinion => opinion.Vote != DecisionVote.Abstain))
+                                    foreach (PawnDecisionOpinion opinion in votingResult)
                                     {
                                         Utility.Log($"{opinion.voter}'s opinion is {opinion.support.ToStringWithSign()}.");
-                                        opinion.voter.needs.mood.thoughts.memories.TryGainMemory(opinion.Vote == DecisionVote.Yea ? RimocracyDefOf.LikeDecision : RimocracyDefOf.DislikeDecision);
-                                        opinion.voter.ChangeLoyalty(opinion.Vote == DecisionVote.Yea ? def.loyaltyEffect : -def.loyaltyEffect);
+                                        switch (opinion.Vote)
+                                        {
+                                            case DecisionVote.Yea:
+                                                opinion.voter.needs.mood.thoughts.memories.TryGainMemory(RimocracyDefOf.LikeDecision);
+                                                opinion.voter.ChangeLoyalty(def.loyaltyEffect);
+                                                break;
+
+                                            case DecisionVote.Nay:
+                                                opinion.voter.needs.mood.thoughts.memories.TryGainMemory(RimocracyDefOf.DislikeDecision);
+                                                opinion.voter.ChangeLoyalty(-def.loyaltyEffect);
+                                                break;
+
+                                            case DecisionVote.Tolerate:
+                                                opinion.voter.ChangeLoyalty(-def.loyaltyEffect * Need_Loyalty.ToleratedDecisionLoyaltyFactor);
+                                                break;
+                                        }
                                     }
                                     Find.LetterStack.ReceiveLetter($"{def.LabelTitleCase} Decision Taken", def.description, LetterDefOf.NeutralEvent, null);
                                 }
-                                else Messages.Message($"Could not take {def.LabelTitleCase} decision: requirements are not met.", MessageTypeDefOf.NegativeEvent, false);
+                                else Messages.Message($"Could not take {def.LabelTitleCase} decision: requirements are not met.", MessageTypeDefOf.RejectInput, false);
                                 Close();
                             }
                         }

@@ -13,7 +13,8 @@ namespace Rimocracy
         public const float MoodWeight = 1;
         public const float OpinionOfLeaderWeight = 1;
         public const float LoyaltyResetOnLeaderChange = 0.25f;
-        public const float ProtestLevelBase = 0.10f;
+        public const float ToleratedDecisionLoyaltyFactor = 0.75f;
+        public const float ProtestLevelBase = 0.15f;
         public const float DefaultLevel = 0.50f;
 
         static List<float> threshPercentsCommon = new List<float>(2)
@@ -34,7 +35,7 @@ namespace Rimocracy
         {
             get
             {
-                int pop = Utility.Population;
+                int pop = Utility.CitizensCount;
                 if (pop <= 0)
                     return ProtestLevelBase;
                 return ProtestLevelBase + (DefaultLevel - ProtestLevelBase) * Utility.RimocracyComp.Protesters.Count / pop;
