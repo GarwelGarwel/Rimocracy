@@ -150,8 +150,8 @@ namespace Rimocracy
             Math.Max(0,
                 BaseGovernanceDecayPerDay
                 * (HasLeader ? Leader.GetStatValue(RimocracyDefOf.GovernanceDecay) : 1)
-                * (DecisionActive("Egalitarianism") ? 1.5f - Utility.MedianMood : 1)
-                * (DecisionActive("Stability") ? 0.75f : 1));
+                * (DecisionActive(DecisionDef.Egalitarianism) ? 1.5f - Utility.MedianMood : 1)
+                * (DecisionActive(DecisionDef.Stability) ? 0.75f : 1));
 
         public bool ElectionCalled => ElectionTick != int.MaxValue;
 
@@ -317,18 +317,21 @@ namespace Rimocracy
                 ChooseLeader();
 
             // Governance decay
-            governance = Math.Max(Governance - GovernanceDecayPerDay / GenDate.TicksPerDay * UpdateInterval, 0);
+            ChangeGovernance(-GovernanceDecayPerDay / GenDate.TicksPerDay * UpdateInterval);
         }
 
-        public void ImproveGovernance(float amount) => Governance = Math.Min(Governance + amount, 1);
+        public void ChangeGovernance(float amount) => Governance = Mathf.Clamp01(Governance + amount);
 
         public bool DecisionActive(string tag) => Decisions.Any(decision => decision.Tag == tag);
 
         internal void CancelDecision(string tag)
         {
-            foreach (Decision decision in Decisions.Where(decision => decision.Tag == tag || decision.def.defName == tag))
-                decision.def.Cancel();
-            Decisions.RemoveAll(decision => decision.Tag == tag || decision.def.defName == tag);
+            for (int i = Decisions.Count - 1; i >= 0; i--)
+                if (Decisions[i].Tag == tag || Decisions[i].def.defName == tag)
+                {
+                    Decisions[i].def.Cancel();
+                    Decisions.RemoveAt(i);
+                }
         }
 
         void ChooseLeaderTitle()

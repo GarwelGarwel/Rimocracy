@@ -47,7 +47,7 @@ namespace Rimocracy
             weight += sympathy;
 
             // If Meritocracy is in effect, sum of candidate's skills is taken into account
-            if (Utility.RimocracyComp.DecisionActive("Meritocracy"))
+            if (Utility.RimocracyComp.DecisionActive(DecisionDef.Meritocracy))
             {
                 float sumSkills = candidate.skills.skills.Sum(sr => sr.Level);
                 Utility.Log($"{candidate} has a total level of skills of {sumSkills}, affecting Meritocracy.");

@@ -16,7 +16,12 @@ namespace Rimocracy
 
     public class DecisionDef : Def
     {
+        public const string CultOfPersonality = "CultOfPersonality";
+        public const string Egalitarianism = "Egalitarianism";
+        public const string Elitism = "Elitism";
+        public const string Meritocracy = "Meritocracy";
         public const string Multiculturalism = "Multiculturalism";
+        public const string ResPublica = "ResPublica";
         public const string Stability = "Stability";
         public const string StateIdeoligion = "StateIdeoligion";
         public const string StateOfEmergency = "StateOfEmergency";

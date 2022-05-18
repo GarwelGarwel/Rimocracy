@@ -43,7 +43,7 @@ namespace Rimocracy
         {
             if (isSitting)
                 rotateToFace = TargetIndex.B;
-            Utility.RimocracyComp.ImproveGovernance(GovernanceImprovementSpeed / GenDate.TicksPerHour);
+            Utility.RimocracyComp.ChangeGovernance(GovernanceImprovementSpeed / GenDate.TicksPerHour);
             pawn.skills.Learn(SkillDefOf.Intellectual, 0.05f);
             pawn.skills.Learn(SkillDefOf.Social, 0.05f);
             pawn.GainComfortFromCellIfPossible(true);

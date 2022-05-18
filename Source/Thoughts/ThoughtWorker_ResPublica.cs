@@ -7,7 +7,7 @@ namespace Rimocracy
     {
         protected override ThoughtState CurrentStateInternal(Pawn p)
         {
-            if (!Utility.RimocracyComp.DecisionActive("ResPublica") || !p.IsCitizen())
+            if (!Utility.RimocracyComp.DecisionActive(DecisionDef.ResPublica) || !p.IsCitizen())
                 return ThoughtState.Inactive;
 
             float g = Utility.RimocracyComp.Governance;
