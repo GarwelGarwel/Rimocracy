@@ -51,6 +51,8 @@ namespace Rimocracy
 
         public string LabelTitleCase => GenText.ToTitleCaseSmart(label.Formatted(new NamedArgument(Utility.RimocracyComp.Leader, "TARGET")));
 
+        public TaggedString Description => description.Formatted(new NamedArgument(Utility.LeaderTitle, "LEADER"), new NamedArgument(Utility.NationName, "NATION"));
+
         public bool IsDisplayable =>
             (!IsPersistent || !Utility.RimocracyComp.DecisionActive(Tag)) && (displayRequirements == null || displayRequirements);
 
@@ -58,7 +60,7 @@ namespace Rimocracy
             IsDisplayable
             && (effectRequirements == null || effectRequirements)
             && Utility.RimocracyComp.Governance >= GovernanceCost
-            && (silverCostPerCitizen <= 0 || Utility.GetMaxSilver().silver >= SilverCost);
+            && (silverCostPerCitizen <= 0 || Utility.GetTotalSilver() >= SilverCost);
 
         /// <summary>
         /// Tells if this decision tag should be stored
@@ -104,7 +106,7 @@ namespace Rimocracy
             return true;
         }
 
-        public bool Activate(bool cheat = false)
+        public bool Activate(DecisionVoteResults votingResult, bool cheat = false)
         {
             if (!IsValid && !cheat)
             {
@@ -117,13 +119,15 @@ namespace Rimocracy
 
             if (!cheat)
             {
-                Utility.RimocracyComp.Governance -= GovernanceCost;
+                Utility.RimocracyComp.ChangeGovernance(-GovernanceCost);
                 if (silverCostPerCitizen > 0)
                 {
-                    int cost = SilverCost;
-                    (Map map, int silver) = Utility.GetMaxSilver();
-                    Utility.Log($"Available silver: {silver}. Cost: {cost}.");
-                    Utility.RemoveSilver(map, cost);
+                    int amount = SilverCost;
+                    if (Utility.GetTotalSilver() < amount || Utility.RemoveSilver(amount) < amount)
+                    {
+                        Utility.Log($"Not enough silver for {defName}: {amount} needed.", LogLevel.Warning);
+                        return false;
+                    }
                 }
             }
 
@@ -167,10 +171,36 @@ namespace Rimocracy
                     pawn.ChangeLoyalty(changeLoyalty);
             }
 
+            foreach (PawnDecisionOpinion opinion in votingResult)
+            {
+                Utility.Log($"{opinion.voter}'s opinion is {opinion.support.ToStringWithSign()}.");
+                switch (opinion.Vote)
+                {
+                    case DecisionVote.Yea:
+                        opinion.voter.needs.mood.thoughts.memories.TryGainMemory(RimocracyDefOf.LikeDecision);
+                        opinion.voter.ChangeLoyalty(loyaltyEffect);
+                        break;
+
+                    case DecisionVote.Nay:
+                        opinion.voter.needs.mood.thoughts.memories.TryGainMemory(RimocracyDefOf.DislikeDecision);
+                        opinion.voter.ChangeLoyalty(-loyaltyEffect);
+                        break;
+
+                    case DecisionVote.Tolerate:
+                        opinion.voter.ChangeLoyalty(-loyaltyEffect * Need_Loyalty.ToleratedDecisionLoyaltyFactor);
+                        break;
+                }
+                opinion.voter.GetLoyalty().RecalculatePersistentEffects();
+            }
+
             return true;
         }
 
         public void Cancel()
-        { }
+        {
+            if (loyaltyEffect != 0)
+                foreach (Pawn pawn in Utility.Citizens)
+                    pawn.GetLoyalty().RecalculatePersistentEffects();
+        }
     }
 }

@@ -12,14 +12,14 @@ namespace Rimocracy
         public Alert_ProtestRisk()
         {
             defaultPriority = AlertPriority.High;
-            defaultLabel = "Protest risk";
+            defaultLabel = "Disloyal citizens";
         }
 
         public override AlertReport GetReport()
         {
             if (Utility.RimocracyComp.Protesters.Any())
                 return false;
-            potentialProtesters = Utility.Citizens.Where(pawn => pawn.GetLoyalty() < Need_Loyalty.ProtestLevel).ToList();
+            potentialProtesters = Utility.Citizens.Where(pawn => pawn.GetLoyaltyLevel() < Need_Loyalty.ProtestLevel).ToList();
             if (!potentialProtesters.Any())
                 return false;
             if (potentialProtesters.Count == 1)

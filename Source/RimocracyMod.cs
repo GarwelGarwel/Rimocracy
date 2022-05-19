@@ -66,7 +66,7 @@ namespace Rimocracy
 
             content.CheckboxLabeled("Show Action Support Details", ref Settings.ShowActionSupportDetails, "Show a dialog with info about who supported or opposed various actions (e.g. arrest) and why");
 
-            content.CheckboxLabeled("Debug Logging", ref Settings.DebugLogging, "Check to enable verbose logging; it is super useful for catching bugs");
+            content.CheckboxLabeled("Debug Logging", ref Settings.DebugLogging, "Check to enable verbose logging; it is necessary to report bugs");
 
             viewRect.height = content.CurHeight;
             content.End();

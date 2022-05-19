@@ -73,7 +73,7 @@ namespace Rimocracy
             if (support < -0.5f)
             {
                 loyaltyOffset = voter.GetLoyaltySupportOffset();
-                explanations.Add($"Loyalty {voter.GetLoyalty().ToStringPercent()}: {Utility.ColorizeOpinion(loyaltyOffset)}");
+                explanations.Add($"Loyalty {voter.GetLoyaltyLevel().ToStringPercent()}: {Utility.ColorizeOpinion(loyaltyOffset)}");
             }
             else loyaltyOffset = 0;
             explanation = explanations.ToLineList();

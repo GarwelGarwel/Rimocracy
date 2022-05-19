@@ -72,7 +72,7 @@ namespace Rimocracy
 
         public static float CitizenGovernanceWeight(Pawn pawn)
         {
-            Need_Loyalty loyalty = pawn.needs.TryGetNeed<Need_Loyalty>();
+            Need_Loyalty loyalty = pawn.GetLoyalty();
             if (loyalty == null)
                 return 1;
             if (loyalty.IsProtesting)
@@ -80,17 +80,19 @@ namespace Rimocracy
             return 1.5f - loyalty.CurLevel;
         }
 
-        public static float GetLoyaltySupportOffset(this Pawn pawn) => pawn.GetLoyalty() * 200 - 100;
+        public static Need_Loyalty GetLoyalty(this Pawn pawn) => pawn.needs.TryGetNeed<Need_Loyalty>();
 
-        public static float GetLoyalty(this Pawn pawn)
+        public static float GetLoyaltySupportOffset(this Pawn pawn) => pawn.GetLoyaltyLevel() * 200 - 100;
+
+        public static float GetLoyaltyLevel(this Pawn pawn)
         {
-            Need_Loyalty loyalty = pawn.needs.TryGetNeed<Need_Loyalty>();
+            Need_Loyalty loyalty = pawn.GetLoyalty();
             return loyalty != null ? loyalty.CurLevel : Need_Loyalty.DefaultLevel;
         }
 
         public static void ChangeLoyalty(this Pawn pawn, float value)
         {
-            Need_Loyalty loyalty = pawn.needs.TryGetNeed<Need_Loyalty>();
+            Need_Loyalty loyalty = pawn.GetLoyalty();
             if (loyalty != null)
                 loyalty.CurLevel += value;
             else Log($"ChangeLoyalty: {pawn} has no Need_Loyalty.", LogLevel.Error);
@@ -102,34 +104,35 @@ namespace Rimocracy
             PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonistsAndPrisoners_NoCryptosleep
             .Sum(pawn => pawn.needs.food.FoodFallPerTick) * GenDate.TicksPerDay;
 
-        public static (Map map, int silver) GetMaxSilver()
-        {
-            int silver = 0;
-            Map map = null;
-            foreach (Map m in Find.Maps.Where(m => m.IsPlayerHome))
-            {
-                int s = m.resourceCounter.Silver;
-                if (s > silver)
-                {
-                    silver = s;
-                    map = m;
-                }
-            }
-            return (map, silver);
-        }
+        public static int GetTotalSilver() => Find.Maps.Where(map => map.IsPlayerHome).Sum(map => map.resourceCounter.Silver);
 
-        public static void RemoveSilver(Map map, int amount)
+        public static int RemoveSilver(Map map, int amount)
         {
-            foreach (Thing thing in map.spawnedThings.Where(thing => thing.def == ThingDefOf.Silver).ToList())
+            int removed = 0;
+            foreach (Thing thing in map.spawnedThings.Where(thing => thing.Faction.IsPlayer && thing.def == ThingDefOf.Silver).ToList())
             {
-                int count = Math.Min(amount, thing.stackCount);
+                int count = Math.Min(amount - removed, thing.stackCount);
                 Log($"Removing {count} silver from {thing}...");
                 thing.SplitOff(count);
-                amount -= count;
-                if (amount <= 0)
-                    return;
+                removed += count;
+                if (removed >= amount)
+                    break;
             }
-            Log($"Not enough silver: {amount} units short!", LogLevel.Error);
+            Log($"{removed} units of silver removed from {map} out of {amount}.");
+            return removed;
+        }
+
+        public static int RemoveSilver(int amount)
+        {
+            int removed = 0;
+            foreach (Map map in Find.Maps.Where(map => map.IsPlayerHome))
+            {
+                removed += RemoveSilver(map, amount - removed);
+                if (removed >= amount)
+                    break;
+            }
+            Log($"{removed} silver removed from all maps out of {amount}.");
+            return removed;
         }
 
         public static float DaysOfFood => TotalNutrition / FoodConsumptionPerDay;
@@ -227,7 +230,14 @@ namespace Rimocracy
             return count % 2 == 0 ? (list[count / 2 - 1] + list[count / 2]) / 2 : list[count / 2];
         }
 
-        public static string ColorizeOpinion(this string text, float support) => text.Colorize(support > 0.5f ? Color.green : (support < -0.5f ? Color.red : Color.gray));
+        public static string ColorizeByValue(this string text, float value, Color color1, Color color2, Color color3, float lowValue = 0, float highValue = 0) =>
+            text.Colorize(value < lowValue ? color1 : (value <= highValue ? color2 : color3));
+
+        public static string ColorizeByValue(this string text, float value, float lowValue = 0, float highValue = 0) =>
+            text.ColorizeByValue(value, Color.red, Color.gray, Color.green, lowValue, highValue);
+
+        public static string ColorizeOpinion(this string text, float support) =>
+            text.ColorizeByValue(support, -0.5f, 0.5f);
 
         public static string ColorizeOpinion(this float support) => support.ToStringWithSign("0").ColorizeOpinion(support);
 

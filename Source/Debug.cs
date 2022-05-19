@@ -8,14 +8,14 @@ namespace Rimocracy
         static void LowerGovernance()
         {
             if (Utility.PoliticsEnabled)
-                Utility.RimocracyComp.Governance -= 0.1f;
+                Utility.RimocracyComp.ChangeGovernance(-0.1f);
         }
 
         [DebugAction(category = "General", name = "Raise Governance", actionType = DebugActionType.Action, allowedGameStates = AllowedGameStates.Playing)]
         static void RaiseGovernance()
         {
             if (Utility.PoliticsEnabled)
-                Utility.RimocracyComp.Governance += 0.1f;
+                Utility.RimocracyComp.ChangeGovernance(0.1f);
         }
 
         [DebugAction("Pawns", "Appoint Leader", actionType = DebugActionType.ToolMapForPawns, allowedGameStates = AllowedGameStates.PlayingOnMap)]

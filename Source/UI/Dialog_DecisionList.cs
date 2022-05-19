@@ -51,7 +51,7 @@ namespace Rimocracy
             {
                 content.Label("Active decisions:");
                 foreach (Decision decision in Utility.RimocracyComp.Decisions)
-                    content.Label($"- {decision.def.LabelTitleCase}{(decision.def.Expiration != int.MaxValue ? $" (expires in {(decision.expiration - Find.TickManager.TicksAbs).ToStringTicksToPeriod()})" : "")}", tooltip: decision.def.description);
+                    content.Label($"- {decision.def.LabelTitleCase}{(decision.def.Expiration != int.MaxValue ? $" (expires in {(decision.expiration - Find.TickManager.TicksAbs).ToStringTicksToPeriod()})" : "")}", tooltip: decision.def.Description);
             }
 
             content.GapLine();
@@ -77,7 +77,7 @@ namespace Rimocracy
                     GUI.color = Color.white;
                     if (decisionToShowDetails == def)
                     {
-                        content.Label(def.description.Formatted(new NamedArgument(Utility.LeaderTitle, "LEADER"), new NamedArgument(Utility.NationName, "NATION")));
+                        content.Label(def.Description);
                         if (def.governanceCost != 0)
                             content.Label($"Will {(def.governanceCost > 0 ? "reduce" : "increase")} Governance by {Math.Abs(def.GovernanceCost).ToStringPercent()}.");
                         if (!def.effectRequirements.IsTrivial)
@@ -107,7 +107,7 @@ namespace Rimocracy
                             foreach (PawnDecisionOpinion opinion in votingResult)
                                 content.Label($"   {opinion.voter.NameShortColored}: {opinion.VoteStringColored}", tooltip: opinion.explanation);
                             if (def.loyaltyEffect != 0)
-                                content.Label($"Loyalty of citizens who support this decision will increase, and of those who oppose or tolerate it, decrease by {def.loyaltyEffect.ToStringPercent()}.");
+                                content.Label($"Loyalty of citizens who support this decision will increase, and of those who oppose or tolerate it, decrease by up to {def.loyaltyEffect.ToStringPercent()}.");
                         }
 
                         // Display Activate button for valid decisions
@@ -116,30 +116,8 @@ namespace Rimocracy
                             if (content.ButtonText("Activate"))
                             {
                                 Utility.Log($"Activating {def.defName}.");
-                                if (def.Activate())
-                                {
-                                    foreach (PawnDecisionOpinion opinion in votingResult)
-                                    {
-                                        Utility.Log($"{opinion.voter}'s opinion is {opinion.support.ToStringWithSign()}.");
-                                        switch (opinion.Vote)
-                                        {
-                                            case DecisionVote.Yea:
-                                                opinion.voter.needs.mood.thoughts.memories.TryGainMemory(RimocracyDefOf.LikeDecision);
-                                                opinion.voter.ChangeLoyalty(def.loyaltyEffect);
-                                                break;
-
-                                            case DecisionVote.Nay:
-                                                opinion.voter.needs.mood.thoughts.memories.TryGainMemory(RimocracyDefOf.DislikeDecision);
-                                                opinion.voter.ChangeLoyalty(-def.loyaltyEffect);
-                                                break;
-
-                                            case DecisionVote.Tolerate:
-                                                opinion.voter.ChangeLoyalty(-def.loyaltyEffect * Need_Loyalty.ToleratedDecisionLoyaltyFactor);
-                                                break;
-                                        }
-                                    }
+                                if (def.Activate(votingResult))
                                     Find.LetterStack.ReceiveLetter($"{def.LabelTitleCase} Decision Taken", def.description, LetterDefOf.NeutralEvent, null);
-                                }
                                 else Messages.Message($"Could not take {def.LabelTitleCase} decision: requirements are not met.", MessageTypeDefOf.RejectInput, false);
                                 Close();
                             }
@@ -149,7 +127,7 @@ namespace Rimocracy
                         // Display devmode (cheat) Activate button
                         if (Prefs.DevMode && content.ButtonText("Activate (DevMode)"))
                         {
-                            def.Activate(true);
+                            def.Activate(votingResult, true);
                             Close();
                         }
 

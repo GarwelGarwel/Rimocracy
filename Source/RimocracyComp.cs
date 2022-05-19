@@ -267,10 +267,10 @@ namespace Rimocracy
                     protesters.RemoveAt(i);
                     continue;
                 }
-                Need_Loyalty loyalty = protesters[i].needs.TryGetNeed<Need_Loyalty>();
+                Need_Loyalty loyalty = protesters[i].GetLoyalty();
                 if (loyalty == null || !loyalty.IsProtesting)
                 {
-                    Utility.Log($"Removing invalid protester {protesters[i]} (loyalty {protesters[i].GetLoyalty().ToStringPercent()}.");
+                    Utility.Log($"Removing invalid protester {protesters[i]} (loyalty {protesters[i].GetLoyaltyLevel().ToStringPercent()}.");
                     protesters.RemoveAt(i);
                 }
             }
@@ -402,7 +402,7 @@ namespace Rimocracy
                 {
                     Governance = Mathf.Lerp(DecisionActive(DecisionDef.Stability) ? 0 : 0.5f, Governance, 0.5f);
                     foreach (Pawn pawn in Utility.Citizens)
-                        pawn.ChangeLoyalty((Need_Loyalty.DefaultLevel - pawn.GetLoyalty()) * Need_Loyalty.LoyaltyResetOnLeaderChange * (DecisionActive(DecisionDef.Stability) ? 2 : 1));
+                        pawn.ChangeLoyalty((Need_Loyalty.DefaultLevel - pawn.GetLoyaltyLevel()) * Need_Loyalty.LoyaltyResetOnLeaderChange * (DecisionActive(DecisionDef.Stability) ? 2 : 1));
                     Find.LetterStack.ReceiveLetter(SuccessionWorker.NewLeaderMessageTitle(Leader), $"{SuccessionWorker.NewLeaderMessageText(Leader)}\n\n{FocusSkillMessage}", LetterDefOf.NeutralEvent);
                     Tale tale = TaleRecorder.RecordTale(RimocracyDefOf.BecameLeader, Leader);
                 }

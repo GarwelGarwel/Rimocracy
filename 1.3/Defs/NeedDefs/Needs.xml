@@ -6,7 +6,7 @@
 		<defName>Rimocracy_Loyalty</defName>
 		<needClass>Rimocracy.Need_Loyalty</needClass>
 		<label>loyalty</label>
-		<description>Sense of the citizen's belonging to the community and their satisfaction with it. It slowly changes according to the mood and opinion of the leader and is also affected by decisions, successions and other events. Loyal citizens are easier to govern (so Governance decays slower) and they are more likely to tolerate unpopular decisions. Disloyal citizens can protest or rebel.</description>
+		<description>Sense of the citizen's belonging to the community and their satisfaction with it. It slowly changes according to the mood and opinion of the leader and is also affected by decisions. Loyal citizens are easier to govern (so Governance decays slower) and they are more likely to tolerate unpopular decisions. Disloyal citizens may protest or rebel.</description>
 		<minIntelligence>Humanlike</minIntelligence>
 		<colonistsOnly>true</colonistsOnly>
 		<listPriority>60</listPriority>
