@@ -73,6 +73,7 @@
     <Compile Include="Defs\PoliticalActionDef.cs" />
     <Compile Include="Defs\ProtestDef.cs" />
     <Compile Include="Need_Loyalty.cs" />
+    <Compile Include="RecordWorker_TimeProtesting.cs" />
     <Compile Include="UI\Dialog_PoliticalAction.cs" />
     <Compile Include="GoodwillSituationWorker_Multiculturalism.cs" />
     <Compile Include="HarmonyManager.cs" />
