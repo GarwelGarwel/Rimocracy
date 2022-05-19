@@ -5,11 +5,11 @@ using Verse;
 
 namespace Rimocracy
 {
-    public class Alert_ProtestRisk : Alert
+    public class Alert_DisloyalCitizens : Alert
     {
         List<Pawn> potentialProtesters = new List<Pawn>();
 
-        public Alert_ProtestRisk()
+        public Alert_DisloyalCitizens()
         {
             defaultPriority = AlertPriority.High;
             defaultLabel = "Disloyal citizens";

@@ -10,8 +10,6 @@ namespace Rimocracy
         /// <summary>
         /// Returns a list of skills that affect the given stat
         /// </summary>
-        /// <param name="stat"></param>
-        /// <returns></returns>
         public static List<SkillDef> GetSkills(StatDef stat)
         {
             List<SkillDef> skills = stat.skillNeedFactors.NullOrEmpty()
