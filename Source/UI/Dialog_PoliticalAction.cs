@@ -50,7 +50,7 @@ namespace Rimocracy
                     else if (opinion.Vote == DecisionVote.Nay)
                         govChange = action.governanceChangeIfOpposed * scaleFactor;
                     if (Mathf.Abs(govChange) >= 0.001f)
-                        content.Label($"Governance changed by {govChange.ToStringPercent()}, because the {Utility.LeaderTitle} {(opinion.Vote == DecisionVote.Yea ? "spearheaded" : "protested")} the action.");
+                        content.Label($"Governance changed by {govChange.ToStringPercent().ColorizeByValue(govChange)}, because the {Utility.LeaderTitle} {(opinion.Vote == DecisionVote.Yea ? "spearheaded" : "protested")} the action.");
                 }
                 content.Label($"{Utility.LeaderTitle.CapitalizeFirst()} {Utility.RimocracyComp.Leader.NameShortColored}: {opinion.VoteStringColored}", tooltip: opinion.explanation);
             }
@@ -59,7 +59,7 @@ namespace Rimocracy
                 content.Label($"{opinion.voter.NameShortColored}: {opinion.VoteStringColored}", tooltip: opinion.explanation);
 
             content.Gap();
-            content.CheckboxLabeled("Always show action details", ref Settings.ShowActionSupportDetails, "Uncheck to disable this dialog from popping up. You may re-enable it in the Settings.");
+            content.CheckboxLabeled("Always show this dialog", ref Settings.ShowActionSupportDetails, "Uncheck to disable action details from popping up. You may re-enable it in the Settings.");
 
             content.End();
         }

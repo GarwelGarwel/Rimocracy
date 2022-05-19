@@ -12,7 +12,8 @@ namespace Rimocracy
 
         public static ElectionCampaign GetCampaign(this Pawn candidate) => Utility.RimocracyComp?.Campaigns?.FirstOrDefault(ec => ec?.Candidate == candidate);
 
-        public static Pawn GetSupportedCandidate(this Pawn pawn) => Utility.RimocracyComp?.Campaigns?.FirstOrDefault(ec => ec?.Supporters != null && ec.Supporters.Contains(pawn))?.Candidate;
+        public static Pawn GetSupportedCandidate(this Pawn pawn) =>
+            Utility.RimocracyComp?.Campaigns?.FirstOrDefault(ec => ec?.Supporters != null && ec.Supporters.Contains(pawn))?.Candidate;
 
         public static float VoteWeight(Pawn voter, Pawn candidate)
         {

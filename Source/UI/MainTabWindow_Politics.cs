@@ -62,15 +62,6 @@ namespace Rimocracy
                 content.Label($"Candidates:\r\n{Utility.RimocracyComp.Campaigns.Select(ec => $"- {ec.ToTaggedString()}").ToLineList()}");
             }
 
-            // Protests
-            if (Utility.RimocracyComp.Protesters.Count > 0)
-            {
-                content.Gap();
-                if (Utility.RimocracyComp.Protesters.Count == 1)
-                    content.Label($"Protester: {Utility.RimocracyComp.Protesters[0].NameShortColored}");
-                else content.Label($"Protesters: {Utility.RimocracyComp.Protesters.Count}", tooltip: Utility.RimocracyComp.Protesters.Select(pawn => pawn.LabelCap).ToCommaList());
-            }
-
             content.Gap();
             if (content.ButtonText("View Decisions"))
                 Find.WindowStack.Add(new Dialog_DecisionList());
