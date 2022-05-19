@@ -10,6 +10,7 @@
 		<tag>Succession</tag>
 		<durationDays>20</durationDays>
 		<governanceCost>0.25</governanceCost>
+		<loyaltyEffect>0.20</loyaltyEffect>
 	</Rimocracy.DecisionDef>
 	
 	<Rimocracy.DecisionDef ParentName="BaseSuccessionDecision">
@@ -603,21 +604,21 @@
 				<opinionOfTarget>
 					<offset>
 						<points>
-							<li>(-100, -40)</li>
+							<li>(-100, -100)</li>
 							<li>(0, 0)</li>
-							<li>(100, 20)</li>
+							<li>(100, 50)</li>
 						</points>
 					</offset>
 				</opinionOfTarget>
 			</li>
 			<li>
 				<label>loyalist ideoligion</label>
-				<value>6</value>
+				<value>15</value>
 				<meme>Loyalist</meme>
 			</li>
 			<li>
 				<label>research not allowed</label>
-				<value>4</value>
+				<value>10</value>
 				<precept>Research_None</precept>
 			</li>
 		</considerations>
@@ -659,10 +660,16 @@
 					<offset>
 						<points>
 							<li>(0.50, 0)</li>
-							<li>(1, -20)</li>
+							<li>(1, -40)</li>
 						</points>
 					</offset>
 				</governance>
+				<factors>
+					<li>
+						<value>2</value>
+						<decision>Stability</decision>
+					</li>
+				</factors>
 			</li>
 			<li>
 				<label>this is a witch-hunt</label>
@@ -675,8 +682,8 @@
 				<opinionOfTarget>
 					<offset>
 						<points>
-							<li>(-100, 20)</li>
-							<li>(100, -30)</li>
+							<li>(-100, 30)</li>
+							<li>(100, -45)</li>
 						</points>
 					</offset>
 				</opinionOfTarget>
@@ -686,15 +693,21 @@
 				<medianOpinionOfTarget>
 					<offset>
 						<points>
-							<li>(-100, 8)</li>
-							<li>(100, -15)</li>
+							<li>(-100, 20)</li>
+							<li>(100, -30)</li>
 						</points>
 					</offset>
 				</medianOpinionOfTarget>
 			</li>
 			<li>
+				<label>jealous</label>
+				<value>10</value>
+				<isLeader>false</isLeader>
+				<trait>Jealous</trait>
+			</li>
+			<li>
 				<label>loyalist ideoligion</label>
-				<value>-10</value>
+				<value>-20</value>
 				<meme>Loyalist</meme>
 			</li>
 		</considerations>
@@ -722,17 +735,17 @@
 		<considerations>
 			<li>
 				<label>my opinion will count</label>
-				<value>20</value>
+				<value>50</value>
 				<isLeader>false</isLeader>
 			</li>
 			<li>
 				<label>individualist ideoligion</label>
-				<value>20</value>
+				<value>50</value>
 				<meme>Individualist</meme>
 			</li>
 			<li>
 				<label>collectivist ideoligion</label>
-				<value>-20</value>
+				<value>-50</value>
 				<meme>Collectivist</meme>
 			</li>
 		</considerations>
@@ -752,17 +765,17 @@
 		<considerations>
 			<li>
 				<label>my opinion won't matter anymore</label>
-				<value>-20</value>
+				<value>-50</value>
 				<isLeader>false</isLeader>
 			</li>
 			<li>
 				<label>individualist ideoligion</label>
-				<value>-20</value>
+				<value>-50</value>
 				<meme>Individualist</meme>
 			</li>
 			<li>
 				<label>collectivist ideoligion</label>
-				<value>20</value>
+				<value>50</value>
 				<meme>Collectivist</meme>
 			</li>
 		</considerations>
@@ -793,37 +806,37 @@
 		<considerations>
 			<li>
 				<label>the government should care about all citizens</label>
-				<value>20</value>
+				<value>50</value>
 				<isLeader>false</isLeader>
 			</li>
 			<li>
 				<label>individualist ideoligion</label>
-				<value>10</value>
+				<value>25</value>
 				<meme>Individualist</meme>
 			</li>
 			<li>
 				<label>collectivist ideoligion</label>
-				<value>-10</value>
+				<value>-50</value>
 				<meme>Collectivist</meme>
 			</li>
 			<li>
 				<label>human primacy</label>
-				<value>10</value>
+				<value>25</value>
 				<meme>HumanPrimacy</meme>
 			</li>
 			<li>
 				<label>pain is virtue</label>
-				<value>-10</value>
+				<value>-25</value>
 				<meme>PainIsVirtue</meme>
 			</li>
 			<li>
 				<label>guilty ideoligion</label>
-				<value>-10</value>
+				<value>-25</value>
 				<meme>Guilty</meme>
 			</li>
 			<li>
 				<label>comfort ignored</label>
-				<value>-10</value>
+				<value>-20</value>
 				<precept>Comfort_Ignored</precept>
 			</li>
 		</considerations>
@@ -843,37 +856,37 @@
 		<considerations>
 			<li>
 				<label>I wish the government cared more about my happiness</label>
-				<value>-20</value>
+				<value>-50</value>
 				<isLeader>false</isLeader>
 			</li>
 			<li>
 				<label>individualist ideoligion</label>
-				<value>-10</value>
+				<value>-25</value>
 				<meme>Individualist</meme>
 			</li>
 			<li>
 				<label>collectivist ideoligion</label>
-				<value>10</value>
+				<value>50</value>
 				<meme>Collectivist</meme>
 			</li>
 			<li>
 				<label>human primacy</label>
-				<value>-10</value>
+				<value>-25</value>
 				<meme>HumanPrimacy</meme>
 			</li>
 			<li>
 				<label>pain is virtue</label>
-				<value>10</value>
+				<value>25</value>
 				<meme>PainIsVirtue</meme>
 			</li>
 			<li>
-				<label>guilty ideoligion</label>
+				<label>25 ideoligion</label>
 				<value>10</value>
 				<meme>Guilty</meme>
 			</li>
 			<li>
 				<label>comfort ignored</label>
-				<value>10</value>
+				<value>20</value>
 				<precept>Comfort_Ignored</precept>
 			</li>
 		</considerations>
@@ -1008,22 +1021,22 @@
 			</li>
 			<li>
 				<label>research not allowed</label>
-				<value>-12</value>
+				<value>-15</value>
 				<precept>Research_None</precept>
 			</li>
 			<li>
 				<label>extremely slow research</label>
-				<value>-8</value>
+				<value>-10</value>
 				<precept>Research_ExtremelySlow</precept>
 			</li>
 			<li>
 				<label>very slow research</label>
-				<value>-4</value>
+				<value>-5</value>
 				<precept>Research_VerySlow</precept>
 			</li>
 			<li>
 				<label>very fast research</label>
-				<value>4</value>
+				<value>5</value>
 				<precept>Research_VeryFast</precept>
 			</li>
 		</considerations>
@@ -1062,30 +1075,30 @@
 				<governance>
 					<offset>
 						<points>
-							<li>(0, -20)</li>
-							<li>(1, 20)</li>
+							<li>(0, -50)</li>
+							<li>(1, 50)</li>
 						</points>
 					</offset>
 				</governance>
 			</li>
 			<li>
 				<label>individualist ideoligion</label>
-				<value>-20</value>
+				<value>-50</value>
 				<meme>Individualist</meme>
 			</li>
 			<li>
 				<label>collectivist ideoligion</label>
-				<value>20</value>
+				<value>50</value>
 				<meme>Collectivist</meme>
 			</li>
 			<li>
 				<label>loyalist ideoligion</label>
-				<value>10</value>
+				<value>25</value>
 				<meme>Loyalist</meme>
 			</li>
 			<li>
 				<label>human primacy</label>
-				<value>20</value>
+				<value>50</value>
 				<meme>HumanPrimacy</meme>
 			</li>
 		</considerations>
@@ -1108,30 +1121,30 @@
 				<governance>
 					<offset>
 						<points>
-							<li>(0, 20)</li>
-							<li>(1, -20)</li>
+							<li>(0, 50)</li>
+							<li>(1, -50)</li>
 						</points>
 					</offset>
 				</governance>
 			</li>
 			<li>
 				<label>individualist ideoligion</label>
-				<value>20</value>
+				<value>50</value>
 				<meme>Individualist</meme>
 			</li>
 			<li>
 				<label>collectivist ideoligion</label>
-				<value>-20</value>
+				<value>-50</value>
 				<meme>Collectivist</meme>
 			</li>
 			<li>
 				<label>loyalist ideoligion</label>
-				<value>-10</value>
+				<value>-25</value>
 				<meme>Loyalist</meme>
 			</li>
 			<li>
 				<label>human primacy</label>
-				<value>-20</value>
+				<value>-50</value>
 				<meme>HumanPrimacy</meme>
 			</li>
 		</considerations>
@@ -1160,7 +1173,7 @@
 					<lessThan>0</lessThan>
 					<offset>
 						<points>
-							<li>(-100, -40)</li>
+							<li>(-100, -60)</li>
 							<li>(0, 0)</li>
 						</points>
 					</offset>
@@ -1168,17 +1181,17 @@
 			</li>
 			<li>
 				<label>individualist ideoligion</label>
-				<value>-10</value>
+				<value>-20</value>
 				<meme>Individualist</meme>
 			</li>
 			<li>
 				<label>collectivist ideoligion</label>
-				<value>10</value>
+				<value>20</value>
 				<meme>Collectivist</meme>
 			</li>
 			<li>
 				<label>loyalist ideoligion</label>
-				<value>10</value>
+				<value>20</value>
 				<meme>Loyalist</meme>
 			</li>
 		</considerations>
@@ -1208,7 +1221,7 @@
 					<lessThan>0</lessThan>
 					<offset>
 						<points>
-							<li>(-100, 40)</li>
+							<li>(-100, 60)</li>
 							<li>(0, 0)</li>
 						</points>
 					</offset>
@@ -1216,17 +1229,17 @@
 			</li>
 			<li>
 				<label>individualist ideoligion</label>
-				<value>10</value>
+				<value>20</value>
 				<meme>Individualist</meme>
 			</li>
 			<li>
 				<label>collectivist ideoligion</label>
-				<value>-10</value>
+				<value>-20</value>
 				<meme>Collectivist</meme>
 			</li>
 			<li>
 				<label>loyalist ideoligion</label>
-				<value>-10</value>
+				<value>-20</value>
 				<meme>Loyalist</meme>
 			</li>
 		</considerations>
@@ -1442,9 +1455,9 @@
 				<opinionOfTarget>
 					<offset>
 						<points>
-							<li>(-100, -40)</li>
+							<li>(-100, -60)</li>
 							<li>(0, 0)</li>
-							<li>(100, 20)</li>
+							<li>(100, 30)</li>
 						</points>
 					</offset>
 				</opinionOfTarget>
@@ -1454,16 +1467,21 @@
 				<medianOpinionOfTarget>
 					<offset>
 						<points>
-							<li>(-100, -20)</li>
+							<li>(-100, -30)</li>
 							<li>(0, 0)</li>
-							<li>(100, 10)</li>
+							<li>(100, 15)</li>
 						</points>
 					</offset>
 				</medianOpinionOfTarget>
 			</li>
 			<li>
+				<label>individualist ideoligion</label>
+				<value>-20</value>
+				<meme>Individualist</meme>
+			</li>
+			<li>
 				<label>ideological structure</label>
-				<value>10</value>
+				<value>20</value>
 				<meme>Structure_Ideological</meme>
 			</li>
 		</considerations>
@@ -1483,7 +1501,7 @@
 		<considerations>
 			<li>
 				<label>I am the leader</label>
-				<value>-40</value>
+				<value>-60</value>
 				<isLeader>true</isLeader>
 			</li>
 			<li>
@@ -1498,9 +1516,9 @@
 				<opinionOfTarget>
 					<offset>
 						<points>
-							<li>(-100, 40)</li>
+							<li>(-100, 60)</li>
 							<li>(0, 0)</li>
-							<li>(100, -20)</li>
+							<li>(100, -30)</li>
 						</points>
 					</offset>
 				</opinionOfTarget>
@@ -1510,12 +1528,17 @@
 				<medianOpinionOfTarget>
 					<offset>
 						<points>
-							<li>(-100, 20)</li>
+							<li>(-100, 30)</li>
 							<li>(0, 0)</li>
-							<li>(100, -10)</li>
+							<li>(100, -15)</li>
 						</points>
 					</offset>
 				</medianOpinionOfTarget>
+			</li>
+			<li>
+				<label>individualist ideoligion</label>
+				<value>20</value>
+				<meme>Individualist</meme>
 			</li>
 			<li>
 				<label>ideological structure</label>
@@ -1546,7 +1569,7 @@
 		<considerations>
 			<li>
 				<label>I am the leader</label>
-				<value>20</value>
+				<value>40</value>
 				<isLeader>true</isLeader>
 			</li>
 			<li>
@@ -1555,22 +1578,22 @@
 				<opinionOfTarget>
 					<offset>
 						<points>
-							<li>(-100, -40)</li>
+							<li>(-100, -100)</li>
 							<li>(0, 0)</li>
 							<li>(50, 0)</li>
-							<li>(100, 20)</li>
+							<li>(100, 40)</li>
 						</points>
 					</offset>
 				</opinionOfTarget>
 			</li>
 			<li>
 				<label>Campaign is on</label>
-				<value>-10</value>
+				<value>-20</value>
 				<campaigning>true</campaigning>
 			</li>
 			<li>
 				<label>raider ideoligion</label>
-				<value>10</value>
+				<value>20</value>
 				<meme>Raider</meme>
 			</li>
 			<li>
@@ -1628,89 +1651,89 @@
 			</li>
 			<li>
 				<label>I have a different ideoligion</label>
-				<value>-20</value>
+				<value>-30</value>
 				<primaryIdeoligion>false</primaryIdeoligion>
 			</li>
 			<li>
 				<label>proselytizer ideoligion</label>
-				<value>10</value>
+				<value>15</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<meme>Proselytizer</meme>
 			</li>
 			<li>
 				<label>proselytizer ideoligion</label>
-				<value>-10</value>
+				<value>-15</value>
 				<primaryIdeoligion>false</primaryIdeoligion>
 				<meme>Proselytizer</meme>
 			</li>
 			<li>
 				<label>collectivist ideoligion</label>
-				<value>10</value>
+				<value>15</value>
 				<meme>Collectivist</meme>
 			</li>
 			<li>
 				<label>intense bigotry</label>
-				<value>40</value>
+				<value>60</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Abhorrent</precept>
 			</li>
 			<li>
 				<label>moderate bigotry</label>
-				<value>30</value>
+				<value>45</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Horrible</precept>
 			</li>
 			<li>
 				<label>mild bigotry</label>
-				<value>20</value>
+				<value>30</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Disapproved</precept>
 			</li>
 			<li>
 				<label>I share primary ideoligion</label>
-				<value>10</value>
+				<value>15</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Standard</precept>
 			</li>
 			<li>
 				<label>diversity of thought appreciated</label>
-				<value>-10</value>
+				<value>-15</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Approved</precept>
 			</li>
 			<li>
 				<label>diversity of thought appreciated</label>
-				<value>-20</value>
+				<value>-30</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Approved</precept>
 			</li>
 			<li>
 				<label>diversity of thought highly appreciated</label>
-				<value>-30</value>
+				<value>-45</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Respected</precept>
 			</li>
 			<li>
 				<label>diversity of thought exalted</label>
-				<value>-40</value>
+				<value>-60</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Exalted</precept>
 			</li>
 			<li>
 				<label>occasionally proselytizing</label>
-				<value>5</value>
+				<value>10</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>Proselytizing_Occasionally</precept>
 			</li>
 			<li>
 				<label>sometimes proselytizing</label>
-				<value>10</value>
+				<value>15</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>Proselytizing_Sometimes</precept>
 			</li>
 			<li>
 				<label>frequently proselytizing</label>
-				<value>15</value>
+				<value>20</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>Proselytizing_Frequently</precept>
 			</li>
@@ -1720,7 +1743,7 @@
 				<ideoCertainty>
 					<offset>
 						<points>
-							<li>(0, -20)</li>
+							<li>(0, -30)</li>
 							<li>(1, 0)</li>
 						</points>
 					</offset>
@@ -1732,8 +1755,8 @@
 				<ideoCertainty>
 					<offset>
 						<points>
-							<li>(0, 20)</li>
-							<li>(1, -20)</li>
+							<li>(0, 30)</li>
+							<li>(1, -30)</li>
 						</points>
 					</offset>
 				</ideoCertainty>
@@ -1767,78 +1790,78 @@
 			</li>
 			<li>
 				<label>proselytizer ideoligion</label>
-				<value>-10</value>
+				<value>-15</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<meme>Proselytizer</meme>
 			</li>
 			<li>
 				<label>collectivist ideoligion</label>
-				<value>-10</value>
+				<value>-15</value>
 				<meme>Collectivist</meme>
 			</li>
 			<li>
 				<label>intense bigotry</label>
-				<value>-40</value>
+				<value>-60</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Abhorrent</precept>
 			</li>
 			<li>
 				<label>moderate bigotry</label>
-				<value>-30</value>
+				<value>-45</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Horrible</precept>
 			</li>
 			<li>
 				<label>mild bigotry</label>
-				<value>-20</value>
+				<value>-30</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Disapproved</precept>
 			</li>
 			<li>
 				<label>I share primary ideoligion</label>
-				<value>-10</value>
+				<value>-15</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Standard</precept>
 			</li>
 			<li>
 				<label>diversity of thought appreciated</label>
-				<value>10</value>
+				<value>15</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Approved</precept>
 			</li>
 			<li>
 				<label>diversity of thought appreciated</label>
-				<value>20</value>
+				<value>30</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Approved</precept>
 			</li>
 			<li>
 				<label>diversity of thought highly appreciated</label>
-				<value>30</value>
+				<value>45</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Respected</precept>
 			</li>
 			<li>
 				<label>diversity of thought exalted</label>
-				<value>40</value>
+				<value>60</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Exalted</precept>
 			</li>
 			<li>
 				<label>occasionally proselytizing</label>
-				<value>-5</value>
+				<value>-10</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>Proselytizing_Occasionally</precept>
 			</li>
 			<li>
 				<label>sometimes proselytizing</label>
-				<value>-10</value>
+				<value>-15</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>Proselytizing_Sometimes</precept>
 			</li>
 			<li>
 				<label>frequently proselytizing</label>
-				<value>-15</value>
+				<value>-20</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>Proselytizing_Frequently</precept>
 			</li>
@@ -1848,7 +1871,7 @@
 				<ideoCertainty>
 					<offset>
 						<points>
-							<li>(0, 20)</li>
+							<li>(0, 30)</li>
 							<li>(1, 0)</li>
 						</points>
 					</offset>
@@ -1886,7 +1909,7 @@
 		<considerations>
 			<li>
 				<label>I will lose ideoligion leadership</label>
-				<value>-20</value>
+				<value>-50</value>
 				<isLeader>true</isLeader>
 				<primaryIdeoligion>true</primaryIdeoligion>
 			</li>
@@ -1897,54 +1920,54 @@
 			</li>
 			<li>
 				<label>I have a minority ideoligion</label>
-				<value>20</value>
+				<value>40</value>
 				<primaryIdeoligion>false</primaryIdeoligion>
 			</li>
 			<li>
 				<label>intense bigotry</label>
-				<value>-40</value>
+				<value>-60</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Abhorrent</precept>
 			</li>
 			<li>
 				<label>moderate bigotry</label>
-				<value>-30</value>
+				<value>-45</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Horrible</precept>
 			</li>
 			<li>
 				<label>mild bigotry</label>
-				<value>-20</value>
+				<value>-30</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Disapproved</precept>
 			</li>
 			<li>
 				<label>I share primary ideoligion</label>
-				<value>-10</value>
+				<value>-15</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Standard</precept>
 			</li>
 			<li>
 				<label>diversity of thought appreciated</label>
-				<value>10</value>
+				<value>15</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Approved</precept>
 			</li>
 			<li>
 				<label>diversity of thought appreciated</label>
-				<value>20</value>
+				<value>30</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Approved</precept>
 			</li>
 			<li>
 				<label>diversity of thought highly appreciated</label>
-				<value>30</value>
+				<value>45</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Respected</precept>
 			</li>
 			<li>
 				<label>diversity of thought exalted</label>
-				<value>40</value>
+				<value>60</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Exalted</precept>
 			</li>
@@ -1954,8 +1977,8 @@
 				<ideoCertainty>
 					<offset>
 						<points>
-							<li>(0, 10)</li>
-							<li>(1, -10)</li>
+							<li>(0, 15)</li>
+							<li>(1, -15)</li>
 						</points>
 					</offset>
 				</ideoCertainty>
@@ -1967,7 +1990,7 @@
 					<offset>
 						<points>
 							<li>(0, 0)</li>
-							<li>(1, 20)</li>
+							<li>(1, 30)</li>
 						</points>
 					</offset>
 				</ideoCertainty>
@@ -1991,7 +2014,7 @@
 		<considerations>
 			<li>
 				<label>I lose a chance to become a leader</label>
-				<value>-20</value>
+				<value>-50</value>
 				<isLeader>false</isLeader>
 				<primaryIdeoligion>false</primaryIdeoligion>
 			</li>
@@ -2008,55 +2031,55 @@
 			</li>
 			<li>
 				<label>I gain the ideoligion leader title</label>
-				<value>30</value>
+				<value>50</value>
 				<isLeader>true</isLeader>
 				<primaryIdeoligion>true</primaryIdeoligion>
 			</li>
 			<li>
 				<label>intense bigotry</label>
-				<value>40</value>
+				<value>60</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Abhorrent</precept>
 			</li>
 			<li>
 				<label>moderate bigotry</label>
-				<value>30</value>
+				<value>45</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Horrible</precept>
 			</li>
 			<li>
 				<label>mild bigotry</label>
-				<value>20</value>
+				<value>30</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Disapproved</precept>
 			</li>
 			<li>
 				<label>I share primary ideoligion</label>
-				<value>10</value>
+				<value>15</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Standard</precept>
 			</li>
 			<li>
 				<label>diversity of thought appreciated</label>
-				<value>-10</value>
+				<value>-15</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Approved</precept>
 			</li>
 			<li>
 				<label>diversity of thought appreciated</label>
-				<value>-20</value>
+				<value>-30</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Approved</precept>
 			</li>
 			<li>
 				<label>diversity of thought highly appreciated</label>
-				<value>-30</value>
+				<value>-45</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Respected</precept>
 			</li>
 			<li>
 				<label>diversity of thought exalted</label>
-				<value>-40</value>
+				<value>-60</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Exalted</precept>
 			</li>
@@ -2066,8 +2089,8 @@
 				<ideoCertainty>
 					<offset>
 						<points>
-							<li>(0, -10)</li>
-							<li>(1, 10)</li>
+							<li>(0, -15)</li>
+							<li>(1, 15)</li>
 						</points>
 					</offset>
 				</ideoCertainty>
@@ -2123,8 +2146,8 @@
 				<opinionOfTarget>
 					<offset>
 						<points>
-							<li>(-100, -20)</li>
-							<li>(100, 20)</li>
+							<li>(-100, -40)</li>
+							<li>(100, 40)</li>
 						</points>
 					</offset>
 				</opinionOfTarget>
@@ -2158,8 +2181,8 @@
 				<opinionOfTarget>
 					<offset>
 						<points>
-							<li>(-100, 20)</li>
-							<li>(100, -20)</li>
+							<li>(-100, 40)</li>
+							<li>(100, -40)</li>
 						</points>
 					</offset>
 				</opinionOfTarget>
