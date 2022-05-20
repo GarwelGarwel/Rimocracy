@@ -49,7 +49,7 @@ namespace Rimocracy
         public float changeLoyalty;
         public float loyaltyEffect = 0.10f;
 
-        public string LabelTitleCase => GenText.ToTitleCaseSmart(label.Formatted(new NamedArgument(Utility.RimocracyComp.Leader, "TARGET")));
+        public string LabelTitleCase => GenText.ToTitleCaseSmart(label);
 
         public TaggedString Description => description.Formatted(new NamedArgument(Utility.LeaderTitle, "LEADER"), new NamedArgument(Utility.NationName, "NATION"));
 

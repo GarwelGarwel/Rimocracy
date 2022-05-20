@@ -29,6 +29,7 @@ namespace Rimocracy
 
         public int GetVotesNum(DecisionVote vote) => this.Count(pdo => pdo.Vote == vote);
 
-        public override string ToString() => this.Select(opinion => $"{opinion.voter}: {opinion.support.ToStringWithSign("0").ColorizeOpinion(opinion.support)}").ToLineList();
+        public override string ToString() =>
+            this.Select(opinion => $"{opinion.voter}: {opinion.support.ToStringWithSign("0").ColorizeOpinion(opinion.support)}").ToLineList();
     }
 }
