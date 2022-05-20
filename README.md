@@ -7,7 +7,7 @@ Rimocracy introduces the concept of Governance Quality (or simply Governance). I
 
 - Governance directly affects work speed and other related stats. Governance of 0% makes your colonists work slower and reduces their negotiation powers by 25% while 100% Governance increases these values by the same percentage. It is always better to have high Governance.
 - When your leader is elected/appointed, a Focus Skill is semi-randomly selected based on his/her abilities. This skill receives a bigger boost. For instance, Intellectual focus skill will improve research speed. The boost ranges from nothing for zero Governance to 50% for maximum Governance. So if you have 100% governance and Intellectual focus skill, your research speed will be increased by 125% (because of Global Work Speed bonus) x 150% (because of the Focus Skill) = 187.5%.
-- However, Governance always tends to deteriorate, or decay. The rate of decay is higher for colonies with more citizens and at higher Governance level. For instance, if you only have three citizens and 50% of Governance, it will decay at 1.8% per day, but if you have 15 citizens and 100% Governance, you will lose 10.9% of it every day.
+- However, Governance always tends to deteriorate, or decay. The rate of decay is higher for colonies with more citizens and at higher Governance level. For instance, if you only have three citizens and 50% of Governance, it will decay at 1.8% per day, but if you have 15 citizens and 100% Governance, you will lose 10.9% of it every day. In fact, it's a bit more complex than that (see below on Loyalty).
 - To improve Governance, your leader needs to do Govern job. It is done at a Research Station, a throne (if you own Royalty DLC), or the Management Desk from the Colony Manager mod. The effectiveness of governing is affected by the workstation (thrones are better than research stations, for isntance), leader's Intellectual and Social stats and other factors, most importantly the impressiveness of the room. So better give them a good place to govern from.
 - When your leader changes (see more about it below), your Governance is partially reset to the mid-point between its old value and 50%. So, if you had 70% Governance, your new leader will inherit only 60%.
 
@@ -45,7 +45,7 @@ Candidates and their supporters usually hang together and dislike their competit
 
 ## Decisions
 
-Political decisions allow you to change many rules, such as succession type or term duration. Other decisions have more complex effects. E.g., Egalitarianism makes Governance decay depend on the median mood of your citizens (the higher the mood, the slower decay). Most decisions have associated Governance costs and certain requirements. Many decisions also affect the regime type, which can vary from 100% authoritarian to 100% democratic. As you move towards either authoritarianism or democracy, some decisions become unavailable and some others open up to you.
+Political decisions allow you to change many rules, such as succession type or term duration. Other decisions have more complex effects. E.g., Egalitarianism makes Governance decay depend on the median mood of your citizens (the higher the mood, the slower decay). Most decisions have associated Governance costs and certain requirements.
 
 Some decisions, like changing succession type, require support of the majority of your citizens. Their opinions will depend on their personalities and interests (e.g. older pawns will prefer Seniority succession and more aggressive types Martial succession).
 
@@ -55,11 +55,22 @@ Many decisions, even those that don't require a vote, will please or upset your 
 
 Some game actions such as taking, releasing or executing prisoners, banishing pawns, attacking or trading with other settlements will also have their supporters and opponents, who will react accordingly. If the action is supported by your leader, it will usually increase the Governance of the colony. If the leader opposes the action, it will either cause a Governance hit (by default) or the leader can simply veto it (if you've activated the corresponding decision).
 
+## Loyalty
+
+Every citizen (i.e. adult, free colonist) now has a Loyalty need. It represents his or her satisfaction with how the colony is governed. It is affected by the citizen's mood, opinion of the leader and of active decisions as well as by actions. It changes very slowly taking approximately 30 days to go from 0% to 100% (though it falls faster than it rises). However, it is immediately affected by decisions, positively or negatively. There is also a special decision to quickly increase all citizens' loyalty by distributing silver among them.
+
+Loyal pawns may tolerate (that is, not vote against) decisions they would otherwise reject. The level of loyalty you need to have this toleration depends on how strongly they feel about a particular decision or action. You can check it in the respective tooltip. If a citizen tolerates a certain decision or action, they will also have 25% less of a loyalty hit when you take it.
+
+Seriously disloyal citizens may start protesting. Protests are effectively certain mental breaks, but they are contagious: the more colonists are protesting (relative to the colony's population), the more likely others are to join. So better keep them loyal and happy!
+
+Loyalty also has a passive effect: loyal citizens cause less Governance decay than disloyal ones. A completely disloyal colonist counts as three 100% loyal colonists for these calculations, and a protester as four.
+
 ## Required & Supported Mods
 
-- **Harmony 2.0** (required since Rimocracy 1.3)
+- **Harmony 2.0**
 - Colony Manager
 - Individuality
+- Primitive Workbenches
 - Rumor Has It (Continued)
 - Simple Slavery
 - Thrones plus
