@@ -234,9 +234,6 @@
 					<inverted>true</inverted>
 				</li>
 			</all>
-			<regime>
-				<lessThan>-0.10</lessThan>
-			</regime>
 		</requirements>
 	</Rimocracy.LeaderTitleDef>
 

@@ -64,9 +64,11 @@ namespace Rimocracy
             content.Label($"Governance Cost Factor: {Settings.GovernanceCostFactor.ToStringPercent()}", tooltip: "Adjust the Governance cost of decisions");
             Settings.GovernanceCostFactor = (float)Math.Round(content.Slider(Settings.GovernanceCostFactor, 0, 2), 2);
 
+            content.CheckboxLabeled("Loyalty Enabled", ref Settings.LoyaltyEnabled, $"Pawns have a Loyalty need that affects their reaction to decisions and may cause protests. {(Settings.LoyaltyEnabled ? "Note: If you uncheck this but then change your mind, all pawns' loyalties will be reset to 50%.".Colorize(Color.red) : "")}");
+
             content.CheckboxLabeled("Show Action Support Details", ref Settings.ShowActionSupportDetails, "Show a dialog with info about who supported or opposed various actions (e.g. arrest) and why");
 
-            content.CheckboxLabeled("Debug Logging", ref Settings.DebugLogging, "Check to enable verbose logging; it is super useful for catching bugs");
+            content.CheckboxLabeled("Debug Logging", ref Settings.DebugLogging, "Check to enable verbose logging; it is necessary to report bugs");
 
             viewRect.height = content.CurHeight;
             content.End();

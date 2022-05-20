@@ -16,19 +16,20 @@ namespace Rimocracy
         const string indentSymbol = "  ";
 
         public string label;
-        public float support;
-
+        float value;
         bool inverted = false;
 
         List<Consideration> all = new List<Consideration>();
         List<Consideration> any = new List<Consideration>();
+
+        List<Consideration> factors = new List<Consideration>();
+        List<Consideration> offsets = new List<Consideration>();
 
         SuccessionDef succession;
         bool? leaderExists;
         TermDuration termDuration = TermDuration.Undefined;
         bool? campaigning;
         ValueOperations governance;
-        ValueOperations regime;
         ValueOperations population;
         ValueOperations daysOfFood;
         List<TechLevel> techLevels = new List<TechLevel>();
@@ -38,6 +39,7 @@ namespace Rimocracy
         bool? isLeader;
         bool? isTarget;
         TraitDef trait;
+        int traitDegree;
         List<SkillOperations> skills = new List<SkillOperations>();
         bool? isCapableOfViolence;
         ValueOperations medianOpinionOfMe;
@@ -51,7 +53,10 @@ namespace Rimocracy
         bool? targetIsColonist;
         bool? targetIsLeader;
         bool? targetInAggroMentalState;
+        bool? targetIsGuilty;
+        bool? targetIsWild;
         TraitDef targetTrait;
+        int targetTraitDegree;
         ValueOperations opinionOfTarget;
         ValueOperations medianOpinionOfTarget;
         ValueOperations targetAge;
@@ -64,12 +69,13 @@ namespace Rimocracy
             !inverted
             && all.NullOrEmpty()
             && any.NullOrEmpty()
+            && factors.NullOrEmpty()
+            && offsets.NullOrEmpty()
             && succession == null
             && leaderExists == null
             && termDuration == TermDuration.Undefined
             && campaigning == null
             && governance == null
-            && regime == null
             && population == null
             && daysOfFood == null
             && techLevels.EnumerableNullOrEmpty()
@@ -88,12 +94,19 @@ namespace Rimocracy
             && targetIsColonist == null
             && targetIsLeader == null
             && targetInAggroMentalState == null
+            && targetIsGuilty == null
+            && targetIsWild == null
             && targetTrait == null
             && medianOpinionOfTarget == null
             && medianOpinionOfTarget == null
             && targetAge == null
             && targetFactionGoodwill == null
             && primaryIdeoligion == null;
+
+        public Consideration()
+        { }
+
+        public Consideration(float value) => this.value = value;
 
         public static implicit operator bool(Consideration consideration) => consideration.IsSatisfied(target: Utility.RimocracyComp.Leader);
 
@@ -111,14 +124,12 @@ namespace Rimocracy
                 res &= Utility.RimocracyComp.IsCampaigning == campaigning;
             if (res && governance != null)
                 res &= governance.Compare(Utility.RimocracyComp.Governance);
-            if (res && regime != null)
-                res &= regime.Compare(Utility.RimocracyComp.RegimeFinal);
             if (res && population != null)
                 res &= population.Compare(Utility.Population);
             if (res && daysOfFood != null)
                 res &= daysOfFood.Compare(Utility.DaysOfFood);
             if (res && techLevels.Any())
-                res &= techLevels.Contains(Find.FactionManager.OfPlayer.def.techLevel);
+                res &= techLevels.Contains(Faction.OfPlayer.def.techLevel);
             if (res && !modActive.NullOrEmpty())
                 res &= ModsConfig.IsActive(modActive.Contains('.') ? modActive : $"Ludeon.RimWorld.{modActive}");
             if (res && !decision.NullOrEmpty())
@@ -131,7 +142,7 @@ namespace Rimocracy
                 if (res && isTarget != null)
                     res &= (pawn == target) == isTarget;
                 if (res && trait != null && pawn?.story?.traits != null)
-                    res &= pawn.story.traits.HasTrait(trait);
+                    res &= pawn.story.traits.HasTrait(trait, traitDegree);
                 if (res && !skills.NullOrEmpty())
                     res &= skills.TrueForAll(so => so.Compare(pawn));
                 if (res && isCapableOfViolence != null)
@@ -152,16 +163,20 @@ namespace Rimocracy
                     res &= target.IsLeader() == targetIsLeader;
                 if (res && targetInAggroMentalState != null)
                     res &= target.InAggroMentalState == targetInAggroMentalState;
+                if (res && targetIsGuilty != null)
+                    res &= target.guilt.IsGuilty == targetIsGuilty;
+                if (res && targetIsWild != null)
+                    res &= target.IsWildMan() == targetIsWild;
                 if (res && targetTrait != null && target.story?.traits != null)
-                    res &= target.story.traits.HasTrait(targetTrait);
+                    res &= target.story.traits.HasTrait(targetTrait, targetTraitDegree);
                 if (res && opinionOfTarget != null && pawn != null)
                     res &= opinionOfTarget.Compare(pawn.GetOpinionOf(target));
                 if (res && medianOpinionOfTarget != null)
                     res &= medianOpinionOfTarget.Compare(target.MedianCitizensOpinion());
                 if (res && targetAge != null && target.ageTracker != null)
                     res &= targetAge.Compare(target.ageTracker.AgeBiologicalYears);
-                if (res && targetFactionGoodwill != null && target.Faction != null && !target.Faction.IsPlayer)
-                    res &= targetFactionGoodwill.Compare(target.Faction.PlayerGoodwill);
+                if (res && targetFactionGoodwill != null && target.HomeFaction != null && !target.HomeFaction.IsPlayer)
+                    res &= targetFactionGoodwill.Compare(target.HomeFaction.PlayerGoodwill);
             }
 
             Ideo ideo = pawn?.Ideo ?? Utility.NationPrimaryIdeo;
@@ -184,20 +199,19 @@ namespace Rimocracy
             return res ^ inverted;
         }
 
-        public (float support, TaggedString explanation) GetSupportAndExplanation(Pawn pawn, Pawn target)
+        public (float value, TaggedString explanation) GetSupportAndExplanation(Pawn pawn, Pawn target)
         {
-            float s = GetSupport(pawn, target);
-            return (s, s != 0 ? $"{label.Formatted(pawn.Named("PAWN"), target.Named("TARGET")).Resolve().CapitalizeFirst()}: {s.ToStringWithSign("0")}" : null);
+            float s = GetValue(pawn, target);
+            return (s, s != 0 ? $"{label.Formatted(pawn.Named("PAWN"), target.Named("TARGET")).Resolve().CapitalizeFirst()}: {s.ToStringWithSign("0").ColorizeOpinion(s)}" : null);
         }
 
-        public float GetSupport(Pawn pawn, Pawn target = null)
+        public float GetValue(Pawn pawn, Pawn target = null)
         {
             if (!IsSatisfied(pawn, target))
                 return 0;
-            float s = support;
+            float s = value;
 
             governance?.TransformValue(Utility.RimocracyComp.Governance, ref s);
-            regime?.TransformValue(Utility.RimocracyComp.RegimeFinal, ref s);
             population?.TransformValue(Utility.Population, ref s);
             daysOfFood?.TransformValue(Utility.DaysOfFood, ref s);
             foreach (SkillOperations so in skills)
@@ -218,6 +232,11 @@ namespace Rimocracy
                 if (target.Faction != null && !target.Faction.IsPlayer)
                     targetFactionGoodwill?.TransformValue(target.Faction.PlayerGoodwill, ref s);
             }
+
+            foreach (Consideration factor in factors.Where(factor => factor.IsSatisfied(pawn, target)))
+                s *= factor.GetValue(pawn, target);
+            foreach (Consideration offset in offsets)
+                s += offset.GetValue(pawn, target);
             return s;
         }
 
@@ -252,8 +271,6 @@ namespace Rimocracy
                 AddLine($"Campaign is {((bool)campaigning ? "on" : "off")}");
             if (governance != null)
                 AddLine(governance.ToString("Governance", "P0"));
-            if (regime != null)
-                AddLine(regime.ToString("Regime (democracy)", "P0"));
             if (population != null)
                 AddLine(population.ToString("Population"));
             if (daysOfFood != null)
@@ -266,16 +283,16 @@ namespace Rimocracy
                 AddLine($"{GenText.SplitCamelCase(decision)} is active");
 
             if (isLeader != null)
-                AddLine($"{pawn.CapitalizeFirst()} is {((bool)isLeader ? $"" :"not ")}the leader");
+                AddLine($"{pawn.CapitalizeFirst()} is {((bool)isLeader ? "" :"not ")}the leader");
             if (isTarget != null)
-                AddLine($"{pawn.CapitalizeFirst()} is {((bool)isTarget ? $"" : $"not ")}the target");
+                AddLine($"{pawn.CapitalizeFirst()} is {((bool)isTarget ? "" : "not ")}the target");
             if (trait != null)
-                AddLine($"{pawn.CapitalizeFirst()} has trait {trait}");
+                AddLine($"{pawn.CapitalizeFirst()} has trait {trait.LabelCap}{(traitDegree != 0 ? $" of {trait.DataAtDegree(traitDegree)?.LabelCap}" : "")}");
             if (!skills.EnumerableNullOrEmpty())
                 foreach (SkillOperations skill in skills)
                     AddLine(skill.ToString(skill.skill.LabelCap));
             if (isCapableOfViolence != null)
-                AddLine($"{pawn.CapitalizeFirst()} is {((bool)isCapableOfViolence ? $"" : "in")}capable of violence");
+                AddLine($"{pawn.CapitalizeFirst()} is {((bool)isCapableOfViolence ? "" : "in")}capable of violence");
             if (medianOpinionOfMe != null)
                 AddLine(medianOpinionOfMe.ToString($"Median citizens' opinion of {pawn}"));
             if (age != null)
@@ -310,8 +327,12 @@ namespace Rimocracy
                 AddLine($"{target.CapitalizeFirst()} is {((bool)targetIsLeader ? "" : "not ")}the leader");
             if (targetInAggroMentalState != null)
                 AddLine($"{target.CapitalizeFirst()} is {((bool)targetInAggroMentalState ? "" : "not ")}in an aggressive mental break");
+            if (targetIsGuilty != null)
+                AddLine($"{target.CapitalizeFirst()} is {((bool)targetIsGuilty ? "" : "not ")}guilty");
+            if (targetIsWild != null)
+                AddLine($"{target.CapitalizeFirst()} is {((bool)targetIsWild ? "" : "not ")}wild");
             if (targetTrait != null)
-                AddLine($"{target.CapitalizeFirst()} has trait {targetTrait}");
+                AddLine($"{target.CapitalizeFirst()} has trait {targetTrait.LabelCap}{(targetTraitDegree != 0 ? $" of {targetTrait.DataAtDegree(targetTraitDegree)?.LabelCap}" : "")}");
             if (opinionOfTarget != null)
                 AddLine($"{opinionOfTarget.ToString($"{pawn.CapitalizeFirst()}'s opinion of {target}")}");
             if (medianOpinionOfTarget != null)

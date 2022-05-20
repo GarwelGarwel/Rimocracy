@@ -51,13 +51,8 @@ namespace Rimocracy
             {
                 content.Label("Active decisions:");
                 foreach (Decision decision in Utility.RimocracyComp.Decisions)
-                    content.Label($"- {decision.def.LabelTitleCase}{(decision.def.Expiration != int.MaxValue ? $" (expires in {(decision.expiration - Find.TickManager.TicksAbs).ToStringTicksToPeriod()})" : "")}", tooltip: decision.def.description);
+                    content.Label($"- {decision.def.LabelTitleCase}{(decision.def.Expiration != int.MaxValue ? $" (expires in {(decision.expiration - Find.TickManager.TicksAbs).ToStringTicksToPeriod()})" : "")}", tooltip: decision.def.Description);
             }
-
-            // Display regime type
-            if (Utility.RimocracyComp.RegimeFinal != 0)
-                content.Label($"The current regime is {Math.Abs(Utility.RimocracyComp.RegimeFinal).ToStringPercent()} {(Utility.RimocracyComp.RegimeFinal > 0 ? "democratic" : "authoritarian")}.");
-            else content.Label("The current regime is neither democratic nor authoritarian.");
 
             content.GapLine();
 
@@ -82,14 +77,11 @@ namespace Rimocracy
                     GUI.color = Color.white;
                     if (decisionToShowDetails == def)
                     {
-                        content.Label(def.description);
+                        content.Label(def.Description);
                         if (def.governanceCost != 0)
-                            content.Label($"Will {(def.governanceCost > 0 ? "reduce" : "increase")} Governance by {Math.Abs(def.GovernanceCost).ToStringPercent()}.");
-                        if (def.regimeEffect != 0)
-                            content.Label($"Will move the regime {Math.Abs(def.regimeEffect).ToStringPercent()} towards {(def.regimeEffect > 0 ? "democracy" : "authoritarianism")}.");
+                            content.Label($"Will {(def.governanceCost > 0 ? "reduce" : "increase")} Governance by {Math.Abs(def.GovernanceCost).ToStringPercent().ColorizeByValue(-def.governanceCost)}.");
                         if (!def.effectRequirements.IsTrivial)
                             content.Label($"Requirements:\n{def.effectRequirements.ToString(target: Utility.RimocracyComp.Leader?.NameShortColored)}");
-
                         switch (def.enactment)
                         {
                             case DecisionEnactmentRule.Decree:
@@ -101,19 +93,21 @@ namespace Rimocracy
                                 content.Label($"Requires approval of a majority of citizens.");
                                 break;
                         }
-                        
+
                         DecisionVoteResults votingResult = def.GetVotingResults(Utility.Citizens.ToList());
                         if (def.enactment == DecisionEnactmentRule.Decree && Utility.RimocracyComp.HasLeader)
                         {
                             PawnDecisionOpinion leaderOpinion = votingResult[Utility.RimocracyComp.Leader];
-                            content.Label($"{Utility.LeaderTitle.CapitalizeFirst()}'s support: {leaderOpinion.support.ToStringWithSign("0")}", tooltip: leaderOpinion.explanation);
+                            content.Label($"{Utility.LeaderTitle.CapitalizeFirst()} {leaderOpinion.VoteStringColored} this decision.", tooltip: leaderOpinion.explanation);
                         }
 
                         if ((def.allCitizensReact || def.enactment == DecisionEnactmentRule.Law || def.enactment == DecisionEnactmentRule.Referendum) && votingResult.Any(opinion => opinion.Vote != DecisionVote.Abstain))
                         {
-                            content.Label($"Citizens' support: {votingResult.Yea.ToStringCached()} - {votingResult.Nay.ToStringCached()}");
+                            content.Label($"Citizens' support: {votingResult.Yea.ToStringCached().Colorize(Color.green)} - {votingResult.Nay.ToStringCached().Colorize(Color.red)}");
                             foreach (PawnDecisionOpinion opinion in votingResult)
-                                content.Label($"  {opinion.voter.NameShortColored}: {opinion.support.ToStringWithSign("0")}", tooltip: opinion.explanation);
+                                content.Label($"   {opinion.voter.NameShortColored}: {opinion.VoteStringColored}", tooltip: opinion.explanation);
+                            if (def.loyaltyEffect != 0)
+                                content.Label($"Loyalty of citizens who support this decision will increase, and of those who oppose or tolerate it, decrease by up to {def.loyaltyEffect.ToStringPercent()}.");
                         }
 
                         // Display Activate button for valid decisions
@@ -122,16 +116,9 @@ namespace Rimocracy
                             if (content.ButtonText("Activate"))
                             {
                                 Utility.Log($"Activating {def.defName}.");
-                                if (def.Activate())
-                                {
-                                    foreach (PawnDecisionOpinion opinion in votingResult.Where(opinion => opinion.Vote != DecisionVote.Abstain))
-                                    {
-                                        Utility.Log($"{opinion.voter}'s opinion is {opinion.support.ToStringWithSign()}.");
-                                        opinion.voter.needs.mood.thoughts.memories.TryGainMemory(opinion.Vote == DecisionVote.Yea ? RimocracyDefOf.LikeDecision : RimocracyDefOf.DislikeDecision);
-                                    }
+                                if (def.Activate(votingResult))
                                     Find.LetterStack.ReceiveLetter($"{def.LabelTitleCase} Decision Taken", def.description, LetterDefOf.NeutralEvent, null);
-                                }
-                                else Messages.Message($"Could not take {def.LabelTitleCase} decision: requirements are not met.", MessageTypeDefOf.NegativeEvent, false);
+                                else Messages.Message($"Could not take {def.LabelTitleCase} decision: requirements are not met.", MessageTypeDefOf.RejectInput, false);
                                 Close();
                             }
                         }
@@ -140,7 +127,7 @@ namespace Rimocracy
                         // Display devmode (cheat) Activate button
                         if (Prefs.DevMode && content.ButtonText("Activate (DevMode)"))
                         {
-                            def.Activate(true);
+                            def.Activate(votingResult, true);
                             Close();
                         }
 

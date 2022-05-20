@@ -20,6 +20,14 @@
 	</RecordDef>
 
 	<RecordDef>
+		<defName>TimeProtesting</defName>
+		<label>time protesting</label>
+		<description>Total time spent protesting.</description>
+		<type>Time</type>
+		<workerClass>Rimocracy.RecordWorker_TimeProtesting</workerClass>
+	</RecordDef>
+
+	<RecordDef>
 		<defName>TimesElected</defName>
 		<label>times elected</label>
 		<description>The number of times this pawn has been elected a leader.</description>

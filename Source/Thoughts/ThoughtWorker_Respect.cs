@@ -8,7 +8,7 @@ namespace Rimocracy
         protected override ThoughtState CurrentSocialStateInternal(Pawn p, Pawn otherPawn)
         {
             if (otherPawn.IsLeader() && p.IsCitizen())
-                if (!Utility.RimocracyComp.DecisionActive("CultOfPersonality"))
+                if (!Utility.RimocracyComp.DecisionActive(DecisionDef.CultOfPersonality))
                 {
                     if (Utility.RimocracyComp.Governance < 0.10)
                         return ThoughtState.ActiveAtStage(0);

@@ -1,5 +1,4 @@
 ﻿using RimWorld;
-using Verse;
 
 namespace Rimocracy
 {
@@ -13,6 +12,6 @@ namespace Rimocracy
                 base.TransformValue(req, ref val);
         }
 
-        bool IsApplicable => Utility.PoliticsEnabled && Utility.RimocracyComp.DecisionActive("Elitism");
+        bool IsApplicable => Utility.PoliticsEnabled && Utility.RimocracyComp.DecisionActive(DecisionDef.Elitism);
     }
 }

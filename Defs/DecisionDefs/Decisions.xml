@@ -8,14 +8,15 @@
 		<category>SuccessionTypes</category>
 		<enactment>Law</enactment>
 		<tag>Succession</tag>
-		<durationTicks>1000000</durationTicks>
+		<durationDays>20</durationDays>
 		<governanceCost>0.25</governanceCost>
+		<loyaltyEffect>0.20</loyaltyEffect>
 	</Rimocracy.DecisionDef>
 	
 	<Rimocracy.DecisionDef ParentName="BaseSuccessionDecision">
 		<defName>SuccessionElection</defName>
 		<label>election succession</label>
-		<description>The leader shall be elected by all free, adult colonists.</description>
+		<description>The {LEADER} shall be elected by all free, adult colonists.</description>
 		<displayPriorityInCategory>10</displayPriorityInCategory>
 		<displayRequirements>
 			<succession>Election</succession>
@@ -31,8 +32,8 @@
 				<medianOpinionOfMe>
 					<offset>
 						<points>
-							<li>(-100, -10)</li>
-							<li>(100, 10)</li>
+							<li>(-100, -20)</li>
+							<li>(100, 20)</li>
 						</points>
 					</offset>
 				</medianOpinionOfMe>
@@ -50,7 +51,7 @@
 					<lessThan>0</lessThan>
 					<offset>
 						<points>
-							<li>(-100, 20)</li>
+							<li>(-100, 40)</li>
 							<li>(0, 0)</li>
 						</points>
 					</offset>
@@ -61,7 +62,7 @@
 			</li>
 			<li>
 				<label>I want a right to vote</label>
-				<support>5</support>
+				<value>10</value>
 				<isLeader>false</isLeader>
 			</li>
 			<li>
@@ -70,8 +71,8 @@
 				<age>
 					<offset>
 						<points>
-							<li>(18, 10)</li>
-							<li>(80, -10)</li>
+							<li>(18, 20)</li>
+							<li>(80, -20)</li>
 						</points>
 					</offset>
 				</age>
@@ -84,8 +85,8 @@
 						<skill>Shooting</skill>
 						<offset>
 							<points>
-								<li>(0, 5)</li>
-								<li>(20, -5)</li>
+								<li>(0, 10)</li>
+								<li>(20, -10)</li>
 							</points>
 						</offset>
 					</li>
@@ -93,8 +94,8 @@
 						<skill>Melee</skill>
 						<offset>
 							<points>
-								<li>(0, 5)</li>
-								<li>(20, -5)</li>
+								<li>(0, 10)</li>
+								<li>(20, -10)</li>
 							</points>
 						</offset>
 					</li>
@@ -102,17 +103,17 @@
 			</li>
 			<li>
 				<label>raider ideoligion</label>
-				<support>-5</support>
+				<value>-10</value>
 				<meme>Raider</meme>
 			</li>
 			<li>
 				<label>individualist ideoligion</label>
-				<support>5</support>
+				<value>10</value>
 				<meme>Individualist</meme>
 			</li>
 			<li>
 				<label>collectivist ideoligion</label>
-				<support>-5</support>
+				<value>-10</value>
 				<meme>Collectivist</meme>
 			</li>
 		</considerations>
@@ -122,26 +123,21 @@
 	<Rimocracy.DecisionDef ParentName="BaseSuccessionDecision">
 		<defName>SuccessionLot</defName>
 		<label>lot succession</label>
-		<description>The leader shall be chosen randomly from all citizens. Considered not very democratic.</description>
+		<description>The {LEADER} shall be chosen randomly from all citizens.</description>
 		<displayPriorityInCategory>20</displayPriorityInCategory>
 		<displayRequirements>
 			<succession>Lot</succession>
 			<inverted>true</inverted>
 		</displayRequirements>
-		<effectRequirements>
-			<regime>
-				<lessOrEqual>0.10</lessOrEqual>
-			</regime>
-		</effectRequirements>
 		<considerations>
 			<li>
 				<label>I don't want to take chances</label>
-				<support>-5</support>
+				<value>-10</value>
 				<isLeader>true</isLeader>
 			</li>
 			<li>
 				<label>I'll have a chance to rule</label>
-				<support>5</support>
+				<value>10</value>
 				<isLeader>false</isLeader>
 			</li>
 			<li>
@@ -150,8 +146,8 @@
 				<medianOpinionOfMe>
 					<offset>
 						<points>
-							<li>(-100, 10)</li>
-							<li>(100, -10)</li>
+							<li>(-100, 20)</li>
+							<li>(100, -20)</li>
 						</points>
 					</offset>
 				</medianOpinionOfMe>
@@ -162,15 +158,15 @@
 				<age>
 					<offset>
 						<points>
-							<li>(18, 10)</li>
-							<li>(80, -10)</li>
+							<li>(18, 20)</li>
+							<li>(80, -20)</li>
 						</points>
 					</offset>
 				</age>
 			</li>
 			<li>
 				<label>I don't want to lose my noble privileges</label>
-				<support>-10</support>
+				<value>-20</value>
 				<titleSeniority>
 					<greaterThan>0</greaterThan>
 				</titleSeniority>
@@ -191,8 +187,8 @@
 						<skill>Shooting</skill>
 						<offset>
 							<points>
-								<li>(0, 5)</li>
-								<li>(20, -5)</li>
+								<li>(0, 10)</li>
+								<li>(20, -10)</li>
 							</points>
 						</offset>
 					</li>
@@ -200,8 +196,8 @@
 						<skill>Melee</skill>
 						<offset>
 							<points>
-								<li>(0, 5)</li>
-								<li>(20, -5)</li>
+								<li>(0, 10)</li>
+								<li>(20, -10)</li>
 							</points>
 						</offset>
 					</li>
@@ -214,16 +210,15 @@
 	<Rimocracy.DecisionDef ParentName="BaseSuccessionDecision">
 		<defName>SuccessionSeniority</defName>
 		<label>seniority succession</label>
-		<description>The oldest, and therefore most experienced, colonist shall be the leader. Considered non-democratic.</description>
+		<description>The oldest, and therefore most experienced, colonist shall be the {LEADER}.</description>
 		<displayPriorityInCategory>30</displayPriorityInCategory>
 		<displayRequirements>
 			<succession>Seniority</succession>
 			<inverted>true</inverted>
 		</displayRequirements>
 		<effectRequirements>
-			<regime>
-				<lessOrEqual>-0.10</lessOrEqual>
-			</regime>
+			<decision>Egalitarianism</decision>
+			<inverted>true</inverted>
 		</effectRequirements>
 		<considerations>
 			<li>
@@ -231,8 +226,8 @@
 				<age>
 					<offset>
 						<points>
-							<li>(18, -20)</li>
-							<li>(80, 20)</li>
+							<li>(18, -40)</li>
+							<li>(80, 40)</li>
 						</points>
 					</offset>
 				</age>
@@ -243,15 +238,15 @@
 				<medianOpinionOfMe>
 					<offset>
 						<points>
-							<li>(-100, 10)</li>
-							<li>(100, -10)</li>
+							<li>(-100, 20)</li>
+							<li>(100, -20)</li>
 						</points>
 					</offset>
 				</medianOpinionOfMe>
 			</li>
 			<li>
 				<label>I don't want to lose my noble privileges</label>
-				<support>-5</support>
+				<value>-10</value>
 				<titleSeniority>
 					<greaterThan>0</greaterThan>
 				</titleSeniority>
@@ -272,8 +267,8 @@
 						<skill>Shooting</skill>
 						<offset>
 							<points>
-								<li>(0, 5)</li>
-								<li>(20, -5)</li>
+								<li>(0, 10)</li>
+								<li>(20, -10)</li>
 							</points>
 						</offset>
 					</li>
@@ -281,8 +276,8 @@
 						<skill>Melee</skill>
 						<offset>
 							<points>
-								<li>(0, 5)</li>
-								<li>(20, -5)</li>
+								<li>(0, 10)</li>
+								<li>(20, -10)</li>
 							</points>
 						</offset>
 					</li>
@@ -290,12 +285,12 @@
 			</li>
 			<li>
 				<label>loyalist ideoligion</label>
-				<support>5</support>
+				<value>10</value>
 				<meme>Loyalist</meme>
 			</li>
 			<li>
 				<label>research not allowed</label>
-				<support>4</support>
+				<value>8</value>
 				<precept>Research_None</precept>
 			</li>
 		</considerations>
@@ -305,7 +300,7 @@
 	<Rimocracy.DecisionDef ParentName="BaseSuccessionDecision">
 		<defName>SuccessionNobility</defName>
 		<label>nobility succession</label>
-		<description>The pawn with the highest, and oldest, nobility title will be the leader. Considered non-democratic.</description>
+		<description>The pawn with the highest, and oldest, nobility title shall be the {LEADER}.</description>
 		<displayPriorityInCategory>40</displayPriorityInCategory>
 		<displayRequirements>
 			<inverted>true</inverted>
@@ -319,9 +314,8 @@
 			</any>
 		</displayRequirements>
 		<effectRequirements>
-			<regime>
-				<lessOrEqual>-0.10</lessOrEqual>
-			</regime>
+			<decision>Egalitarianism</decision>
+			<inverted>true</inverted>
 		</effectRequirements>
 		<considerations>
 			<li>
@@ -329,9 +323,9 @@
 				<titleSeniority>
 					<offset>
 						<points>
-							<li>(-100, -10)</li>
+							<li>(-100, -20)</li>
 							<li>(0, 1)</li>
-							<li>(600, 60)</li>
+							<li>(600, 120)</li>
 						</points>
 					</offset>
 				</titleSeniority>
@@ -342,8 +336,8 @@
 				<medianOpinionOfMe>
 					<offset>
 						<points>
-							<li>(-100, 10)</li>
-							<li>(100, -10)</li>
+							<li>(-100, 20)</li>
+							<li>(100, -20)</li>
 						</points>
 					</offset>
 				</medianOpinionOfMe>
@@ -354,8 +348,8 @@
 				<age>
 					<offset>
 						<points>
-							<li>(18, 10)</li>
-							<li>(80, -10)</li>
+							<li>(18, 20)</li>
+							<li>(80, -20)</li>
 						</points>
 					</offset>
 				</age>
@@ -368,8 +362,8 @@
 						<skill>Shooting</skill>
 						<offset>
 							<points>
-								<li>(0, 5)</li>
-								<li>(20, -5)</li>
+								<li>(0, 10)</li>
+								<li>(20, -10)</li>
 							</points>
 						</offset>
 					</li>
@@ -377,8 +371,8 @@
 						<skill>Melee</skill>
 						<offset>
 							<points>
-								<li>(0, 5)</li>
-								<li>(20, -5)</li>
+								<li>(0, 10)</li>
+								<li>(20, -10)</li>
 							</points>
 						</offset>
 					</li>
@@ -386,12 +380,12 @@
 			</li>
 			<li>
 				<label>loyalist ideoligion</label>
-				<support>5</support>
+				<value>10</value>
 				<meme>Loyalist</meme>
 			</li>
 			<li>
 				<label>research not allowed</label>
-				<support>4</support>
+				<value>8</value>
 				<precept>Research_None</precept>
 			</li>
 		</considerations>
@@ -401,21 +395,16 @@
 	<Rimocracy.DecisionDef ParentName="BaseSuccessionDecision">
 		<defName>SuccessionMartial</defName>
 		<label>martial succession</label>
-		<description>The most accomplished warrior will become our leader. Considered non-democratic.</description>
+		<description>The most accomplished warrior shall become our {LEADER}.</description>
 		<displayPriorityInCategory>50</displayPriorityInCategory>
 		<displayRequirements>
 			<succession>Martial</succession>
 			<inverted>true</inverted>
 		</displayRequirements>
-		<effectRequirements>
-			<regime>
-				<lessOrEqual>-0.10</lessOrEqual>
-			</regime>
-		</effectRequirements>
 		<considerations>
 			<li>
 				<label>incapable of violence</label>
-				<support>-20</support>
+				<value>-30</value>
 				<isCapableOfViolence>false</isCapableOfViolence>
 			</li>
 			<li>
@@ -445,27 +434,27 @@
 			</li>
 			<li>
 				<label>bloodlust</label>
-				<support>10</support>
+				<value>10</value>
 				<trait>Bloodlust</trait>
 			</li>
 			<li>
 				<label>kind</label>
-				<support>-10</support>
+				<value>-10</value>
 				<trait>Kind</trait>
 			</li>
 			<li>
 				<label>brawler</label>
-				<support>15</support>
+				<value>15</value>
 				<trait>Brawler</trait>
 			</li>
 			<li>
 				<label>tough</label>
-				<support>10</support>
+				<value>10</value>
 				<trait>Tough</trait>
 			</li>
 			<li>
 				<label>wimp</label>
-				<support>-15</support>
+				<value>-15</value>
 				<trait>Wimp</trait>
 			</li>
 			<li>
@@ -494,7 +483,7 @@
 			</li>
 			<li>
 				<label>I don't want to lose my noble privileges</label>
-				<support>-5</support>
+				<value>-10</value>
 				<titleSeniority>
 					<greaterThan>0</greaterThan>
 				</titleSeniority>
@@ -509,27 +498,27 @@
 			</li>
 			<li>
 				<label>raider ideoligion</label>
-				<support>5</support>
+				<value>6</value>
 				<meme>Raider</meme>
 			</li>
 			<li>
 				<label>supremacist ideoligion</label>
-				<support>10</support>
+				<value>10</value>
 				<meme>Supremacist</meme>
 			</li>
 			<li>
 				<label>raiding respected</label>
-				<support>5</support>
+				<value>6</value>
 				<precept>Raiding_Respected</precept>
 			</li>
 			<li>
 				<label>raiding required</label>
-				<support>10</support>
+				<value>10</value>
 				<precept>Raiding_Required</precept>
 			</li>
 			<li>
 				<label>research not allowed</label>
-				<support>4</support>
+				<value>4</value>
 				<precept>Research_None</precept>
 			</li>
 		</considerations>
@@ -551,7 +540,7 @@
 	<Rimocracy.DecisionDef ParentName="BaseTermDurationDecision">
 		<defName>TermQuadrum</defName>
 		<label>quadrum-long term</label>
-		<description>Set term of a leader to one quadrum (15 days).</description>
+		<description>Set term of {LEADER} to one quadrum (15 days).</description>
 		<displayPriorityInCategory>10</displayPriorityInCategory>
 		<displayRequirements>
 			<termDuration>Halfyear</termDuration>
@@ -562,7 +551,7 @@
 	<Rimocracy.DecisionDef ParentName="BaseTermDurationDecision">
 		<defName>TermHalfYear</defName>
 		<label>half-year long term</label>
-		<description>Set term of a leader to half a year (30 days).</description>
+		<description>Set term of {LEADER} to half a year (30 days).</description>
 		<displayPriorityInCategory>20</displayPriorityInCategory>
 		<displayRequirements>
 			<any>
@@ -580,7 +569,7 @@
 	<Rimocracy.DecisionDef ParentName="BaseTermDurationDecision">
 		<defName>TermYear</defName>
 		<label>year-long term</label>
-		<description>Set term of a leader to one year (60 days).</description>
+		<description>Set term of {LEADER} to one year (60 days).</description>
 		<displayPriorityInCategory>30</displayPriorityInCategory>
 		<displayRequirements>
 			<any>
@@ -598,20 +587,15 @@
 	<Rimocracy.DecisionDef ParentName="BaseTermDurationDecision">
 		<defName>TermIndefinite</defName>
 		<label>indefinite term</label>
-		<description>Leaders will rule till their death.</description>
+		<description>{LEADER} will rule till his or her death.</description>
 		<displayPriorityInCategory>40</displayPriorityInCategory>
 		<displayRequirements>
 			<termDuration>Year</termDuration>
 		</displayRequirements>
-		<effectRequirements>
-			<regime>
-				<lessOrEqual>-0.20</lessOrEqual>
-			</regime>
-		</effectRequirements>
 		<considerations>
 			<li>
 				<label>I want to rule forever</label>
-				<support>10</support>
+				<value>100</value>
 				<isLeader>true</isLeader>
 			</li>
 			<li>
@@ -620,20 +604,21 @@
 				<opinionOfTarget>
 					<offset>
 						<points>
-							<li>(-100, -10)</li>
-							<li>(100, 10)</li>
+							<li>(-100, -100)</li>
+							<li>(0, 0)</li>
+							<li>(100, 50)</li>
 						</points>
 					</offset>
 				</opinionOfTarget>
 			</li>
 			<li>
 				<label>loyalist ideoligion</label>
-				<support>3</support>
+				<value>15</value>
 				<meme>Loyalist</meme>
 			</li>
 			<li>
 				<label>research not allowed</label>
-				<support>2</support>
+				<value>10</value>
 				<precept>Research_None</precept>
 			</li>
 		</considerations>
@@ -646,15 +631,12 @@
 	<Rimocracy.DecisionDef>
 		<defName>Impeachment</defName>
 		<label>impeach leader</label>
-		<description>Immediately relieve the current leader of his or her duties and initiate a new succession.</description>
+		<description>Immediately relieve the current {LEADER} of their duties and initiate a new succession.</description>
 		<category>Terms</category>
 		<enactment>Referendum</enactment>
 		<displayPriorityInCategory>50</displayPriorityInCategory>
 		<displayRequirements>
 			<leaderExists>true</leaderExists>
-			<regime>
-				<greaterOrEqual>-0.50</greaterOrEqual>
-			</regime>
 			<all>
 				<li>
 					<succession>Seniority</succession>
@@ -662,6 +644,10 @@
 				</li>
 				<li>
 					<decision>Stability</decision>
+					<inverted>true</inverted>
+				</li>
+				<li>
+					<decision>CultOfPersonality</decision>
 					<inverted>true</inverted>
 				</li>
 			</all>
@@ -674,14 +660,20 @@
 					<offset>
 						<points>
 							<li>(0.50, 0)</li>
-							<li>(1, -10)</li>
+							<li>(1, -40)</li>
 						</points>
 					</offset>
 				</governance>
+				<factors>
+					<li>
+						<value>2</value>
+						<decision>Stability</decision>
+					</li>
+				</factors>
 			</li>
 			<li>
 				<label>this is a witch-hunt</label>
-				<support>-100</support>
+				<value>-100</value>
 				<isLeader>true</isLeader>
 			</li>
 			<li>
@@ -690,8 +682,8 @@
 				<opinionOfTarget>
 					<offset>
 						<points>
-							<li>(-100, 10)</li>
-							<li>(100, -20)</li>
+							<li>(-100, 30)</li>
+							<li>(100, -45)</li>
 						</points>
 					</offset>
 				</opinionOfTarget>
@@ -701,15 +693,21 @@
 				<medianOpinionOfTarget>
 					<offset>
 						<points>
-							<li>(-100, 5)</li>
-							<li>(100, -10)</li>
+							<li>(-100, 20)</li>
+							<li>(100, -30)</li>
 						</points>
 					</offset>
 				</medianOpinionOfTarget>
 			</li>
 			<li>
+				<label>jealous</label>
+				<value>10</value>
+				<isLeader>false</isLeader>
+				<trait>Jealous</trait>
+			</li>
+			<li>
 				<label>loyalist ideoligion</label>
-				<support>-5</support>
+				<value>-20</value>
 				<meme>Loyalist</meme>
 			</li>
 		</considerations>
@@ -723,16 +721,11 @@
 	<Rimocracy.DecisionDef>
 		<defName>Populism</defName>
 		<label>consent of the governed</label>
-		<description>A true leader never forgets about his or her people and draws authority from their support. The efficiency of the leader is affected by the citizens' median opinion of him/her.</description>
+		<description>A true {LEADER} never forgets about his or her people and draws authority from their support. The efficiency of the leader is affected by the citizens' median opinion of him/her.</description>
 		<category>Democratic</category>
 		<displayPriorityInCategory>10</displayPriorityInCategory>
 		<effectRequirements>
 			<all>
-				<li>
-					<regime>
-						<greaterOrEqual>-0.15</greaterOrEqual>
-					</regime>
-				</li>
 				<li>
 					<decision>CultOfPersonality</decision>
 					<inverted>true</inverted>
@@ -742,29 +735,28 @@
 		<considerations>
 			<li>
 				<label>my opinion will count</label>
-				<support>10</support>
+				<value>50</value>
 				<isLeader>false</isLeader>
 			</li>
 			<li>
 				<label>individualist ideoligion</label>
-				<support>10</support>
+				<value>50</value>
 				<meme>Individualist</meme>
 			</li>
 			<li>
 				<label>collectivist ideoligion</label>
-				<support>-10</support>
+				<value>-50</value>
 				<meme>Collectivist</meme>
 			</li>
 		</considerations>
 		<tag/>
 		<governanceCost>0.25</governanceCost>
-		<regimeEffect>0.20</regimeEffect>
 	</Rimocracy.DecisionDef>
 
 	<Rimocracy.DecisionDef>
 		<defName>Populism_Cancel</defName>
 		<label>cancel "Consent of the Governed"</label>
-		<description>These fools just can't appreciate what the leader is really doing. We shouldn't care about their opinions any more.</description>
+		<description>These fools just can't appreciate what the {LEADER} is really doing. We shouldn't care about their opinions any more.</description>
 		<category>Democratic</category>
 		<displayPriorityInCategory>10</displayPriorityInCategory>
 		<displayRequirements>
@@ -773,17 +765,17 @@
 		<considerations>
 			<li>
 				<label>my opinion won't matter anymore</label>
-				<support>-10</support>
+				<value>-50</value>
 				<isLeader>false</isLeader>
 			</li>
 			<li>
 				<label>individualist ideoligion</label>
-				<support>-10</support>
+				<value>-50</value>
 				<meme>Individualist</meme>
 			</li>
 			<li>
 				<label>collectivist ideoligion</label>
-				<support>10</support>
+				<value>50</value>
 				<meme>Collectivist</meme>
 			</li>
 		</considerations>
@@ -802,12 +794,11 @@
 		<effectRequirements>
 			<all>
 				<li>
-					<regime>
-						<greaterOrEqual>0.10</greaterOrEqual>
-					</regime>
+					<decision>Elitism</decision>
+					<inverted>true</inverted>
 				</li>
 				<li>
-					<decision>Elitism</decision>
+					<decision>CultOfPersonality</decision>
 					<inverted>true</inverted>
 				</li>
 			</all>
@@ -815,43 +806,42 @@
 		<considerations>
 			<li>
 				<label>the government should care about all citizens</label>
-				<support>10</support>
+				<value>50</value>
 				<isLeader>false</isLeader>
 			</li>
 			<li>
 				<label>individualist ideoligion</label>
-				<support>5</support>
+				<value>25</value>
 				<meme>Individualist</meme>
 			</li>
 			<li>
 				<label>collectivist ideoligion</label>
-				<support>-5</support>
+				<value>-50</value>
 				<meme>Collectivist</meme>
 			</li>
 			<li>
 				<label>human primacy</label>
-				<support>5</support>
+				<value>25</value>
 				<meme>HumanPrimacy</meme>
 			</li>
 			<li>
 				<label>pain is virtue</label>
-				<support>-5</support>
+				<value>-25</value>
 				<meme>PainIsVirtue</meme>
 			</li>
 			<li>
 				<label>guilty ideoligion</label>
-				<support>-5</support>
+				<value>-25</value>
 				<meme>Guilty</meme>
 			</li>
 			<li>
 				<label>comfort ignored</label>
-				<support>-5</support>
+				<value>-20</value>
 				<precept>Comfort_Ignored</precept>
 			</li>
 		</considerations>
 		<tag/>
 		<governanceCost>0.25</governanceCost>
-		<regimeEffect>0.30</regimeEffect>
 	</Rimocracy.DecisionDef>
 
 	<Rimocracy.DecisionDef>
@@ -866,37 +856,37 @@
 		<considerations>
 			<li>
 				<label>I wish the government cared more about my happiness</label>
-				<support>-10</support>
+				<value>-50</value>
 				<isLeader>false</isLeader>
 			</li>
 			<li>
 				<label>individualist ideoligion</label>
-				<support>-5</support>
+				<value>-25</value>
 				<meme>Individualist</meme>
 			</li>
 			<li>
 				<label>collectivist ideoligion</label>
-				<support>5</support>
+				<value>50</value>
 				<meme>Collectivist</meme>
 			</li>
 			<li>
 				<label>human primacy</label>
-				<support>-5</support>
+				<value>-25</value>
 				<meme>HumanPrimacy</meme>
 			</li>
 			<li>
 				<label>pain is virtue</label>
-				<support>5</support>
+				<value>25</value>
 				<meme>PainIsVirtue</meme>
 			</li>
 			<li>
-				<label>guilty ideoligion</label>
-				<support>5</support>
+				<label>25 ideoligion</label>
+				<value>10</value>
 				<meme>Guilty</meme>
 			</li>
 			<li>
 				<label>comfort ignored</label>
-				<support>5</support>
+				<value>20</value>
 				<precept>Comfort_Ignored</precept>
 			</li>
 		</considerations>
@@ -914,9 +904,6 @@
 		<displayPriorityInCategory>30</displayPriorityInCategory>
 		<effectRequirements>
 			<succession>Election</succession>
-			<regime>
-				<greaterOrEqual>0.20</greaterOrEqual>
-			</regime>
 		</effectRequirements>
 		<considerations>
 			<li>
@@ -1034,27 +1021,26 @@
 			</li>
 			<li>
 				<label>research not allowed</label>
-				<support>-6</support>
+				<value>-15</value>
 				<precept>Research_None</precept>
 			</li>
 			<li>
 				<label>extremely slow research</label>
-				<support>-4</support>
+				<value>-10</value>
 				<precept>Research_ExtremelySlow</precept>
 			</li>
 			<li>
 				<label>very slow research</label>
-				<support>-2</support>
+				<value>-5</value>
 				<precept>Research_VerySlow</precept>
 			</li>
 			<li>
 				<label>very fast research</label>
-				<support>2</support>
+				<value>5</value>
 				<precept>Research_VeryFast</precept>
 			</li>
 		</considerations>
 		<tag/>
-		<regimeEffect>0.20</regimeEffect>
 		<governanceCost>0.25</governanceCost>
 	</Rimocracy.DecisionDef>
 
@@ -1080,114 +1066,104 @@
 		<category>Democratic</category>
 		<displayPriorityInCategory>40</displayPriorityInCategory>
 		<effectRequirements>
-			<all>
-				<li>
-					<regime>
-						<greaterOrEqual>0.25</greaterOrEqual>
-					</regime>
-				</li>
-				<li>
-					<decision>StateOfEmergency</decision>
-					<inverted>true</inverted>
-				</li>
-			</all>
+			<decision>StateOfEmergency</decision>
+			<inverted>true</inverted>
 		</effectRequirements>
 		<considerations>
 			<li>
+				<label>governance</label>
+				<governance>
+					<offset>
+						<points>
+							<li>(0, -50)</li>
+							<li>(1, 50)</li>
+						</points>
+					</offset>
+				</governance>
+			</li>
+			<li>
 				<label>individualist ideoligion</label>
-				<support>-5</support>
+				<value>-50</value>
 				<meme>Individualist</meme>
 			</li>
 			<li>
 				<label>collectivist ideoligion</label>
-				<support>5</support>
+				<value>50</value>
 				<meme>Collectivist</meme>
 			</li>
 			<li>
 				<label>loyalist ideoligion</label>
-				<support>5</support>
+				<value>25</value>
 				<meme>Loyalist</meme>
 			</li>
 			<li>
 				<label>human primacy</label>
-				<support>5</support>
+				<value>50</value>
 				<meme>HumanPrimacy</meme>
 			</li>
 		</considerations>
 		<tag/>
-		<regimeEffect>0.30</regimeEffect>
 		<governanceCost>0.25</governanceCost>
 	</Rimocracy.DecisionDef>
 
 	<Rimocracy.DecisionDef>
 		<defName>ResPublica_Cancel</defName>
-		<label>cancel "res publica"</label>
+		<label>cancel "Res Publica"</label>
 		<description>It's not the business of the mob to think about the matters of the state!</description>
 		<category>Democratic</category>
 		<displayPriorityInCategory>40</displayPriorityInCategory>
 		<displayRequirements>
 			<decision>ResPublica</decision>
 		</displayRequirements>
+		<considerations>
+			<li>
+				<label>governance</label>
+				<governance>
+					<offset>
+						<points>
+							<li>(0, 50)</li>
+							<li>(1, -50)</li>
+						</points>
+					</offset>
+				</governance>
+			</li>
+			<li>
+				<label>individualist ideoligion</label>
+				<value>50</value>
+				<meme>Individualist</meme>
+			</li>
+			<li>
+				<label>collectivist ideoligion</label>
+				<value>-50</value>
+				<meme>Collectivist</meme>
+			</li>
+			<li>
+				<label>loyalist ideoligion</label>
+				<value>-25</value>
+				<meme>Loyalist</meme>
+			</li>
+			<li>
+				<label>human primacy</label>
+				<value>-50</value>
+				<meme>HumanPrimacy</meme>
+			</li>
+		</considerations>
 		<governanceCost>0.15</governanceCost>
 		<cancelDecision>ResPublica</cancelDecision>
 	</Rimocracy.DecisionDef>
-
-	<!-- Liberty -->
-
-	<!--Rimocracy.DecisionDef>
-		<defName>Liberty</defName>
-		<label>Freedom of Thought</label>
-		<description>When citizens are left to their own devices, that is, not drafted, they develop their skills much faster. But they will hate the interference of drafting.</description>
-		<category>Democratic</category>
-		<displayPriorityInCategory>50</displayPriorityInCategory>
-		<effectRequirements>
-			<all>
-				<li>
-					<decision>StateOfEmergency</decision>
-					<inverted>true</inverted>
-				</li>
-				<li>
-					<regime>
-						<greaterOrEqual>-0.10</greaterOrEqual>
-					</regime>
-				</li>
-			</all>
-		</effectRequirements>
-		<tag/>
-		<regimeEffect>0.20</regimeEffect>
-		<governanceCost>0.10</governanceCost>
-	</Rimocracy.DecisionDef>
-
-	<Rimocracy.DecisionDef>
-		<defName>Liberty_Cancel</defName>
-		<label>Cancel "Freedom of Thought"</label>
-		<description>Liberty shouldn't be allowed to become chaos. It's time to improve the discipline.</description>
-		<category>Democratic</category>
-		<displayPriorityInCategory>50</displayPriorityInCategory>
-		<displayRequirements>
-			<decision>Liberty</decision>
-		</displayRequirements>
-		<governanceCost>0.10</governanceCost>
-		<cancelDecision>Liberty</cancelDecision>
-	</Rimocracy.DecisionDef-->
 
 	<!-- Stability -->
 
 	<Rimocracy.DecisionDef>
 		<defName>Stability</defName>
 		<label>stability doctrine</label>
-		<description>While the same leader is in charge, governance decay rate is much lower. But if leadership changes, for whatever reason, governance will halve.</description>
+		<description>While the same {LEADER} is in charge, governance decay rate is much lower. But if leadership changes, for whatever reason, governance will drop by half.</description>
 		<category>Authoritarian</category>
 		<displayPriorityInCategory>10</displayPriorityInCategory>
-		<effectRequirements>
-			<regime>
-				<lessOrEqual>0.10</lessOrEqual>
-			</regime>
-		</effectRequirements>
 		<considerations>
 			<li>
 				<label>I want to stay in charge</label>
-				<support>50</support>
+				<value>100</value>
 				<isLeader>true</isLeader>
 			</li>
 			<li>
@@ -1197,7 +1173,7 @@
 					<lessThan>0</lessThan>
 					<offset>
 						<points>
-							<li>(-100, -20)</li>
+							<li>(-100, -60)</li>
 							<li>(0, 0)</li>
 						</points>
 					</offset>
@@ -1205,28 +1181,27 @@
 			</li>
 			<li>
 				<label>individualist ideoligion</label>
-				<support>-5</support>
+				<value>-20</value>
 				<meme>Individualist</meme>
 			</li>
 			<li>
 				<label>collectivist ideoligion</label>
-				<support>5</support>
+				<value>20</value>
 				<meme>Collectivist</meme>
 			</li>
 			<li>
 				<label>loyalist ideoligion</label>
-				<support>5</support>
+				<value>20</value>
 				<meme>Loyalist</meme>
 			</li>
 		</considerations>
 		<tag/>
-		<regimeEffect>-0.20</regimeEffect>
 		<governanceCost>0.25</governanceCost>
 	</Rimocracy.DecisionDef>
 
 	<Rimocracy.DecisionDef>
 		<defName>Stability_Cancel</defName>
-		<label>cancel "stability doctrine"</label>
+		<label>cancel "Stability Doctrine"</label>
 		<description>We need a more dynamic society.</description>
 		<category>Authoritarian</category>
 		<displayPriorityInCategory>10</displayPriorityInCategory>
@@ -1236,7 +1211,7 @@
 		<considerations>
 			<li>
 				<label>I want to stay in charge</label>
-				<support>-50</support>
+				<value>-100</value>
 				<isLeader>true</isLeader>
 			</li>
 			<li>
@@ -1246,7 +1221,7 @@
 					<lessThan>0</lessThan>
 					<offset>
 						<points>
-							<li>(-100, 20)</li>
+							<li>(-100, 60)</li>
 							<li>(0, 0)</li>
 						</points>
 					</offset>
@@ -1254,17 +1229,17 @@
 			</li>
 			<li>
 				<label>individualist ideoligion</label>
-				<support>5</support>
+				<value>20</value>
 				<meme>Individualist</meme>
 			</li>
 			<li>
 				<label>collectivist ideoligion</label>
-				<support>-5</support>
+				<value>-20</value>
 				<meme>Collectivist</meme>
 			</li>
 			<li>
 				<label>loyalist ideoligion</label>
-				<support>-5</support>
+				<value>-20</value>
 				<meme>Loyalist</meme>
 			</li>
 		</considerations>
@@ -1277,15 +1252,13 @@
 	<Rimocracy.DecisionDef>
 		<defName>Elitism</defName>
 		<label>L'État, c'est moi</label>
-		<description>A happy leader is a productive leader. When the ruler is in a good mood, he, or she, will improve governance better.</description>
+		<description>A happy {LEADER} is a productive {LEADER}. When the leader is in a good mood, he, or she, will improve governance better.</description>
 		<category>Authoritarian</category>
 		<displayPriorityInCategory>20</displayPriorityInCategory>
 		<effectRequirements>
 			<all>
 				<li>
-					<regime>
-						<lessOrEqual>-0.10</lessOrEqual>
-					</regime>
+					<leaderExists>true</leaderExists>
 				</li>
 				<li>
 					<decision>Egalitarianism</decision>
@@ -1296,7 +1269,7 @@
 		<considerations>
 			<li>
 				<label>I like it!</label>
-				<support>50</support>
+				<value>100</value>
 				<all>
 					<li>
 						<isLeader>true</isLeader>
@@ -1305,27 +1278,36 @@
 						<trait>Ascetic</trait>
 						<inverted>true</inverted>
 					</li>
+					<li>
+						<meme>PainIsVirtue</meme>
+						<inverted>true</inverted>
+					</li>
+					<li>
+						<precept>Comfort_Ignored</precept>
+						<inverted>true</inverted>
+					</li>
 				</all>
 			</li>
 			<li>
 				<label>greedy</label>
-				<support>10</support>
+				<value>20</value>
 				<isLeader>true</isLeader>
+				<trait>Greedy</trait>
 			</li>
 			<li>
 				<label>jealous</label>
-				<support>-10</support>
+				<value>-20</value>
 				<isLeader>false</isLeader>
 				<trait>Jealous</trait>
 			</li>
 			<li>
-				<label>and what about MY happiness?</label>
+				<label>I don't care for {TARGET}'s happiness</label>
 				<isLeader>false</isLeader>
 				<opinionOfTarget>
 					<lessThan>0</lessThan>
 					<offset>
 						<points>
-							<li>(-100, -20)</li>
+							<li>(-100, -40)</li>
 							<li>(0, 0)</li>
 						</points>
 					</offset>
@@ -1333,32 +1315,31 @@
 			</li>
 			<li>
 				<label>individualist ideoligion</label>
-				<support>-5</support>
+				<value>-20</value>
 				<meme>Individualist</meme>
 			</li>
 			<li>
 				<label>collectivist ideoligion</label>
-				<support>5</support>
+				<value>20</value>
 				<meme>Collectivist</meme>
 			</li>
 			<li>
 				<label>pain is virtue</label>
-				<support>-5</support>
+				<value>-10</value>
 				<meme>PainIsVirtue</meme>
 			</li>
 			<li>
 				<label>guilty ideoligion</label>
-				<support>-5</support>
+				<value>-20</value>
 				<meme>Guilty</meme>
 			</li>
 			<li>
 				<label>comfort ignored</label>
-				<support>-5</support>
+				<value>-10</value>
 				<precept>Comfort_Ignored</precept>
 			</li>
 		</considerations>
 		<tag/>
-		<regimeEffect>-0.20</regimeEffect>
 		<governanceCost>0.25</governanceCost>
 	</Rimocracy.DecisionDef>
 
@@ -1374,12 +1355,18 @@
 		<considerations>
 			<li>
 				<label>my interests</label>
-				<support>-50</support>
+				<value>-100</value>
 				<isLeader>true</isLeader>
 			</li>
 			<li>
+				<label>greedy</label>
+				<value>-20</value>
+				<isLeader>true</isLeader>
+				<trait>Greedy</trait>
+			</li>
+			<li>
 				<label>jealous</label>
-				<support>10</support>
+				<value>20</value>
 				<isLeader>false</isLeader>
 				<trait>Jealous</trait>
 			</li>
@@ -1390,7 +1377,7 @@
 					<lessThan>0</lessThan>
 					<offset>
 						<points>
-							<li>(-100, 20)</li>
+							<li>(-100, 40)</li>
 							<li>(0, 0)</li>
 						</points>
 					</offset>
@@ -1398,27 +1385,27 @@
 			</li>
 			<li>
 				<label>individualist ideoligion</label>
-				<support>-5</support>
+				<value>-20</value>
 				<meme>Individualist</meme>
 			</li>
 			<li>
 				<label>collectivist ideoligion</label>
-				<support>5</support>
+				<value>20</value>
 				<meme>Collectivist</meme>
 			</li>
 			<li>
 				<label>pain is virtue</label>
-				<support>5</support>
+				<value>10</value>
 				<meme>PainIsVirtue</meme>
 			</li>
 			<li>
 				<label>guilty ideoligion</label>
-				<support>5</support>
+				<value>20</value>
 				<meme>Guilty</meme>
 			</li>
 			<li>
 				<label>comfort ignored</label>
-				<support>5</support>
+				<value>10</value>
 				<precept>Comfort_Ignored</precept>
 			</li>
 		</considerations>
@@ -1431,18 +1418,20 @@
 	<Rimocracy.DecisionDef>
 		<defName>CultOfPersonality</defName>
 		<label>cult of personality</label>
-		<description>Our leader is an extraordinary person, who makes all decisions and bears ultimate responsibility for successes and failures. Every citizen will recognize that and love (or hate) the leader twice as much.</description>
+		<description>Our {LEADER} is an extraordinary person, who makes all decisions and bears ultimate responsibility for successes and failures. Every citizen will recognize that and love (or hate) {LEADER} twice as much.</description>
 		<category>Authoritarian</category>
 		<displayPriorityInCategory>30</displayPriorityInCategory>
 		<effectRequirements>
 			<all>
 				<li>
-					<regime>
-						<lessOrEqual>-0.20</lessOrEqual>
-					</regime>
+					<leaderExists>true</leaderExists>
 				</li>
 				<li>
 					<decision>Populism</decision>
+					<inverted>true</inverted>
+				</li>
+				<li>
+					<decision>Egalitarianism</decision>
 					<inverted>true</inverted>
 				</li>
 			</all>
@@ -1450,7 +1439,7 @@
 		<considerations>
 			<li>
 				<label>I am the leader</label>
-				<support>50</support>
+				<value>80</value>
 				<all>
 					<li>
 						<isLeader>true</isLeader>
@@ -1463,7 +1452,7 @@
 			</li>
 			<li>
 				<label>jealous</label>
-				<support>-10</support>
+				<value>-20</value>
 				<isLeader>false</isLeader>
 				<trait>Jealous</trait>
 			</li>
@@ -1473,9 +1462,9 @@
 				<opinionOfTarget>
 					<offset>
 						<points>
-							<li>(-100, -20)</li>
+							<li>(-100, -60)</li>
 							<li>(0, 0)</li>
-							<li>(100, 10)</li>
+							<li>(100, 30)</li>
 						</points>
 					</offset>
 				</opinionOfTarget>
@@ -1485,28 +1474,32 @@
 				<medianOpinionOfTarget>
 					<offset>
 						<points>
-							<li>(-100, -10)</li>
+							<li>(-100, -30)</li>
 							<li>(0, 0)</li>
-							<li>(100, 5)</li>
+							<li>(100, 15)</li>
 						</points>
 					</offset>
 				</medianOpinionOfTarget>
 			</li>
 			<li>
+				<label>individualist ideoligion</label>
+				<value>-20</value>
+				<meme>Individualist</meme>
+			</li>
+			<li>
 				<label>ideological structure</label>
-				<support>5</support>
+				<value>20</value>
 				<meme>Structure_Ideological</meme>
 			</li>
 		</considerations>
 		<tag/>
-		<regimeEffect>-0.20</regimeEffect>
 		<governanceCost>0.15</governanceCost>
 	</Rimocracy.DecisionDef>
 
 	<Rimocracy.DecisionDef>
 		<defName>CultOfPersonality_Cancel</defName>
 		<label>cancel cult of personality</label>
-		<description>The leader should be more humble.</description>
+		<description>The {LEADER} should be more humble.</description>
 		<category>Authoritarian</category>
 		<displayPriorityInCategory>30</displayPriorityInCategory>
 		<displayRequirements>
@@ -1515,12 +1508,20 @@
 		<considerations>
 			<li>
 				<label>I am the leader</label>
-				<support>-20</support>
-				<isLeader>true</isLeader>
+				<value>-80</value>
+				<all>
+					<li>
+						<isLeader>true</isLeader>
+					</li>
+					<li>
+						<trait>Ascetic</trait>
+						<inverted>true</inverted>
+					</li>
+				</all>
 			</li>
 			<li>
 				<label>jealous</label>
-				<support>10</support>
+				<value>20</value>
 				<isLeader>false</isLeader>
 				<trait>Jealous</trait>
 			</li>
@@ -1530,9 +1531,9 @@
 				<opinionOfTarget>
 					<offset>
 						<points>
-							<li>(-100, 20)</li>
+							<li>(-100, 60)</li>
 							<li>(0, 0)</li>
-							<li>(100, -10)</li>
+							<li>(100, -30)</li>
 						</points>
 					</offset>
 				</opinionOfTarget>
@@ -1542,16 +1543,21 @@
 				<medianOpinionOfTarget>
 					<offset>
 						<points>
-							<li>(-100, 10)</li>
+							<li>(-100, 30)</li>
 							<li>(0, 0)</li>
-							<li>(100, -5)</li>
+							<li>(100, -15)</li>
 						</points>
 					</offset>
 				</medianOpinionOfTarget>
 			</li>
 			<li>
+				<label>individualist ideoligion</label>
+				<value>20</value>
+				<meme>Individualist</meme>
+			</li>
+			<li>
 				<label>ideological structure</label>
-				<support>-5</support>
+				<value>-10</value>
 				<meme>Structure_Ideological</meme>
 			</li>
 		</considerations>
@@ -1570,11 +1576,6 @@
 		<effectRequirements>
 			<all>
 				<li>
-					<regime>
-						<lessOrEqual>-0.20</lessOrEqual>
-					</regime>
-				</li>
-				<li>
 					<decision>ResPublica</decision>
 					<inverted>true</inverted>
 				</li>
@@ -1583,7 +1584,7 @@
 		<considerations>
 			<li>
 				<label>I am the leader</label>
-				<support>10</support>
+				<value>40</value>
 				<isLeader>true</isLeader>
 			</li>
 			<li>
@@ -1592,32 +1593,31 @@
 				<opinionOfTarget>
 					<offset>
 						<points>
-							<li>(-100, -20)</li>
+							<li>(-100, -100)</li>
 							<li>(0, 0)</li>
 							<li>(50, 0)</li>
-							<li>(100, 10)</li>
+							<li>(100, 40)</li>
 						</points>
 					</offset>
 				</opinionOfTarget>
 			</li>
 			<li>
 				<label>Campaign is on</label>
-				<support>-5</support>
+				<value>-20</value>
 				<campaigning>true</campaigning>
 			</li>
 			<li>
 				<label>raider ideoligion</label>
-				<support>5</support>
+				<value>20</value>
 				<meme>Raider</meme>
 			</li>
 			<li>
 				<label>comfort ignored</label>
-				<support>5</support>
+				<value>10</value>
 				<precept>Comfort_Ignored</precept>
 			</li>
 		</considerations>
-		<durationTicks>180000</durationTicks>
-		<regimeEffect>-0.30</regimeEffect>
+		<durationDays>3</durationDays>
 		<governanceCost>0.25</governanceCost>
 	</Rimocracy.DecisionDef>
 
@@ -1661,94 +1661,94 @@
 		<considerations>
 			<li>
 				<label>kind</label>
-				<support>-5</support>
+				<value>-10</value>
 				<trait>Kind</trait>
 			</li>
 			<li>
 				<label>I have a different ideoligion</label>
-				<support>-10</support>
+				<value>-30</value>
 				<primaryIdeoligion>false</primaryIdeoligion>
 			</li>
 			<li>
 				<label>proselytizer ideoligion</label>
-				<support>5</support>
+				<value>15</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<meme>Proselytizer</meme>
 			</li>
 			<li>
 				<label>proselytizer ideoligion</label>
-				<support>-5</support>
+				<value>-15</value>
 				<primaryIdeoligion>false</primaryIdeoligion>
 				<meme>Proselytizer</meme>
 			</li>
 			<li>
 				<label>collectivist ideoligion</label>
-				<support>5</support>
+				<value>15</value>
 				<meme>Collectivist</meme>
 			</li>
 			<li>
 				<label>intense bigotry</label>
-				<support>20</support>
+				<value>60</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Abhorrent</precept>
 			</li>
 			<li>
 				<label>moderate bigotry</label>
-				<support>15</support>
+				<value>45</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Horrible</precept>
 			</li>
 			<li>
 				<label>mild bigotry</label>
-				<support>10</support>
+				<value>30</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Disapproved</precept>
 			</li>
 			<li>
 				<label>I share primary ideoligion</label>
-				<support>5</support>
+				<value>15</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Standard</precept>
 			</li>
 			<li>
 				<label>diversity of thought appreciated</label>
-				<support>-5</support>
+				<value>-15</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Approved</precept>
 			</li>
 			<li>
 				<label>diversity of thought appreciated</label>
-				<support>-10</support>
+				<value>-30</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Approved</precept>
 			</li>
 			<li>
 				<label>diversity of thought highly appreciated</label>
-				<support>-15</support>
+				<value>-45</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Respected</precept>
 			</li>
 			<li>
 				<label>diversity of thought exalted</label>
-				<support>-20</support>
+				<value>-60</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Exalted</precept>
 			</li>
 			<li>
 				<label>occasionally proselytizing</label>
-				<support>3</support>
+				<value>10</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>Proselytizing_Occasionally</precept>
 			</li>
 			<li>
 				<label>sometimes proselytizing</label>
-				<support>5</support>
+				<value>15</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>Proselytizing_Sometimes</precept>
 			</li>
 			<li>
 				<label>frequently proselytizing</label>
-				<support>7</support>
+				<value>20</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>Proselytizing_Frequently</precept>
 			</li>
@@ -1758,7 +1758,7 @@
 				<ideoCertainty>
 					<offset>
 						<points>
-							<li>(0, -10)</li>
+							<li>(0, -30)</li>
 							<li>(1, 0)</li>
 						</points>
 					</offset>
@@ -1770,8 +1770,8 @@
 				<ideoCertainty>
 					<offset>
 						<points>
-							<li>(0, 10)</li>
-							<li>(1, -10)</li>
+							<li>(0, 30)</li>
+							<li>(1, -30)</li>
 						</points>
 					</offset>
 				</ideoCertainty>
@@ -1794,89 +1794,89 @@
 		</displayRequirements>
 		<considerations>
 			<li>
-				<label>kind</label>
-				<support>5</support>
-				<trait>Kind</trait>
-			</li>
-			<li>
 				<label>I have a different ideoligion</label>
-				<support>50</support>
+				<value>100</value>
 				<primaryIdeoligion>false</primaryIdeoligion>
 			</li>
 			<li>
+				<label>kind</label>
+				<value>10</value>
+				<trait>Kind</trait>
+			</li>
+			<li>
 				<label>proselytizer ideoligion</label>
-				<support>-5</support>
+				<value>-15</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<meme>Proselytizer</meme>
 			</li>
 			<li>
 				<label>collectivist ideoligion</label>
-				<support>-5</support>
+				<value>-15</value>
 				<meme>Collectivist</meme>
 			</li>
 			<li>
 				<label>intense bigotry</label>
-				<support>-20</support>
+				<value>-60</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Abhorrent</precept>
 			</li>
 			<li>
 				<label>moderate bigotry</label>
-				<support>-15</support>
+				<value>-45</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Horrible</precept>
 			</li>
 			<li>
 				<label>mild bigotry</label>
-				<support>-10</support>
+				<value>-30</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Disapproved</precept>
 			</li>
 			<li>
 				<label>I share primary ideoligion</label>
-				<support>-5</support>
+				<value>-15</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Standard</precept>
 			</li>
 			<li>
 				<label>diversity of thought appreciated</label>
-				<support>5</support>
+				<value>15</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Approved</precept>
 			</li>
 			<li>
 				<label>diversity of thought appreciated</label>
-				<support>10</support>
+				<value>30</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Approved</precept>
 			</li>
 			<li>
 				<label>diversity of thought highly appreciated</label>
-				<support>15</support>
+				<value>45</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Respected</precept>
 			</li>
 			<li>
 				<label>diversity of thought exalted</label>
-				<support>20</support>
+				<value>60</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Exalted</precept>
 			</li>
 			<li>
 				<label>occasionally proselytizing</label>
-				<support>-3</support>
+				<value>-10</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>Proselytizing_Occasionally</precept>
 			</li>
 			<li>
 				<label>sometimes proselytizing</label>
-				<support>-5</support>
+				<value>-15</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>Proselytizing_Sometimes</precept>
 			</li>
 			<li>
 				<label>frequently proselytizing</label>
-				<support>-7</support>
+				<value>-20</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>Proselytizing_Frequently</precept>
 			</li>
@@ -1886,7 +1886,7 @@
 				<ideoCertainty>
 					<offset>
 						<points>
-							<li>(0, 10)</li>
+							<li>(0, 30)</li>
 							<li>(1, 0)</li>
 						</points>
 					</offset>
@@ -1924,65 +1924,65 @@
 		<considerations>
 			<li>
 				<label>I will lose ideoligion leadership</label>
-				<support>-10</support>
+				<value>-50</value>
 				<isLeader>true</isLeader>
 				<primaryIdeoligion>true</primaryIdeoligion>
 			</li>
 			<li>
 				<label>kind</label>
-				<support>5</support>
+				<value>10</value>
 				<trait>Kind</trait>
 			</li>
 			<li>
-				<label>I have a different ideoligion</label>
-				<support>10</support>
+				<label>I have a minority ideoligion</label>
+				<value>40</value>
 				<primaryIdeoligion>false</primaryIdeoligion>
 			</li>
 			<li>
 				<label>intense bigotry</label>
-				<support>-20</support>
+				<value>-60</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Abhorrent</precept>
 			</li>
 			<li>
 				<label>moderate bigotry</label>
-				<support>-15</support>
+				<value>-45</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Horrible</precept>
 			</li>
 			<li>
 				<label>mild bigotry</label>
-				<support>-10</support>
+				<value>-30</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Disapproved</precept>
 			</li>
 			<li>
 				<label>I share primary ideoligion</label>
-				<support>-5</support>
+				<value>-15</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Standard</precept>
 			</li>
 			<li>
 				<label>diversity of thought appreciated</label>
-				<support>5</support>
+				<value>15</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Approved</precept>
 			</li>
 			<li>
 				<label>diversity of thought appreciated</label>
-				<support>10</support>
+				<value>30</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Approved</precept>
 			</li>
 			<li>
 				<label>diversity of thought highly appreciated</label>
-				<support>15</support>
+				<value>45</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Respected</precept>
 			</li>
 			<li>
 				<label>diversity of thought exalted</label>
-				<support>20</support>
+				<value>60</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Exalted</precept>
 			</li>
@@ -1992,8 +1992,8 @@
 				<ideoCertainty>
 					<offset>
 						<points>
-							<li>(0, 5)</li>
-							<li>(1, -5)</li>
+							<li>(0, 15)</li>
+							<li>(1, -15)</li>
 						</points>
 					</offset>
 				</ideoCertainty>
@@ -2005,7 +2005,7 @@
 					<offset>
 						<points>
 							<li>(0, 0)</li>
-							<li>(1, 10)</li>
+							<li>(1, 30)</li>
 						</points>
 					</offset>
 				</ideoCertainty>
@@ -2029,72 +2029,72 @@
 		<considerations>
 			<li>
 				<label>I lose a chance to become a leader</label>
-				<support>-10</support>
+				<value>-50</value>
 				<isLeader>false</isLeader>
 				<primaryIdeoligion>false</primaryIdeoligion>
 			</li>
 			<li>
 				<label>I lose the title</label>
-				<support>-50</support>
+				<value>-100</value>
 				<isLeader>true</isLeader>
 				<primaryIdeoligion>false</primaryIdeoligion>
 			</li>
 			<li>
 				<label>kind</label>
-				<support>-5</support>
+				<value>-10</value>
 				<trait>Kind</trait>
 			</li>
 			<li>
-				<label>I gain the Ideoligion leader title</label>
-				<support>15</support>
+				<label>I gain the ideoligion leader title</label>
+				<value>50</value>
 				<isLeader>true</isLeader>
 				<primaryIdeoligion>true</primaryIdeoligion>
 			</li>
 			<li>
 				<label>intense bigotry</label>
-				<support>20</support>
+				<value>60</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Abhorrent</precept>
 			</li>
 			<li>
 				<label>moderate bigotry</label>
-				<support>15</support>
+				<value>45</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Horrible</precept>
 			</li>
 			<li>
 				<label>mild bigotry</label>
-				<support>10</support>
+				<value>30</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Disapproved</precept>
 			</li>
 			<li>
 				<label>I share primary ideoligion</label>
-				<support>5</support>
+				<value>15</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Standard</precept>
 			</li>
 			<li>
 				<label>diversity of thought appreciated</label>
-				<support>-5</support>
+				<value>-15</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Approved</precept>
 			</li>
 			<li>
 				<label>diversity of thought appreciated</label>
-				<support>-10</support>
+				<value>-30</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Approved</precept>
 			</li>
 			<li>
 				<label>diversity of thought highly appreciated</label>
-				<support>-15</support>
+				<value>-45</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Respected</precept>
 			</li>
 			<li>
 				<label>diversity of thought exalted</label>
-				<support>-20</support>
+				<value>-60</value>
 				<primaryIdeoligion>true</primaryIdeoligion>
 				<precept>IdeoDiversity_Exalted</precept>
 			</li>
@@ -2104,8 +2104,8 @@
 				<ideoCertainty>
 					<offset>
 						<points>
-							<li>(0, -5)</li>
-							<li>(1, 5)</li>
+							<li>(0, -15)</li>
+							<li>(1, 15)</li>
 						</points>
 					</offset>
 				</ideoCertainty>
@@ -2115,14 +2115,28 @@
 		<cancelDecision>Multiculturalism</cancelDecision>
 	</Rimocracy.DecisionDef>
 
+	<!-- Loyalty Decisions -->
+	
+	<Rimocracy.DecisionDef>
+		<defName>SocialWelfare</defName>
+		<label>social welfare</label>
+		<description>Spend 100 silver per colonist to raise their loyalty by 10%.</description>
+		<category>Misc</category>
+		<allCitizensReact>false</allCitizensReact>
+		<displayPriorityInCategory>50</displayPriorityInCategory>
+		<durationDays>3</durationDays>
+		<silverCostPerCitizen>100</silverCostPerCitizen>
+		<changeLoyalty>0.10</changeLoyalty>
+		<loyaltyEffect>0</loyaltyEffect>
+	</Rimocracy.DecisionDef>
+
 	<!-- Action Veto Power -->
 	
 	<Rimocracy.DecisionDef>
 		<defName>ActionVetoPower</defName>
 		<label>enable veto for actions</label>
-		<description>If the leader opposes a game action such as arresting or banishing pawns, he/she can stop it. Without veto power, such actions will be taken but at a cost of Governance.</description>
+		<description>If the {LEADER} opposes a game action such as arresting or banishing pawns, they can stop it. Without veto power, such actions will be taken but at a cost of Governance.</description>
 		<category>Misc</category>
-		<enactment>None</enactment>
 		<displayPriorityInCategory>100</displayPriorityInCategory>
 		<displayRequirements>
 			<all>
@@ -2138,7 +2152,7 @@
 		<considerations>
 			<li>
 				<label>I want more authority</label>
-				<support>50</support>
+				<value>100</value>
 				<isLeader>true</isLeader>
 			</li>
 			<li>
@@ -2147,8 +2161,8 @@
 				<opinionOfTarget>
 					<offset>
 						<points>
-							<li>(-100, -10)</li>
-							<li>(100, 10)</li>
+							<li>(-100, -40)</li>
+							<li>(100, 40)</li>
 						</points>
 					</offset>
 				</opinionOfTarget>
@@ -2162,7 +2176,7 @@
 	<Rimocracy.DecisionDef>
 		<defName>ActionVetoPower_Cancel</defName>
 		<label>abolish veto for actions</label>
-		<description>Leader can't prevent game actions, such as arresting or banishing pawns, from happening. Instead, they will reduce Governance if the leader opposes them.</description>
+		<description>A {LEADER} can't prevent game actions, such as arresting or banishing pawns, from happening. Instead, they will reduce Governance if the leader opposes them.</description>
 		<category>Misc</category>
 		<enactment>None</enactment>
 		<displayPriorityInCategory>100</displayPriorityInCategory>
@@ -2173,7 +2187,7 @@
 		<considerations>
 			<li>
 				<label>my authority will be reduced</label>
-				<support>-50</support>
+				<value>-100</value>
 				<isLeader>true</isLeader>
 			</li>
 			<li>
@@ -2182,8 +2196,8 @@
 				<opinionOfTarget>
 					<offset>
 						<points>
-							<li>(-100, 10)</li>
-							<li>(100, -10)</li>
+							<li>(-100, 40)</li>
+							<li>(100, -40)</li>
 						</points>
 					</offset>
 				</opinionOfTarget>

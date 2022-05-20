@@ -13,7 +13,7 @@
 			<value>
 				<li>
 					<label>gun nut</label>
-					<support>5</support>
+					<value>20</value>
 					<trait>SYR_GunNut</trait>
 				</li>
 			</value>
@@ -31,7 +31,7 @@
 			<value>
 				<li>
 					<label>peacemaker</label>
-					<support>-5</support>
+					<value>-20</value>
 					<trait>Peacemaker</trait>
 					<targetIsColonist>true</targetIsColonist>
 					<isTarget>false</isTarget>
@@ -54,12 +54,12 @@
 					<value>
 						<li>
 							<label>rebel</label>
-							<support>-10</support>
+							<value>-20</value>
 							<trait>VTE_Rebel</trait>
 						</li>
 						<li>
 							<label>submissive</label>
-							<support>5</support>
+							<value>10</value>
 							<trait>VTE_Submissive</trait>
 						</li>
 						<li>
@@ -69,7 +69,7 @@
 								<lessThan>0</lessThan>
 								<offset>
 									<points>
-										<li>(-100, 20)</li>
+										<li>(-100, 40)</li>
 										<li>(0, 0)</li>
 									</points>
 								</offset>
@@ -83,12 +83,12 @@
 					<value>
 						<li>
 							<label>rebel</label>
-							<support>-10</support>
+							<value>-20</value>
 							<trait>VTE_Rebel</trait>
 						</li>
 						<li>
 							<label>submissive</label>
-							<support>5</support>
+							<value>10</value>
 							<trait>VTE_Submissive</trait>
 						</li>
 						<li>
@@ -98,7 +98,7 @@
 								<lessThan>0</lessThan>
 								<offset>
 									<points>
-										<li>(-100, 20)</li>
+										<li>(-100, 40)</li>
 										<li>(0, 0)</li>
 									</points>
 								</offset>
@@ -108,7 +108,7 @@
 				</li>
 				
 				<li Class="PatchOperationAdd">
-					<xpath>/Defs/Rimocracy.PoliticalActionDef[defName="Execution"]/considerations/li[label="killing people is bad"]/all</xpath>
+					<xpath>/Defs/Rimocracy.PoliticalActionDef[defName="Execution"]/considerations/li[label="killing an innocent"]/all</xpath>
 					<value>
 						<li>
 							<trait>VTE_Desensitized</trait>
@@ -149,7 +149,7 @@
 								<lessThan>0</lessThan>
 								<offset>
 									<points>
-										<li>(-100, -20)</li>
+										<li>(-100, -40)</li>
 										<li>(0, 0)</li>
 									</points>
 								</offset>
@@ -163,12 +163,12 @@
 					<value>
 						<li>
 							<label>rebel</label>
-							<support>-10</support>
+							<value>-20</value>
 							<trait>VTE_Rebel</trait>
 						</li>
 						<li>
 							<label>submissive</label>
-							<support>5</support>
+							<value>10</value>
 							<trait>VTE_Submissive</trait>
 						</li>
 						<li>
@@ -178,7 +178,7 @@
 								<lessThan>0</lessThan>
 								<offset>
 									<points>
-										<li>(-100, 20)</li>
+										<li>(-100, 40)</li>
 										<li>(0, 0)</li>
 									</points>
 								</offset>
@@ -186,7 +186,7 @@
 						</li>
 						<li>
 							<label>snob</label>
-							<support>5</support>
+							<value>10</value>
 							<isTarget>false</isTarget>
 							<trait>VTE_Snob</trait>
 							<opinionOfTarget>
@@ -197,14 +197,12 @@
 				</li>
 				
 				<li Class="PatchOperationAdd">
-					<xpath>/Defs/Rimocracy.PoliticalActionDef[defName="Banishment"]/considerations/li[label="banishment is cruel"]</xpath>
+					<xpath>/Defs/Rimocracy.PoliticalActionDef[defName="Banishment"]/considerations/li[label="banishment is cruel"]/all</xpath>
 					<value>
-						<all>
-							<li>
-								<trait>VTE_Desensitized</trait>
-								<inverted>true</inverted>
-							</li>
-						</all>
+						<li>
+							<trait>VTE_Desensitized</trait>
+							<inverted>true</inverted>
+						</li>
 					</value>
 				</li>
 				
@@ -225,17 +223,17 @@
 					<value>
 						<li>
 							<label>coward</label>
-							<support>-10</support>
+							<value>-30</value>
 							<trait>VTE_Coward</trait>
 						</li>
 						<li>
 							<label>brave</label>
-							<support>10</support>
+							<value>30</value>
 							<trait>VTE_Brave</trait>
 						</li>
 						<li>
 							<label>martial artist</label>
-							<support>5</support>
+							<value>15</value>
 							<trait>VTE_MartialArtist</trait>
 						</li>
 					</value>

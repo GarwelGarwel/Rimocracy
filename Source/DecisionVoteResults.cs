@@ -12,6 +12,8 @@ namespace Rimocracy
 
         public int Nay => GetVotesNum(DecisionVote.Nay);
 
+        public int Tolerates => GetVotesNum(DecisionVote.Tolerate);
+
         public int Abstentions => GetVotesNum(DecisionVote.Abstain);
 
         public bool MajoritySupport => Yea > Nay;
@@ -27,6 +29,6 @@ namespace Rimocracy
 
         public int GetVotesNum(DecisionVote vote) => this.Count(pdo => pdo.Vote == vote);
 
-        public override string ToString() => this.Select(opinion => $"{opinion.voter}: {opinion.support.ToStringWithSign("0")}").ToLineList();
+        public override string ToString() => this.Select(opinion => $"{opinion.voter}: {opinion.support.ToStringWithSign("0").ColorizeOpinion(opinion.support)}").ToLineList();
     }
 }

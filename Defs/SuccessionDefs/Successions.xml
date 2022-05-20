@@ -23,6 +23,7 @@
 				<offset>2</offset>
 			</li>
 		</memes>
+		<loyaltyEffect>0.025</loyaltyEffect>
 		<newLeaderMessageText>{PAWN} has been elected as the new {LEADERTITLE} of {NATIONNAME} with {VOTESNUM}. Vox populi, vox dei!</newLeaderMessageText>
 		<sameLeaderMessageTitle>{PAWN} reelected</sameLeaderMessageTitle>
 		<sameLeaderMessageText>{PAWN} has been reelected as the {LEADERTITLE} of {NATIONNAME} with {VOTESNUM}.</sameLeaderMessageText>
@@ -51,7 +52,6 @@
 		</memes>
 		<newLeaderMessageText>{PAWN} drew the short straw and will rule {NATIONNAME} from now on!</newLeaderMessageText>
 		<sameLeaderMessageText>{PAWN} has a lucky hand! {PAWN_pronoun} won the {LEADERTITLE} lottery again.</sameLeaderMessageText>
-		<regimeEffect>-0.05</regimeEffect>
 	</Rimocracy.SuccessionDef>
 
 	<Rimocracy.SuccessionDef>
@@ -76,7 +76,6 @@
 		</memes>
 		<newLeaderMessageText>{PAWN} will rule {NATIONNAME} now as the oldest colonist.</newLeaderMessageText>
 		<sameLeaderMessageText>{PAWN} is still the oldest colonist in {NATIONNAME}. {PAWN_pronoun} remains our {LEADERTITLE}.</sameLeaderMessageText>
-		<regimeEffect>-0.10</regimeEffect>
 	</Rimocracy.SuccessionDef>
 
 	<Rimocracy.SuccessionDef>
@@ -99,7 +98,6 @@
 				<offset>2</offset>
 			</li>
 		</memes>
-		<regimeEffect>-0.10</regimeEffect>
 	</Rimocracy.SuccessionDef>
 
 	<Rimocracy.SuccessionDef>
@@ -125,7 +123,6 @@
 		<newLeaderMessageText>{PAWN} will now lead {NATIONNAME} to glory as its most renowned warrior.</newLeaderMessageText>
 		<sameLeaderMessageTitle>{PAWN} reelected</sameLeaderMessageTitle>
 		<sameLeaderMessageText>{PAWN} is still the most able worrior of {NATIONNAME}. Friends and foes alike bow before {PAWN_objective}!</sameLeaderMessageText>
-		<regimeEffect>-0.10</regimeEffect>
 	</Rimocracy.SuccessionDef>
 
 </Defs>

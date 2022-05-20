@@ -7,8 +7,7 @@ namespace Rimocracy
 {
     public class ElectionCampaign : IExposable
     {
-        // How often campaign updates take place; must be multiple of 250
-        internal const int CampaignInterval = 2000;
+        internal const int IntervalsBetweenUpdates = 8;
 
         Pawn candidate;
         SkillDef focusSkill;
@@ -48,7 +47,7 @@ namespace Rimocracy
 
         public void RareTick()
         {
-            if (Find.TickManager.TicksAbs % CampaignInterval != 0)
+            if (Find.TickManager.TicksAbs / 250 % IntervalsBetweenUpdates != 0)
                 return;
 
             // List of pawns that will leave the campaign
@@ -125,7 +124,6 @@ namespace Rimocracy
         public TaggedString ToTaggedString() =>
             $"{Candidate.NameShortColored}, {FocusSkill?.LabelCap ?? "no"} focus{(Supporters.Count > 1 ? $", {(Supporters.Count - 1).ToStringCached()} core supporters" : "")}";
 
-        public override string ToString() =>
-            ToTaggedString().RawText.StripTags();
+        public override string ToString() => ToTaggedString().RawText.StripTags();
     }
 }

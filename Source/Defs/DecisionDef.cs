@@ -16,7 +16,13 @@ namespace Rimocracy
 
     public class DecisionDef : Def
     {
+        public const string CultOfPersonality = "CultOfPersonality";
+        public const string Egalitarianism = "Egalitarianism";
+        public const string Elitism = "Elitism";
+        public const string Meritocracy = "Meritocracy";
         public const string Multiculturalism = "Multiculturalism";
+        public const string ResPublica = "ResPublica";
+        public const string Stability = "Stability";
         public const string StateIdeoligion = "StateIdeoligion";
         public const string StateOfEmergency = "StateOfEmergency";
 
@@ -34,20 +40,27 @@ namespace Rimocracy
         public int durationTicks;
 
         public float governanceCost;
+        public int silverCostPerCitizen;
         public SuccessionDef setSuccession;
         public TermDuration setTermDuration = TermDuration.Undefined;
         public bool impeachLeader;
         public bool? actionsNeedApproval;
         public string cancelDecision;
-        public float regimeEffect;
+        public float changeLoyalty;
+        public float loyaltyEffect = 0.10f;
 
         public string LabelTitleCase => GenText.ToTitleCaseSmart(label.Formatted(new NamedArgument(Utility.RimocracyComp.Leader, "TARGET")));
+
+        public TaggedString Description => description.Formatted(new NamedArgument(Utility.LeaderTitle, "LEADER"), new NamedArgument(Utility.NationName, "NATION"));
 
         public bool IsDisplayable =>
             (!IsPersistent || !Utility.RimocracyComp.DecisionActive(Tag)) && (displayRequirements == null || displayRequirements);
 
         public bool IsValid =>
-            IsDisplayable && (effectRequirements == null || effectRequirements) && Utility.RimocracyComp.Governance >= GovernanceCost;
+            IsDisplayable
+            && (effectRequirements == null || effectRequirements)
+            && Utility.RimocracyComp.Governance >= GovernanceCost
+            && (silverCostPerCitizen <= 0 || Utility.GetTotalSilver() >= SilverCost);
 
         /// <summary>
         /// Tells if this decision tag should be stored
@@ -60,6 +73,8 @@ namespace Rimocracy
         public string Tag => tag.NullOrEmpty() ? defName : tag;
 
         public float GovernanceCost => governanceCost * Settings.GovernanceCostFactor;
+
+        public int SilverCost => silverCostPerCitizen * Utility.CitizensCount;
 
         public int Duration => durationDays * GenDate.TicksPerDay + durationTicks;
 
@@ -91,7 +106,7 @@ namespace Rimocracy
             return true;
         }
 
-        public bool Activate(bool cheat = false)
+        public bool Activate(DecisionVoteResults votingResult, bool cheat = false)
         {
             if (!IsValid && !cheat)
             {
@@ -103,7 +118,18 @@ namespace Rimocracy
                 Utility.RimocracyComp.Decisions.Add(new Decision(this));
 
             if (!cheat)
-                Utility.RimocracyComp.Governance -= GovernanceCost;
+            {
+                Utility.RimocracyComp.ChangeGovernance(-GovernanceCost);
+                if (silverCostPerCitizen > 0)
+                {
+                    int amount = SilverCost;
+                    if (Utility.GetTotalSilver() < amount || Utility.RemoveSilver(amount) < amount)
+                    {
+                        Utility.Log($"Not enough silver for {defName}: {amount} needed.", LogLevel.Warning);
+                        return false;
+                    }
+                }
+            }
 
             if (setSuccession != null)
             {
@@ -138,10 +164,33 @@ namespace Rimocracy
                 Utility.RimocracyComp.CancelDecision(cancelDecision);
             }
 
-            if (regimeEffect != 0)
+            if (changeLoyalty != 0)
             {
-                Utility.Log($"Changing regime by {regimeEffect}.");
-                Utility.RimocracyComp.RegimeBase += regimeEffect;
+                Utility.Log($"Changing all pawns' loyalty by {changeLoyalty.ToStringPercent()}.");
+                foreach (Pawn pawn in Utility.Citizens)
+                    pawn.ChangeLoyalty(changeLoyalty);
+            }
+
+            foreach (PawnDecisionOpinion opinion in votingResult)
+            {
+                Utility.Log($"{opinion.voter}'s opinion is {opinion.support.ToStringWithSign()}.");
+                switch (opinion.Vote)
+                {
+                    case DecisionVote.Yea:
+                        opinion.voter.needs.mood.thoughts.memories.TryGainMemory(RimocracyDefOf.LikeDecision);
+                        opinion.voter.ChangeLoyalty(loyaltyEffect);
+                        break;
+
+                    case DecisionVote.Nay:
+                        opinion.voter.needs.mood.thoughts.memories.TryGainMemory(RimocracyDefOf.DislikeDecision);
+                        opinion.voter.ChangeLoyalty(-loyaltyEffect);
+                        break;
+
+                    case DecisionVote.Tolerate:
+                        opinion.voter.ChangeLoyalty(-loyaltyEffect * Need_Loyalty.ToleratedDecisionLoyaltyFactor);
+                        break;
+                }
+                opinion.voter.GetLoyalty().RecalculatePersistentEffects();
             }
 
             return true;
@@ -149,11 +198,9 @@ namespace Rimocracy
 
         public void Cancel()
         {
-            if (regimeEffect != 0)
-            {
-                Utility.Log($"Changing regime by {(-regimeEffect).ToStringWithSign()}.");
-                Utility.RimocracyComp.RegimeBase -= regimeEffect;
-            }
+            if (loyaltyEffect != 0)
+                foreach (Pawn pawn in Utility.Citizens)
+                    pawn.GetLoyalty().RecalculatePersistentEffects();
         }
     }
 }

@@ -12,7 +12,8 @@ namespace Rimocracy
 
         public static ElectionCampaign GetCampaign(this Pawn candidate) => Utility.RimocracyComp?.Campaigns?.FirstOrDefault(ec => ec?.Candidate == candidate);
 
-        public static Pawn GetSupportedCandidate(this Pawn pawn) => Utility.RimocracyComp?.Campaigns?.FirstOrDefault(ec => ec?.Supporters != null && ec.Supporters.Contains(pawn))?.Candidate;
+        public static Pawn GetSupportedCandidate(this Pawn pawn) =>
+            Utility.RimocracyComp?.Campaigns?.FirstOrDefault(ec => ec?.Supporters != null && ec.Supporters.Contains(pawn))?.Candidate;
 
         public static float VoteWeight(Pawn voter, Pawn candidate)
         {
@@ -47,7 +48,7 @@ namespace Rimocracy
             weight += sympathy;
 
             // If Meritocracy is in effect, sum of candidate's skills is taken into account
-            if (Utility.RimocracyComp.DecisionActive("Meritocracy"))
+            if (Utility.RimocracyComp.DecisionActive(DecisionDef.Meritocracy))
             {
                 float sumSkills = candidate.skills.skills.Sum(sr => sr.Level);
                 Utility.Log($"{candidate} has a total level of skills of {sumSkills}, affecting Meritocracy.");

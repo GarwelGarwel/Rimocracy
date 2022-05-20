@@ -21,8 +21,6 @@ namespace Rimocracy
         float governance = 0.5f;
         float governanceTarget = 1;
 
-        float regime;
-
         SkillDef focusSkill;
         TermDuration termDuration = TermDuration.Halfyear;
         SuccessionDef successionType;
@@ -31,6 +29,7 @@ namespace Rimocracy
         int electionTick = int.MaxValue;
         List<Decision> decisions = new List<Decision>();
         bool actionsNeedApproval;
+        List<Pawn> protesters = new List<Pawn>();
 
         bool justLoaded = true;
 
@@ -120,15 +119,6 @@ namespace Rimocracy
             set => governanceTarget = value;
         }
 
-        public float RegimeBase
-        {
-            get => regime;
-            set => regime = value;
-        }
-
-        public float RegimeFinal =>
-            Mathf.Clamp(RegimeBase + (SuccessionType != null ? SuccessionType.regimeEffect : 0) + TermDuration.GetRegimeEffect(), -1, 1);
-
         public TermDuration TermDuration
         {
             get => termDuration;
@@ -154,14 +144,15 @@ namespace Rimocracy
         }
 
         public float BaseGovernanceDecayPerDay =>
-            (0.03f + Governance * 0.1f - (0.06f + Governance * 0.25f) / Utility.CitizensCount) * Settings.GovernanceDecaySpeed;
+            Settings.GovernanceDecaySpeed *
+            (0.03f + Governance * 0.1f - (0.06f + Governance * 0.25f) / Utility.Citizens.Sum(pawn => Utility.CitizenGovernanceWeight(pawn)));
 
         public float GovernanceDecayPerDay =>
             Math.Max(0,
                 BaseGovernanceDecayPerDay
                 * (HasLeader ? Leader.GetStatValue(RimocracyDefOf.GovernanceDecay) : 1)
-                * (DecisionActive("Egalitarianism") ? 1.5f - Utility.MedianMood : 1)
-                * (DecisionActive("Stability") ? 0.75f : 1));
+                * (DecisionActive(DecisionDef.Egalitarianism) ? 1.5f - Utility.MedianMood : 1)
+                * (DecisionActive(DecisionDef.Stability) ? 0.75f : 1));
 
         public bool ElectionCalled => ElectionTick != int.MaxValue;
 
@@ -177,6 +168,12 @@ namespace Rimocracy
             set => decisions = value;
         }
 
+        internal List<Pawn> Protesters
+        {
+            get => protesters;
+            set => protesters = value;
+        }
+
         string FocusSkillMessage => $"The focus skill is {FocusSkill.LabelCap}.";
 
         public RimocracyComp()
@@ -187,9 +184,11 @@ namespace Rimocracy
             : base(world)
         { }
 
-        public SuccessionDef GetRandomSuccessionDef(Ideo ideo) => DefDatabase<SuccessionDef>.AllDefs.Where(def => def.Worker.IsValid).RandomElementByWeight(def => def.GetWeight(ideo));
+        public SuccessionDef GetRandomSuccessionDef(Ideo ideo) =>
+            DefDatabase<SuccessionDef>.AllDefs.Where(def => def.Worker.IsValid).RandomElementByWeight(def => def.GetWeight(ideo));
 
-        public int UpdatedTermExpiration() => TermDuration == TermDuration.Indefinite ? int.MaxValue : Find.TickManager.TicksAbs + Utility.TermDurationTicks;
+        public int UpdatedTermExpiration() =>
+            TermDuration == TermDuration.Indefinite ? int.MaxValue : Find.TickManager.TicksAbs + Utility.TermDurationTicks;
 
         public override void FinalizeInit()
         {
@@ -212,10 +211,10 @@ namespace Rimocracy
             Scribe_Values.Look(ref electionTick, "electionTick", int.MaxValue);
             Scribe_Values.Look(ref governance, "governance", 0.5f);
             Scribe_Values.Look(ref governanceTarget, "governanceTarget", 1);
-            Scribe_Values.Look(ref regime, "regime");
             Scribe_Defs.Look(ref focusSkill, "focusSkill");
             Scribe_Collections.Look(ref decisions, "decisions", LookMode.Deep);
             Scribe_Values.Look(ref actionsNeedApproval, "actionsNeedApproval");
+            Scribe_Collections.Look(ref protesters, "protesters", LookMode.Reference);
         }
 
         public override void WorldComponentTick()
@@ -236,6 +235,7 @@ namespace Rimocracy
                     Utility.Log($"Governance decay: {GovernanceDecayPerDay.ToStringPercent()}/day");
                     Utility.Log($"Focus skill: {FocusSkill}");
                     Utility.Log($"Decisions: {Decisions.Select(decision => decision?.Tag).ToCommaList()}");
+                    Utility.Log($"Protesters: {Protesters.Select(pawn => pawn.Name.ToStringShort).ToCommaList()}");
                 }
             }
 
@@ -249,7 +249,7 @@ namespace Rimocracy
                 {
                     IsEnabled = false;
                     Leader = null;
-                    Governance = 0.5f;
+                    Governance = 0.50f;
                     ElectionTick = int.MaxValue;
                 }
                 return;
@@ -259,6 +259,30 @@ namespace Rimocracy
 
             if ((!ModsConfig.IdeologyActive || DecisionActive(DecisionDef.Multiculturalism)) && LeaderTitleDef == null)
                 ChooseLeaderTitle();
+
+            // Clean up protesters list
+            if (Settings.LoyaltyEnabled)
+            {
+                int oldProtestersCount = protesters.Count;
+                for (int i = oldProtestersCount - 1; i >= 0; i--)
+                {
+                    if (protesters[i] == null || !protesters[i].IsCitizen())
+                    {
+                        Utility.Log($"Removing invalid protester record {(protesters[i]?.Name.ToStringShort ?? "null")} (index {i}).");
+                        protesters.RemoveAt(i);
+                        continue;
+                    }
+                    Need_Loyalty loyalty = protesters[i].GetLoyalty();
+                    if (loyalty == null || !loyalty.IsProtesting)
+                    {
+                        Utility.Log($"Removing invalid protester {protesters[i]} (loyalty {protesters[i].GetLoyaltyLevel().ToStringPercent()}.");
+                        protesters.RemoveAt(i);
+                    }
+                }
+                if (protesters.Count != oldProtestersCount)
+                    Need_Loyalty.RecalculateThreshPercents();
+            }
+            else protesters.Clear();
 
             // Remove expired or invalid decisions
             for (int i = Decisions.Count - 1; i >= 0; i--)
@@ -300,18 +324,21 @@ namespace Rimocracy
                 ChooseLeader();
 
             // Governance decay
-            governance = Math.Max(Governance - GovernanceDecayPerDay / GenDate.TicksPerDay * UpdateInterval, 0);
+            ChangeGovernance(-GovernanceDecayPerDay / GenDate.TicksPerDay * UpdateInterval);
         }
 
-        public void ImproveGovernance(float amount) => Governance = Math.Min(Governance + amount, 1);
+        public void ChangeGovernance(float amount) => Governance = Mathf.Clamp01(Governance + amount);
 
         public bool DecisionActive(string tag) => Decisions.Any(decision => decision.Tag == tag);
 
         internal void CancelDecision(string tag)
         {
-            foreach (Decision decision in Decisions.Where(decision => decision.Tag == tag || decision.def.defName == tag))
-                decision.def.Cancel();
-            Decisions.RemoveAll(decision => decision.Tag == tag || decision.def.defName == tag);
+            for (int i = Decisions.Count - 1; i >= 0; i--)
+                if (Decisions[i].Tag == tag || Decisions[i].def.defName == tag)
+                {
+                    Decisions[i].def.Cancel();
+                    Decisions.RemoveAt(i);
+                }
         }
 
         void ChooseLeaderTitle()
@@ -343,7 +370,9 @@ namespace Rimocracy
             {
                 CampaigningCandidates = ((SuccessionWorker_Election)SuccessionWorker).ChooseLeaders();
                 Utility.Log($"Campaigns:\n{Campaigns.Select(campaign => $"- {campaign.ToString()}").ToLineList()}");
-                Messages.Message($"The election campaign is on! {CampaigningCandidates.Select(p => p.LabelShortCap).ToCommaList(true)} are competing to be the {Utility.LeaderTitle} of {Utility.NationName}.", new LookTargets(CampaigningCandidates), MessageTypeDefOf.NeutralEvent);
+                Messages.Message($"The election campaign is on! {CampaigningCandidates.Select(p => p.NameShortColored.RawText).ToCommaList(true)} are competing to be the {Utility.LeaderTitle} of {Utility.NationName}.",
+                    new LookTargets(CampaigningCandidates),
+                    MessageTypeDefOf.NeutralEvent);
             }
         }
 
@@ -356,18 +385,23 @@ namespace Rimocracy
             {
                 Utility.Log($"{Leader} was chosen to be the leader.");
 
-                if ((!ModsConfig.IdeologyActive || DecisionActive(DecisionDef.Multiculturalism)) && (LeaderTitleDef == null || !LeaderTitleDef.IsApplicable || (Leader != oldLeader && Rand.Chance(0.2f))))
+                // Chance to choose a new leader title
+                if ((!ModsConfig.IdeologyActive || DecisionActive(DecisionDef.Multiculturalism))
+                    && (LeaderTitleDef == null || !LeaderTitleDef.IsApplicable || (Leader != oldLeader && Rand.Chance(0.2f))))
                     ChooseLeaderTitle();
 
                 TermExpiration = UpdatedTermExpiration();
                 ElectionTick = int.MaxValue;
                 FocusSkill = Leader.GetCampaign()?.FocusSkill ?? SkillsUtility.GetRandomSkill(Leader.skills.skills, Leader == oldLeader ? FocusSkill : null);
+                Utility.Log($"New leader is {Leader} (chosen from {SuccessionWorker.Candidates.Count().ToStringCached()} candidates). Their term expires on {GenDate.DateFullStringAt(TermExpiration, Find.WorldGrid.LongLatOf(Leader.Tile))}. The focus skill is {FocusSkill.defName}.");
 
                 // Campaigning candidates and their supporters gain their thoughts
                 if (IsCampaigning)
                     foreach (ElectionCampaign campaign in Campaigns)
                     {
-                        campaign.Candidate.needs.mood.thoughts.memories.TryGainMemory(ThoughtMaker.MakeThought(RimocracyDefOf.ElectionOutcome, campaign.Candidate.IsLeader() ? 1 : 0));
+                        campaign.Candidate.needs.mood.thoughts.memories.TryGainMemory(
+                            ThoughtMaker.MakeThought(RimocracyDefOf.ElectionOutcome,
+                            campaign.Candidate.IsLeader() ? 1 : 0));
                         foreach (Pawn p2 in CampaigningCandidates.Where(p2 => p2 != campaign.Candidate))
                             campaign.Candidate.needs.mood.thoughts.memories.TryGainMemory(RimocracyDefOf.ElectionCompetitorMemory, p2);
                         int stage = campaign.Candidate.IsLeader() ? 3 : 2;
@@ -375,17 +409,25 @@ namespace Rimocracy
                             p.needs.mood.thoughts.memories.TryGainMemory(ThoughtMaker.MakeThought(RimocracyDefOf.ElectionOutcome, stage));
                     }
 
-                // If the leader has changed, partially reset Governance; show message
+                // If the leader has changed, partially reset Governance and loyalty; show message; record tale
                 if (Leader != oldLeader)
                 {
-                    Governance = Mathf.Lerp(DecisionActive("Stability") ? 0 : 0.5f, Governance, 0.5f);
+                    Governance = Mathf.Lerp(DecisionActive(DecisionDef.Stability) ? 0 : 0.5f, Governance, 0.5f);
+                    foreach (Pawn pawn in Utility.Citizens)
+                        pawn.ChangeLoyalty((Need_Loyalty.DefaultLevel - pawn.GetLoyaltyLevel()) * Need_Loyalty.LoyaltyResetOnLeaderChange * (DecisionActive(DecisionDef.Stability) ? 2 : 1));
                     Find.LetterStack.ReceiveLetter(SuccessionWorker.NewLeaderMessageTitle(Leader), $"{SuccessionWorker.NewLeaderMessageText(Leader)}\n\n{FocusSkillMessage}", LetterDefOf.NeutralEvent);
                     Tale tale = TaleRecorder.RecordTale(RimocracyDefOf.BecameLeader, Leader);
-                    if (tale != null)
-                        Utility.Log($"Tale recorded: {tale}");
                 }
                 else Find.LetterStack.ReceiveLetter(SuccessionWorker.SameLeaderMessageTitle(Leader), $"{SuccessionWorker.SameLeaderMessageText(Leader)}\n\n{FocusSkillMessage}", LetterDefOf.NeutralEvent);
-                Utility.Log($"New leader is {Leader} (chosen from {SuccessionWorker.Candidates.Count().ToStringCached()} candidates). Their term expires on {GenDate.DateFullStringAt(TermExpiration, Find.WorldGrid.LongLatOf(Leader.Tile))}. The focus skill is {FocusSkill.defName}.");
+
+                // Apply succession's loyalty effect
+                float loyaltyEffect = SuccessionWorker.LoyaltyEffect;
+                if (loyaltyEffect != 0)
+                {
+                    Utility.Log($"All citizens gain {loyaltyEffect:N0} loyalty due to the succession.");
+                    foreach (Pawn pawn in Utility.Citizens)
+                        pawn.ChangeLoyalty(loyaltyEffect);
+                }
             }
             else Utility.Log("Could not choose a new leader.", LogLevel.Warning);
             Campaigns = null;

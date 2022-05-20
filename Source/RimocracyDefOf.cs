@@ -12,6 +12,8 @@ namespace Rimocracy
 
         public static JobDef Govern;
 
+        public static NeedDef Rimocracy_Loyalty;
+
         public static PoliticalActionDef Arrest;
         public static PoliticalActionDef Execution;
         public static PoliticalActionDef Release;

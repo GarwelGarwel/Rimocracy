@@ -12,19 +12,18 @@ namespace Rimocracy
 
         bool actionTaken;
 
-        float governanceChangeFactor;
+        float scaleFactor;
 
-        public Dialog_PoliticalAction(PoliticalActionDef action, DecisionVoteResults opinions, bool actionTaken, float governanceChangeFactor = 1)
+        public Dialog_PoliticalAction(PoliticalActionDef action, DecisionVoteResults opinions, bool actionTaken, float scaleFactor = 1)
         {
             this.action = action;
             this.opinions = opinions;
             this.actionTaken = actionTaken;
-            this.governanceChangeFactor = governanceChangeFactor;
+            this.scaleFactor = scaleFactor;
             doCloseX = true;
             doCloseButton = true;
             closeOnClickedOutside = true;
             forcePause = true;
-            Utility.Log($"Opinions of {action.defName}: {opinions}");
         }
 
         public override void DoWindowContents(Rect inRect)
@@ -38,7 +37,7 @@ namespace Rimocracy
             Text.Anchor = TextAnchor.UpperLeft;
 
             if (opinions.Count > 1)
-                content.Label($"{opinions.Yea.ToStringCached()} citizens support the action, {opinions.Nay.ToStringCached()} oppose it, and {opinions.Abstentions.ToStringCached()} are indiffirent.");
+                content.Label($"{opinions.Yea.ToStringCached()} citizens {"support".Colorize(Color.green)} the action, {opinions.Nay.ToStringCached()} {"oppose".Colorize(Color.red)} it, and {opinions.Tolerates.ToStringCached()} are unhappy but {"tolerate".Colorize(Color.yellow)} it.");
 
             if (Utility.RimocracyComp.HasLeader)
             {
@@ -46,29 +45,29 @@ namespace Rimocracy
                 if (actionTaken)
                 {
                     float govChange = 0;
-                    if (opinion.Vote == DecisionVote.Yea && action.governanceChangeIfSupported != 0)
-                        govChange = action.governanceChangeIfSupported * governanceChangeFactor;
-                    else if (opinion.Vote == DecisionVote.Nay && action.governanceChangeIfOpposed != 0)
-                        govChange = action.governanceChangeIfOpposed * governanceChangeFactor;
+                    if (opinion.Vote == DecisionVote.Yea)
+                        govChange = action.governanceChangeIfSupported * scaleFactor;
+                    else if (opinion.Vote == DecisionVote.Nay)
+                        govChange = action.governanceChangeIfOpposed * scaleFactor;
                     if (Mathf.Abs(govChange) >= 0.001f)
-                        content.Label($"Governance changed by {govChange.ToStringPercent()}, because the {Utility.LeaderTitle} {(opinion.Vote == DecisionVote.Yea ? "spearheaded" : "protested")} the action.");
+                        content.Label($"Governance changed by {govChange.ToStringPercent().ColorizeByValue(govChange)}, because the {Utility.LeaderTitle} {(opinion.Vote == DecisionVote.Yea ? "spearheaded" : "protested")} the action.");
                 }
-                content.Label($"{Utility.LeaderTitle.CapitalizeFirst()} {Utility.RimocracyComp.Leader.NameShortColored}: {opinion.support.ToStringWithSign("0")}", tooltip: opinion.explanation);
+                content.Label($"{Utility.LeaderTitle.CapitalizeFirst()} {Utility.RimocracyComp.Leader.NameShortColored}: {opinion.VoteStringColored}", tooltip: opinion.explanation);
             }
 
             foreach (PawnDecisionOpinion opinion in opinions.Where(opinion => opinion.voter != Utility.RimocracyComp.Leader))
-                content.Label($"{opinion.voter.NameShortColored}: {opinion.support.ToStringWithSign("0")}", tooltip: opinion.explanation);
+                content.Label($"{opinion.voter.NameShortColored}: {opinion.VoteStringColored}", tooltip: opinion.explanation);
 
             content.Gap();
-            content.CheckboxLabeled("Always show action details", ref Settings.ShowActionSupportDetails, "Uncheck to disable this dialog from popping up. You may re-enable it in the Settings.");
+            content.CheckboxLabeled("Always show this dialog", ref Settings.ShowActionSupportDetails, "Uncheck to disable action details from popping up. You may re-enable it in the Settings.");
 
             content.End();
         }
 
-        public static void Show(PoliticalActionDef action, DecisionVoteResults opinions, bool actionTaken, float governanceChangeFactor = 1)
+        public static void Show(PoliticalActionDef action, DecisionVoteResults opinions, bool actionTaken, float scaleFactor = 1)
         {
             if (opinions.Any(opinion => opinion.Vote != DecisionVote.Abstain))
-                Find.WindowStack.Add(new Dialog_PoliticalAction(action, opinions, actionTaken, governanceChangeFactor));
+                Find.WindowStack.Add(new Dialog_PoliticalAction(action, opinions, actionTaken, scaleFactor));
         }
     }
 }

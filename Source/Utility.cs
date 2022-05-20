@@ -1,6 +1,8 @@
 ﻿using RimWorld;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 using Verse;
 
 namespace Rimocracy
@@ -23,8 +25,6 @@ namespace Rimocracy
 
     public static class Utility
     {
-        static bool? simpleSlaveryInstalled;
-
         static int rimocracyCompIndex = -1;
 
         public static RimocracyComp RimocracyComp
@@ -38,20 +38,19 @@ namespace Rimocracy
                     if (comp != null)
                         return comp;
                 }
-                for (rimocracyCompIndex = 0; rimocracyCompIndex < Find.World.components.Count; rimocracyCompIndex++)
+                for (rimocracyCompIndex = Find.World.components.Count - 1; rimocracyCompIndex >= 0; rimocracyCompIndex--)
                 {
                     comp = Find.World.components[rimocracyCompIndex] as RimocracyComp;
                     if (comp != null)
                         return comp;
                 }
-                rimocracyCompIndex = -1;
                 return null;
             }
         }
 
         public static bool PoliticsEnabled => RimocracyComp != null && RimocracyComp.IsEnabled;
 
-        public static bool IsSimpleSlaveryInstalled => (bool)(simpleSlaveryInstalled ?? (simpleSlaveryInstalled = RimocracyDefOf.Enslaved != null));
+        public static bool IsSimpleSlaveryInstalled => RimocracyDefOf.Enslaved != null;
 
         public static bool IsFreeAdultColonist(this Pawn pawn) =>
             pawn != null
@@ -71,10 +70,70 @@ namespace Rimocracy
 
         public static int Population => PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonistsAndPrisoners_NoCryptosleep.Count();
 
-        public static float TotalNutrition => Find.Maps.Where(map => map.mapPawns.AnyColonistSpawned).Sum(map => map.resourceCounter.TotalHumanEdibleNutrition);
+        public static float CitizenGovernanceWeight(Pawn pawn)
+        {
+            Need_Loyalty loyalty = pawn.GetLoyalty();
+            if (loyalty == null)
+                return 1;
+            if (loyalty.IsProtesting)
+                return 2;
+            return 1.5f - loyalty.CurLevel;
+        }
+
+        public static Need_Loyalty GetLoyalty(this Pawn pawn) => pawn.needs.TryGetNeed<Need_Loyalty>();
+
+        public static float GetLoyaltySupportOffset(this Pawn pawn) => pawn.GetLoyaltyLevel() * 200 - 100;
+
+        public static float GetLoyaltyLevel(this Pawn pawn)
+        {
+            Need_Loyalty loyalty = pawn.GetLoyalty();
+            return loyalty != null ? loyalty.CurLevel : Need_Loyalty.DefaultLevel;
+        }
+
+        public static void ChangeLoyalty(this Pawn pawn, float value)
+        {
+            Need_Loyalty loyalty = pawn.GetLoyalty();
+            if (loyalty != null)
+                loyalty.CurLevel += value;
+            else Log($"ChangeLoyalty: {pawn} has no Need_Loyalty.", LogLevel.Error);
+        }
+
+        public static float TotalNutrition => Find.Maps.Where(map => map.IsPlayerHome).Sum(map => map.resourceCounter.TotalHumanEdibleNutrition);
 
         public static float FoodConsumptionPerDay =>
-            PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonistsAndPrisoners_NoCryptosleep.Sum(pawn => pawn.needs.food.FoodFallPerTick) * GenDate.TicksPerDay;
+            PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonistsAndPrisoners_NoCryptosleep
+            .Sum(pawn => pawn.needs.food.FoodFallPerTick) * GenDate.TicksPerDay;
+
+        public static int GetTotalSilver() => Find.Maps.Where(map => map.IsPlayerHome).Sum(map => map.resourceCounter.Silver);
+
+        public static int RemoveSilver(Map map, int amount)
+        {
+            int removed = 0;
+            foreach (Thing thing in map.spawnedThings.Where(thing => thing.Faction.IsPlayer && thing.def == ThingDefOf.Silver).ToList())
+            {
+                int count = Math.Min(amount - removed, thing.stackCount);
+                Log($"Removing {count} silver from {thing}...");
+                thing.SplitOff(count);
+                removed += count;
+                if (removed >= amount)
+                    break;
+            }
+            Log($"{removed} units of silver removed from {map} out of {amount}.");
+            return removed;
+        }
+
+        public static int RemoveSilver(int amount)
+        {
+            int removed = 0;
+            foreach (Map map in Find.Maps.Where(map => map.IsPlayerHome))
+            {
+                removed += RemoveSilver(map, amount - removed);
+                if (removed >= amount)
+                    break;
+            }
+            Log($"{removed} silver removed from all maps out of {amount}.");
+            return removed;
+        }
 
         public static float DaysOfFood => TotalNutrition / FoodConsumptionPerDay;
 
@@ -84,7 +143,10 @@ namespace Rimocracy
 
         public static IEnumerable<LeaderTitleDef> ApplicableLeaderTitles => DefDatabase<LeaderTitleDef>.AllDefs.Where(def => def.IsApplicable);
 
-        public static string LeaderTitle => (ModsConfig.IdeologyActive && !RimocracyComp.DecisionActive(DecisionDef.Multiculturalism) ? IdeologyLeaderPrecept()?.Label : RimocracyComp?.LeaderTitleDef?.GetTitle(RimocracyComp.Leader)) ?? "leader";
+        public static string LeaderTitle =>
+            (ModsConfig.IdeologyActive && !RimocracyComp.DecisionActive(DecisionDef.Multiculturalism)
+            ? IdeologyLeaderPrecept()?.Label
+            : RimocracyComp?.LeaderTitleDef?.GetTitle(RimocracyComp.Leader)) ?? "leader";
 
         public static int TermDurationTicks => RimocracyComp.TermDuration.GetDurationTicks();
 
@@ -97,15 +159,16 @@ namespace Rimocracy
         public static Precept_RoleSingle IdeologyLeaderPrecept(Ideo ideo = null) =>
             (ideo ?? NationPrimaryIdeo).GetAllPreceptsOfType<Precept_RoleSingle>().FirstOrDefault(p => p.def == PreceptDefOf.IdeoRole_Leader);
 
-        public static bool RoleRequirementsMetPotentially(Pawn pawn, Precept_Role role) => role.def.roleRequirements.All(req => req is RoleRequirement_Leader || req.Met(pawn, role));
+        public static bool RoleRequirementsMetPotentially(Pawn pawn, Precept_Role role) =>
+            role.def.roleRequirements.All(req => req is RoleRequirement_Leader || req.Met(pawn, role));
 
         public static bool CanBeLeader(this Pawn p) =>
             p.IsCitizen()
             && !p.GetDisabledWorkTypes(true).Contains(RimocracyDefOf.Governing)
             && (!ModsConfig.IdeologyActive || RimocracyComp.DecisionActive(DecisionDef.Multiculturalism) || RoleRequirementsMetPotentially(p, IdeologyLeaderPrecept()));
 
-        public static bool IsLeader(this Pawn p) => PoliticsEnabled && RimocracyComp.Leader == p;
-
+        public static bool IsLeader(this Pawn p) => p != null && RimocracyComp?.Leader == p;
+        
         /// <summary>
         /// Returns pawn's most senior title's seniority, with no titles at all being -100
         /// </summary>
@@ -144,24 +207,6 @@ namespace Rimocracy
             }
         }
 
-        public static float GetRegimeEffect(this TermDuration termDuration)
-        {
-            switch (termDuration)
-            {
-                case TermDuration.Quadrum:
-                    return 0.05f;
-
-                case TermDuration.Halfyear:
-                    return 0;
-
-                case TermDuration.Year:
-                    return -0.05f;
-
-                default:
-                    return -0.10f;
-            }
-        }
-
         public static float GetOpinionOf(this Pawn pawn, Pawn target)
         {
             if (pawn == null || target == null)
@@ -184,6 +229,17 @@ namespace Rimocracy
             int count = list.Count;
             return count % 2 == 0 ? (list[count / 2 - 1] + list[count / 2]) / 2 : list[count / 2];
         }
+
+        public static string ColorizeByValue(this string text, float value, Color color1, Color color2, Color color3, float lowValue = 0, float highValue = 0) =>
+            text.Colorize(value < lowValue ? color1 : (value <= highValue ? color2 : color3));
+
+        public static string ColorizeByValue(this string text, float value, float lowValue = 0, float highValue = 0) =>
+            text.ColorizeByValue(value, Color.red, Color.gray, Color.green, lowValue, highValue);
+
+        public static string ColorizeOpinion(this string text, float support) =>
+            text.ColorizeByValue(support, -0.5f, 0.5f);
+
+        public static string ColorizeOpinion(this float support) => support.ToStringWithSign("0").ColorizeOpinion(support);
 
         internal static void Log(string message, LogLevel logLevel = LogLevel.Message)
         {
