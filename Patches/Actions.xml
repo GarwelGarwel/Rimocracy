@@ -13,7 +13,7 @@
 			<value>
 				<li>
 					<label>gun nut</label>
-					<value>10</value>
+					<value>20</value>
 					<trait>SYR_GunNut</trait>
 				</li>
 			</value>
@@ -31,7 +31,7 @@
 			<value>
 				<li>
 					<label>peacemaker</label>
-					<value>-10</value>
+					<value>-20</value>
 					<trait>Peacemaker</trait>
 					<targetIsColonist>true</targetIsColonist>
 					<isTarget>false</isTarget>
@@ -223,17 +223,17 @@
 					<value>
 						<li>
 							<label>coward</label>
-							<value>-20</value>
+							<value>-30</value>
 							<trait>VTE_Coward</trait>
 						</li>
 						<li>
 							<label>brave</label>
-							<value>20</value>
+							<value>30</value>
 							<trait>VTE_Brave</trait>
 						</li>
 						<li>
 							<label>martial artist</label>
-							<value>10</value>
+							<value>15</value>
 							<trait>VTE_MartialArtist</trait>
 						</li>
 					</value>

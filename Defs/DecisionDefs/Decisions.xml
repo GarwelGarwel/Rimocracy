@@ -913,8 +913,8 @@
 						<skill>Shooting</skill>
 						<offset>
 							<points>
-								<li>(0, -20)</li>
-								<li>(20, 20)</li>
+								<li>(0, -10)</li>
+								<li>(20, 10)</li>
 							</points>
 						</offset>
 					</li>
@@ -922,8 +922,8 @@
 						<skill>Melee</skill>
 						<offset>
 							<points>
-								<li>(0, -20)</li>
-								<li>(20, 20)</li>
+								<li>(0, -10)</li>
+								<li>(20, 10)</li>
 							</points>
 						</offset>
 					</li>
@@ -931,8 +931,8 @@
 						<skill>Construction</skill>
 						<offset>
 							<points>
-								<li>(0, -20)</li>
-								<li>(20, 20)</li>
+								<li>(0, -10)</li>
+								<li>(20, 10)</li>
 							</points>
 						</offset>
 					</li>
@@ -940,8 +940,8 @@
 						<skill>Mining</skill>
 						<offset>
 							<points>
-								<li>(0, -20)</li>
-								<li>(20, 20)</li>
+								<li>(0, -10)</li>
+								<li>(20, 10)</li>
 							</points>
 						</offset>
 					</li>
@@ -949,8 +949,8 @@
 						<skill>Cooking</skill>
 						<offset>
 							<points>
-								<li>(0, -20)</li>
-								<li>(20, 20)</li>
+								<li>(0, -10)</li>
+								<li>(20, 10)</li>
 							</points>
 						</offset>
 					</li>
@@ -958,8 +958,8 @@
 						<skill>Plants</skill>
 						<offset>
 							<points>
-								<li>(0, -20)</li>
-								<li>(20, 20)</li>
+								<li>(0, -10)</li>
+								<li>(20, 10)</li>
 							</points>
 						</offset>
 					</li>
@@ -967,8 +967,8 @@
 						<skill>Animals</skill>
 						<offset>
 							<points>
-								<li>(0, -20)</li>
-								<li>(20, 20)</li>
+								<li>(0, -10)</li>
+								<li>(20, 10)</li>
 							</points>
 						</offset>
 					</li>
@@ -976,8 +976,8 @@
 						<skill>Crafting</skill>
 						<offset>
 							<points>
-								<li>(0, -20)</li>
-								<li>(20, 20)</li>
+								<li>(0, -10)</li>
+								<li>(20, 10)</li>
 							</points>
 						</offset>
 					</li>
@@ -985,8 +985,8 @@
 						<skill>Artistic</skill>
 						<offset>
 							<points>
-								<li>(0, -20)</li>
-								<li>(20, 20)</li>
+								<li>(0, -10)</li>
+								<li>(20, 10)</li>
 							</points>
 						</offset>
 					</li>
@@ -994,8 +994,8 @@
 						<skill>Medicine</skill>
 						<offset>
 							<points>
-								<li>(0, -20)</li>
-								<li>(20, 20)</li>
+								<li>(0, -10)</li>
+								<li>(20, 10)</li>
 							</points>
 						</offset>
 					</li>
@@ -1003,8 +1003,8 @@
 						<skill>Social</skill>
 						<offset>
 							<points>
-								<li>(0, -20)</li>
-								<li>(20, 20)</li>
+								<li>(0, -10)</li>
+								<li>(20, 10)</li>
 							</points>
 						</offset>
 					</li>
@@ -1012,8 +1012,8 @@
 						<skill>Intellectual</skill>
 						<offset>
 							<points>
-								<li>(0, -20)</li>
-								<li>(20, 20)</li>
+								<li>(0, -10)</li>
+								<li>(20, 10)</li>
 							</points>
 						</offset>
 					</li>
@@ -1108,7 +1108,7 @@
 
 	<Rimocracy.DecisionDef>
 		<defName>ResPublica_Cancel</defName>
-		<label>cancel "res publica"</label>
+		<label>cancel "Res Publica"</label>
 		<description>It's not the business of the mob to think about the matters of the state!</description>
 		<category>Democratic</category>
 		<displayPriorityInCategory>40</displayPriorityInCategory>
@@ -1201,7 +1201,7 @@
 
 	<Rimocracy.DecisionDef>
 		<defName>Stability_Cancel</defName>
-		<label>cancel "stability doctrine"</label>
+		<label>cancel "Stability Doctrine"</label>
 		<description>We need a more dynamic society.</description>
 		<category>Authoritarian</category>
 		<displayPriorityInCategory>10</displayPriorityInCategory>
@@ -1292,6 +1292,7 @@
 				<label>greedy</label>
 				<value>20</value>
 				<isLeader>true</isLeader>
+				<trait>Greedy</trait>
 			</li>
 			<li>
 				<label>jealous</label>
@@ -1300,7 +1301,7 @@
 				<trait>Jealous</trait>
 			</li>
 			<li>
-				<label>and what about MY happiness?</label>
+				<label>I don't care for {TARGET}'s happiness</label>
 				<isLeader>false</isLeader>
 				<opinionOfTarget>
 					<lessThan>0</lessThan>
@@ -1314,12 +1315,12 @@
 			</li>
 			<li>
 				<label>individualist ideoligion</label>
-				<value>-10</value>
+				<value>-20</value>
 				<meme>Individualist</meme>
 			</li>
 			<li>
 				<label>collectivist ideoligion</label>
-				<value>10</value>
+				<value>20</value>
 				<meme>Collectivist</meme>
 			</li>
 			<li>
@@ -1329,7 +1330,7 @@
 			</li>
 			<li>
 				<label>guilty ideoligion</label>
-				<value>-10</value>
+				<value>-20</value>
 				<meme>Guilty</meme>
 			</li>
 			<li>
@@ -1358,6 +1359,12 @@
 				<isLeader>true</isLeader>
 			</li>
 			<li>
+				<label>greedy</label>
+				<value>-20</value>
+				<isLeader>true</isLeader>
+				<trait>Greedy</trait>
+			</li>
+			<li>
 				<label>jealous</label>
 				<value>20</value>
 				<isLeader>false</isLeader>
@@ -1378,12 +1385,12 @@
 			</li>
 			<li>
 				<label>individualist ideoligion</label>
-				<value>-10</value>
+				<value>-20</value>
 				<meme>Individualist</meme>
 			</li>
 			<li>
 				<label>collectivist ideoligion</label>
-				<value>10</value>
+				<value>20</value>
 				<meme>Collectivist</meme>
 			</li>
 			<li>
@@ -1393,7 +1400,7 @@
 			</li>
 			<li>
 				<label>guilty ideoligion</label>
-				<value>10</value>
+				<value>20</value>
 				<meme>Guilty</meme>
 			</li>
 			<li>
@@ -1432,7 +1439,7 @@
 		<considerations>
 			<li>
 				<label>I am the leader</label>
-				<value>100</value>
+				<value>80</value>
 				<all>
 					<li>
 						<isLeader>true</isLeader>
@@ -1501,8 +1508,16 @@
 		<considerations>
 			<li>
 				<label>I am the leader</label>
-				<value>-60</value>
-				<isLeader>true</isLeader>
+				<value>-80</value>
+				<all>
+					<li>
+						<isLeader>true</isLeader>
+					</li>
+					<li>
+						<trait>Ascetic</trait>
+						<inverted>true</inverted>
+					</li>
+				</all>
 			</li>
 			<li>
 				<label>jealous</label>
