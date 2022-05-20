@@ -82,8 +82,6 @@ namespace Rimocracy
 
         public static Need_Loyalty GetLoyalty(this Pawn pawn) => pawn.needs.TryGetNeed<Need_Loyalty>();
 
-        public static float GetLoyaltySupportOffset(this Pawn pawn) => pawn.GetLoyaltyLevel() * 200 - 100;
-
         public static float GetLoyaltyLevel(this Pawn pawn)
         {
             Need_Loyalty loyalty = pawn.GetLoyalty();
@@ -97,6 +95,8 @@ namespace Rimocracy
                 loyalty.CurLevel += value;
             else Log($"ChangeLoyalty: {pawn} has no Need_Loyalty.", LogLevel.Error);
         }
+
+        public static float GetLoyaltySupportOffset(this Pawn pawn) => pawn.GetLoyaltyLevel() * 200 - 100;
 
         public static float TotalNutrition => Find.Maps.Where(map => map.IsPlayerHome).Sum(map => map.resourceCounter.TotalHumanEdibleNutrition);
 

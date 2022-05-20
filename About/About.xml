@@ -6,10 +6,11 @@
 	<url>https://github.com/GarwelGarwel/Rimocracy</url>
 	<packageId>Garwel.Rimocracy</packageId>
 	<supportedVersions>
-		<li>1.2</li>
 		<li>1.3</li>
 	</supportedVersions>
-	<description>Adds politics to the game</description>
+	<description>Rimocracy brings domestic politics to the RimWorld.
+
+The colony can now have a leader, chosen in one of many ways, who governs thereby improving efficiency of all citizens. You can move your country towards a liberal democracy, an oppressive dictatorship or something in-between, but make sure that you have enough public support for your reforms. Maintain loyalty of your citizens to ensure they tolerate the less popular decisions and stay clear of protesting.</description>
 	<modDependencies>
 		<li>
 			<packageId>brrainz.harmony</packageId>
