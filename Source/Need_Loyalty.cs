@@ -32,7 +32,7 @@ namespace Rimocracy
 
         protected override bool IsFrozen => base.IsFrozen || !Utility.PoliticsEnabled || !pawn.IsCitizen();
 
-        public override bool ShowOnNeedList => base.ShowOnNeedList && Utility.PoliticsEnabled && pawn.IsCitizen();
+        public override bool ShowOnNeedList => base.ShowOnNeedList && Settings.LoyaltyEnabled && Utility.PoliticsEnabled && pawn.IsCitizen();
 
         public static float ProtestLevel
         {
@@ -50,13 +50,15 @@ namespace Rimocracy
 
         public float StartProtestMTB => GenDate.HoursPerDay * 5 * (1 + CurLevel / ProtestLevel) * (1 + Utility.RimocracyComp.Governance);
 
-        public Need_Loyalty(Pawn pawn) : base(pawn) => threshPercents = threshPercentsCommon;
+        public Need_Loyalty(Pawn pawn)
+            : base(pawn) =>
+            threshPercents = threshPercentsCommon;
 
         public static void RecalculateThreshPercents() => threshPercentsCommon[0] = ProtestLevel;
 
         public void RecalculatePersistentEffects()
         {
-            Utility.Log($"RecalculatePersistentEffects for {pawn} @ tick {Find.TickManager.TicksAbs}");
+            Utility.Log($"RecalculatePersistentEffects for {pawn}");
             persistentOffset = 0;
             foreach (DecisionDef decision in Utility.RimocracyComp.Decisions.Select(decision => decision.def))
             {
@@ -125,6 +127,12 @@ namespace Rimocracy
 
         public override void NeedInterval()
         {
+            if (!Settings.LoyaltyEnabled)
+            {
+                CurLevel = DefaultLevel;
+                protest = null;
+                return;
+            }
             base.NeedInterval();
             if (IsProtesting && !pawn.InMentalState)
                 StopProtest();
