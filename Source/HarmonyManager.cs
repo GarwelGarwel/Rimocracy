@@ -29,10 +29,11 @@ namespace Rimocracy
             Utility.Log($"Applying Harmony patches...");
 
             // Patches for political actions
-            Patch("RimWorld.JobDriver_TakeToBed:MakeNewToils", "Arrest_Prefix", "Arrest_Postfix");
-            Patch("RimWorld.JobDriver_Execute:MakeNewToils", "Execution_Prefix");
+            Patch("RimWorld.JobDriver_TakeToBed:MakeNewToils", prefix: "Arrest_Prefix");
+            Patch("RimWorld.Pawn_GuestTracker:CapturedBy", postfix: "Arrest_Postfix");
+            Patch("RimWorld.JobDriver_Execute:MakeNewToils", prefix: "Execution_Prefix");
             Patch("RimWorld.ExecutionUtility:DoExecutionByCut", postfix: "Execution_Postfix");
-            Patch("Verse.AI.JobDriver_ReleasePrisoner:MakeNewToils", "Release_Prefix");
+            Patch("Verse.AI.JobDriver_ReleasePrisoner:MakeNewToils", prefix: "Release_Prefix");
             Patch("RimWorld.GenGuest:PrisonerRelease", postfix: "Release_Postfix");
             Patch("RimWorld.PawnBanishUtility:Banish", "Banishment_Prefix", "Banishment_Postfix");
             Patch("RimWorld.Planet.SettlementUtility:Attack", "SettlementAttack_Prefix", "SettlementAttack_Postfix");
@@ -75,31 +76,22 @@ namespace Rimocracy
 
         #region ARREST
 
-        // Check is the TakeToBed job is in fact to arrest a non-prisoner for the colony (to prevent it from firing for relocating prisoners etc.)
-        static bool IsActualArrestJob(JobDriver_TakeToBed jobDriver) =>
-            jobDriver.job.def.makeTargetPrisoner && jobDriver.pawn.IsColonist && !jobDriver.job.targetA.Pawn.IsPrisonerOfColony;
-
-        public static void Arrest_Prefix(JobDriver_TakeToBed __instance, out DecisionVoteResults __state)
+        public static void Arrest_Prefix(JobDriver_TakeToBed __instance)
         {
-            if (!IsActualArrestJob(__instance))
-            {
-                __state = null;
+            if (!__instance.job.def.makeTargetPrisoner || !__instance.pawn.IsColonist || __instance.job.targetA.Pawn.IsPrisonerOfColony)
                 return;
-            }
             Pawn target = __instance.job.targetA.Pawn;
-            Utility.Log($"Arrest_Prefix for {target}");
-            if (Vetoed(RimocracyDefOf.Arrest, out __state, target))
+            Utility.Log($"Arrest_Prefix for {target} (from {target.Faction}) by {__instance.pawn.Faction}");
+            if (Vetoed(RimocracyDefOf.Arrest, target))
                 __instance.EndJobWith(JobCondition.Incompletable);
         }
 
-        public static void Arrest_Postfix(JobDriver_TakeToBed __instance, DecisionVoteResults __state)
+        public static void Arrest_Postfix(Pawn_GuestTracker __instance, Faction by, Pawn ___pawn)
         {
-            if (!Utility.PoliticsEnabled || !IsActualArrestJob(__instance))
+            if (!Utility.PoliticsEnabled || !__instance.IsPrisoner || !by.IsPlayer)
                 return;
-            Pawn target = __instance.job.targetA.Pawn;
-            Utility.Log($"Arrest_Postfix for {target}");
-            if (!Utility.RimocracyComp.ActionsNeedApproval || __state == null || !__state.Vetoed)
-                RimocracyDefOf.Arrest.Activate(__state ?? RimocracyDefOf.Arrest.GetOpinions(target));
+            Utility.Log($"Arrest_Postfix for {___pawn} (from {___pawn.Faction}) by {by}");
+            RimocracyDefOf.Arrest.Activate(___pawn);
         }
 
         #endregion ARREST
