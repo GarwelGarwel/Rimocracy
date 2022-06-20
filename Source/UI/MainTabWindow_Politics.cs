@@ -49,7 +49,7 @@ namespace Rimocracy
             // Next election
             else if (Utility.RimocracyComp.ElectionTick > Find.TickManager.TicksAbs)
             {
-                if (Utility.RimocracyComp.ElectionTick != int.MaxValue)
+                if (Utility.RimocracyComp.ElectionCalled)
                     content.Label($"{leaderTitle} will be elected in {(Utility.RimocracyComp.ElectionTick - Find.TickManager.TicksAbs).ToStringTicksToPeriod(false)}.", tooltip: Utility.DateFullStringWithHourAtHome(Utility.RimocracyComp.ElectionTick));
                 else content.Label($"Election of a new {leaderTitle} not yet called for.");
             }

@@ -53,6 +53,7 @@ namespace Rimocracy
         bool? targetIsColonist;
         bool? targetIsLeader;
         bool? targetInAggroMentalState;
+        bool? targetIsHostile;
         bool? targetIsGuilty;
         bool? targetIsWild;
         TraitDef targetTrait;
@@ -94,6 +95,7 @@ namespace Rimocracy
             && targetIsColonist == null
             && targetIsLeader == null
             && targetInAggroMentalState == null
+            && targetIsHostile == null
             && targetIsGuilty == null
             && targetIsWild == null
             && targetTrait == null
@@ -163,6 +165,8 @@ namespace Rimocracy
                     res &= target.IsLeader() == targetIsLeader;
                 if (res && targetInAggroMentalState != null)
                     res &= target.InAggroMentalState == targetInAggroMentalState;
+                if (res && targetIsHostile != null && pawn != null)
+                    res &= target.HostileTo(pawn) == targetIsHostile;
                 if (res && targetIsGuilty != null)
                     res &= target.guilt.IsGuilty == targetIsGuilty;
                 if (res && targetIsWild != null)
@@ -327,6 +331,8 @@ namespace Rimocracy
                 AddLine($"{target.CapitalizeFirst()} is {((bool)targetIsLeader ? "" : "not ")}the leader");
             if (targetInAggroMentalState != null)
                 AddLine($"{target.CapitalizeFirst()} is {((bool)targetInAggroMentalState ? "" : "not ")}in an aggressive mental break");
+            if (targetIsHostile != null)
+                AddLine($"{target.CapitalizeFirst()} is {((bool)targetIsHostile ? "" : "not ")}hostile to {pawn}");
             if (targetIsGuilty != null)
                 AddLine($"{target.CapitalizeFirst()} is {((bool)targetIsGuilty ? "" : "not ")}guilty");
             if (targetIsWild != null)
