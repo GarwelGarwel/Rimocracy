@@ -14,6 +14,7 @@ namespace Rimocracy
 
         public const float MoodWeight = 1;
         public const float OpinionOfLeaderWeight = 1;
+        public const float MentalStateDebuff = 0.20f;
         public const float LoyaltyResetOnLeaderChange = 0.25f;
         public const float ToleratedDecisionLoyaltyFactor = 0.75f;
         public const float ProtestLevelBase = 0.15f;
@@ -29,6 +30,8 @@ namespace Rimocracy
         ProtestDef protest;
 
         public bool IsProtesting => protest != null;
+
+        bool InGenuineMentalState => pawn.InMentalState && !IsProtesting;
 
         protected override bool IsFrozen => base.IsFrozen || !Utility.PoliticsEnabled || !pawn.IsCitizen();
 
@@ -46,7 +49,7 @@ namespace Rimocracy
         }
 
         public override float CurInstantLevel =>
-            (pawn.needs.mood.CurLevelPercentage * MoodWeight + (pawn.GetOpinionOf(Utility.RimocracyComp.Leader) + 100) / 200 * OpinionOfLeaderWeight) / (MoodWeight + OpinionOfLeaderWeight) + persistentOffset;
+            Mathf.Clamp01((pawn.needs.mood.CurLevelPercentage * MoodWeight + (pawn.GetOpinionOf(Utility.RimocracyComp.Leader) + 100) / 200 * OpinionOfLeaderWeight) / (MoodWeight + OpinionOfLeaderWeight) - (InGenuineMentalState ? MentalStateDebuff : 0) + persistentOffset);
 
         public float StartProtestMTB => GenDate.HoursPerDay * 5 * (1 + CurLevel / ProtestLevel) * (1 + Utility.RimocracyComp.Governance);
 
@@ -155,6 +158,8 @@ namespace Rimocracy
             tip += $"\n\nLoyalty of {pawn} is affected by {pawn.Possessive()} mood ({pawn.needs.mood.CurLevelPercentage.ToStringPercent().ColorizeByValue(pawn.needs.mood.CurLevelPercentage, 0.5f, 0.5f)}){(leader != null ? $" and opinion of {Utility.LeaderTitle} {leader.NameShortColored} ({opinionOfLeader.ToStringWithSign("0").ColorizeByValue(opinionOfLeader)})." : ".")}";
             if (persistentOffset != 0)
                 tip += $" Active decisions change loyalty by {persistentOffset.ToStringWithSign("0.#%").ColorizeByValue(persistentOffset)}.";
+            if (InGenuineMentalState)
+                tip += $" Mental state lowers loyalty by {MentalStateDebuff.ToStringPercent().Colorize(Color.red)}.";
             if (CurLevel > DefaultLevel)
             {
                 int supportOffset = (int)Math.Floor(pawn.GetLoyaltySupportOffset());
