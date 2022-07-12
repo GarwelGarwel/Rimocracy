@@ -37,19 +37,13 @@ namespace Rimocracy
 
         public override bool ShowOnNeedList => base.ShowOnNeedList && Settings.LoyaltyEnabled && Utility.PoliticsEnabled && pawn.IsCitizen();
 
-        public static float ProtestLevel
-        {
-            get
-            {
-                int pop = Utility.CitizensCount;
-                if (pop <= 0)
-                    return ProtestLevelBase;
-                return ProtestLevelBase + (DefaultLevel - ProtestLevelBase) * Utility.RimocracyComp.Protesters.Count / pop;
-            }
-        }
+        public static float ProtestLevel =>
+            ProtestLevelBase + (DefaultLevel - ProtestLevelBase) * Utility.RimocracyComp.Protesters.Count / Math.Max(Utility.CitizensCount, 1);
 
         public override float CurInstantLevel =>
-            Mathf.Clamp01((pawn.needs.mood.CurLevelPercentage * MoodWeight + (pawn.GetOpinionOf(Utility.RimocracyComp.Leader) + 100) / 200 * OpinionOfLeaderWeight) / (MoodWeight + OpinionOfLeaderWeight) - (InGenuineMentalState ? MentalStateDebuff : 0) + persistentOffset);
+            Mathf.Clamp01(GenMath.WeightedAverage(pawn.needs.mood.CurLevelPercentage, MoodWeight, (pawn.GetOpinionOf(Utility.RimocracyComp.Leader) + 100) / 200, OpinionOfLeaderWeight)
+                - (InGenuineMentalState ? MentalStateDebuff : 0)
+                + persistentOffset);
 
         public float StartProtestMTB => GenDate.HoursPerDay * 5 * (1 + CurLevel / ProtestLevel) * (1 + Utility.RimocracyComp.Governance);
 
