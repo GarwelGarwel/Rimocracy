@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Verse;
 
+using static Rimocracy.Utility;
+
 namespace Rimocracy
 {
     public class ElectionCampaign : IExposable
@@ -56,7 +58,7 @@ namespace Rimocracy
             HashSet<Pawn> recruits = new HashSet<Pawn>();
 
             // Preparing a list of potential targets for swaying with randomized weights
-            Dictionary<Pawn, float> potentialTargets = Utility.Citizens
+            Dictionary<Pawn, float> potentialTargets = Citizens
                     .Where(p =>
                     !Utility.RimocracyComp.CampaigningCandidates.Contains(p)
                     && !p.InMentalState
@@ -65,7 +67,7 @@ namespace Rimocracy
                     .ToDictionary(p => p, p => Rand.Range(0, ElectionUtility.VoteWeight(p, Candidate) + 100));
 
             if (Settings.DebugLogging && potentialTargets.Count > 0)
-                Utility.Log($"Potential targets for {Candidate}:\r\n{potentialTargets.Select(kvp => $"- {kvp.Key}\t{kvp.Value:N0}").ToLineList()}");
+                Log($"Potential targets for {Candidate}:\r\n{potentialTargets.Select(kvp => $"- {kvp.Key}\t{kvp.Value:N0}").ToLineList()}");
 
             foreach (Pawn pawn in Supporters.Where(pawn => !pawn.InMentalState && !pawn.Downed))
             {
@@ -75,7 +77,7 @@ namespace Rimocracy
                     float defectionChance = 1 - ElectionUtility.VoteWeight(pawn, candidate) / 100;
                     if (!pawn.IsCitizen() || Rand.Chance(defectionChance) || Utility.RimocracyComp.CampaigningCandidates.MaxBy(p => ElectionUtility.VoteWeight(pawn, p)) != candidate)
                     {
-                        Utility.Log($"{pawn} is no longer a core supporter for {candidate}. Their defection chance was {defectionChance:P1}.");
+                        Log($"{pawn} is no longer a core supporter for {candidate}. Their defection chance was {defectionChance:P1}.");
                         defectors.Add(pawn);
                         continue;
                     }
@@ -89,12 +91,12 @@ namespace Rimocracy
 
                 if (targetPawn == null)
                     continue;
-                Utility.Log($"{pawn} is trying to sway {targetPawn}.");
+                Log($"{pawn} is trying to sway {targetPawn}.");
                 float swayChance = pawn.GetStatValue(StatDefOf.SocialImpact) * Settings.SwayChanceFactor * 0.1f;
-                Utility.Log($"Sway chance: {swayChance:P1}.");
+                Log($"Sway chance: {swayChance:P1}.");
                 if (Rand.Chance(swayChance))
                 {
-                    Utility.Log("Sway successful!");
+                    Log("Sway successful!");
                     targetPawn.needs.mood.thoughts.memories.TryGainMemory(RimocracyDefOf.PoliticalSympathy, Candidate);
                     pawn.records.Increment(RimocracyDefOf.VotersSwayed);
 
@@ -102,10 +104,10 @@ namespace Rimocracy
                     {
                         // If the target pawn is not already a core supporter of any candidate, try to recruit them to the campaign
                         float recruitChance = (ElectionUtility.VoteWeight(targetPawn, Candidate) / 100 - 1) * pawn.GetStatValue(StatDefOf.NegotiationAbility) * Settings.RecruitmentChanceFactor;
-                        Utility.Log($"Chance of recruitment: {recruitChance:P1}");
+                        Log($"Chance of recruitment: {recruitChance:P1}");
                         if (Rand.Chance(recruitChance))
                         {
-                            Utility.Log($"{pawn} successfully recruited {targetPawn} to support {Candidate}.");
+                            Log($"{pawn} successfully recruited {targetPawn} to support {Candidate}.");
                             recruits.Add(targetPawn);
                             pawn.records.Increment(RimocracyDefOf.SupportersRecruited);
                             Messages.Message($"{pawn} recruited {targetPawn} as a supporter of {Candidate}", new LookTargets(targetPawn), MessageTypeDefOf.NeutralEvent);

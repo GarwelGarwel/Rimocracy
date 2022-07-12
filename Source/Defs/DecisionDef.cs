@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Verse;
 
+using static Rimocracy.Utility;
+
 namespace Rimocracy
 {
     public enum DecisionEnactmentRule
@@ -51,7 +53,7 @@ namespace Rimocracy
 
         public string LabelTitleCase => GenText.ToTitleCaseSmart(label);
 
-        public TaggedString Description => description.Formatted(new NamedArgument(Utility.LeaderTitle, "LEADER"), new NamedArgument(Utility.NationName, "NATION"));
+        public TaggedString Description => description.Formatted(new NamedArgument(LeaderTitle, "LEADER"), new NamedArgument(NationName, "NATION"));
 
         public bool IsDisplayable =>
             (!IsPersistent || !Utility.RimocracyComp.DecisionActive(Tag)) && (displayRequirements == null || displayRequirements);
@@ -60,7 +62,7 @@ namespace Rimocracy
             IsDisplayable
             && (effectRequirements == null || effectRequirements)
             && Utility.RimocracyComp.Governance >= GovernanceCost
-            && (silverCostPerCitizen <= 0 || Utility.GetTotalSilver() >= SilverCost);
+            && (silverCostPerCitizen <= 0 || GetTotalSilver() >= SilverCost);
 
         /// <summary>
         /// Tells if this decision tag should be stored
@@ -74,7 +76,7 @@ namespace Rimocracy
 
         public float GovernanceCost => governanceCost * Settings.GovernanceCostFactor;
 
-        public int SilverCost => silverCostPerCitizen * Utility.CitizensCount;
+        public int SilverCost => silverCostPerCitizen * CitizensCount;
 
         public int Duration => durationDays * GenDate.TicksPerDay + durationTicks;
 
@@ -85,7 +87,7 @@ namespace Rimocracy
 
         public List<Pawn> Stakeholders =>
             allCitizensReact || enactment == DecisionEnactmentRule.Law || enactment == DecisionEnactmentRule.Referendum
-            ? Utility.Citizens.ToList()
+            ? Citizens.ToList()
             : (Utility.RimocracyComp.HasLeader ? new List<Pawn>(1) { Utility.RimocracyComp.Leader } : new List<Pawn>());
 
         public DecisionVoteResults GetVotingResults(List<Pawn> voters) => new DecisionVoteResults(voters.Select(pawn => new PawnDecisionOpinion(pawn, considerations, Utility.RimocracyComp.Leader)));
@@ -110,7 +112,7 @@ namespace Rimocracy
         {
             if (!IsValid && !cheat)
             {
-                Utility.Log($"{defName} decision is invalid.", LogLevel.Warning);
+                Log($"{defName} decision is invalid.", LogLevel.Warning);
                 return false;
             }
 
@@ -123,9 +125,9 @@ namespace Rimocracy
                 if (silverCostPerCitizen > 0)
                 {
                     int amount = SilverCost;
-                    if (Utility.GetTotalSilver() < amount || Utility.RemoveSilver(amount) < amount)
+                    if (GetTotalSilver() < amount || RemoveSilver(amount) < amount)
                     {
-                        Utility.Log($"Not enough silver for {defName}: {amount} needed.", LogLevel.Warning);
+                        Log($"Not enough silver for {defName}: {amount} needed.", LogLevel.Warning);
                         return false;
                     }
                 }
@@ -133,13 +135,13 @@ namespace Rimocracy
 
             if (setSuccession != null)
             {
-                Utility.Log($"Setting succession to {setSuccession}.");
+                Log($"Setting succession to {setSuccession}.");
                 Utility.RimocracyComp.SuccessionType = setSuccession;
             }
 
             if (setTermDuration != TermDuration.Undefined)
             {
-                Utility.Log($"Setting term duration to {setTermDuration}.");
+                Log($"Setting term duration to {setTermDuration}.");
                 Utility.RimocracyComp.TermDuration = setTermDuration;
                 if (!cheat)
                     Utility.RimocracyComp.TermExpiration = Math.Min(Utility.RimocracyComp.TermExpiration, Utility.RimocracyComp.UpdatedTermExpiration());
@@ -147,33 +149,33 @@ namespace Rimocracy
 
             if (impeachLeader && Utility.RimocracyComp.HasLeader)
             {
-                Utility.Log($"Impeaching {Utility.RimocracyComp.Leader}.");
+                Log($"Impeaching {Utility.RimocracyComp.Leader}.");
                 Utility.RimocracyComp.Leader.needs.mood.thoughts.memories.TryGainMemory(RimocracyDefOf.ImpeachedMemory);
                 Utility.RimocracyComp.Leader = null;
             }
 
             if (actionsNeedApproval != null)
             {
-                Utility.Log($"Setting ActionsNeeedApproval to {actionsNeedApproval}.");
+                Log($"Setting ActionsNeeedApproval to {actionsNeedApproval}.");
                 Utility.RimocracyComp.ActionsNeedApproval = (bool)actionsNeedApproval;
             }
 
             if (!cancelDecision.NullOrEmpty())
             {
-                Utility.Log($"Canceling decision tag {cancelDecision}.");
+                Log($"Canceling decision tag {cancelDecision}.");
                 Utility.RimocracyComp.CancelDecision(cancelDecision);
             }
 
             if (changeLoyalty != 0)
             {
-                Utility.Log($"Changing all pawns' loyalty by {changeLoyalty.ToStringPercent()}.");
-                foreach (Pawn pawn in Utility.Citizens)
+                Log($"Changing all pawns' loyalty by {changeLoyalty.ToStringPercent()}.");
+                foreach (Pawn pawn in Citizens)
                     pawn.ChangeLoyalty(changeLoyalty);
             }
 
             foreach (PawnDecisionOpinion opinion in votingResult)
             {
-                Utility.Log($"{opinion.voter}'s opinion is {opinion.support.ToStringWithSign()}.");
+                Log($"{opinion.voter}'s opinion is {opinion.support.ToStringWithSign()}.");
                 switch (opinion.Vote)
                 {
                     case DecisionVote.Yea:
@@ -199,7 +201,7 @@ namespace Rimocracy
         public void Cancel()
         {
             if (loyaltyEffect != 0)
-                foreach (Pawn pawn in Utility.Citizens)
+                foreach (Pawn pawn in Citizens)
                     pawn.GetLoyalty().RecalculatePersistentEffects();
         }
     }

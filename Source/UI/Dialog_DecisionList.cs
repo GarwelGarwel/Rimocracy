@@ -30,7 +30,8 @@ namespace Rimocracy
 
         public override void DoWindowContents(Rect rect)
         {
-            if (Utility.RimocracyComp.IsUpdateTick)
+            RimocracyComp comp = Utility.RimocracyComp;
+            if (comp.IsUpdateTick)
             {
                 UpdateAvailableDecisions();
                 viewRect = new Rect();
@@ -44,13 +45,13 @@ namespace Rimocracy
             Listing_Standard content = new Listing_Standard();
             content.Begin(viewRect);
 
-            content.Label($"Succession type: {Utility.RimocracyComp.SuccessionType.LabelCap}", tooltip: Utility.RimocracyComp.SuccessionType.description);
-            content.Label($"Leader's term: {Utility.RimocracyComp.TermDuration}");
+            content.Label($"Succession type: {comp.SuccessionType.LabelCap}", tooltip: comp.SuccessionType.description);
+            content.Label($"Leader's term: {comp.TermDuration}");
 
-            if (Utility.RimocracyComp.Decisions.Any())
+            if (comp.Decisions.Any())
             {
                 content.Label("Active decisions:");
-                foreach (Decision decision in Utility.RimocracyComp.Decisions)
+                foreach (Decision decision in comp.Decisions)
                     content.Label($"- {decision.def.LabelTitleCase}{(decision.def.Expiration != int.MaxValue ? $" (expires in {(decision.expiration - Find.TickManager.TicksAbs).ToStringTicksToPeriod()})" : "")}", tooltip: decision.def.Description);
             }
 
@@ -81,7 +82,7 @@ namespace Rimocracy
                         if (def.governanceCost != 0)
                             content.Label($"Will {(def.governanceCost > 0 ? "reduce" : "increase")} Governance by {Math.Abs(def.GovernanceCost).ToStringPercent().ColorizeByValue(-def.governanceCost)}.");
                         if (!def.effectRequirements.IsTrivial)
-                            content.Label($"Requirements:\n{def.effectRequirements.ToString(target: Utility.RimocracyComp.Leader?.NameShortColored)}");
+                            content.Label($"Requirements:\n{def.effectRequirements.ToString(target: comp.Leader?.NameShortColored)}");
                         switch (def.enactment)
                         {
                             case DecisionEnactmentRule.Decree:
@@ -95,9 +96,9 @@ namespace Rimocracy
                         }
 
                         DecisionVoteResults votingResult = def.GetVotingResults(Utility.Citizens.ToList());
-                        if (def.enactment == DecisionEnactmentRule.Decree && Utility.RimocracyComp.HasLeader)
+                        if (def.enactment == DecisionEnactmentRule.Decree && comp.HasLeader)
                         {
-                            PawnDecisionOpinion leaderOpinion = votingResult[Utility.RimocracyComp.Leader];
+                            PawnDecisionOpinion leaderOpinion = votingResult[comp.Leader];
                             content.Label($"{Utility.LeaderTitle.CapitalizeFirst()} {leaderOpinion.VoteStringColored} this decision.", tooltip: leaderOpinion.explanation);
                         }
 

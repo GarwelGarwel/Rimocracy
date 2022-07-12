@@ -39,9 +39,11 @@ namespace Rimocracy
             if (opinions.Count > 1)
                 content.Label($"{opinions.Yea.ToStringCached()} citizens {"support".Colorize(Color.green)} the action, {opinions.Nay.ToStringCached()} {"oppose".Colorize(Color.red)} it, and {opinions.Tolerates.ToStringCached()} are unhappy but {"tolerate".Colorize(Color.yellow)} it.");
 
-            if (Utility.RimocracyComp.HasLeader)
+            RimocracyComp comp = Utility.RimocracyComp;
+
+            if (comp.HasLeader)
             {
-                PawnDecisionOpinion opinion = opinions[Utility.RimocracyComp.Leader];
+                PawnDecisionOpinion opinion = opinions[comp.Leader];
                 if (actionTaken)
                 {
                     float govChange = 0;
@@ -52,10 +54,10 @@ namespace Rimocracy
                     if (Mathf.Abs(govChange) >= 0.001f)
                         content.Label($"Governance changed by {govChange.ToStringPercent().ColorizeByValue(govChange)}, because the {Utility.LeaderTitle} {(opinion.Vote == DecisionVote.Yea ? "spearheaded" : "protested")} the action.");
                 }
-                content.Label($"{Utility.LeaderTitle.CapitalizeFirst()} {Utility.RimocracyComp.Leader.NameShortColored}: {opinion.VoteStringColored}", tooltip: opinion.explanation);
+                content.Label($"{Utility.LeaderTitle.CapitalizeFirst()} {comp.Leader.NameShortColored}: {opinion.VoteStringColored}", tooltip: opinion.explanation);
             }
 
-            foreach (PawnDecisionOpinion opinion in opinions.Where(opinion => opinion.voter != Utility.RimocracyComp.Leader))
+            foreach (PawnDecisionOpinion opinion in opinions.Where(opinion => opinion.voter != comp.Leader))
                 content.Label($"{opinion.voter.NameShortColored}: {opinion.VoteStringColored}", tooltip: opinion.explanation);
 
             content.Gap();
