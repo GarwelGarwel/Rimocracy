@@ -59,8 +59,9 @@ namespace Rimocracy
         {
             Log($"RecalculatePersistentEffects for {pawn}");
             persistentOffset = 0;
-            foreach (DecisionDef decision in Utility.RimocracyComp.Decisions.Select(decision => decision.def))
+            for (int i = 0; i < Utility.RimocracyComp.Decisions.Count; i++)
             {
+                DecisionDef decision = Utility.RimocracyComp.Decisions[i].def;
                 PawnDecisionOpinion opinion = new PawnDecisionOpinion(pawn, decision.considerations, Utility.RimocracyComp.Leader);
                 Log($"{pawn}'s support for {decision.defName}: {opinion.support.ToStringWithSign()}");
                 switch (opinion.Vote)

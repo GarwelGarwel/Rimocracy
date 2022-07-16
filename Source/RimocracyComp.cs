@@ -253,6 +253,7 @@ namespace Rimocracy
                     Leader = null;
                     Governance = 0.50f;
                     ElectionTick = int.MaxValue;
+                    Protesters.Clear();
                 }
                 return;
             }
@@ -312,8 +313,9 @@ namespace Rimocracy
                             CallElection();
                         }
 
-                        foreach (ElectionCampaign campaign in Campaigns.InRandomOrder())
-                            campaign.RareTick();
+                        int offset = Rand.Range(0, Campaigns.Count);
+                        for (int i = 0; i < Campaigns.Count; i++)
+                            Campaigns[(i + offset) % Campaigns.Count].RareTick();
                     }
 
                 // If election is due, choose new leader
@@ -331,7 +333,13 @@ namespace Rimocracy
 
         public void ChangeGovernance(float amount) => Governance = Mathf.Clamp01(Governance + amount);
 
-        public bool DecisionActive(string tag) => Decisions.Any(decision => decision.Tag == tag);
+        public bool DecisionActive(string tag)
+        {
+            for (int i = 0; i < Decisions.Count; i++)
+                if (Decisions[i].Tag == tag)
+                    return true;
+            return false;
+        }
 
         internal void CancelDecision(string tag)
         {
