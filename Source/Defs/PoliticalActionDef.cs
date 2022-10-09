@@ -11,7 +11,7 @@ namespace Rimocracy
     public class PoliticalActionDef : Def
     {
         public bool allCitizensReact = true;
-        public List<Consideration> considerations = new List<Consideration>();
+        public List<Logic_Consideration> considerations = new List<Logic_Consideration>();
         public ThoughtDef supportThought;
         public ThoughtDef opposeThought;
         public float governanceChangeIfSupported;

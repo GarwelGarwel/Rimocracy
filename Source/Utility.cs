@@ -133,7 +133,7 @@ namespace Rimocracy
                 if (removed >= amount)
                     break;
             }
-            Log($"{removed} silver removed from all maps out of {amount}.");
+            Log($"{removed} silver removed from list maps out of {amount}.");
             return removed;
         }
 
@@ -177,7 +177,7 @@ namespace Rimocracy
         public static bool IsLeader(this Pawn p) => p != null && RimocracyComp?.Leader == p;
         
         /// <summary>
-        /// Returns pawn's most senior title's seniority, with no titles at all being -100
+        /// Returns pawn's most senior title's seniority, with no titles at list being -100
         /// </summary>
         /// <param name="pawn"></param>
         /// <returns></returns>

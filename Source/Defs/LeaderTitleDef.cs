@@ -8,7 +8,7 @@ namespace Rimocracy
 
         public string labelFemale;
 
-        public Consideration requirements = Consideration.always;
+        public Logic_Consideration requirements = Logic_Consideration.always;
 
         public bool IsApplicable => requirements.IsSatisfied();
 

@@ -55,14 +55,14 @@ namespace Rimocracy
             }
         }
 
-        public PawnDecisionOpinion(Pawn voter, IEnumerable<Consideration> considerations, Pawn target)
+        public PawnDecisionOpinion(Pawn voter, IEnumerable<Logic_Consideration> considerations, Pawn target)
         {
             this.voter = voter;
             support = 0;
             List<string> explanations = new List<string>();
-            foreach (Consideration consideration in considerations)
+            foreach (Logic_Consideration consideration in considerations)
             {
-                (float support, TaggedString explanation) supportExplanation = consideration.GetSupportAndExplanation(voter, target);
+                (float support, TaggedString explanation) supportExplanation = consideration.GetValueAndExplanation(voter, target);
                 if (supportExplanation.support != 0)
                 {
                     support += supportExplanation.support;

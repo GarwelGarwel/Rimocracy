@@ -13,7 +13,7 @@ namespace Rimocracy
 
         public override string GetLabel(Precept_Role role) =>
             role.def.leaderRole
-            ? ((Utility.PoliticsEnabled && Utility.RimocracyComp.DecisionActive(DecisionDef.Multiculturalism)) ? "Disabled when Multiculturalism is active" : "Chosen according to succession law")
+            ? ((Utility.PoliticsEnabled && Utility.RimocracyComp.DecisionActive(DecisionDef.Multiculturalism)) ? "Disabled when Multiculturalism is active" : "Chosen according to SuccessionDef law")
             : $"Can't be the current {Utility.IdeologyLeaderPrecept(role.ideo)?.Label ?? "leader"}";
     }
 }

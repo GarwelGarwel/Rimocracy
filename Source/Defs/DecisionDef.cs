@@ -31,11 +31,11 @@ namespace Rimocracy
         public DecisionCategoryDef category;
         public int displayPriorityInCategory;
 
-        public Consideration displayRequirements = Consideration.always;
-        public Consideration effectRequirements = Consideration.always;
+        public Logic_Consideration displayRequirements = Logic_Consideration.always;
+        public Logic_Consideration effectRequirements = Logic_Consideration.always;
         public DecisionEnactmentRule enactment = DecisionEnactmentRule.None;
         public bool allCitizensReact = true;
-        public List<Consideration> considerations = new List<Consideration>();
+        public List<Logic_Consideration> considerations = new List<Logic_Consideration>();
 
         public string tag;
         public int durationDays;
@@ -53,7 +53,7 @@ namespace Rimocracy
 
         public string LabelTitleCase => GenText.ToTitleCaseSmart(label);
 
-        public TaggedString Description => description.Formatted(new NamedArgument(LeaderTitle, "LEADER"), new NamedArgument(NationName, "NATION"));
+        public TaggedString Description => description.Formatted(new NamedArgument(LeaderTitle, "LEADERTITLE"), new NamedArgument(NationName, "NATION"));
 
         public bool IsDisplayable =>
             (!IsPersistent || !Utility.RimocracyComp.DecisionActive(Tag)) && (displayRequirements == null || displayRequirements);
@@ -135,7 +135,7 @@ namespace Rimocracy
 
             if (setSuccession != null)
             {
-                Log($"Setting succession to {setSuccession}.");
+                Log($"Setting SuccessionDef to {setSuccession}.");
                 Utility.RimocracyComp.SuccessionType = setSuccession;
             }
 
@@ -168,7 +168,7 @@ namespace Rimocracy
 
             if (changeLoyalty != 0)
             {
-                Log($"Changing all pawns' loyalty by {changeLoyalty.ToStringPercent()}.");
+                Log($"Changing list pawns' loyalty by {changeLoyalty.ToStringPercent()}.");
                 foreach (Pawn pawn in Citizens)
                     pawn.ChangeLoyalty(changeLoyalty);
             }
