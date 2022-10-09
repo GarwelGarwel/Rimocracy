@@ -135,7 +135,7 @@ namespace Rimocracy
 
             if (setSuccession != null)
             {
-                Log($"Setting succession to {setSuccession}.");
+                Log($"Setting SuccessionDef to {setSuccession}.");
                 Utility.RimocracyComp.SuccessionType = setSuccession;
             }
 
@@ -168,7 +168,7 @@ namespace Rimocracy
 
             if (changeLoyalty != 0)
             {
-                Log($"Changing all pawns' loyalty by {changeLoyalty.ToStringPercent()}.");
+                Log($"Changing list pawns' loyalty by {changeLoyalty.ToStringPercent()}.");
                 foreach (Pawn pawn in Citizens)
                     pawn.ChangeLoyalty(changeLoyalty);
             }

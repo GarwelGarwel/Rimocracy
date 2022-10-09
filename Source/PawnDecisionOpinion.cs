@@ -62,7 +62,7 @@ namespace Rimocracy
             List<string> explanations = new List<string>();
             foreach (Consideration consideration in considerations)
             {
-                (float support, TaggedString explanation) supportExplanation = consideration.GetSupportAndExplanation(voter, target);
+                (float support, TaggedString explanation) supportExplanation = consideration.GetValueAndExplanation(voter, target);
                 if (supportExplanation.support != 0)
                 {
                     support += supportExplanation.support;

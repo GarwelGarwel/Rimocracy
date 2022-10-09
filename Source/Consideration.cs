@@ -1,86 +1,79 @@
-﻿using RimWorld;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Verse;
 
 namespace Rimocracy
 {
-    public class Consideration
+    public class Consideration : Logic
     {
         public static readonly Consideration always = new Consideration();
 
         public static readonly Consideration never = new Consideration() { inverted = true };
 
-        static string indent = "";
+        internal static string indent = "";
 
-        const string indentSymbol = "  ";
+        internal const string indentSymbol = "  ";
 
-        public string label;
-        float value;
-        bool inverted = false;
-
-        List<Consideration> all = new List<Consideration>();
-        List<Consideration> any = new List<Consideration>();
+        Logic_All all;
+        Logic_Any any;
 
         List<Consideration> factors = new List<Consideration>();
         List<Consideration> offsets = new List<Consideration>();
 
-        SuccessionDef succession;
-        bool? leaderExists;
-        TermDuration termDuration = TermDuration.Undefined;
-        bool? campaigning;
-        ValueOperations governance;
-        ValueOperations population;
-        ValueOperations daysOfFood;
-        List<TechLevel> techLevels = new List<TechLevel>();
-        string modActive;
-        string decision;
+        Logic_Succession succession;
+        Logic_LeaderExists leaderExists;
+        Logic_TermDuration termDuration;
+        Logic_IsCampaigning campaigning;
+        Logic_Governance governance;
+        Logic_Population population;
+        Logic_DaysOfFood daysOfFood;
+        Logic_TechLevel techLevel;
+        Logic_ModActive modActive;
+        Logic_DecisionActive decision;
 
-        bool? isLeader;
-        bool? isTarget;
-        TraitDef trait;
-        int traitDegree;
-        List<SkillOperations> skills = new List<SkillOperations>();
-        bool? isCapableOfViolence;
-        ValueOperations medianOpinionOfMe;
-        ValueOperations age;
-        ValueOperations titleSeniority;
-        bool? primaryIdeoligion;
-        string meme;
-        string precept;
-        ValueOperations ideoCertainty;
+        Logic_IsLeader isLeader;
+        Logic_IsTarget isTarget;
+        Logic_HasTrait trait;
+        List<Logic_Skill> skills = new List<Logic_Skill>();
+        Logic_IsCapableOfViolence isCapableOfViolence;
+        Logic_MedianOpinion medianOpinionOfMe;
+        Logic_Age age;
+        Logic_TitleSeniority titleSeniority;
+        Logic_HasPrimaryIdeo primaryIdeoligion;
+        Logic_Meme meme;
+        Logic_Precept precept;
+        Logic_IdeoCertainty ideoCertainty;
 
-        bool? targetIsColonist;
-        bool? targetIsLeader;
-        bool? targetInAggroMentalState;
-        bool? targetIsHostile;
-        bool? targetIsGuilty;
-        bool? targetIsWild;
-        TraitDef targetTrait;
-        int targetTraitDegree;
-        ValueOperations opinionOfTarget;
-        ValueOperations medianOpinionOfTarget;
-        ValueOperations targetAge;
-        ValueOperations targetFactionGoodwill;
+        Logic_IsColonist targetIsColonist;
+        Logic_IsLeader targetIsLeader;
+        Logic_InAggroMentalState targetInAggroMentalState;
+        Logic_IsHostile targetIsHostile;
+        Logic_IsGuilty targetIsGuilty;
+        Logic_IsWild targetIsWild;
+        Logic_HasTrait targetTrait;
+        Logic_Opinion opinionOfTarget;
+        Logic_MedianOpinion medianOpinionOfTarget;
+        Logic_Age targetAge;
+        Logic_FactionGoodwill targetFactionGoodwill;
 
         /// <summary>
         /// Returns true if this requirement is default
         /// </summary>
         public bool IsTrivial =>
             !inverted
-            && all.NullOrEmpty()
-            && any.NullOrEmpty()
+            && all == null
+            && any == null
             && factors.NullOrEmpty()
             && offsets.NullOrEmpty()
             && succession == null
             && leaderExists == null
-            && termDuration == TermDuration.Undefined
+            && termDuration == null
             && campaigning == null
             && governance == null
             && population == null
             && daysOfFood == null
-            && techLevels.EnumerableNullOrEmpty()
-            && modActive.NullOrEmpty()
+            && techLevel == null
+            && modActive == null
             && decision == null
             && isLeader == null
             && isTarget == null
@@ -90,7 +83,10 @@ namespace Rimocracy
             && medianOpinionOfMe == null
             && age == null
             && titleSeniority == null
-            && precept.NullOrEmpty()
+            && targetFactionGoodwill == null
+            && primaryIdeoligion == null
+            && meme == null
+            && precept == null
             && ideoCertainty == null
             && targetIsColonist == null
             && targetIsLeader == null
@@ -99,11 +95,11 @@ namespace Rimocracy
             && targetIsGuilty == null
             && targetIsWild == null
             && targetTrait == null
+            && opinionOfTarget == null
             && medianOpinionOfTarget == null
-            && medianOpinionOfTarget == null
-            && targetAge == null
-            && targetFactionGoodwill == null
-            && primaryIdeoligion == null;
+            && targetAge == null;
+
+        public override string DefaultLabel => "";
 
         public Consideration()
         { }
@@ -112,129 +108,113 @@ namespace Rimocracy
 
         public static implicit operator bool(Consideration consideration) => consideration.IsSatisfied(target: Utility.RimocracyComp.Leader);
 
-        public bool IsSatisfied(Pawn pawn = null, Pawn target = null)
+        protected override bool IsSatisfiedInternal(Pawn pawn = null, Pawn target = null)
         {
             bool res = true;
 
             if (succession != null)
-                res &= Utility.RimocracyComp.SuccessionType.defName == succession.defName;
-            if (res && termDuration != TermDuration.Undefined)
-                res &= Utility.RimocracyComp.TermDuration == termDuration;
+                res &= succession.IsSatisfied();
             if (res && leaderExists != null)
-                res &= Utility.RimocracyComp.HasLeader == leaderExists;
+                res &= leaderExists.IsSatisfied();
+            if (res && termDuration != null)
+                res &= termDuration.IsSatisfied();
             if (res && campaigning != null)
-                res &= Utility.RimocracyComp.IsCampaigning == campaigning;
+                res &= campaigning.IsSatisfied();
             if (res && governance != null)
-                res &= governance.Compare(Utility.RimocracyComp.Governance);
+                res &= governance.IsSatisfied();
             if (res && population != null)
-                res &= population.Compare(Utility.Population);
+                res &= population.IsSatisfied();
             if (res && daysOfFood != null)
-                res &= daysOfFood.Compare(Utility.DaysOfFood);
-            if (res && techLevels.Any())
-                res &= techLevels.Contains(Faction.OfPlayer.def.techLevel);
-            if (res && !modActive.NullOrEmpty())
-                res &= ModsConfig.IsActive(modActive.Contains('.') ? modActive : $"Ludeon.RimWorld.{modActive}");
-            if (res && !decision.NullOrEmpty())
-                res &= Utility.RimocracyComp.DecisionActive(decision);
+                res &= daysOfFood.IsSatisfied();
+            if (res && techLevel != null)
+                res &= techLevel.IsSatisfied();
+            if (res && modActive != null)
+                res &= modActive.IsSatisfied();
+            if (res && decision != null)
+                res &= decision.IsSatisfied();
+
+            if (res && primaryIdeoligion != null && primaryIdeoligion.ValidFor(pawn))
+                res &= primaryIdeoligion.IsSatisfied(pawn);
+            if (res && meme != null && meme.ValidFor(pawn))
+                res &= meme.IsSatisfied(pawn);
+            if (res && precept != null && precept.ValidFor(pawn))
+                res &= precept.IsSatisfied(pawn);
 
             if (res && pawn != null)
             {
                 if (isLeader != null)
-                    res &= pawn.IsLeader() == isLeader;
+                    res &= isLeader.IsSatisfied(pawn);
                 if (res && isTarget != null)
-                    res &= (pawn == target) == isTarget;
-                if (res && trait != null && pawn?.story?.traits != null)
-                    res &= pawn.story.traits.HasTrait(trait, traitDegree);
+                    res &= isTarget.IsSatisfied(pawn, target);
+                if (res && trait != null && trait.ValidFor(pawn))
+                    res &= trait.IsSatisfied(pawn);
                 if (res && !skills.NullOrEmpty())
-                    res &= skills.TrueForAll(so => so.Compare(pawn));
+                    res &= skills.TrueForAll(so => so.IsSatisfied(pawn));
                 if (res && isCapableOfViolence != null)
-                    res &= pawn.WorkTagIsDisabled(WorkTags.Violent) != isCapableOfViolence;
+                    res &= isCapableOfViolence.IsSatisfied(pawn);
                 if (res && medianOpinionOfMe != null)
-                    res &= medianOpinionOfMe.Compare(pawn.MedianCitizensOpinion());
-                if (res && age != null && pawn?.ageTracker != null)
-                    res &= age.Compare(pawn.ageTracker.AgeBiologicalYears);
-                if (res && titleSeniority != null && pawn?.royalty != null)
-                    res &= titleSeniority.Compare(pawn.GetTitleSeniority());
+                    res &= medianOpinionOfMe.IsSatisfied(pawn);
+                if (res && age != null && age.ValidFor(pawn))
+                    res &= age.IsSatisfied(pawn);
+                if (res && titleSeniority != null && titleSeniority.ValidFor(pawn))
+                    res &= titleSeniority.IsSatisfied(pawn);
+                if (res && ideoCertainty != null && ideoCertainty.ValidFor(pawn))
+                    res &= ideoCertainty.IsSatisfied(pawn);
             }
 
             if (res && target != null)
             {
                 if (targetIsColonist != null)
-                    res &= target.IsColonist == targetIsColonist;
+                    res &= targetIsColonist.IsSatisfied(target);
                 if (res && targetIsLeader != null)
-                    res &= target.IsLeader() == targetIsLeader;
+                    res &= targetIsLeader.IsSatisfied(target);
                 if (res && targetInAggroMentalState != null)
-                    res &= target.InAggroMentalState == targetInAggroMentalState;
-                if (res && targetIsHostile != null && pawn != null)
-                    res &= target.HostileTo(pawn) == targetIsHostile;
+                    res &= targetInAggroMentalState.IsSatisfied(target);
+                if (res && targetIsHostile != null && targetIsHostile.ValidFor(pawn, target))
+                    res &= targetIsHostile.IsSatisfied(pawn, target);
                 if (res && targetIsGuilty != null)
-                    res &= target.guilt.IsGuilty == targetIsGuilty;
+                    res &= targetIsGuilty.IsSatisfied(target);
                 if (res && targetIsWild != null)
-                    res &= target.IsWildMan() == targetIsWild;
-                if (res && targetTrait != null && target.story?.traits != null)
-                    res &= target.story.traits.HasTrait(targetTrait, targetTraitDegree);
-                if (res && opinionOfTarget != null && pawn != null)
-                    res &= opinionOfTarget.Compare(pawn.GetOpinionOf(target));
+                    res &= targetIsWild.IsSatisfied(target);
+                if (res && targetTrait != null && targetTrait.ValidFor(target))
+                    res &= targetTrait.IsSatisfied(target);
+                if (res && opinionOfTarget != null)
+                    res &= opinionOfTarget.IsSatisfied(pawn, target);
                 if (res && medianOpinionOfTarget != null)
-                    res &= medianOpinionOfTarget.Compare(target.MedianCitizensOpinion());
-                if (res && targetAge != null && target.ageTracker != null)
-                    res &= targetAge.Compare(target.ageTracker.AgeBiologicalYears);
-                if (res && targetFactionGoodwill != null && target.HomeFaction != null && !target.HomeFaction.IsPlayer)
-                    res &= targetFactionGoodwill.Compare(target.HomeFaction.PlayerGoodwill);
+                    res &= medianOpinionOfTarget.IsSatisfied(target);
+                if (res && targetAge != null && targetAge.ValidFor(target))
+                    res &= targetAge.IsSatisfied(target);
+                if (res && targetFactionGoodwill != null && targetFactionGoodwill.ValidFor(target))
+                    res &= targetFactionGoodwill.IsSatisfied(target);
             }
 
-            Ideo ideo = pawn?.Ideo ?? Utility.NationPrimaryIdeo;
-            if (ideo != null)
-            {
-                if (res && !meme.NullOrEmpty())
-                    res &= ideo.memes.Any(m => m.defName == meme);
-                if (res && !precept.NullOrEmpty())
-                    res &= ideo.PreceptsListForReading.Any(p => p.def.defName == precept);
-                if (res && ideoCertainty != null && pawn?.ideo != null)
-                    res &= ideoCertainty.Compare(pawn.ideo.Certainty);
-                if (res && primaryIdeoligion != null && ideo != null)
-                    res &= (ideo == Utility.NationPrimaryIdeo) == primaryIdeoligion;
-            }
-
-            if (res && !all.NullOrEmpty())
-                res &= all.All(r => r.IsSatisfied(pawn, target));
-            if (res && !any.NullOrEmpty())
-                res &= any.Any(r => r.IsSatisfied(pawn, target));
-            return res ^ inverted;
+            if (res && all != null)
+                res &= all.IsSatisfied(pawn, target);
+            if (res && any != null)
+                res &= any.IsSatisfied(pawn, target);
+            return res;
         }
 
-        public (float value, TaggedString explanation) GetSupportAndExplanation(Pawn pawn, Pawn target)
-        {
-            float s = GetValue(pawn, target);
-            return (s, s != 0 ? $"{label.Formatted(pawn.Named("PAWN"), target.Named("TARGET")).Resolve().CapitalizeFirst()}: {s.ToStringWithSign("0").ColorizeOpinion(s)}" : null);
-        }
-
-        public float GetValue(Pawn pawn, Pawn target = null)
+        public override float GetValue(Pawn pawn = null, Pawn target = null)
         {
             if (!IsSatisfied(pawn, target))
                 return 0;
             float s = value;
-
-            governance?.TransformValue(Utility.RimocracyComp.Governance, ref s);
-            population?.TransformValue(Utility.Population, ref s);
-            daysOfFood?.TransformValue(Utility.DaysOfFood, ref s);
-            foreach (SkillOperations so in skills)
-                so.TransformValue(pawn, ref s);
-            medianOpinionOfMe?.TransformValue(pawn.MedianCitizensOpinion(), ref s);
-            if (pawn?.ageTracker != null)
-                age?.TransformValue(pawn.ageTracker.AgeBiologicalYears, ref s);
-            if (pawn?.royalty != null)
-                titleSeniority?.TransformValue(pawn.GetTitleSeniority(), ref s);
-            if (ModsConfig.IdeologyActive && pawn?.ideo != null)
-                ideoCertainty?.TransformValue(pawn.ideo.Certainty, ref s);
+            governance?.TransformValue(ref s);
+            population?.TransformValue(ref s);
+            daysOfFood?.TransformValue(ref s);
+            for (int i = 0; i < skills.Count; i++)
+                skills[i]?.TransformValue(ref s, pawn);
+            medianOpinionOfMe?.TransformValue(ref s, pawn);
+            age?.TransformValue(ref s, pawn);
+            titleSeniority?.TransformValue(ref s, pawn);
+            ideoCertainty?.TransformValue(ref s, pawn);
             if (target != null)
             {
-                opinionOfTarget?.TransformValue(pawn.GetOpinionOf(target), ref s);
-                medianOpinionOfTarget?.TransformValue(target.MedianCitizensOpinion(), ref s);
-                if (target.ageTracker != null)
-                    targetAge?.TransformValue(target.ageTracker.AgeBiologicalYears, ref s);
-                if (target.Faction != null && !target.Faction.IsPlayer)
-                    targetFactionGoodwill?.TransformValue(target.Faction.PlayerGoodwill, ref s);
+                opinionOfTarget?.TransformValue(ref s, pawn, target);
+                medianOpinionOfTarget?.TransformValue(ref s, target);
+                targetAge?.TransformValue(ref s, target);
+                targetFactionGoodwill?.TransformValue(ref s, target);
             }
 
             foreach (Consideration factor in factors.Where(factor => factor.IsSatisfied(pawn, target)))
@@ -244,128 +224,104 @@ namespace Rimocracy
             return s;
         }
 
-        public string ToString(string pawn = null, string target = null)
+        internal static void AddIndent() => indent += indentSymbol;
+
+        internal static void RemoveIndent() => indent = indent.Remove(0, indentSymbol.Length);
+
+        public override string LabelAdjusted(Pawn pawn = null, Pawn target = null)
         {
-            void AddIndent() => indent += indentSymbol;
-
-            void RemoveIndent() => indent = indent.Remove(0, indentSymbol.Length);
-
             string res = "";
 
             void AddLine(string text) => res += $"{indent}{text}\n";
 
-            if (pawn.NullOrEmpty())
-                pawn = "the pawn";
-            if (target.NullOrEmpty())
-                target = "the target";
-
             if (inverted)
             {
-                AddLine("The following must be FALSE:");
+                res = $"{base.LabelAdjusted(pawn, target)}\n";
                 AddIndent();
             }
 
             if (succession != null)
-                AddLine($"Succession law: {succession.LabelCap}");
+                AddLine(succession.LabelAdjusted());
             if (leaderExists != null)
-                AddLine($"Leader {((bool)leaderExists ? "exists" : "doesn't exist")}");
-            if (termDuration != TermDuration.Undefined)
-                AddLine($"Term duration: {termDuration}");
+                AddLine(leaderExists.LabelAdjusted());
+            if (termDuration != null)
+                AddLine(termDuration.LabelAdjusted());
             if (campaigning != null)
-                AddLine($"Campaign is {((bool)campaigning ? "on" : "off")}");
+                AddLine(campaigning.LabelAdjusted());
             if (governance != null)
-                AddLine(governance.ToString("Governance", "P0"));
+                AddLine(governance.LabelAdjusted());
             if (population != null)
-                AddLine(population.ToString("Population"));
+                AddLine(population.LabelAdjusted());
             if (daysOfFood != null)
-                AddLine(daysOfFood.ToString("Days worth of food"));
-            if (techLevels.Any())
-                AddLine($"Tech level: {techLevels.Select(techLevel => techLevel.ToStringHuman()).ToCommaList()}");
-            if (!modActive.NullOrEmpty())
-                AddLine($"DLC/mod active: {modActive}");
-            if (!decision.NullOrEmpty())
-                AddLine($"{GenText.SplitCamelCase(decision)} is active");
+                AddLine(daysOfFood.LabelAdjusted());
+            if (techLevel != null)
+                AddLine(techLevel.LabelAdjusted());
+            if (modActive != null)
+                AddLine(modActive.LabelAdjusted());
+            if (decision != null)
+                AddLine(decision.LabelAdjusted());
 
             if (isLeader != null)
-                AddLine($"{pawn.CapitalizeFirst()} is {((bool)isLeader ? "" :"not ")}the leader");
+                AddLine(isLeader.LabelAdjusted(pawn));
             if (isTarget != null)
-                AddLine($"{pawn.CapitalizeFirst()} is {((bool)isTarget ? "" : "not ")}the target");
-            if (trait != null)
-                AddLine($"{pawn.CapitalizeFirst()} has trait {trait.LabelCap}{(traitDegree != 0 ? $" of {trait.DataAtDegree(traitDegree)?.LabelCap}" : "")}");
+                AddLine(isTarget.LabelAdjusted(pawn, target));
+            if (trait != null && trait.ValidFor(pawn))
+                AddLine(trait.LabelAdjusted(pawn));
             if (!skills.EnumerableNullOrEmpty())
-                foreach (SkillOperations skill in skills)
-                    AddLine(skill.ToString(skill.skill.LabelCap));
+                foreach (Logic_Skill skill in skills)
+                    AddLine(skill.LabelAdjusted(pawn));
             if (isCapableOfViolence != null)
-                AddLine($"{pawn.CapitalizeFirst()} is {((bool)isCapableOfViolence ? "" : "in")}capable of violence");
+                AddLine(isCapableOfViolence.LabelAdjusted(pawn));
             if (medianOpinionOfMe != null)
-                AddLine(medianOpinionOfMe.ToString($"Median citizens' opinion of {pawn}"));
-            if (age != null)
-                AddLine(age.ToString($"{pawn.CapitalizeFirst()}'s age"));
-            if (titleSeniority != null)
-                AddLine(titleSeniority.ToString($"{pawn.CapitalizeFirst()}'s title seniority"));
+                AddLine(medianOpinionOfMe.LabelAdjusted(pawn));
+            if (age != null && age.ValidFor(pawn))
+                AddLine(age.LabelAdjusted(pawn));
+            if (titleSeniority != null && ModsConfig.RoyaltyActive)
+                AddLine(titleSeniority.LabelAdjusted(pawn));
+
             if (ModsConfig.IdeologyActive)
             {
-                if (!meme.NullOrEmpty())
-                {
-                    MemeDef m = DefDatabase<MemeDef>.GetNamed(meme, false);
-                    if (m != null)
-                        AddLine($"Ideoligion has '{m.LabelCap}' meme");
-                    else Utility.Log($"No MemeDef {meme} found for a consideration.", LogLevel.Error);
-                }
-                if (!precept.NullOrEmpty())
-                {
-                    PreceptDef p = DefDatabase<PreceptDef>.GetNamed(precept, false);
-                    if (p != null)
-                        AddLine($"Ideoligion has '{p.issue.LabelCap}: {p.LabelCap}' precept");
-                    else Utility.Log($"No PreceptDef {precept} found for a consideration.", LogLevel.Error);
-                }
-                if (ideoCertainty != null)
-                    AddLine(ideoCertainty.ToString($"{pawn.CapitalizeFirst()}'s certainty in their ideoligion", "P0"));
-                if (primaryIdeoligion != null)
-                    AddLine($"{pawn.CapitalizeFirst()} {((bool)primaryIdeoligion ? "shares" : "doesn't share")} the primary ideoligion");
+                if (meme != null && meme.ValidFor(pawn))
+                    AddLine(meme.LabelAdjusted(pawn));
+                if (precept != null && precept.ValidFor(pawn))
+                    AddLine(precept.LabelAdjusted(pawn));
+                if (ideoCertainty != null && ideoCertainty.ValidFor(pawn))
+                    AddLine(ideoCertainty.LabelAdjusted(pawn));
+                if (primaryIdeoligion != null && primaryIdeoligion.ValidFor(pawn))
+                    AddLine(primaryIdeoligion.LabelAdjusted(pawn));
             }
 
             if (targetIsColonist != null)
-                AddLine($"{target.CapitalizeFirst()} is {((bool)targetIsColonist ? "" : "not ")}a colonist");
+                AddLine(targetIsColonist.LabelAdjusted(target));
             if (targetIsLeader != null)
-                AddLine($"{target.CapitalizeFirst()} is {((bool)targetIsLeader ? "" : "not ")}the leader");
+                AddLine(targetIsLeader.LabelAdjusted(target));
             if (targetInAggroMentalState != null)
-                AddLine($"{target.CapitalizeFirst()} is {((bool)targetInAggroMentalState ? "" : "not ")}in an aggressive mental break");
-            if (targetIsHostile != null)
-                AddLine($"{target.CapitalizeFirst()} is {((bool)targetIsHostile ? "" : "not ")}hostile to {pawn}");
+                AddLine(targetInAggroMentalState.LabelAdjusted(target));
+            if (targetIsHostile != null && targetIsHostile.ValidFor(pawn, target))
+                AddLine(targetIsHostile.LabelAdjusted(pawn, target));
             if (targetIsGuilty != null)
-                AddLine($"{target.CapitalizeFirst()} is {((bool)targetIsGuilty ? "" : "not ")}guilty");
+                AddLine(targetIsGuilty.LabelAdjusted(target));
             if (targetIsWild != null)
-                AddLine($"{target.CapitalizeFirst()} is {((bool)targetIsWild ? "" : "not ")}wild");
-            if (targetTrait != null)
-                AddLine($"{target.CapitalizeFirst()} has trait {targetTrait.LabelCap}{(targetTraitDegree != 0 ? $" of {targetTrait.DataAtDegree(targetTraitDegree)?.LabelCap}" : "")}");
+                AddLine(targetIsWild.LabelAdjusted(target));
+            if (targetTrait != null && targetTrait.ValidFor(target))
+                AddLine(targetTrait.LabelAdjusted(target));
             if (opinionOfTarget != null)
-                AddLine($"{opinionOfTarget.ToString($"{pawn.CapitalizeFirst()}'s opinion of {target}")}");
+                AddLine(opinionOfTarget.LabelAdjusted(pawn, target));
             if (medianOpinionOfTarget != null)
-                AddLine(medianOpinionOfTarget.ToString($"Median citizens' opinion of {target}"));
+                AddLine(medianOpinionOfTarget.LabelAdjusted(target));
             if (targetAge != null)
-                AddLine(targetAge.ToString($"{target.CapitalizeFirst()}'s age"));
+                AddLine(targetAge.LabelAdjusted(target));
             if (targetFactionGoodwill != null)
-                AddLine(targetFactionGoodwill.ToString($"Goodwill of {target.CapitalizeFirst()}'s faction"));
+                AddLine(targetFactionGoodwill.LabelAdjusted(target));
 
-            if (!all.NullOrEmpty())
-            {
-                AddLine("All of the following:");
-                AddIndent();
-                foreach (Consideration r in all)
-                    res += $"{r.ToString(pawn, target)}\n";
-                RemoveIndent();
-            }
-            if (!any.NullOrEmpty())
-            {
-                AddLine("Any of the following:");
-                AddIndent();
-                foreach (Consideration r in any)
-                    res += $"{r.ToString(pawn, target)}\n";
-                RemoveIndent();
-            }
+            if (all != null)
+                AddLine(GenText.Indented(all.LabelAdjusted(pawn, target), indent));
+            if (any != null)
+                AddLine(GenText.Indented(any.LabelAdjusted(pawn, target), indent));
+
             if (inverted)
                 RemoveIndent();
+            
             return res.TrimEndNewlines();
         }
     }

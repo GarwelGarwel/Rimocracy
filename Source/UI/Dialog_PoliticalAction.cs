@@ -61,7 +61,7 @@ namespace Rimocracy
                 content.Label($"{opinion.voter.NameShortColored}: {opinion.VoteStringColored}", tooltip: opinion.explanation);
 
             content.Gap();
-            content.CheckboxLabeled("Always show this dialog", ref Settings.ShowActionSupportDetails, "Uncheck to disable action details from popping up. You may re-enable it in the Settings.");
+            content.CheckboxLabeled("Logic_Always show this dialog", ref Settings.ShowActionSupportDetails, "Uncheck to disable action details from popping up. You may re-enable it in the Settings.");
 
             content.End();
         }
