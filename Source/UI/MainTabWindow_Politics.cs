@@ -33,7 +33,7 @@ namespace Rimocracy
             // Current Leader
             content.Label($"{leaderTitle}: {comp.Leader?.NameFullColored ?? "none"}");
 
-            // Governance target, leader skills and next succession
+            // Governance target, leader skills and next SuccessionDef
             if (comp.HasLeader)
             {
                 content.Label($"Governance quality: {comp.Governance.ToStringPercent("F1")}. Falls by {comp.GovernanceDecayPerDay.ToStringPercent()} per day.");

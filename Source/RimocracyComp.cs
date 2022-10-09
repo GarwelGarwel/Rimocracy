@@ -12,7 +12,7 @@ namespace Rimocracy
 {
     public class RimocracyComp : WorldComponent
     {
-        // How often mod enabled/disabled check, succession, governance decay etc. are updated
+        // How often mod enabled/disabled check, SuccessionDef, governance decay etc. are updated
         public const int UpdateInterval = 500;
 
         bool isEnabled = false;
@@ -189,8 +189,7 @@ namespace Rimocracy
         public SuccessionDef GetRandomSuccessionDef(Ideo ideo) =>
             DefDatabase<SuccessionDef>.AllDefs.Where(def => def.Worker.IsValid).RandomElementByWeight(def => def.GetWeight(ideo));
 
-        public int UpdatedTermExpiration() =>
-            TermDuration == TermDuration.Indefinite ? int.MaxValue : Find.TickManager.TicksAbs + TermDurationTicks;
+        public int UpdatedTermExpiration() => TermDuration == TermDuration.Indefinite ? int.MaxValue : (Find.TickManager.TicksAbs + TermDurationTicks);
 
         public override void FinalizeInit()
         {
@@ -228,7 +227,7 @@ namespace Rimocracy
                 {
                     Log($"Politics: {(IsEnabled ? "enabled" : "disabled")}");
                     Log($"Leader: {(HasLeader ? Leader.Name.ToStringShort : "none")}");
-                    Log($"Succession: {SuccessionType.defName} @ {TermExpiration} (in {(TermExpiration - Find.TickManager.TicksAbs).ToStringTicksToPeriod(false, true)})");
+                    Log($"SuccessionDef: {SuccessionType.defName} @ {TermExpiration} (in {(TermExpiration - Find.TickManager.TicksAbs).ToStringTicksToPeriod(false, true)})");
                     Log($"Election tick: {ElectionTick} (in {(ElectionTick - Find.TickManager.TicksAbs).ToStringTicksToPeriod(false, true)})");
                     Log($"Term duration: {TermDuration}");
                     if (IsCampaigning)
@@ -323,7 +322,7 @@ namespace Rimocracy
                     ChooseLeader();
             }
 
-            // If no valid leader, initiate succession (non-electoral)
+            // If no valid leader, initiate SuccessionDef (non-electoral)
             else if (ticks >= TermExpiration || !Leader.CanBeLeader())
                 ChooseLeader();
 
@@ -379,8 +378,9 @@ namespace Rimocracy
             if (ElectionUtility.CampaigningEnabled)
             {
                 CampaigningCandidates = ((SuccessionWorker_Election)SuccessionWorker).ChooseLeaders();
-                Log($"Campaigns:\n{Campaigns.Select(campaign => $"- {campaign.ToString()}").ToLineList()}");
-                Messages.Message($"The election campaign is on! {CampaigningCandidates.Select(p => p.NameShortColored.RawText).ToCommaList(true)} are competing to be the {LeaderTitle} of {NationName}.",
+                Log($"Campaigns:\n{Campaigns.Select(campaign => $"- {campaign}").ToLineList()}");
+                Messages.Message(
+                    $"The election campaign is on! {CampaigningCandidates.Select(p => p.NameShortColored.RawText).ToCommaList(true)} are competing to be the {LeaderTitle} of {NationName}.",
                     new LookTargets(CampaigningCandidates),
                     MessageTypeDefOf.NeutralEvent);
             }
@@ -425,16 +425,22 @@ namespace Rimocracy
                     Governance = Mathf.Lerp(DecisionActive(DecisionDef.Stability) ? 0 : 0.5f, Governance, 0.5f);
                     foreach (Pawn pawn in Citizens)
                         pawn.ChangeLoyalty((Need_Loyalty.DefaultLevel - pawn.GetLoyaltyLevel()) * Need_Loyalty.LoyaltyResetOnLeaderChange * (DecisionActive(DecisionDef.Stability) ? 2 : 1));
-                    Find.LetterStack.ReceiveLetter(SuccessionWorker.NewLeaderMessageTitle(Leader), $"{SuccessionWorker.NewLeaderMessageText(Leader)}\n\n{FocusSkillMessage}", LetterDefOf.NeutralEvent);
+                    Find.LetterStack.ReceiveLetter(
+                        SuccessionWorker.NewLeaderMessageTitle(Leader),
+                        $"{SuccessionWorker.NewLeaderMessageText(Leader)}\n\n{FocusSkillMessage}",
+                        LetterDefOf.NeutralEvent);
                     Tale tale = TaleRecorder.RecordTale(RimocracyDefOf.BecameLeader, Leader);
                 }
-                else Find.LetterStack.ReceiveLetter(SuccessionWorker.SameLeaderMessageTitle(Leader), $"{SuccessionWorker.SameLeaderMessageText(Leader)}\n\n{FocusSkillMessage}", LetterDefOf.NeutralEvent);
+                else Find.LetterStack.ReceiveLetter(
+                    SuccessionWorker.SameLeaderMessageTitle(Leader),
+                    $"{SuccessionWorker.SameLeaderMessageText(Leader)}\n\n{FocusSkillMessage}",
+                    LetterDefOf.NeutralEvent);
 
-                // Apply succession's loyalty effect
+                // Apply SuccessionDef's loyalty effect
                 float loyaltyEffect = SuccessionWorker.LoyaltyEffect;
                 if (loyaltyEffect != 0)
                 {
-                    Log($"All citizens gain {loyaltyEffect:N0} loyalty due to the succession.");
+                    Log($"All citizens gain {loyaltyEffect:N0} loyalty due to the SuccessionDef.");
                     foreach (Pawn pawn in Citizens)
                         pawn.ChangeLoyalty(loyaltyEffect);
                 }

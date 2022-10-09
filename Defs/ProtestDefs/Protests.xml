@@ -86,23 +86,19 @@
 			<factors>
 				<li>
 					<value>0.25</value>
-					<trait>Industriousness</trait>
-					<traitDegree>2</traitDegree>
+					<trait>Industriousness:2</trait>
 				</li>
 				<li>
 					<value>0.5</value>
-					<trait>Industriousness</trait>
-					<traitDegree>1</traitDegree>
+					<trait>Industriousness:1</trait>
 				</li>
 				<li>
 					<value>2</value>
-					<trait>Industriousness</trait>
-					<traitDegree>-1</traitDegree>
+					<trait>Industriousness:-1</trait>
 				</li>
 				<li>
 					<value>4</value>
-					<trait>Industriousness</trait>
-					<traitDegree>-2</traitDegree>
+					<trait>Industriousness:-2</trait>
 				</li>
 			</factors>
 		</weight>
@@ -116,23 +112,19 @@
 			<factors>
 				<li>
 					<value>0.4</value>
-					<trait>Industriousness</trait>
-					<traitDegree>2</traitDegree>
+					<trait>Industriousness:2</trait>
 				</li>
 				<li>
 					<value>0.6</value>
-					<trait>Industriousness</trait>
-					<traitDegree>1</traitDegree>
+					<trait>Industriousness:1</trait>
 				</li>
 				<li>
 					<value>1.6</value>
-					<trait>Industriousness</trait>
-					<traitDegree>-1</traitDegree>
+					<trait>Industriousness:-1</trait>
 				</li>
 				<li>
 					<value>2.5</value>
-					<trait>Industriousness</trait>
-					<traitDegree>-2</traitDegree>
+					<trait>Industriousness:-2</trait>
 				</li>
 			</factors>
 		</weight>
@@ -146,23 +138,19 @@
 			<factors>
 				<li>
 					<value>0.5</value>
-					<trait>Industriousness</trait>
-					<traitDegree>2</traitDegree>
+					<trait>Industriousness:2</trait>
 				</li>
 				<li>
 					<value>0.7</value>
-					<trait>Industriousness</trait>
-					<traitDegree>1</traitDegree>
+					<trait>Industriousness:1</trait>
 				</li>
 				<li>
 					<value>1.5</value>
-					<trait>Industriousness</trait>
-					<traitDegree>-1</traitDegree>
+					<trait>Industriousness:-1</trait>
 				</li>
 				<li>
 					<value>2</value>
-					<trait>Industriousness</trait>
-					<traitDegree>-2</traitDegree>
+					<trait>Industriousness:-2</trait>
 				</li>
 			</factors>
 		</weight>

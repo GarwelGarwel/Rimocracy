@@ -15,13 +15,15 @@
 				<label>I don't want to be arrested!</label>
 				<value>-100</value>
 				<all>
-					<li>
-						<isTarget>true</isTarget>
-					</li>
-					<li>
-						<trait>Masochist</trait>
-						<inverted>true</inverted>
-					</li>
+					<list>
+						<li>
+							<isTarget>true</isTarget>
+						</li>
+						<li>
+							<trait>Masochist</trait>
+							<inverted>true</inverted>
+						</li>
+					</list>
 				</all>
 			</li>
 			<li>
@@ -59,14 +61,16 @@
 				<value>20</value>
 				<targetIsWild>true</targetIsWild>
 				<all>
-					<li>
-						<meme>NaturePrimacy</meme>
-						<inverted>true</inverted>
-					</li>
-					<li>
-						<meme>AnimalPersonhood</meme>
-						<inverted>true</inverted>
-					</li>
+					<list>
+						<li>
+							<meme>NaturePrimacy</meme>
+							<inverted>true</inverted>
+						</li>
+						<li>
+							<meme>AnimalPersonhood</meme>
+							<inverted>true</inverted>
+						</li>
+					</list>
 				</all>
 			</li>
 			<li>
@@ -110,17 +114,19 @@
 				<label>killing an innocent</label>
 				<value>-40</value>
 				<all>
-					<li>
-						<trait>Psychopath</trait>
-						<inverted>true</inverted>
-					</li>
-					<li>
-						<trait>Bloodlust</trait>
-						<inverted>true</inverted>
-					</li>
-					<li>
-						<targetIsGuilty>false</targetIsGuilty>
-					</li>
+					<list>
+						<li>
+							<trait>Psychopath</trait>
+							<inverted>true</inverted>
+						</li>
+						<li>
+							<trait>Bloodlust</trait>
+							<inverted>true</inverted>
+						</li>
+						<li>
+							<targetIsGuilty>false</targetIsGuilty>
+						</li>
+					</list>
 				</all>
 			</li>
 			<li>
@@ -156,14 +162,16 @@
 				<label>{TARGET} is a fellow colonist</label>
 				<value>-40</value>
 				<all>
-					<li>
-						<targetIsColonist>true</targetIsColonist>
-						<isTarget>false</isTarget>
-					</li>
-					<li>
-						<trait>Psychopath</trait>
-						<inverted>true</inverted>
-					</li>
+					<list>
+						<li>
+							<targetIsColonist>true</targetIsColonist>
+							<isTarget>false</isTarget>
+						</li>
+						<li>
+							<trait>Psychopath</trait>
+							<inverted>true</inverted>
+						</li>
+					</list>
 				</all>
 			</li>
 			<li>
@@ -179,10 +187,12 @@
 					</offset>
 				</daysOfFood>
 				<all>
-					<li>
-						<trait>Kind</trait>
-						<inverted>true</inverted>
-					</li>
+					<list>
+						<li>
+							<trait>Kind</trait>
+							<inverted>true</inverted>
+						</li>
+					</list>
 				</all>
 			</li>
 			<li>
@@ -205,12 +215,14 @@
 				<label>execution is horrible</label>
 				<value>-30</value>
 				<any>
-					<li>
-						<precept>Execution_Horrible</precept>
-					</li>
-					<li>
-						<precept>Execution_HorribleIfInnocent</precept>
-					</li>
+					<list>
+						<li>
+							<precept>Execution_Horrible</precept>
+						</li>
+						<li>
+							<precept>Execution_HorribleIfInnocent</precept>
+						</li>
+					</list>
 				</any>
 			</li>
 			<li>
@@ -242,14 +254,16 @@
 				<label>{TARGET} is a fellow colonist</label>
 				<value>20</value>
 				<all>
-					<li>
-						<targetIsColonist>true</targetIsColonist>
-						<isTarget>false</isTarget>
-					</li>
-					<li>
-						<trait>Psychopath</trait>
-						<inverted>true</inverted>
-					</li>
+					<list>
+						<li>
+							<targetIsColonist>true</targetIsColonist>
+							<isTarget>false</isTarget>
+						</li>
+						<li>
+							<trait>Psychopath</trait>
+							<inverted>true</inverted>
+						</li>
+					</list>
 				</all>
 			</li>
 			<li>
@@ -319,15 +333,17 @@
 			<li>
 				<label>banishment is cruel</label>
 				<value>-30</value>
-				<all>
-					<li>
-						<trait>Psychopath</trait>
-						<inverted>true</inverted>
-					</li>
-					<li>
-						<targetIsGuilty>true</targetIsGuilty>
-					</li>
-				</all>
+				<any>
+					<inverted>true</inverted>
+					<list>
+						<li>
+							<trait>Psychopath</trait>
+						</li>
+						<li>
+							<targetIsGuilty>true</targetIsGuilty>
+						</li>
+					</list>
+				</any>
 			</li>
 			<li>
 				<label>opinion of {TARGET}</label>

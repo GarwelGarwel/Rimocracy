@@ -41,12 +41,16 @@
 			<li>
 				<label>I don't like {TARGET}, and it can unseat {TARGET_objective}</label>
 				<all>
-					<li>
-						<termDuration>Indefinite</termDuration>
-						<inverted>true</inverted>
-					</li>
+					<list>
+						<li>
+							<termDuration>Indefinite</termDuration>
+							<inverted>true</inverted>
+						</li>
+						<li>
+							<isLeader>false</isLeader>
+						</li>
+					</list>
 				</all>
-				<isLeader>false</isLeader>
 				<opinionOfTarget>
 					<lessThan>0</lessThan>
 					<offset>
@@ -171,12 +175,14 @@
 					<greaterThan>0</greaterThan>
 				</titleSeniority>
 				<any>
-					<li>
-						<succession>Nobility</succession>
-					</li>
-					<li>
-						<succession>Election</succession>
-					</li>
+					<list>
+						<li>
+							<succession>Nobility</succession>
+						</li>
+						<li>
+							<succession>Election</succession>
+						</li>
+					</list>
 				</any>
 			</li>
 			<li>
@@ -251,12 +257,14 @@
 					<greaterThan>0</greaterThan>
 				</titleSeniority>
 				<any>
-					<li>
-						<succession>Nobility</succession>
-					</li>
-					<li>
-						<succession>Election</succession>
-					</li>
+					<list>
+						<li>
+							<succession>Nobility</succession>
+						</li>
+						<li>
+							<succession>Election</succession>
+						</li>
+					</list>
 				</any>
 			</li>
 			<li>
@@ -303,14 +311,16 @@
 		<description>The pawn with the highest, and oldest, nobility title shall be the {LEADER}.</description>
 		<displayPriorityInCategory>40</displayPriorityInCategory>
 		<displayRequirements>
-			<inverted>true</inverted>
 			<any>
-				<li>
-					<succession>Nobility</succession>
-				</li>
-				<li>
-					<decision>Meritocracy</decision>
-				</li>
+				<inverted>true</inverted>
+				<list>
+					<li>
+						<succession>Nobility</succession>
+					</li>
+					<li>
+						<decision>Meritocracy</decision>
+					</li>
+				</list>
 			</any>
 		</displayRequirements>
 		<effectRequirements>
@@ -488,12 +498,14 @@
 					<greaterThan>0</greaterThan>
 				</titleSeniority>
 				<any>
-					<li>
-						<succession>Nobility</succession>
-					</li>
-					<li>
-						<succession>Election</succession>
-					</li>
+					<list>
+						<li>
+							<succession>Nobility</succession>
+						</li>
+						<li>
+							<succession>Election</succession>
+						</li>
+					</list>
 				</any>
 			</li>
 			<li>
@@ -555,12 +567,14 @@
 		<displayPriorityInCategory>20</displayPriorityInCategory>
 		<displayRequirements>
 			<any>
-				<li>
-					<termDuration>Quadrum</termDuration>
-				</li>
-				<li>
-					<termDuration>Year</termDuration>
-				</li>
+				<list>
+					<li>
+						<termDuration>Quadrum</termDuration>
+					</li>
+					<li>
+						<termDuration>Year</termDuration>
+					</li>
+				</list>
 			</any>
 		</displayRequirements>
 		<setTermDuration>Halfyear</setTermDuration>
@@ -573,12 +587,14 @@
 		<displayPriorityInCategory>30</displayPriorityInCategory>
 		<displayRequirements>
 			<any>
-				<li>
-					<termDuration>Halfyear</termDuration>
-				</li>
-				<li>
-					<termDuration>Indefinite</termDuration>
-				</li>
+				<list>
+					<li>
+						<termDuration>Halfyear</termDuration>
+					</li>
+					<li>
+						<termDuration>Indefinite</termDuration>
+					</li>
+				</list>
 			</any>
 		</displayRequirements>
 		<setTermDuration>Year</setTermDuration>
@@ -637,20 +653,20 @@
 		<displayPriorityInCategory>50</displayPriorityInCategory>
 		<displayRequirements>
 			<leaderExists>true</leaderExists>
-			<all>
-				<li>
-					<succession>Seniority</succession>
-					<inverted>true</inverted>
-				</li>
-				<li>
-					<decision>Stability</decision>
-					<inverted>true</inverted>
-				</li>
-				<li>
-					<decision>CultOfPersonality</decision>
-					<inverted>true</inverted>
-				</li>
-			</all>
+			<any>
+				<inverted>true</inverted>
+				<list>
+					<li>
+						<succession>Seniority</succession>
+					</li>
+					<li>
+						<decision>Stability</decision>
+					</li>
+					<li>
+						<decision>CultOfPersonality</decision>
+					</li>
+				</list>
+			</any>
 		</displayRequirements>
 		<considerations>
 			<li>
@@ -725,12 +741,8 @@
 		<category>Democratic</category>
 		<displayPriorityInCategory>10</displayPriorityInCategory>
 		<effectRequirements>
-			<all>
-				<li>
-					<decision>CultOfPersonality</decision>
-					<inverted>true</inverted>
-				</li>
-			</all>
+			<decision>CultOfPersonality</decision>
+			<inverted>true</inverted>
 		</effectRequirements>
 		<considerations>
 			<li>
@@ -792,16 +804,17 @@
 		<category>Democratic</category>
 		<displayPriorityInCategory>20</displayPriorityInCategory>
 		<effectRequirements>
-			<all>
-				<li>
-					<decision>Elitism</decision>
-					<inverted>true</inverted>
-				</li>
-				<li>
-					<decision>CultOfPersonality</decision>
-					<inverted>true</inverted>
-				</li>
-			</all>
+			<any>
+				<inverted>true</inverted>
+				<list>
+					<li>
+						<decision>Elitism</decision>
+					</li>
+					<li>
+						<decision>CultOfPersonality</decision>
+					</li>
+				</list>
+			</any>
 		</effectRequirements>
 		<considerations>
 			<li>
@@ -1257,13 +1270,15 @@
 		<displayPriorityInCategory>20</displayPriorityInCategory>
 		<effectRequirements>
 			<all>
-				<li>
-					<leaderExists>true</leaderExists>
-				</li>
-				<li>
-					<decision>Egalitarianism</decision>
-					<inverted>true</inverted>
-				</li>
+				<list>
+					<li>
+						<leaderExists>true</leaderExists>
+					</li>
+					<li>
+						<decision>Egalitarianism</decision>
+						<inverted>true</inverted>
+					</li>
+				</list>
 			</all>
 		</effectRequirements>
 		<considerations>
@@ -1271,21 +1286,23 @@
 				<label>I like it!</label>
 				<value>100</value>
 				<all>
-					<li>
-						<isLeader>true</isLeader>
-					</li>
-					<li>
-						<trait>Ascetic</trait>
-						<inverted>true</inverted>
-					</li>
-					<li>
-						<meme>PainIsVirtue</meme>
-						<inverted>true</inverted>
-					</li>
-					<li>
-						<precept>Comfort_Ignored</precept>
-						<inverted>true</inverted>
-					</li>
+					<list>
+						<li>
+							<isLeader>true</isLeader>
+						</li>
+						<li>
+							<trait>Ascetic</trait>
+							<inverted>true</inverted>
+						</li>
+						<li>
+							<meme>PainIsVirtue</meme>
+							<inverted>true</inverted>
+						</li>
+						<li>
+							<precept>Comfort_Ignored</precept>
+							<inverted>true</inverted>
+						</li>
+					</list>
 				</all>
 			</li>
 			<li>
@@ -1423,17 +1440,19 @@
 		<displayPriorityInCategory>30</displayPriorityInCategory>
 		<effectRequirements>
 			<all>
-				<li>
-					<leaderExists>true</leaderExists>
-				</li>
-				<li>
-					<decision>Populism</decision>
-					<inverted>true</inverted>
-				</li>
-				<li>
-					<decision>Egalitarianism</decision>
-					<inverted>true</inverted>
-				</li>
+				<list>
+					<li>
+						<leaderExists>true</leaderExists>
+					</li>
+					<li>
+						<decision>Populism</decision>
+						<inverted>true</inverted>
+					</li>
+					<li>
+						<decision>Egalitarianism</decision>
+						<inverted>true</inverted>
+					</li>
+				</list>
 			</all>
 		</effectRequirements>
 		<considerations>
@@ -1441,13 +1460,15 @@
 				<label>I am the leader</label>
 				<value>80</value>
 				<all>
-					<li>
-						<isLeader>true</isLeader>
-					</li>
-					<li>
-						<trait>Ascetic</trait>
-						<inverted>true</inverted>
-					</li>
+					<list>
+						<li>
+							<isLeader>true</isLeader>
+						</li>
+						<li>
+							<trait>Ascetic</trait>
+							<inverted>true</inverted>
+						</li>
+					</list>
 				</all>
 			</li>
 			<li>
@@ -1510,13 +1531,15 @@
 				<label>I am the leader</label>
 				<value>-80</value>
 				<all>
-					<li>
-						<isLeader>true</isLeader>
-					</li>
-					<li>
-						<trait>Ascetic</trait>
-						<inverted>true</inverted>
-					</li>
+					<list>
+						<li>
+							<isLeader>true</isLeader>
+						</li>
+						<li>
+							<trait>Ascetic</trait>
+							<inverted>true</inverted>
+						</li>
+					</list>
 				</all>
 			</li>
 			<li>
@@ -1574,12 +1597,8 @@
 		<category>Authoritarian</category>
 		<displayPriorityInCategory>50</displayPriorityInCategory>
 		<effectRequirements>
-			<all>
-				<li>
-					<decision>ResPublica</decision>
-					<inverted>true</inverted>
-				</li>
-			</all>
+			<decision>ResPublica</decision>
+			<inverted>true</inverted>
 		</effectRequirements>
 		<considerations>
 			<li>
@@ -1645,17 +1664,19 @@
 		<displayPriorityInCategory>10</displayPriorityInCategory>
 		<displayRequirements>
 			<all>
-				<li>
-					<modActive>Ideology</modActive>
-				</li>
-				<li>
-					<decision>StateIdeoligion</decision>
-					<inverted>true</inverted>
-				</li>
-				<li>
-					<decision>Multiculturalism</decision>
-					<inverted>true</inverted>
-				</li>
+				<list>
+					<li>
+						<modActive>Ideology</modActive>
+					</li>
+					<li>
+						<decision>StateIdeoligion</decision>
+						<inverted>true</inverted>
+					</li>
+					<li>
+						<decision>Multiculturalism</decision>
+						<inverted>true</inverted>
+					</li>
+				</list>
 			</all>
 		</displayRequirements>
 		<considerations>
@@ -1908,17 +1929,19 @@
 		<displayPriorityInCategory>20</displayPriorityInCategory>
 		<displayRequirements>
 			<all>
-				<li>
-					<modActive>Ideology</modActive>
-				</li>
-				<li>
-					<decision>Multiculturalism</decision>
-					<inverted>true</inverted>
-				</li>
-				<li>
-					<decision>StateIdeoligion</decision>
-					<inverted>true</inverted>
-				</li>
+				<list>
+					<li>
+						<modActive>Ideology</modActive>
+					</li>
+					<li>
+						<decision>Multiculturalism</decision>
+						<inverted>true</inverted>
+					</li>
+					<li>
+						<decision>StateIdeoligion</decision>
+						<inverted>true</inverted>
+					</li>
+				</list>
 			</all>
 		</displayRequirements>
 		<considerations>
@@ -2140,13 +2163,15 @@
 		<displayPriorityInCategory>100</displayPriorityInCategory>
 		<displayRequirements>
 			<all>
-				<li>
-					<leaderExists>true</leaderExists>
-				</li>
-				<li>
-					<decision>ActionVetoPower</decision>
-					<inverted>true</inverted>
-				</li>
+				<list>
+					<li>
+						<leaderExists>true</leaderExists>
+					</li>
+					<li>
+						<decision>ActionVetoPower</decision>
+						<inverted>true</inverted>
+					</li>
+				</list>
 			</all>
 		</displayRequirements>
 		<considerations>

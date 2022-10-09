@@ -49,88 +49,112 @@
 			<li Class="Rimocracy.StatPart_Backstories">
 				<modifiers>
 					<li>
-						<name>hiveworld drone</name>
+						<name>ArtSlave57</name>
 						<factor>0.8</factor>
 					</li>
 					<li>
-						<name>civil servant</name>
-						<factor>1.25</factor>
-					</li>
-					<li>
-						<name>castaway</name>
+						<name>Castaway81</name>
 						<factor>0.9</factor>
 					</li>
 					<li>
-						<name>sheriff</name>
-						<factor>1.1</factor>
-					</li>
-					<li>
-						<name>medieval slave</name>
+						<name>ChildSlave58</name>
 						<factor>0.8</factor>
 					</li>
 					<li>
-						<name>medieval lordling</name>
+						<name>CivilServant25</name>
 						<factor>1.25</factor>
 					</li>
 					<li>
-						<name>urbworld politican</name>
+						<name>ColiseumCleaner54</name>
+						<factor>0.8</factor>
+					</li>
+					<li>
+						<name>CommonerLord45</name>
 						<factor>1.25</factor>
 					</li>
 					<li>
-						<name>coliseum cleaner</name>
-						<factor>0.8</factor>
+					<li>
+						<name>CorporateSlave22</name>
+						<factor>0.9</factor>
+					</li>
+						<name>CorpStudent95</name>
+						<factor>1.25</factor>
 					</li>
 					<li>
-						<name>work camp slave</name>
-						<factor>0.8</factor>
-					</li>
-					<li>
-						<name>war chief</name>
-						<factor>1.1</factor>
-					</li>
-					<li>
-						<name>vinho king</name>
-						<factor>1.1</factor>
-					</li>
-					<li>
-						<name>vatgrown slavegirl</name>
-						<factor>0.8</factor>
-					</li>
-					<li>
-						<name>urbworld sex slave</name>
-						<factor>0.8</factor>
-					</li>
-					<li>
-						<name>feudal lordling</name>
+						<name>CrimeLord10</name>
 						<factor>1.4</factor>
 					</li>
 					<li>
-						<name>system lord</name>
+						<name>DisplacedNoble67</name>
+						<factor>1.1</factor>
+					</li>
+					<li>
+						<name>FactoryDrone58</name>
+						<factor>0.8</factor>
+					</li>
+					<li>
+						<name>FallenOfficial12</name>
+						<factor>1.25</factor>
+					</li>
+					<li>
+						<name>FeudalFarmBoy0</name>
+						<factor>0.8</factor>
+					</li>
+					<li>
+						<name>FeudalLordling56</name>
+						<factor>1.4</factor>
+					</li>
+					<li>
+						<name>FrontierMarshal54</name>
+						<factor>1.25</factor>
+					</li>
+					<li>
+						<name>MedievalSlave50</name>
+						<factor>0.8</factor>
+					</li>
+					<li>
+						<name>MercenaryLord13</name>
+						<factor>1.25</factor>
+					</li>
+					<li>
+						<name>Minister88</name>
+						<factor>1.4</factor>
+					</li>
+					<li>
+						<name>RaiderKing38</name>
 						<factor>1.5</factor>
 					</li>
 					<li>
-						<name>child slave</name>
+						<name>ReligiousHierarch16</name>
+						<factor>1.1</factor>
+					</li>
+					<li>
+						<name>SystemLord77</name>
+						<factor>1.5</factor>
+					</li>
+					<li>
+						<name>UrbworldPolitican92</name>
+						<factor>1.25</factor>
+					</li>
+					<li>
+						<name>UrbworldSexSlave25</name>
 						<factor>0.8</factor>
 					</li>
 					<li>
-						<name>displaced noble</name>
+						<name>VatgrownSlavegirl8</name>
+						<factor>0.8</factor>
+					</li>
+					<li>
+						<name>VinhoKing98</name>
 						<factor>1.1</factor>
 					</li>
 					<li>
-						<name>minister</name>
-						<factor>1.4</factor>
-					</li>
-					<li>
-						<name>frontier marshal</name>
-						<factor>1.25</factor>
-					</li>
-					<li>
-						<name>religious hierarch</name>
+						<name>WarChief97</name>
 						<factor>1.1</factor>
 					</li>
 					<li>
-						<name>fallen official</name>
-						<factor>1.25</factor>
+						<name>WorkCampSlave37</name>
+						<factor>0.8</factor>
 					</li>
 				</modifiers>
 			</li>

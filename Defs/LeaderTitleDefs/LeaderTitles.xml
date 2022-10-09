@@ -11,9 +11,9 @@
 		<defName>chief</defName>
 		<label>chief</label>
 		<requirements>
-			<techLevels>
-				<li>Neolithic</li>
-			</techLevels>
+			<techLevel>
+				<level>Neolithic</level>
+			</techLevel>
 		</requirements>
 	</Rimocracy.LeaderTitleDef>
 
@@ -22,9 +22,9 @@
 		<labelMale>chieftain</labelMale>
 		<labelFemale>chieftainess</labelFemale>
 		<requirements>
-			<techLevels>
-				<li>Neolithic</li>
-			</techLevels>
+			<techLevel>
+				<level>Neolithic</level>
+			</techLevel>
 		</requirements>
 	</Rimocracy.LeaderTitleDef>
 
@@ -36,10 +36,12 @@
 			<population>
 				<greaterOrEqual>7</greaterOrEqual>
 			</population>
-			<techLevels>
-				<li>Neolithic</li>
-				<li>Medieval</li>
-			</techLevels>
+			<techLevel>
+				<any>
+					<li>Neolithic</li>
+					<li>Medieval</li>
+				</any>
+			</techLevel>
 		</requirements>
 	</Rimocracy.LeaderTitleDef>
 
@@ -49,11 +51,13 @@
 		<labelFemale>lady</labelFemale>
 		<requirements>
 			<succession>Nobility</succession>
-			<techLevels>
-				<li>Medieval</li>
-				<li>Industrial</li>
-				<li>Spacer</li>
-			</techLevels>
+			<techLevel>
+				<any>
+					<li>Medieval</li>
+					<li>Industrial</li>
+					<li>Spacer</li>
+				</any>
+			</techLevel>
 		</requirements>
 	</Rimocracy.LeaderTitleDef>
 
@@ -62,9 +66,9 @@
 		<label>suzerain</label>
 		<requirements>
 			<succession>Nobility</succession>
-			<techLevels>
-				<li>Medieval</li>
-			</techLevels>
+			<techLevel>
+				<level>Medieval</level>
+			</techLevel>
 		</requirements>
 	</Rimocracy.LeaderTitleDef>
 
@@ -74,10 +78,12 @@
 		<labelFemale>warlady</labelFemale>
 		<requirements>
 			<succession>Martial</succession>
-			<techLevels>
-				<li>Neolithic</li>
-				<li>Medieval</li>
-			</techLevels>
+			<techLevel>
+				<any>
+					<li>Neolithic</li>
+					<li>Medieval</li>
+				</any>
+			</techLevel>
 		</requirements>
 	</Rimocracy.LeaderTitleDef>
 
@@ -86,10 +92,12 @@
 		<label>captain</label>
 		<requirements>
 			<succession>Martial</succession>
-			<techLevels>
-				<li>Medieval</li>
-				<li>Industrial</li>
-			</techLevels>
+			<techLevel>
+				<any>
+					<li>Medieval</li>
+					<li>Industrial</li>
+				</any>
+			</techLevel>
 		</requirements>
 	</Rimocracy.LeaderTitleDef>
 
@@ -98,10 +106,12 @@
 		<label>commander</label>
 		<requirements>
 			<succession>Martial</succession>
-			<techLevels>
-				<li>Industrial</li>
-				<li>Spacer</li>
-			</techLevels>
+			<techLevel>
+				<any>
+					<li>Industrial</li>
+					<li>Spacer</li>
+				</any>
+			</techLevel>
 		</requirements>
 	</Rimocracy.LeaderTitleDef>
 
@@ -110,9 +120,9 @@
 		<label>elder</label>
 		<requirements>
 			<succession>Seniority</succession>
-			<techLevels>
-				<li>Neolithic</li>
-			</techLevels>
+			<techLevel>
+				<level>Neolithic</level>
+			</techLevel>
 		</requirements>
 	</Rimocracy.LeaderTitleDef>
 
@@ -122,11 +132,13 @@
 		<labelFemale>matriarch</labelFemale>
 		<requirements>
 			<succession>Seniority</succession>
-			<techLevels>
-				<li>Medieval</li>
-				<li>Industrial</li>
-				<li>Spacer</li>
-			</techLevels>
+			<techLevel>
+				<any>
+					<li>Medieval</li>
+					<li>Industrial</li>
+					<li>Spacer</li>
+				</any>
+			</techLevel>
 		</requirements>
 	</Rimocracy.LeaderTitleDef>
 
@@ -136,9 +148,9 @@
 		<requirements>
 			<termDuration>Indefinite</termDuration>
 			<succession>Election</succession>
-			<techLevels>
-				<li>Medieval</li>
-			</techLevels>
+			<techLevel>
+				<level>Medieval</level>
+			</techLevel>
 		</requirements>
 	</Rimocracy.LeaderTitleDef>
 
@@ -146,10 +158,12 @@
 		<defName>magistrate</defName>
 		<label>magistrate</label>
 		<requirements>
-			<techLevels>
-				<li>Medieval</li>
-				<li>Industrial</li>
-			</techLevels>
+			<techLevel>
+				<any>
+					<li>Medieval</li>
+					<li>Industrial</li>
+				</any>
+			</techLevel>
 		</requirements>
 	</Rimocracy.LeaderTitleDef>
 
@@ -158,20 +172,26 @@
 		<label>mayor</label>
 		<requirements>
 			<all>
-				<li>
-					<termDuration>Indefinite</termDuration>
-					<inverted>true</inverted>
-				</li>
+				<list>
+					<li>
+						<succession>Election</succession>
+						<population>
+							<lessThan>12</lessThan>
+						</population>
+						<techLevel>
+							<any>
+								<li>Medieval</li>
+								<li>Industrial</li>
+								<li>Spacer</li>
+							</any>
+						</techLevel>
+					</li>
+					<li>
+						<termDuration>Indefinite</termDuration>
+						<inverted>true</inverted>
+					</li>
+				</list>
 			</all>
-			<succession>Election</succession>
-			<population>
-				<lessThan>12</lessThan>
-			</population>
-			<techLevels>
-				<li>Medieval</li>
-				<li>Industrial</li>
-				<li>Spacer</li>
-			</techLevels>
 		</requirements>
 	</Rimocracy.LeaderTitleDef>
 
@@ -184,10 +204,12 @@
 				<greaterOrEqual>8</greaterOrEqual>
 				<lessOrEqual>15</lessOrEqual>
 			</population>
-			<techLevels>
-				<li>Industrial</li>
-				<li>Spacer</li>
-			</techLevels>
+			<techLevel>
+				<any>
+					<li>Industrial</li>
+					<li>Spacer</li>
+				</any>
+			</techLevel>
 		</requirements>
 	</Rimocracy.LeaderTitleDef>
 
@@ -196,19 +218,25 @@
 		<label>president</label>
 		<requirements>
 			<all>
-				<li>
-					<termDuration>Indefinite</termDuration>
-					<inverted>true</inverted>
-				</li>
+				<list>
+					<li>
+						<succession>Election</succession>
+						<population>
+							<greaterOrEqual>12</greaterOrEqual>
+						</population>
+						<techLevel>
+							<any>
+								<li>Industrial</li>
+								<li>Spacer</li>
+							</any>
+						</techLevel>
+					</li>
+					<li>
+						<termDuration>Indefinite</termDuration>
+						<inverted>true</inverted>
+					</li>
+				</list>
 			</all>
-			<succession>Election</succession>
-			<population>
-				<greaterOrEqual>12</greaterOrEqual>
-			</population>
-			<techLevels>
-				<li>Industrial</li>
-				<li>Spacer</li>
-			</techLevels>
 		</requirements>
 	</Rimocracy.LeaderTitleDef>
 
@@ -217,10 +245,12 @@
 		<label>guru</label>
 		<requirements>
 			<succession>Seniority</succession>
-			<techLevels>
-				<li>Industrial</li>
-				<li>Spacer</li>
-			</techLevels>
+			<techLevel>
+				<any>
+					<li>Industrial</li>
+					<li>Spacer</li>
+				</any>
+			</techLevel>
 		</requirements>
 	</Rimocracy.LeaderTitleDef>
 
@@ -228,12 +258,17 @@
 		<defName>tyrant</defName>
 		<label>tyrant</label>
 		<requirements>
-			<all>
-				<li>
-					<succession>Lot</succession>
-					<inverted>true</inverted>
-				</li>
-			</all>
+			<any>
+				<list>
+					<li>
+						<succession>Lot</succession>
+						<inverted>true</inverted>
+					</li>
+					<li>
+						<termDuration>Indefinite</termDuration>
+					</li>
+				</list>
+			</any>
 		</requirements>
 	</Rimocracy.LeaderTitleDef>
 

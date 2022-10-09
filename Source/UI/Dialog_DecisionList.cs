@@ -45,7 +45,7 @@ namespace Rimocracy
             Listing_Standard content = new Listing_Standard();
             content.Begin(viewRect);
 
-            content.Label($"Succession type: {comp.SuccessionType.LabelCap}", tooltip: comp.SuccessionType.description);
+            content.Label($"SuccessionDef type: {comp.SuccessionType.LabelCap}", tooltip: comp.SuccessionType.description);
             content.Label($"Leader's term: {comp.TermDuration}");
 
             if (comp.Decisions.Any())
@@ -82,7 +82,7 @@ namespace Rimocracy
                         if (def.governanceCost != 0)
                             content.Label($"Will {(def.governanceCost > 0 ? "reduce" : "increase")} Governance by {Math.Abs(def.GovernanceCost).ToStringPercent().ColorizeByValue(-def.governanceCost)}.");
                         if (!def.effectRequirements.IsTrivial)
-                            content.Label($"Requirements:\n{def.effectRequirements.ToString(target: comp.Leader?.NameShortColored)}");
+                            content.Label($"Requirements:\n{def.effectRequirements.LabelAdjusted(target: comp.Leader)}");
                         switch (def.enactment)
                         {
                             case DecisionEnactmentRule.Decree:

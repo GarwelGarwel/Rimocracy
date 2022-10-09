@@ -8,7 +8,7 @@ namespace Rimocracy
 {
     public class SuccessionDef : Def
     {
-        public string noun = "succession";
+        public string noun = "SuccessionDef";
 
         public Type workerClass;
 
