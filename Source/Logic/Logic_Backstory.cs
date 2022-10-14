@@ -23,8 +23,8 @@ namespace Rimocracy
 
         public override string LabelInverted => $"not {BackstoryLabel}";
 
-        public override bool ValidFor(Pawn pawn = null, Pawn target = null) => pawn?.story?.Childhood != null || pawn?.story?.Adulthood != null;
+        public override bool ValidFor(Pawn pawn = null, Pawn target = null) => Backstory != null && (pawn?.story?.Childhood != null || pawn?.story?.Adulthood != null);
 
-        protected override bool IsSatisfiedInternal(Pawn pawn, Pawn target) => Backstory != null && (pawn.story.Childhood == Backstory || pawn.story.Adulthood == Backstory);
+        protected override bool IsSatisfiedInternal(Pawn pawn, Pawn target) => pawn.story.Childhood == Backstory || pawn.story.Adulthood == Backstory;
     }
 }
