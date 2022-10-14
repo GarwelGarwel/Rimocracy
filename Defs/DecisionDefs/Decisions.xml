@@ -16,7 +16,7 @@
 	<Rimocracy.DecisionDef ParentName="BaseSuccessionDecision">
 		<defName>SuccessionElection</defName>
 		<label>election succession</label>
-		<description>The {LEADER} shall be elected by all free, adult colonists.</description>
+		<description>The {LEADERTITLE} shall be elected by all free, adult colonists.</description>
 		<displayPriorityInCategory>10</displayPriorityInCategory>
 		<displayRequirements>
 			<succession>Election</succession>
@@ -120,6 +120,10 @@
 				<value>-10</value>
 				<meme>Collectivist</meme>
 			</li>
+			<li>
+				<value>3</value>
+				<backstory>StudentSocialite89</backstory>
+			</li>
 		</considerations>
 		<setSuccession>Election</setSuccession>
 	</Rimocracy.DecisionDef>
@@ -127,7 +131,7 @@
 	<Rimocracy.DecisionDef ParentName="BaseSuccessionDecision">
 		<defName>SuccessionLot</defName>
 		<label>lot succession</label>
-		<description>The {LEADER} shall be chosen randomly from all citizens.</description>
+		<description>The {LEADERTITLE} shall be chosen randomly from all citizens.</description>
 		<displayPriorityInCategory>20</displayPriorityInCategory>
 		<displayRequirements>
 			<succession>Lot</succession>
@@ -209,6 +213,14 @@
 					</li>
 				</skills>
 			</li>
+			<li>
+				<value>3</value>
+				<backstory>TestSubject82</backstory>
+			</li>
+			<li>
+				<value>5</value>
+				<backstory>BlackjackPlayer76</backstory>
+			</li>
 		</considerations>
 		<setSuccession>Lot</setSuccession>
 	</Rimocracy.DecisionDef>
@@ -216,7 +228,7 @@
 	<Rimocracy.DecisionDef ParentName="BaseSuccessionDecision">
 		<defName>SuccessionSeniority</defName>
 		<label>seniority succession</label>
-		<description>The oldest, and therefore most experienced, colonist shall be the {LEADER}.</description>
+		<description>The oldest, and therefore most experienced, colonist shall be the {LEADERTITLE}.</description>
 		<displayPriorityInCategory>30</displayPriorityInCategory>
 		<displayRequirements>
 			<succession>Seniority</succession>
@@ -301,6 +313,10 @@
 				<value>8</value>
 				<precept>Research_None</precept>
 			</li>
+			<li>
+				<value>3</value>
+				<backstory>DisciplinedFarmer28</backstory>
+			</li>
 		</considerations>
 		<setSuccession>Seniority</setSuccession>
 	</Rimocracy.DecisionDef>
@@ -308,7 +324,7 @@
 	<Rimocracy.DecisionDef ParentName="BaseSuccessionDecision">
 		<defName>SuccessionNobility</defName>
 		<label>nobility succession</label>
-		<description>The pawn with the highest, and oldest, nobility title shall be the {LEADER}.</description>
+		<description>The pawn with the highest, and oldest, nobility title shall be the {LEADERTITLE}.</description>
 		<displayPriorityInCategory>40</displayPriorityInCategory>
 		<displayRequirements>
 			<any>
@@ -398,6 +414,50 @@
 				<value>8</value>
 				<precept>Research_None</precept>
 			</li>
+			<li>
+				<value>3</value>
+				<backstory>WorkCampSlave37</backstory>
+			</li>
+			<li>
+				<value>3</value>
+				<backstory>MedievalPlower14</backstory>
+			</li>
+			<li>
+				<value>5</value>
+				<backstory>NobleWard61</backstory>
+			</li>
+			<li>
+				<value>5</value>
+				<backstory>MedievalSquire5</backstory>
+			</li>
+			<li>
+				<value>3</value>
+				<backstory>VatgrownSlavegirl8</backstory>
+			</li>
+			<li>
+				<value>5</value>
+				<backstory>FeudalLordling56</backstory>
+			</li>
+			<li>
+				<value>3</value>
+				<backstory>FeudalFarmBoy0</backstory>
+			</li>
+			<li>
+				<value>3</value>
+				<backstory>ChildSlave58</backstory>
+			</li>
+			<li>
+				<value>5</value>
+				<backstory>DisplacedNoble67</backstory>
+			</li>
+			<li>
+				<value>3</value>
+				<backstory>ImperialStudent49</backstory>
+			</li>
+			<li>
+				<value>5</value>
+				<backstory>HighBaroness37</backstory>
+			</li>
 		</considerations>
 		<setSuccession>Nobility</setSuccession>
 	</Rimocracy.DecisionDef>
@@ -405,7 +465,7 @@
 	<Rimocracy.DecisionDef ParentName="BaseSuccessionDecision">
 		<defName>SuccessionMartial</defName>
 		<label>martial succession</label>
-		<description>The most accomplished warrior shall become our {LEADER}.</description>
+		<description>The most accomplished warrior shall become our {LEADERTITLE}.</description>
 		<displayPriorityInCategory>50</displayPriorityInCategory>
 		<displayRequirements>
 			<succession>Martial</succession>
@@ -533,6 +593,62 @@
 				<value>4</value>
 				<precept>Research_None</precept>
 			</li>
+			<li>
+				<value>5</value>
+				<backstory>OfficerCadet25</backstory>
+			</li>
+			<li>
+				<value>-5</value>
+				<backstory>WarRefugee96</backstory>
+			</li>
+			<li>
+				<value>3</value>
+				<backstory>SonOfAHuntress75</backstory>
+			</li>
+			<li>
+				<value>5</value>
+				<backstory>VatgrownAssassin20</backstory>
+			</li>
+			<li>
+				<value>5</value>
+				<backstory>StarforceCadet79</backstory>
+			</li>
+			<li>
+				<value>5</value>
+				<backstory>MilitaryChild82</backstory>
+			</li>
+			<li>
+				<value>5</value>
+				<backstory>GunKid30</backstory>
+			</li>
+			<li>
+				<value>3</value>
+				<backstory>WarChild24</backstory>
+			</li>
+			<li>
+				<value>5</value>
+				<backstory>IdealisticCadet64</backstory>
+			</li>
+			<li>
+				<value>3</value>
+				<backstory>IdealisticCadet64</backstory>
+			</li>
+			<li>
+				<value>-3</value>
+				<backstory>OrphanOfWar60</backstory>
+			</li>
+			<li>
+				<value>5</value>
+				<backstory>MilitaryCadet16</backstory>
+			</li>
+			<li>
+				<value>5</value>
+				<backstory>SpaceCadet77</backstory>
+			</li>
+			<li>
+				<value>3</value>
+				<backstory>MilitaryTrainee20</backstory>
+			</li>
 		</considerations>
 		<setSuccession>Martial</setSuccession>
 	</Rimocracy.DecisionDef>
@@ -552,7 +668,7 @@
 	<Rimocracy.DecisionDef ParentName="BaseTermDurationDecision">
 		<defName>TermQuadrum</defName>
 		<label>quadrum-long term</label>
-		<description>Set term of {LEADER} to one quadrum (15 days).</description>
+		<description>Set term of {LEADERTITLE} to one quadrum (15 days).</description>
 		<displayPriorityInCategory>10</displayPriorityInCategory>
 		<displayRequirements>
 			<termDuration>Halfyear</termDuration>
@@ -563,7 +679,7 @@
 	<Rimocracy.DecisionDef ParentName="BaseTermDurationDecision">
 		<defName>TermHalfYear</defName>
 		<label>half-year long term</label>
-		<description>Set term of {LEADER} to half a year (30 days).</description>
+		<description>Set term of {LEADERTITLE} to half a year (30 days).</description>
 		<displayPriorityInCategory>20</displayPriorityInCategory>
 		<displayRequirements>
 			<any>
@@ -583,7 +699,7 @@
 	<Rimocracy.DecisionDef ParentName="BaseTermDurationDecision">
 		<defName>TermYear</defName>
 		<label>year-long term</label>
-		<description>Set term of {LEADER} to one year (60 days).</description>
+		<description>Set term of {LEADERTITLE} to one year (60 days).</description>
 		<displayPriorityInCategory>30</displayPriorityInCategory>
 		<displayRequirements>
 			<any>
@@ -603,7 +719,7 @@
 	<Rimocracy.DecisionDef ParentName="BaseTermDurationDecision">
 		<defName>TermIndefinite</defName>
 		<label>indefinite term</label>
-		<description>{LEADER} will rule till his or her death.</description>
+		<description>{LEADERTITLE} will rule till his or her death.</description>
 		<displayPriorityInCategory>40</displayPriorityInCategory>
 		<displayRequirements>
 			<termDuration>Year</termDuration>
@@ -647,7 +763,7 @@
 	<Rimocracy.DecisionDef>
 		<defName>Impeachment</defName>
 		<label>impeach leader</label>
-		<description>Immediately relieve the current {LEADER} of their duties and initiate a new succession.</description>
+		<description>Immediately relieve the current {LEADERTITLE} of their duties and initiate a new succession.</description>
 		<category>Terms</category>
 		<enactment>Referendum</enactment>
 		<displayPriorityInCategory>50</displayPriorityInCategory>
@@ -726,6 +842,14 @@
 				<value>-20</value>
 				<meme>Loyalist</meme>
 			</li>
+			<li>
+				<value>5</value>
+				<backstory>RebelSlave14</backstory>
+			</li>
+			<li>
+				<value>3</value>
+				<backstory>AspergersRebel13</backstory>
+			</li>
 		</considerations>
 		<durationTicks>600000</durationTicks>
 		<governanceCost>0.20</governanceCost>
@@ -737,7 +861,7 @@
 	<Rimocracy.DecisionDef>
 		<defName>Populism</defName>
 		<label>consent of the governed</label>
-		<description>A true {LEADER} never forgets about his or her people and draws authority from their support. The efficiency of the leader is affected by the citizens' median opinion of him/her.</description>
+		<description>A true {LEADERTITLE} never forgets about his or her people and draws authority from their support. The efficiency of the leader is affected by the citizens' median opinion of him/her.</description>
 		<category>Democratic</category>
 		<displayPriorityInCategory>10</displayPriorityInCategory>
 		<effectRequirements>
@@ -768,7 +892,7 @@
 	<Rimocracy.DecisionDef>
 		<defName>Populism_Cancel</defName>
 		<label>cancel "Consent of the Governed"</label>
-		<description>These fools just can't appreciate what the {LEADER} is really doing. We shouldn't care about their opinions any more.</description>
+		<description>These fools just can't appreciate what the {LEADERTITLE} is really doing. We shouldn't care about their opinions any more.</description>
 		<category>Democratic</category>
 		<displayPriorityInCategory>10</displayPriorityInCategory>
 		<displayRequirements>
@@ -852,6 +976,10 @@
 				<value>-20</value>
 				<precept>Comfort_Ignored</precept>
 			</li>
+			<li>
+				<value>5</value>
+				<backstory>RebelSlave14</backstory>
+			</li>
 		</considerations>
 		<tag/>
 		<governanceCost>0.25</governanceCost>
@@ -901,6 +1029,10 @@
 				<label>comfort ignored</label>
 				<value>20</value>
 				<precept>Comfort_Ignored</precept>
+			</li>
+			<li>
+				<value>-5</value>
+				<backstory>RebelSlave14</backstory>
 			</li>
 		</considerations>
 		<governanceCost>0.15</governanceCost>
@@ -1170,7 +1302,7 @@
 	<Rimocracy.DecisionDef>
 		<defName>Stability</defName>
 		<label>stability doctrine</label>
-		<description>While the same {LEADER} is in charge, governance decay rate is much lower. But if leadership changes, for whatever reason, governance will drop by half.</description>
+		<description>While the same {LEADERTITLE} is in charge, governance decay rate is much lower. But if leadership changes, for whatever reason, governance will drop by half.</description>
 		<category>Authoritarian</category>
 		<displayPriorityInCategory>10</displayPriorityInCategory>
 		<considerations>
@@ -1265,7 +1397,7 @@
 	<Rimocracy.DecisionDef>
 		<defName>Elitism</defName>
 		<label>L'État, c'est moi</label>
-		<description>A happy {LEADER} is a productive {LEADER}. When the leader is in a good mood, he, or she, will improve governance better.</description>
+		<description>A happy {LEADERTITLE} is a productive {LEADERTITLE}. When the leader is in a good mood, he, or she, will improve governance better.</description>
 		<category>Authoritarian</category>
 		<displayPriorityInCategory>20</displayPriorityInCategory>
 		<effectRequirements>
@@ -1435,7 +1567,7 @@
 	<Rimocracy.DecisionDef>
 		<defName>CultOfPersonality</defName>
 		<label>cult of personality</label>
-		<description>Our {LEADER} is an extraordinary person, who makes all decisions and bears ultimate responsibility for successes and failures. Every citizen will recognize that and love (or hate) {LEADER} twice as much.</description>
+		<description>Our {LEADERTITLE} is an extraordinary person, who makes all decisions and bears ultimate responsibility for successes and failures. Every citizen will recognize that and love (or hate) {LEADER} twice as much.</description>
 		<category>Authoritarian</category>
 		<displayPriorityInCategory>30</displayPriorityInCategory>
 		<effectRequirements>
@@ -1520,7 +1652,7 @@
 	<Rimocracy.DecisionDef>
 		<defName>CultOfPersonality_Cancel</defName>
 		<label>cancel cult of personality</label>
-		<description>The {LEADER} should be more humble.</description>
+		<description>The {LEADERTITLE} should be more humble.</description>
 		<category>Authoritarian</category>
 		<displayPriorityInCategory>30</displayPriorityInCategory>
 		<displayRequirements>
@@ -2158,7 +2290,7 @@
 	<Rimocracy.DecisionDef>
 		<defName>ActionVetoPower</defName>
 		<label>enable veto for actions</label>
-		<description>If the {LEADER} opposes a game action such as arresting or banishing pawns, they can stop it. Without veto power, such actions will be taken but at a cost of Governance.</description>
+		<description>If the {LEADERTITLE} opposes a game action such as arresting or banishing pawns, they can stop it. Without veto power, such actions will be taken but at a cost of Governance.</description>
 		<category>Misc</category>
 		<displayPriorityInCategory>100</displayPriorityInCategory>
 		<displayRequirements>
@@ -2201,7 +2333,7 @@
 	<Rimocracy.DecisionDef>
 		<defName>ActionVetoPower_Cancel</defName>
 		<label>abolish veto for actions</label>
-		<description>A {LEADER} can't prevent game actions, such as arresting or banishing pawns, from happening. Instead, they will reduce Governance if the leader opposes them.</description>
+		<description>A {LEADERTITLE} can't prevent game actions, such as arresting or banishing pawns, from happening. Instead, they will reduce Governance if the leader opposes them.</description>
 		<category>Misc</category>
 		<enactment>None</enactment>
 		<displayPriorityInCategory>100</displayPriorityInCategory>

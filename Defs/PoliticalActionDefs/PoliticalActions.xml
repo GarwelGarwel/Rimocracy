@@ -96,6 +96,12 @@
 				<precept>Slavery_Honorable</precept>
 				<targetIsColonist>false</targetIsColonist>
 			</li>
+			<li>
+				<label>uphold the law</label>
+				<value>10</value>
+				<targetIsGuilty>true</targetIsGuilty>
+				<backstory>FrontierMarshal54</backstory>
+			</li>
 		</considerations>
 		<governanceChangeIfSupported>0.04</governanceChangeIfSupported>
 		<governanceChangeIfOpposed>-0.05</governanceChangeIfOpposed>
@@ -486,6 +492,22 @@
 				<value>10</value>
 				<precept>Raiding_Required</precept>
 			</li>
+			<li>
+				<value>5</value>
+				<backstory>UrbworldCriminal6</backstory>
+			</li>
+			<li>
+				<value>-5</value>
+				<backstory>WarRefugee96</backstory>
+			</li>
+			<li>
+				<value>5</value>
+				<backstory>MercenaryRecruit36</backstory>
+			</li>
+			<li>
+				<value>3</value>
+				<backstory>VatgrownAssassin20</backstory>
+			</li>
 		</considerations>
 		<governanceChangeIfSupported>0.08</governanceChangeIfSupported>
 		<governanceChangeIfOpposed>-0.10</governanceChangeIfOpposed>
@@ -531,6 +553,10 @@
 				<label>raider ideology</label>
 				<value>-10</value>
 				<meme>Raider</meme>
+			</li>
+			<li>
+				<value>5</value>
+				<backstory>TradersChild62</backstory>
 			</li>
 		</considerations>
 		<supportThought>LikeTrade</supportThought>
