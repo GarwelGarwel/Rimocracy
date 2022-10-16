@@ -7,11 +7,39 @@
 	<packageId>Garwel.Rimocracy</packageId>
 	<supportedVersions>
 		<li>1.3</li>
+		<li>1.4</li>
 	</supportedVersions>
 	<description>Rimocracy brings domestic politics to the RimWorld.
 
-The colony can now have a leader, chosen in one of many ways, who governs thereby improving efficiency of all citizens. You can move your country towards a liberal democracy, an oppressive dictatorship or something in-between, but make sure that you have enough public support for your reforms. Maintain loyalty of your citizens to ensure they tolerate the less popular decisions and stay clear of protesting.</description>
-	<modDependencies>
+Features:
+
+- Rimocracy introduces the concept of Governance Quality (or simply Governance). It is a value, measured between 0% and 100%. Governance affects pawns' work speed (especially with a Focus Skill, which is selected by the leader), negotiation ability and some other stats. Governance decays over time at a rate depending on the number of citizens in the colony.
+
+- Colonies have leaders, who can increase Governance by doing Govern job on applicable objects (research tables, thrones etc.).
+
+- Leaders may be selected in one of many ways: by election, by lot, by seniority, by the highest noble title or by martial achievements.
+
+- You can take political decisions that define succession laws, term limits and have other effects. Many decisions need approval of the majority of citizens. Citizens will like some decisions and oppose others depending on their traits, skills, opinions on each other, ideoligion etc. They will be happy when a decision they support is enacted and upset about those they dislike.
+
+- Citizens will also have opinions on many game actions you take such as arrests, release, execution or banishment of prisoners, attacks on other settlements and trade.
+
+- Citizens have a new Loyalty need that corresponds to their satisfaction with the way the colony is ruled. Loyal citizens will make governing easier while disloyal ones may protest or rebel. Loyalty is affected by colonists' mood, opinion of the leader and of decisions.
+
+- Built-in support for many mods including Colony Manager, Primitive Workbenches and Vanilla Traits Expanded.
+
+Known Issues and Incompatibilities
+
+- RocketMan and RimThreaded appear to be incompatible with this mod. Use at your own risk!
+
+- Sometimes there are UI issues in the decisions list, when some of the content is not displayed. Try clicking some buttons, so that the window is redrawn.
+
+Detailed readme: https://github.com/GarwelGarwel/Rimocracy/blob/master/README.md
+
+The source code, latest release and more information will always be available here: https://github.com/GarwelGarwel/Rimocracy
+
+Issue reports and pull requests are welcome.
+
+This mod is distributed under MIT License.<modDependencies>
 		<li>
 			<packageId>brrainz.harmony</packageId>
 			<displayName>Harmony</displayName>
