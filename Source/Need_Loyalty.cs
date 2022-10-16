@@ -5,6 +5,8 @@ using System.Linq;
 using UnityEngine;
 using Verse;
 
+using static Rimocracy.Utility;
+
 namespace Rimocracy
 {
     public class Need_Loyalty : Need_Seeker
@@ -14,6 +16,7 @@ namespace Rimocracy
 
         public const float MoodWeight = 1;
         public const float OpinionOfLeaderWeight = 1;
+        public const float MentalStateDebuff = 0.20f;
         public const float LoyaltyResetOnLeaderChange = 0.25f;
         public const float ToleratedDecisionLoyaltyFactor = 0.75f;
         public const float ProtestLevelBase = 0.15f;
@@ -30,23 +33,19 @@ namespace Rimocracy
 
         public bool IsProtesting => protest != null;
 
-        protected override bool IsFrozen => base.IsFrozen || !Utility.PoliticsEnabled || !pawn.IsCitizen();
+        bool InGenuineMentalState => pawn.InMentalState && !IsProtesting;
 
-        public override bool ShowOnNeedList => base.ShowOnNeedList && Settings.LoyaltyEnabled && Utility.PoliticsEnabled && pawn.IsCitizen();
+        protected override bool IsFrozen => base.IsFrozen || !PoliticsEnabled || !pawn.IsCitizen();
 
-        public static float ProtestLevel
-        {
-            get
-            {
-                int pop = Utility.CitizensCount;
-                if (pop <= 0)
-                    return ProtestLevelBase;
-                return ProtestLevelBase + (DefaultLevel - ProtestLevelBase) * Utility.RimocracyComp.Protesters.Count / pop;
-            }
-        }
+        public override bool ShowOnNeedList => base.ShowOnNeedList && Settings.LoyaltyEnabled && PoliticsEnabled && pawn.IsCitizen();
+
+        public static float ProtestLevel =>
+            ProtestLevelBase + (DefaultLevel - ProtestLevelBase) * Utility.RimocracyComp.Protesters.Count / Math.Max(CitizensCount, 1);
 
         public override float CurInstantLevel =>
-            (pawn.needs.mood.CurLevelPercentage * MoodWeight + (pawn.GetOpinionOf(Utility.RimocracyComp.Leader) + 100) / 200 * OpinionOfLeaderWeight) / (MoodWeight + OpinionOfLeaderWeight) + persistentOffset;
+            Mathf.Clamp01(GenMath.WeightedAverage(pawn.needs.mood.CurLevelPercentage, MoodWeight, (pawn.GetOpinionOf(Utility.RimocracyComp.Leader) + 100) / 200, OpinionOfLeaderWeight)
+                - (InGenuineMentalState ? MentalStateDebuff : 0)
+                + persistentOffset);
 
         public float StartProtestMTB => GenDate.HoursPerDay * 5 * (1 + CurLevel / ProtestLevel) * (1 + Utility.RimocracyComp.Governance);
 
@@ -58,12 +57,13 @@ namespace Rimocracy
 
         public void RecalculatePersistentEffects()
         {
-            Utility.Log($"RecalculatePersistentEffects for {pawn}");
+            Log($"RecalculatePersistentEffects for {pawn}");
             persistentOffset = 0;
-            foreach (DecisionDef decision in Utility.RimocracyComp.Decisions.Select(decision => decision.def))
+            for (int i = 0; i < Utility.RimocracyComp.Decisions.Count; i++)
             {
+                DecisionDef decision = Utility.RimocracyComp.Decisions[i].def;
                 PawnDecisionOpinion opinion = new PawnDecisionOpinion(pawn, decision.considerations, Utility.RimocracyComp.Leader);
-                Utility.Log($"{pawn}'s support for {decision.defName}: {opinion.support.ToStringWithSign()}");
+                Log($"{pawn}'s support for {decision.defName}: {opinion.support.ToStringWithSign()}");
                 switch (opinion.Vote)
                 {
                     case DecisionVote.Yea:
@@ -80,7 +80,7 @@ namespace Rimocracy
                 }
             }
             if (persistentOffset != 0)
-                Utility.Log($"Persistent offset due to decisions: {persistentOffset.ToStringPercent()}");
+                Log($"Persistent offset due to decisions: {persistentOffset.ToStringPercent()}");
         }
 
         static ProtestDef RandomProtestDefFor(Pawn pawn) =>
@@ -90,19 +90,19 @@ namespace Rimocracy
         {
             if (pawn.InMentalState || QuestUtility.AnyQuestDisablesRandomMoodCausedMentalBreaksFor(pawn))
                 return;
-            Utility.Log($"Trying to start a protest for {pawn}.");
+            Log($"Trying to start a protest for {pawn}.");
 
             if (Settings.DebugLogging)
                 foreach (ProtestDef p in DefDatabase<ProtestDef>.AllDefs.Where(def => def.AppliesTo(pawn)))
-                    Utility.Log($"Possible protest: {p.defName}, weight = {p.weight.GetValue(pawn):N1}");
+                    Log($"Possible protest: {p.defName}, weight = {p.weight.GetValue(pawn):N1}");
 
             ProtestDef chosenProtest = RandomProtestDefFor(pawn);
             if (chosenProtest == null)
             {
-                Utility.Log($"Could not find a suitable ProtestDef for {pawn} out of {DefDatabase<ProtestDef>.DefCount.ToStringCached()} defs.", LogLevel.Warning);
+                Log($"Could not find a suitable ProtestDef for {pawn} out of {DefDatabase<ProtestDef>.DefCount.ToStringCached()} defs.", LogLevel.Warning);
                 return;
             }
-            Utility.Log($"{pawn} initiates {chosenProtest}.");
+            Log($"{pawn} initiates {chosenProtest}.");
 
             if (pawn.mindState.mentalStateHandler.TryStartMentalState(chosenProtest.mentalState, transitionSilently: true))
             {
@@ -117,7 +117,7 @@ namespace Rimocracy
 
         public void StopProtest()
         {
-            Utility.Log($"{pawn} stops protesting.");
+            Log($"{pawn} stops protesting.");
             pawn.mindState.mentalStateHandler.Reset();
             protest = null;
             Utility.RimocracyComp.Protesters.Remove(pawn);
@@ -152,9 +152,11 @@ namespace Rimocracy
             string tip = base.GetTipString();
             Pawn leader = Utility.RimocracyComp.Leader;
             float opinionOfLeader = pawn.GetOpinionOf(leader);
-            tip += $"\n\nLoyalty of {pawn} is affected by {pawn.Possessive()} mood ({pawn.needs.mood.CurLevelPercentage.ToStringPercent().ColorizeByValue(pawn.needs.mood.CurLevelPercentage, 0.5f, 0.5f)}){(leader != null ? $" and opinion of {Utility.LeaderTitle} {leader.NameShortColored} ({opinionOfLeader.ToStringWithSign("0").ColorizeByValue(opinionOfLeader)})." : ".")}";
+            tip += $"\n\nLoyalty of {pawn} is affected by {pawn.Possessive()} mood ({pawn.needs.mood.CurLevelPercentage.ToStringPercent().ColorizeByValue(pawn.needs.mood.CurLevelPercentage, 0.5f, 0.5f)}){(leader != null ? $" and opinion of {LeaderTitle} {leader.NameShortColored} ({opinionOfLeader.ToStringWithSign("0").ColorizeByValue(opinionOfLeader)})." : ".")}";
             if (persistentOffset != 0)
                 tip += $" Active decisions change loyalty by {persistentOffset.ToStringWithSign("0.#%").ColorizeByValue(persistentOffset)}.";
+            if (InGenuineMentalState)
+                tip += $" Mental state lowers loyalty by {MentalStateDebuff.ToStringPercent().Colorize(Color.red)}.";
             if (CurLevel > DefaultLevel)
             {
                 int supportOffset = (int)Math.Floor(pawn.GetLoyaltySupportOffset());

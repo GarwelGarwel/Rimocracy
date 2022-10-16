@@ -33,21 +33,25 @@
 				<targetIsWild>false</targetIsWild>
 			</li>
 			<li>
-				<label>friendly faction</label>
-				<value>-20</value>
-				<targetIsColonist>false</targetIsColonist>
-				<targetIsWild>false</targetIsWild>
-				<targetFactionGoodwill>
-					<greaterOrEqual>75</greaterOrEqual>
-				</targetFactionGoodwill>
+				<label>{TARGET} is hostile</label>
+				<value>30</value>
+				<targetIsHostile>true</targetIsHostile>
 			</li>
 			<li>
-				<label>hosile faction</label>
-				<value>20</value>
+				<label>faction relations</label>
 				<targetIsColonist>false</targetIsColonist>
 				<targetIsWild>false</targetIsWild>
 				<targetFactionGoodwill>
-					<lessOrEqual>-75</lessOrEqual>
+					<offset>
+						<points>
+							<li>(-100, 25)</li>
+							<li>(-75, 15)</li>
+							<li>(-60, 0)</li>
+							<li>(60, 0)</li>
+							<li>(75, -15)</li>
+							<li>(100, -25)</li>
+						</points>
+					</offset>
 				</targetFactionGoodwill>
 			</li>
 			<li>

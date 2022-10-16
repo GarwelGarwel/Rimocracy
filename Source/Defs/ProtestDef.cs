@@ -4,7 +4,7 @@ namespace Rimocracy
 {
     public class ProtestDef : Def
     {
-        public Consideration weight = new Consideration(1);
+        public Logic_Consideration weight = new Logic_Consideration(1);
         public MentalStateDef mentalState;
 
         public bool AppliesTo(Pawn pawn) => mentalState.Worker.StateCanOccur(pawn) && weight.IsSatisfied(pawn);

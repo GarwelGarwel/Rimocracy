@@ -72,6 +72,8 @@ namespace Rimocracy
 
         public static float CitizenGovernanceWeight(Pawn pawn)
         {
+            if (!Settings.LoyaltyEnabled)
+                return 1;
             Need_Loyalty loyalty = pawn.GetLoyalty();
             if (loyalty == null)
                 return 1;
@@ -90,7 +92,7 @@ namespace Rimocracy
 
         public static void ChangeLoyalty(this Pawn pawn, float value)
         {
-            Need_Loyalty loyalty = pawn.GetLoyalty();
+            Need_Loyalty loyalty = pawn?.GetLoyalty();
             if (loyalty != null)
                 loyalty.CurLevel += value;
             else Log($"ChangeLoyalty: {pawn} has no Need_Loyalty.", LogLevel.Error);
@@ -106,7 +108,7 @@ namespace Rimocracy
 
         public static int GetTotalSilver() => Find.Maps.Where(map => map.IsPlayerHome).Sum(map => map.resourceCounter.Silver);
 
-        public static int RemoveSilver(Map map, int amount)
+        public static int RemoveSilver(this Map map, int amount)
         {
             int removed = 0;
             foreach (Thing thing in map.spawnedThings.Where(thing => thing.Faction.IsPlayer && thing.def == ThingDefOf.Silver).ToList())
@@ -127,11 +129,11 @@ namespace Rimocracy
             int removed = 0;
             foreach (Map map in Find.Maps.Where(map => map.IsPlayerHome))
             {
-                removed += RemoveSilver(map, amount - removed);
+                removed += map.RemoveSilver(amount - removed);
                 if (removed >= amount)
                     break;
             }
-            Log($"{removed} silver removed from all maps out of {amount}.");
+            Log($"{removed} silver removed from list maps out of {amount}.");
             return removed;
         }
 
@@ -159,8 +161,13 @@ namespace Rimocracy
         public static Precept_RoleSingle IdeologyLeaderPrecept(Ideo ideo = null) =>
             (ideo ?? NationPrimaryIdeo).GetAllPreceptsOfType<Precept_RoleSingle>().FirstOrDefault(p => p.def == PreceptDefOf.IdeoRole_Leader);
 
-        public static bool RoleRequirementsMetPotentially(Pawn pawn, Precept_Role role) =>
-            role.def.roleRequirements.All(req => req is RoleRequirement_Leader || req.Met(pawn, role));
+        public static bool RoleRequirementsMetPotentially(Pawn pawn, Precept_Role role)
+        {
+            for (int i = 0; i < role.def.roleRequirements.Count; i++)
+                if (!(role.def.roleRequirements[i] is RoleRequirement_Leader) && !role.def.roleRequirements[i].Met(pawn, role))
+                    return false;
+            return true;
+        }
 
         public static bool CanBeLeader(this Pawn p) =>
             p.IsCitizen()
@@ -170,7 +177,7 @@ namespace Rimocracy
         public static bool IsLeader(this Pawn p) => p != null && RimocracyComp?.Leader == p;
         
         /// <summary>
-        /// Returns pawn's most senior title's seniority, with no titles at all being -100
+        /// Returns pawn's most senior title's seniority, with no titles at list being -100
         /// </summary>
         /// <param name="pawn"></param>
         /// <returns></returns>
@@ -217,18 +224,19 @@ namespace Rimocracy
         }
 
         public static float MedianCitizensOpinion(this Pawn pawn) =>
-             Citizens.Where(p => p != pawn).Select(p => (float)p.needs.mood.thoughts.TotalOpinionOffset(pawn)).Median();
+            Citizens.Where(p => p != pawn).Select(p => (float)p.needs.mood.thoughts.TotalOpinionOffset(pawn)).Median();
 
         public static float MedianMood => Citizens.Select(pawn => pawn.needs.mood.CurLevelPercentage).Median();
 
-        public static float Median(this IEnumerable<float> values)
+        public static float Median(this List<float> values)
         {
             if (values.EnumerableNullOrEmpty())
                 return 0;
-            List<float> list = values.OrderBy(v => v).ToList();
-            int count = list.Count;
-            return count % 2 == 0 ? (list[count / 2 - 1] + list[count / 2]) / 2 : list[count / 2];
+            values.Sort();
+            return values.Count % 2 == 0 ? (values[values.Count / 2 - 1] + values[values.Count / 2]) / 2 : values[values.Count / 2];
         }
+
+        public static float Median(this IEnumerable<float> values) => Median(values.ToList());
 
         public static string ColorizeByValue(this string text, float value, Color color1, Color color2, Color color3, float lowValue = 0, float highValue = 0) =>
             text.Colorize(value < lowValue ? color1 : (value <= highValue ? color2 : color3));
