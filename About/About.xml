@@ -39,7 +39,8 @@ The source code, latest release and more information will always be available he
 
 Issue reports and pull requests are welcome.
 
-This mod is distributed under MIT License.<modDependencies>
+This mod is distributed under MIT License.</description>
+	<modDependencies>
 		<li>
 			<packageId>brrainz.harmony</packageId>
 			<displayName>Harmony</displayName>
