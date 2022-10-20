@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<Patch>
+
+	<!-- SYR Individuality -->
+
+	<Operation Class="PatchOperationFindMod">
+		<mods>
+			<li>[SYR] Individuality</li>
+		</mods>
+		<match Class="PatchOperationAdd">
+			<xpath>/Defs/Rimocracy.PoliticalActionDef[defName="SettlementAttack"]/considerations</xpath>
+			<value>
+				<li>
+					<label>gun nut</label>
+					<value>20</value>
+					<trait>SYR_GunNut</trait>
+				</li>
+			</value>
+		</match>
+	</Operation>
+
+	<!-- Rumor Has It.... (Continued) -->
+
+	<Operation Class="PatchOperationFindMod">
+		<mods>
+			<li>[RF] Rumor Has It.... (Continued)</li>
+		</mods>
+		<match Class="PatchOperationAdd">
+			<xpath>/Defs/Rimocracy.PoliticalActionDef[defName="Execution"]/considerations</xpath>
+			<value>
+				<li>
+					<label>peacemaker</label>
+					<value>-20</value>
+					<trait>Peacemaker</trait>
+					<targetIsColonist>true</targetIsColonist>
+					<isTarget>false</isTarget>
+				</li>
+			</value>
+		</match>
+	</Operation>
+
+	<!-- Vanilla Traits Expanded -->
+
+	<Operation Class="PatchOperationFindMod">
+		<mods>
+			<li>Vanilla Traits Expanded</li>
+		</mods>
+		<match Class="PatchOperationSequence">
+			<operations>
+			
+				<li Class="PatchOperationAdd">
+					<xpath>/Defs/Rimocracy.PoliticalActionDef[defName="Arrest"]/considerations</xpath>
+					<value>
+						<li>
+							<label>rebel</label>
+							<value>-20</value>
+							<trait>VTE_Rebel</trait>
+						</li>
+						<li>
+							<label>submissive</label>
+							<value>10</value>
+							<trait>VTE_Submissive</trait>
+						</li>
+						<li>
+							<label>vengeful</label>
+							<trait>VTE_Vengeful</trait>
+							<opinionOfTarget>
+								<lessThan>0</lessThan>
+								<offset>
+									<points>
+										<li>(-100, 40)</li>
+										<li>(0, 0)</li>
+									</points>
+								</offset>
+							</opinionOfTarget>
+						</li>
+					</value>
+				</li>
+				
+				<li Class="PatchOperationAdd">
+					<xpath>/Defs/Rimocracy.PoliticalActionDef[defName="Execution"]/considerations</xpath>
+					<value>
+						<li>
+							<label>rebel</label>
+							<value>-20</value>
+							<trait>VTE_Rebel</trait>
+						</li>
+						<li>
+							<label>submissive</label>
+							<value>10</value>
+							<trait>VTE_Submissive</trait>
+						</li>
+						<li>
+							<label>vengeful</label>
+							<trait>VTE_Vengeful</trait>
+							<opinionOfTarget>
+								<lessThan>0</lessThan>
+								<offset>
+									<points>
+										<li>(-100, 40)</li>
+										<li>(0, 0)</li>
+									</points>
+								</offset>
+							</opinionOfTarget>
+						</li>
+					</value>
+				</li>
+				
+				<li Class="PatchOperationAdd">
+					<xpath>/Defs/Rimocracy.PoliticalActionDef[defName="Execution"]/considerations/li[label="killing an innocent"]/all/list</xpath>
+					<value>
+						<li>
+							<trait>VTE_Desensitized</trait>
+							<inverted>true</inverted>
+						</li>
+					</value>
+				</li>
+				
+				<li Class="PatchOperationAdd">
+					<xpath>/Defs/Rimocracy.PoliticalActionDef[defName="Execution"]/considerations/li[label="opinion of {TARGET}"]</xpath>
+					<value>
+						<all>
+							<list>
+								<li>
+									<trait>VTE_Desensitized</trait>
+									<inverted>true</inverted>
+								</li>
+							</list>
+						</all>
+					</value>
+				</li>
+				
+				<li Class="PatchOperationAdd">
+					<xpath>/Defs/Rimocracy.PoliticalActionDef[defName="Execution"]/considerations/li[label="{TARGET} is a fellow colonist"]/all/list</xpath>
+					<value>
+						<li>
+							<trait>VTE_Desensitized</trait>
+							<inverted>true</inverted>
+						</li>
+					</value>
+				</li>
+				
+				<li Class="PatchOperationAdd">
+					<xpath>/Defs/Rimocracy.PoliticalActionDef[defName="Release"]/considerations</xpath>
+					<value>
+						<li>
+							<label>vengeful</label>
+							<trait>VTE_Vengeful</trait>
+							<opinionOfTarget>
+								<lessThan>0</lessThan>
+								<offset>
+									<points>
+										<li>(-100, -40)</li>
+										<li>(0, 0)</li>
+									</points>
+								</offset>
+							</opinionOfTarget>
+						</li>
+					</value>
+				</li>
+				
+				<li Class="PatchOperationAdd">
+					<xpath>/Defs/Rimocracy.PoliticalActionDef[defName="Banishment"]/considerations</xpath>
+					<value>
+						<li>
+							<label>rebel</label>
+							<value>-20</value>
+							<trait>VTE_Rebel</trait>
+						</li>
+						<li>
+							<label>submissive</label>
+							<value>10</value>
+							<trait>VTE_Submissive</trait>
+						</li>
+						<li>
+							<label>vengeful</label>
+							<trait>VTE_Vengeful</trait>
+							<opinionOfTarget>
+								<lessThan>0</lessThan>
+								<offset>
+									<points>
+										<li>(-100, 40)</li>
+										<li>(0, 0)</li>
+									</points>
+								</offset>
+							</opinionOfTarget>
+						</li>
+						<li>
+							<label>snob</label>
+							<value>10</value>
+							<isTarget>false</isTarget>
+							<trait>VTE_Snob</trait>
+							<opinionOfTarget>
+								<lessThan>0</lessThan>
+							</opinionOfTarget>
+						</li>
+					</value>
+				</li>
+				
+				<li Class="PatchOperationAdd">
+					<xpath>/Defs/Rimocracy.PoliticalActionDef[defName="Banishment"]/considerations/li[label="banishment is cruel"]/all/list</xpath>
+					<value>
+						<li>
+							<trait>VTE_Desensitized</trait>
+							<inverted>true</inverted>
+						</li>
+					</value>
+				</li>
+				
+				<li Class="PatchOperationAdd">
+					<xpath>/Defs/Rimocracy.PoliticalActionDef[defName="Banishment"]/considerations/li[label="opinion of {TARGET}"]</xpath>
+					<value>
+						<all>
+							<list>
+								<li>
+									<trait>VTE_Desensitized</trait>
+									<inverted>true</inverted>
+								</li>
+							</list>
+						</all>
+					</value>
+				</li>
+				
+				<li Class="PatchOperationAdd">
+					<xpath>/Defs/Rimocracy.PoliticalActionDef[defName="SettlementAttack"]/considerations</xpath>
+					<value>
+						<li>
+							<label>coward</label>
+							<value>-30</value>
+							<trait>VTE_Coward</trait>
+						</li>
+						<li>
+							<label>brave</label>
+							<value>30</value>
+							<trait>VTE_Brave</trait>
+						</li>
+						<li>
+							<label>martial artist</label>
+							<value>15</value>
+							<trait>VTE_MartialArtist</trait>
+						</li>
+					</value>
+				</li>
+				
+			</operations>
+		</match>
+	</Operation>
+
+</Patch>
