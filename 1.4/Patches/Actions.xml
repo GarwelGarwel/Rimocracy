@@ -199,11 +199,10 @@
 				</li>
 				
 				<li Class="PatchOperationAdd">
-					<xpath>/Defs/Rimocracy.PoliticalActionDef[defName="Banishment"]/considerations/li[label="banishment is cruel"]/all/list</xpath>
+					<xpath>/Defs/Rimocracy.PoliticalActionDef[defName="Banishment"]/considerations/li[label="banishment is cruel"]/any/list</xpath>
 					<value>
 						<li>
 							<trait>VTE_Desensitized</trait>
-							<inverted>true</inverted>
 						</li>
 					</value>
 				</li>
