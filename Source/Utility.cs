@@ -50,7 +50,8 @@ namespace Rimocracy
 
         public static bool PoliticsEnabled => RimocracyComp != null && RimocracyComp.IsEnabled;
 
-        public static bool IsSimpleSlaveryInstalled => RimocracyDefOf.Enslaved != null;
+        static bool? isSimpleSlaveryInstalled;
+        public static bool IsSimpleSlaveryInstalled => isSimpleSlaveryInstalled ?? (bool)(isSimpleSlaveryInstalled = RimocracyDefOf.Enslaved != null);
 
         public static bool IsFreeAdultColonist(this Pawn pawn) =>
             pawn != null
