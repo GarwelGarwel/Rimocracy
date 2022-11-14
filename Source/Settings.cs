@@ -19,7 +19,7 @@ namespace Rimocracy
         public static float GovernanceCostFactor = 1;
         public static bool LoyaltyEnabled = true;
         public static bool ShowActionSupportDetails = true;
-        public static bool DebugLogging = true;
+        public static bool DebugLogging = false;
 
         const int MinPopulation_Default = 3;
         const int CitizenshipAge_Default = 16;
