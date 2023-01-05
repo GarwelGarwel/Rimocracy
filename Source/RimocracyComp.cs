@@ -12,7 +12,7 @@ namespace Rimocracy
 {
     public class RimocracyComp : WorldComponent
     {
-        // How often mod enabled/disabled check, SuccessionDef, governance decay etc. are updated
+        // How often mod enabled/disabled check, succession, governance decay etc. are updated
         public const int UpdateInterval = 500;
 
         bool isEnabled = false;
@@ -227,7 +227,7 @@ namespace Rimocracy
                 {
                     Log($"Politics: {(IsEnabled ? "enabled" : "disabled")}");
                     Log($"Leader: {(HasLeader ? Leader.Name.ToStringShort : "none")}");
-                    Log($"SuccessionDef: {SuccessionType.defName} @ {TermExpiration} (in {(TermExpiration - Find.TickManager.TicksAbs).ToStringTicksToPeriod(false, true)})");
+                    Log($"Succession: {SuccessionType.defName} @ {TermExpiration} (in {(TermExpiration - Find.TickManager.TicksAbs).ToStringTicksToPeriod(false, true)})");
                     Log($"Election tick: {ElectionTick} (in {(ElectionTick - Find.TickManager.TicksAbs).ToStringTicksToPeriod(false, true)})");
                     Log($"Term duration: {TermDuration}");
                     if (IsCampaigning)
@@ -440,7 +440,7 @@ namespace Rimocracy
                 float loyaltyEffect = SuccessionWorker.LoyaltyEffect;
                 if (loyaltyEffect != 0)
                 {
-                    Log($"All citizens gain {loyaltyEffect:N0} loyalty due to the SuccessionDef.");
+                    Log($"All citizens gain {loyaltyEffect:P0} loyalty due to the {SuccessionType.noun}.");
                     foreach (Pawn pawn in Citizens)
                         pawn.ChangeLoyalty(loyaltyEffect);
                 }
