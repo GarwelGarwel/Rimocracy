@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Verse;
 
 namespace Rimocracy
@@ -237,101 +238,114 @@ namespace Rimocracy
             if (label != null)
                 return base.LabelAdjusted(checkmark, pawn, target);
 
-            string res = "";
+            StringBuilder res = new StringBuilder();
 
-            void AddLine(string text) => res += $"{indent}{text}\n";
+            void AddLine(string str) => res.Append(indent).AppendLine(str);
+
+            void AddLogic(Logic logic) => AddLine(logic.LabelAdjusted(checkmark, pawn, target));
+
+            void AddLogicTarget(Logic logic) => AddLine(logic.LabelAdjusted(checkmark, target));
 
             if (inverted)
             {
-                res = $"{base.LabelAdjusted(checkmark, pawn, target)}\n";
+                AddLine(base.LabelAdjusted(checkmark, pawn, target));
                 AddIndent();
+                checkmark = false;
             }
 
             if (succession != null)
-                AddLine(succession.LabelAdjusted(checkmark));
+                AddLogic(succession);
             if (leaderExists != null)
-                AddLine(leaderExists.LabelAdjusted(checkmark));
+                AddLogic(leaderExists);
             if (termDuration != null)
-                AddLine(termDuration.LabelAdjusted(checkmark));
+                AddLogic(termDuration);
             if (campaigning != null)
-                AddLine(campaigning.LabelAdjusted(checkmark));
+                AddLogic(campaigning);
             if (governance != null)
-                AddLine(governance.LabelAdjusted(checkmark));
+                AddLogic(governance);
             if (population != null)
-                AddLine(population.LabelAdjusted(checkmark));
+                AddLogic(population);
             if (daysOfFood != null)
-                AddLine(daysOfFood.LabelAdjusted(checkmark));
+                AddLogic(daysOfFood);
             if (techLevel != null)
-                AddLine(techLevel.LabelAdjusted(checkmark));
+                AddLogic(techLevel);
             if (modActive != null)
-                AddLine(modActive.LabelAdjusted(checkmark));
+                AddLogic(modActive);
             if (decision != null)
-                AddLine(decision.LabelAdjusted(checkmark));
+                AddLogic(decision);
 
             if (isLeader != null)
-                AddLine(isLeader.LabelAdjusted(checkmark, pawn));
+                AddLogic(isLeader);
             if (isTarget != null)
-                AddLine(isTarget.LabelAdjusted(checkmark, pawn, target));
+                AddLogic(isTarget);
             if (trait != null && trait.ValidFor(pawn))
-                AddLine(trait.LabelAdjusted(checkmark, pawn));
+                AddLogic(trait);
             if (!skills.EnumerableNullOrEmpty())
                 foreach (Logic_Skill skill in skills)
-                    AddLine(skill.LabelAdjusted(checkmark, pawn));
+                    AddLogic(skill);
             if (isCapableOfViolence != null)
-                AddLine(isCapableOfViolence.LabelAdjusted(checkmark, pawn));
+                AddLogic(isCapableOfViolence);
             if (medianOpinionOfMe != null)
-                AddLine(medianOpinionOfMe.LabelAdjusted(checkmark, pawn));
+                AddLogic(medianOpinionOfMe);
             if (age != null && age.ValidFor(pawn))
-                AddLine(age.LabelAdjusted(checkmark, pawn));
+                AddLogic(age);
             if (backstory != null && backstory.ValidFor(pawn))
-                AddLine(backstory.LabelAdjusted(checkmark, pawn));
+                AddLogic(backstory);
             if (titleSeniority != null && ModsConfig.RoyaltyActive)
-                AddLine(titleSeniority.LabelAdjusted(checkmark, pawn));
+                AddLogic(titleSeniority);
 
             if (ModsConfig.IdeologyActive)
             {
                 if (meme != null && meme.ValidFor(pawn))
-                    AddLine(meme.LabelAdjusted(checkmark, pawn));
+                    AddLogic(meme);
                 if (precept != null && precept.ValidFor(pawn))
-                    AddLine(precept.LabelAdjusted(checkmark, pawn));
+                    AddLogic(precept);
                 if (ideoCertainty != null && ideoCertainty.ValidFor(pawn))
-                    AddLine(ideoCertainty.LabelAdjusted(checkmark, pawn));
+                    AddLogic(ideoCertainty);
                 if (primaryIdeoligion != null && primaryIdeoligion.ValidFor(pawn))
-                    AddLine(primaryIdeoligion.LabelAdjusted(checkmark, pawn));
+                    AddLogic(primaryIdeoligion);
             }
 
             if (targetIsColonist != null)
-                AddLine(targetIsColonist.LabelAdjusted(checkmark, target));
+                AddLogicTarget(targetIsColonist);
             if (targetIsLeader != null)
-                AddLine(targetIsLeader.LabelAdjusted(checkmark, target));
+                AddLogicTarget(targetIsLeader);
             if (targetInAggroMentalState != null)
-                AddLine(targetInAggroMentalState.LabelAdjusted(checkmark, target));
+                AddLogicTarget(targetInAggroMentalState);
             if (targetIsHostile != null && targetIsHostile.ValidFor(pawn, target))
-                AddLine(targetIsHostile.LabelAdjusted(checkmark, pawn, target));
+                AddLogic(targetIsHostile);
             if (targetIsGuilty != null)
-                AddLine(targetIsGuilty.LabelAdjusted(checkmark, target));
+                AddLogicTarget(targetIsGuilty);
             if (targetIsWild != null)
-                AddLine(targetIsWild.LabelAdjusted(checkmark, target));
+                AddLogicTarget(targetIsWild);
             if (targetTrait != null && targetTrait.ValidFor(target))
-                AddLine(targetTrait.LabelAdjusted(checkmark, target));
+                AddLogicTarget(targetTrait);
             if (opinionOfTarget != null)
-                AddLine(opinionOfTarget.LabelAdjusted(checkmark, pawn, target));
+                AddLogic(opinionOfTarget);
             if (medianOpinionOfTarget != null)
-                AddLine(medianOpinionOfTarget.LabelAdjusted(checkmark, target));
+                AddLogicTarget(medianOpinionOfTarget);
             if (targetAge != null)
-                AddLine(targetAge.LabelAdjusted(checkmark, target));
+                AddLogicTarget(targetAge);
             if (targetFactionGoodwill != null)
-                AddLine(targetFactionGoodwill.LabelAdjusted(checkmark, target));
+                AddLogicTarget(targetFactionGoodwill);
 
             if (all != null)
-                AddLine(GenText.Indented(all.LabelAdjusted(checkmark, pawn, target), indent));
+            {
+                AddIndent();
+                AddLogic(all);
+                RemoveIndent();
+            }
             if (any != null)
-                AddLine(GenText.Indented(any.LabelAdjusted(checkmark, pawn, target), indent));
+            {
+                AddIndent();
+                AddLogic(any);
+                RemoveIndent();
+            }
 
             if (inverted)
                 RemoveIndent();
             
-            return res.TrimEndNewlines();
+            return res.ToString().TrimEndNewlines();
         }
     }
 }
