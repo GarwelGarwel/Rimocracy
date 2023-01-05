@@ -1,36 +1,35 @@
 ﻿using RimWorld;
 using Verse;
 
+using static Rimocracy.Utility;
+
 namespace Rimocracy
 {
     public class Settings : ModSettings
     {
-        public static int MinPopulation = MinPopulation_Default;
-        public static int CitizenshipAge = CitizenshipAge_Default;
-        public static float GovernanceDecaySpeed = 1;
-        public static int MinPopulationForCampaigning = MinPopulationForCampaigning_Default;
-        public static float CampaignDurationDays = CampaignDurationDays_Default;
-        public static int MentalStateVoteWeightPenalty = MentalStateVoteWeightPenalty_Default;
-        public static int SameBackstoryVoteWeightBonus = SameBackstoryVoteWeightBonus_Default;
-        public static int PoliticalSympathyWeightFactor = PoliticalSympathyWeightFactor_Default;
-        public static int RandomVoteWeightRadius = RandomVoteWeightRadius_Default;
-        public static float SwayChanceFactor = 1;
-        public static float RecruitmentChanceFactor = 1;
-        public static float GovernanceCostFactor = 1;
-        public static bool LoyaltyEnabled = true;
-        public static bool ShowActionSupportDetails = true;
+        public static int MinPopulation;
+        public static int CitizenshipAge;
+        public static float GovernanceDecaySpeed;
+        public static int MinPopulationForCampaigning;
+        public static float CampaignDurationDays;
+        public static float GovernanceCostFactor;
+        public static bool LoyaltyEnabled;
+        public static bool ShowActionSupportDetails;
         public static bool DebugLogging = false;
 
         const int MinPopulation_Default = 3;
         const int CitizenshipAge_Default = 16;
         const int MinPopulationForCampaigning_Default = 8;
         const float CampaignDurationDays_Default = 3;
-        const int MentalStateVoteWeightPenalty_Default = 10;
-        const int SameBackstoryVoteWeightBonus_Default = 20;
-        const int PoliticalSympathyWeightFactor_Default = 25;
-        const int RandomVoteWeightRadius_Default = 5;
+
+        public const int MentalStateVoteWeightPenalty = 10;
+        public const int SameBackstoryVoteWeightBonus = 20;
+        public const int PoliticalSympathyWeightFactor = 25;
+        public const int RandomVoteWeightRadius = 5;
 
         public static int CampaignDurationTicks => (int)(CampaignDurationDays * GenDate.TicksPerDay);
+
+        public Settings() => Reset();
 
         public override void ExposeData()
         {
@@ -40,16 +39,38 @@ namespace Rimocracy
             Scribe_Values.Look(ref GovernanceDecaySpeed, "GovernanceDecaySpeed", 1);
             Scribe_Values.Look(ref MinPopulationForCampaigning, "MinPopulationForCampaigning", MinPopulationForCampaigning_Default);
             Scribe_Values.Look(ref CampaignDurationDays, "CampaignDurationDays", CampaignDurationDays_Default);
-            Scribe_Values.Look(ref MentalStateVoteWeightPenalty, "MentalStateVoteWeightPenalty", MentalStateVoteWeightPenalty_Default);
-            Scribe_Values.Look(ref SameBackstoryVoteWeightBonus, "SameBackstoryVoteWeightBonus", SameBackstoryVoteWeightBonus_Default);
-            Scribe_Values.Look(ref PoliticalSympathyWeightFactor, "PoliticalSympathyWeightFactor", PoliticalSympathyWeightFactor_Default);
-            Scribe_Values.Look(ref RandomVoteWeightRadius, "RandomVoteWeightRadius", RandomVoteWeightRadius_Default);
-            Scribe_Values.Look(ref SwayChanceFactor, "SwayChanceFactor", 1);
-            Scribe_Values.Look(ref RecruitmentChanceFactor, "RecruitmentChanceFactor", 1);
             Scribe_Values.Look(ref GovernanceCostFactor, "GovernanceCostFactor", 1);
             Scribe_Values.Look(ref LoyaltyEnabled, "LoyaltyEnabled", true);
             Scribe_Values.Look(ref ShowActionSupportDetails, "ShowActionSupportDetails", true);
             Scribe_Values.Look(ref DebugLogging, "DebugLogging");
+            if (Scribe.mode == LoadSaveMode.LoadingVars)
+                Print();
+        }
+
+        public static void Reset()
+        {
+            MinPopulation = MinPopulation_Default;
+            CitizenshipAge = CitizenshipAge_Default;
+            GovernanceDecaySpeed = 1;
+            MinPopulationForCampaigning = MinPopulationForCampaigning_Default;
+            CampaignDurationDays = CampaignDurationDays_Default;
+            GovernanceCostFactor = 1;
+            LoyaltyEnabled = true;
+            ShowActionSupportDetails = true;
+        }
+
+        public static void Print()
+        {
+            if (!DebugLogging)
+                return;
+            Log($"MinPopulation: {MinPopulation.ToStringCached()}");
+            Log($"CitizenshipAge: {CitizenshipAge.ToStringCached()}");
+            Log($"GovernanceDecaySpeed: {GovernanceDecaySpeed:P0}");
+            Log($"MinPopulationForCampaigning: {MinPopulationForCampaigning.ToStringCached()}");
+            Log($"CampaignDurationDays: {CampaignDurationDays}");
+            Log($"GovernanceCostFactor: {GovernanceCostFactor:P0}");
+            Log($"LoyaltyEnabled: {LoyaltyEnabled}");
+            Log($"ShowActionSupportDetails: {ShowActionSupportDetails}");
         }
     }
 }
