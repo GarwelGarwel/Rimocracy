@@ -52,20 +52,22 @@ namespace Rimocracy
         public Pawn Leader
         {
             get => leader;
-            set
-            {
-                if (leader == value)
-                    return;
-                leader = value;
-                if (ModsConfig.IdeologyActive && !DecisionActive(DecisionDef.Multiculturalism))
-                    if (value != null)
-                        IdeologyLeaderPrecept().Assign(value, true);
-                    else IdeologyLeaderPrecept().Unassign(Find.FactionManager.OfPlayer.leader, true);
-                else Find.FactionManager.OfPlayer.leader = value;
-            }
+            set => SetLeader(value);
         }
 
         public bool HasLeader => Leader != null;
+
+        public void SetLeader(Pawn newLeader, bool generateThoughts = true)
+        {
+            if (leader == newLeader)
+                return;
+            leader = newLeader;
+            if (ModsConfig.IdeologyActive && !DecisionActive(DecisionDef.Multiculturalism))
+                if (newLeader != null)
+                    IdeologyLeaderPrecept().Assign(newLeader, generateThoughts);
+                else IdeologyLeaderPrecept().Unassign(Find.FactionManager.OfPlayer.leader, generateThoughts);
+            else Find.FactionManager.OfPlayer.leader = newLeader;
+        }
 
         public LeaderTitleDef LeaderTitleDef
         {
@@ -249,7 +251,7 @@ namespace Rimocracy
                 if (IsEnabled)
                 {
                     IsEnabled = false;
-                    Leader = null;
+                    SetLeader(null, false);
                     Governance = 0.50f;
                     ElectionTick = int.MaxValue;
                     Protesters.Clear();
