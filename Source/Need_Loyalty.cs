@@ -57,7 +57,7 @@ namespace Rimocracy
 
         public void RecalculatePersistentEffects()
         {
-            Log($"RecalculatePersistentEffects for {pawn}");
+            Log($"Need_Loyalty.RecalculatePersistentEffects for {pawn}");
             persistentOffset = 0;
             for (int i = 0; i < Utility.RimocracyComp.Decisions.Count; i++)
             {
@@ -152,7 +152,7 @@ namespace Rimocracy
             string tip = base.GetTipString();
             Pawn leader = Utility.RimocracyComp.Leader;
             float opinionOfLeader = pawn.GetOpinionOf(leader);
-            tip += $"\n\nLoyalty of {pawn} is affected by {pawn.Possessive()} mood ({pawn.needs.mood.CurLevelPercentage.ToStringPercent().ColorizeByValue(pawn.needs.mood.CurLevelPercentage, 0.5f, 0.5f)}){(leader != null ? $" and opinion of {LeaderTitle} {leader.NameShortColored} ({opinionOfLeader.ToStringWithSign("0").ColorizeByValue(opinionOfLeader)})." : ".")}";
+            tip += $"\n\nLoyalty of {pawn.NameShortColored} is affected by {pawn.Possessive()} mood ({pawn.needs.mood.CurLevelPercentage.ToStringPercent().ColorizeByValue(pawn.needs.mood.CurLevelPercentage, 0.5f, 0.5f)}){(leader != null ? $" and opinion of {LeaderTitle} {leader.NameShortColored} ({opinionOfLeader.ToStringWithSign("0").ColorizeByValue(opinionOfLeader)})." : ".")}";
             if (persistentOffset != 0)
                 tip += $" Active decisions change loyalty by {persistentOffset.ToStringWithSign("0.#%").ColorizeByValue(persistentOffset)}.";
             if (InGenuineMentalState)
@@ -166,9 +166,9 @@ namespace Rimocracy
             if (IsProtesting)
                 tip += $"\n\n{pawn.NameShortColored} will stop protesting when {pawn.Possessive()} loyalty goes above {ProtestLevel.ToStringPercent()}.";
             else if (CurLevel < ProtestLevel)
-                tip += $"\n\n<color=red>Expected to protest in {GenDate.ToStringTicksToPeriodVague((int)(StartProtestMTB * GenDate.TicksPerHour), false)}.</color>";
+                tip += $"\n\nExpected to protest in {GenDate.ToStringTicksToPeriodVague((int)(StartProtestMTB * GenDate.TicksPerHour), false)}.".Colorize(Color.red);
             else if (CurInstantLevel < ProtestLevel)
-                tip += $"\n\n<color=yellow>If {pawn.Possessive()} loyalty falls below {ProtestLevel.ToStringPercent()}, {pawn.NameShortColored} may start protesting.</color>";
+                tip += $"\n\nIf {pawn.Possessive()} loyalty falls below {ProtestLevel.ToStringPercent()}, {pawn.NameShortColored} may start protesting.".Colorize(Color.yellow);
             return tip;
         }
 
