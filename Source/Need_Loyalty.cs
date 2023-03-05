@@ -62,8 +62,10 @@ namespace Rimocracy
             for (int i = 0; i < Utility.RimocracyComp.Decisions.Count; i++)
             {
                 DecisionDef decision = Utility.RimocracyComp.Decisions[i].def;
+                if (decision.loyaltyEffect == 0)
+                    continue;
                 PawnDecisionOpinion opinion = new PawnDecisionOpinion(pawn, decision.considerations, Utility.RimocracyComp.Leader);
-                Log($"{pawn}'s support for {decision.defName}: {opinion.support.ToStringWithSign()}");
+                Log($"{pawn}'s support for {decision.defName}: {opinion.support.ToStringWithSign()}. Loyalty effect: {decision.loyaltyEffect}.");
                 switch (opinion.Vote)
                 {
                     case DecisionVote.Yea:
