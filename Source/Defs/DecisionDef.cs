@@ -9,11 +9,11 @@ using static Rimocracy.Utility;
 namespace Rimocracy
 {
     public enum DecisionEnactmentRule
-    { 
-        None = 0, 
-        Decree, 
-        Law, 
-        Referendum 
+    {
+        None = 0,
+        Decree,
+        Law,
+        Referendum
     };
 
     public class DecisionDef : Def
@@ -201,7 +201,7 @@ namespace Rimocracy
         public void Cancel()
         {
             if (loyaltyEffect != 0)
-                foreach (Pawn pawn in Citizens)
+                foreach (Pawn pawn in Citizens.ToList())
                     pawn.GetLoyalty().RecalculatePersistentEffects();
         }
     }
