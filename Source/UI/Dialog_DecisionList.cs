@@ -45,7 +45,7 @@ namespace Rimocracy
             Listing_Standard content = new Listing_Standard();
             content.Begin(viewRect);
 
-            content.Label($"SuccessionDef type: {comp.SuccessionType.LabelCap}", tooltip: comp.SuccessionType.description);
+            content.Label($"Succession type: {comp.SuccessionType.LabelCap}", tooltip: comp.SuccessionType.description);
             content.Label($"Leader's term: {comp.TermDuration}");
 
             if (comp.Decisions.Any())

@@ -221,7 +221,7 @@ namespace Rimocracy
                 return 0;
             if (pawn == target)
                 return 100;
-            return pawn.needs.mood.thoughts.TotalOpinionOffset(target);
+            return Mathf.Clamp(pawn.needs.mood.thoughts.TotalOpinionOffset(target), -100, 100);
         }
 
         public static float MedianCitizensOpinion(this Pawn pawn) =>

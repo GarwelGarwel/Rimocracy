@@ -59,12 +59,12 @@ namespace Rimocracy
 
             // Preparing a list of potential targets for swaying with randomized weights
             Dictionary<Pawn, float> potentialTargets = Citizens
-                    .Where(p =>
+                .Where(p =>
                     !Utility.RimocracyComp.CampaigningCandidates.Contains(p)
                     && !p.InMentalState
                     && !p.Downed
                     && p.needs.mood.thoughts.memories.NumMemoriesOfDef(RimocracyDefOf.PoliticalSympathy) < RimocracyDefOf.PoliticalSympathy.stackLimit)
-                    .ToDictionary(p => p, p => Rand.Range(0, ElectionUtility.VoteWeight(p, Candidate) + 100));
+                .ToDictionary(p => p, p => Rand.Range(0, ElectionUtility.VoteWeight(p, Candidate) + 100));
 
             if (Settings.DebugLogging && potentialTargets.Count > 0)
                 Log($"Potential targets for {Candidate}:\r\n{potentialTargets.Select(kvp => $"- {kvp.Key}\t{kvp.Value:N0}").ToLineList()}");
@@ -92,7 +92,7 @@ namespace Rimocracy
                 if (targetPawn == null)
                     continue;
                 Log($"{pawn} is trying to sway {targetPawn}.");
-                float swayChance = pawn.GetStatValue(StatDefOf.SocialImpact) * Settings.SwayChanceFactor * 0.1f;
+                float swayChance = pawn.GetStatValue(StatDefOf.SocialImpact) * 0.1f;
                 Log($"Sway chance: {swayChance:P1}.");
                 if (Rand.Chance(swayChance))
                 {
@@ -103,7 +103,7 @@ namespace Rimocracy
                     if (!Utility.RimocracyComp.Campaigns.Any(ec => ec.Supporters.Contains(targetPawn)) && !recruits.Contains(targetPawn))
                     {
                         // If the target pawn is not already a core supporter of any candidate, try to recruit them to the campaign
-                        float recruitChance = (ElectionUtility.VoteWeight(targetPawn, Candidate) / 100 - 1) * pawn.GetStatValue(StatDefOf.NegotiationAbility) * Settings.RecruitmentChanceFactor;
+                        float recruitChance = (ElectionUtility.VoteWeight(targetPawn, Candidate) / 100 - 1) * pawn.GetStatValue(StatDefOf.NegotiationAbility);
                         Log($"Chance of recruitment: {recruitChance:P1}");
                         if (Rand.Chance(recruitChance))
                         {
