@@ -61,6 +61,7 @@ namespace Rimocracy
         {
             Log($"Need_Loyalty.RecalculatePersistentEffects for {pawn}");
             persistentOffset = 0;
+
             for (int i = 0; i < Utility.RimocracyComp.Decisions.Count; i++)
             {
                 DecisionDef decision = Utility.RimocracyComp.Decisions[i].def;
@@ -68,6 +69,7 @@ namespace Rimocracy
                     continue;
                 PawnDecisionOpinion opinion = new PawnDecisionOpinion(pawn, decision.considerations, Utility.RimocracyComp.Leader);
                 Log($"{pawn}'s support for {decision.defName}: {opinion.support.ToStringWithSign()}. Loyalty effect: {decision.loyaltyEffect}.");
+
                 switch (opinion.Vote)
                 {
                     case DecisionVote.Yea:
@@ -83,6 +85,7 @@ namespace Rimocracy
                         break;
                 }
             }
+
             if (persistentOffset != 0)
                 Log($"Persistent offset due to decisions: {persistentOffset.ToStringPercent()}");
         }
