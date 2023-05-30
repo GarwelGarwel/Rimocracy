@@ -18,18 +18,29 @@ namespace Rimocracy
 
         public override bool HasJobOnThing(Pawn pawn, Thing t, bool forced = false)
         {
-            if (!t.def.StatBaseDefined(RimocracyDefOf.GovernEfficiencyFactor)
-                || !pawn.CanReserve(t, ignoreOtherReservations: forced)
-                || Utility.IsPowerStarved(t as Building))
+            if (!pawn.CanReserve(t, ignoreOtherReservations: forced))
                 return false;
 
             ThingComp_GoverningBench comp = t.TryGetComp<ThingComp_GoverningBench>();
-            if (comp != null && !comp.AllowGoverning)
+            if (comp == null || !comp.AllowGoverning)
                 return false;
+
+            if (Utility.IsPowerStarved(t as Building))
+            {
+                JobFailReason.Is("NoPower".Translate().CapitalizeFirst());
+                return false;
+            }
+
+            CompAssignableToPawn compAssignableToPawn = t.TryGetComp<CompAssignableToPawn>();
+            if (compAssignableToPawn != null && !compAssignableToPawn.HasFreeSlot && !compAssignableToPawn.AssignedAnything(pawn))
+            {
+                JobFailReason.Is($"{t.LabelNoParenthesisCap} is assigned to someone else");
+                return false;
+            }
 
             if (!forced && Utility.RimocracyComp.Governance >= (Utility.RimocracyComp.GovernanceTarget - Utility.GovernanceImprovementSpeed(pawn, t)))
             {
-                JobFailReason.Is("Governance is already high enough.");
+                JobFailReason.Is("Governance is already high enough");
                 return false;
             }
 
