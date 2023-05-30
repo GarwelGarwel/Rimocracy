@@ -7,7 +7,10 @@ namespace Rimocracy
 {
     class JobDriver_Govern : JobDriver
     {
+        const int JobDuration = GenDate.TicksPerHour * 2;
+
         bool isSitting = false;
+        RimocracyComp comp = Utility.RimocracyComp;
 
         public override bool TryMakePreToilReservations(bool errorOnFailed) => pawn.Reserve(TargetThingA, job);
 
@@ -18,19 +21,19 @@ namespace Rimocracy
             if (TargetThingA.def.building != null && TargetThingA.def.building.isSittable)
             {
                 isSitting = true;
-                yield return Toils_General.Do(delegate
-                {
-                    job.SetTarget(TargetIndex.B, TargetThingA.InteractionCell + TargetThingA.Rotation.FacingCell);
-                });
+                yield return Toils_General.Do(() => job.SetTarget(TargetIndex.B, TargetThingA.InteractionCell + TargetThingA.Rotation.FacingCell));
             }
-            Toil governToil = new Toil();
-            governToil.tickAction = Govern_TickAction;
-            governToil.FailOn(() => Utility.RimocracyComp.Governance >= Utility.RimocracyComp.GovernanceTarget);
+            Toil governToil = new Toil
+            {
+                tickAction = Govern_TickAction,
+                defaultCompleteMode = ToilCompleteMode.Delay,
+                defaultDuration = JobDuration,
+                activeSkill = () => SkillDefOf.Social
+            };
+            governToil.FailOn(() => comp.Governance >= comp.GovernanceTarget);
             governToil.FailOn(() => !pawn.IsLeader());
             governToil.FailOnCannotTouch(TargetIndex.A, PathEndMode.InteractionCell);
-            governToil.defaultCompleteMode = ToilCompleteMode.Delay;
-            governToil.defaultDuration = GenDate.TicksPerHour * 2;
-            governToil.activeSkill = () => SkillDefOf.Social;
+            governToil.WithProgressBar(TargetIndex.A, () => comp.Governance / comp.GovernanceTarget);
             yield return governToil;
             yield return Toils_General.Wait(2, TargetIndex.None);
         }
@@ -43,7 +46,7 @@ namespace Rimocracy
         {
             if (isSitting)
                 rotateToFace = TargetIndex.B;
-            Utility.RimocracyComp.ChangeGovernance(GovernanceImprovementSpeed / GenDate.TicksPerHour);
+            comp.ChangeGovernance(GovernanceImprovementSpeed / GenDate.TicksPerHour);
             pawn.skills.Learn(SkillDefOf.Intellectual, 0.05f);
             pawn.skills.Learn(SkillDefOf.Social, 0.05f);
             pawn.GainComfortFromCellIfPossible(true);
