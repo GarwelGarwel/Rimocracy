@@ -44,6 +44,7 @@ namespace Rimocracy
                     if (comp != null)
                         return comp;
                 }
+                Log($"Could not find RimocracyComp among {Find.World.components.Count} world components.", LogLevel.Error);
                 return null;
             }
         }
