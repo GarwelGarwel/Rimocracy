@@ -1,5 +1,5 @@
 ﻿using RimWorld;
-using System.Linq;
+using System.Collections.Generic;
 using UnityEngine;
 using Verse;
 
@@ -7,39 +7,43 @@ namespace Rimocracy
 {
     class MainTabWindow_Politics : MainTabWindow
     {
-        public override Vector2 InitialSize => new Vector2(455, 320);
+        static List<float> governanceBarBandPercentages = new List<float>(1) { 0.5f };
+
+        RimocracyComp comp = Utility.RimocracyComp;
+        bool draggingBar;
+
+        public override Vector2 InitialSize => new Vector2(420, comp.IsCampaigning ? 320 : 280);
 
         public override void DoWindowContents(Rect rect)
         {
-            RimocracyComp comp = Utility.RimocracyComp;
-            if (comp == null)
-            {
-                Utility.Log("RimocracyComp is null.", LogLevel.Error);
-                return;
-            }
-
-            // Politics Disabled
+            // Politics disabled
             if (!comp.IsEnabled)
             {
                 Widgets.Label(rect, $"You need at least {Settings.MinPopulation.ToStringCached()} free, adult colonists{(ModsConfig.IdeologyActive && Utility.RimocracyComp.DecisionActive(DecisionDef.StateIdeoligion) ? $" following {Utility.NationPrimaryIdeo?.name ?? "your primary ideoligion"}" : "")} and a potential leader for politics.");
                 return;
             }
 
+            string leaderTitle = Utility.LeaderTitle.CapitalizeFirst(comp.LeaderTitleDef);
+
             Listing_Standard content = new Listing_Standard();
             content.Begin(rect);
 
-            string leaderTitle = Utility.LeaderTitle.CapitalizeFirst(comp.LeaderTitleDef);
-
-            // Current Leader
-            content.Label($"{leaderTitle}: {comp.Leader?.NameFullColored ?? "none"}");
-
-            // Governance target, leader skills and next SuccessionDef
+            // Governance target, leader skills and next succession
             if (comp.HasLeader)
             {
-                content.Label($"Governance quality: {comp.Governance.ToStringPercent("F1")}. Falls by {comp.GovernanceDecayPerDay.ToStringPercent()} per day.");
+                // Current Leader
+                if (Widgets.ButtonInvisible(content.Label($"{leaderTitle}: {comp.Leader.NameFullColored}")))
+                    CameraJumper.TryJumpAndSelect(comp.Leader);
 
-                content.Label($"Governance target: {comp.GovernanceTarget.ToStringPercent()}");
-                comp.GovernanceTarget = GenMath.RoundedHundredth(content.Slider(comp.GovernanceTarget, 0, 1));
+                content.Gap();
+                content.Label($"Governance quality: {comp.Governance.ToStringPercent("F1")}. Target: {comp.GovernanceTarget.ToStringPercent()}.");
+
+                float governanceTarget = comp.GovernanceTarget;
+                Widgets.DraggableBar(content.GetRect(22), Texture2D.grayTexture, Texture2D.whiteTexture, Texture2D.blackTexture, Texture2D.whiteTexture, ref draggingBar, comp.Governance, ref governanceTarget, governanceBarBandPercentages);
+                comp.GovernanceTarget = GenMath.RoundedHundredth(governanceTarget);
+
+                content.Label($"Falls at {comp.GovernanceDecayPerDay.ToStringPercent()} per day.");
+                content.Gap();
 
                 if (comp.FocusSkill != null)
                     content.Label($"Focus skill: {comp.FocusSkill.LabelCap}.");
@@ -52,7 +56,7 @@ namespace Rimocracy
             {
                 if (comp.ElectionCalled)
                     content.Label($"{leaderTitle} will be elected in {(comp.ElectionTick - Find.TickManager.TicksAbs).ToStringTicksToPeriod(false)}.", tooltip: Utility.DateFullStringWithHourAtHome(comp.ElectionTick));
-                else content.Label($"Election of a new {leaderTitle} not yet called for.");
+                else content.Label($"Election of a new {Utility.LeaderTitle} not yet called for.");
             }
             else content.Label($"Choosing a new {Utility.LeaderTitle}...");
 
@@ -60,7 +64,10 @@ namespace Rimocracy
             if (comp.IsCampaigning)
             {
                 content.Gap();
-                content.Label($"Candidates:\r\n{comp.Campaigns.Select(ec => $"- {ec.ToTaggedString()}").ToLineList()}");
+                content.Label("Candidates:");
+                foreach (ElectionCampaign campaign in comp.Campaigns)
+                    if (Widgets.ButtonInvisible(content.Label($"- {campaign.Candidate}, {campaign.FocusSkill?.LabelCap ?? "no"} focus", tooltip: campaign.Supporters.Count > 1 ? $"{(campaign.Supporters.Count - 1).ToStringCached()} core supporters" : null)))
+                        CameraJumper.TryJumpAndSelect(campaign.Candidate);
             }
 
             content.Gap();

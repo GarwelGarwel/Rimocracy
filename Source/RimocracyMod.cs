@@ -50,7 +50,7 @@ namespace Rimocracy
             content.Label($"Governance cost factor: {GovernanceCostFactor.ToStringPercent()}", tooltip: "Adjust the Governance cost of decisions.");
             GovernanceCostFactor = (float)Math.Round(content.Slider(GovernanceCostFactor, 0, 2), 2);
 
-            content.CheckboxLabeled("Loyalty enabled", ref LoyaltyEnabled, $"Pawns have a Loyalty need that affects their reaction to decisions and may cause protests. {(LoyaltyEnabled ? "Note: If you uncheck this but then change your mind, list pawns' loyalties will be reset to 50%.".Colorize(Color.red) : "")}.");
+            content.CheckboxLabeled("Loyalty enabled", ref LoyaltyEnabled, $"Pawns have a Loyalty need that affects their reaction to decisions and may cause protests. {(LoyaltyEnabled ? "Note: If you uncheck this but then change your mind, list pawns' loyalties will be reset to 50%.".Colorize(Color.red) : "")}");
 
             content.CheckboxLabeled("Show action support details", ref ShowActionSupportDetails, "Show a dialog with info about who supported or opposed various actions (e.g. arrest) and why.");
 
