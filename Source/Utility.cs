@@ -51,16 +51,12 @@ namespace Rimocracy
 
         public static bool PoliticsEnabled => RimocracyComp != null && RimocracyComp.IsEnabled;
 
-        static bool? isSimpleSlaveryInstalled;
-        public static bool IsSimpleSlaveryInstalled => isSimpleSlaveryInstalled ?? (bool)(isSimpleSlaveryInstalled = RimocracyDefOf.Enslaved != null);
-
         public static bool IsFreeAdultColonist(this Pawn pawn) =>
             pawn != null
             && !pawn.Dead
             && pawn.IsFreeNonSlaveColonist
             && pawn.HomeFaction.IsPlayer
-            && pawn.ageTracker.AgeBiologicalYears >= Settings.CitizenshipAge
-            && (!IsSimpleSlaveryInstalled || !pawn.health.hediffSet.hediffs.Any(hediff => hediff.def == RimocracyDefOf.Enslaved));
+            && pawn.ageTracker.AgeBiologicalYears >= Settings.CitizenshipAge;
 
         public static bool IsCitizen(this Pawn pawn) =>
             pawn.IsFreeAdultColonist() && (!ModsConfig.IdeologyActive || pawn?.Ideo == NationPrimaryIdeo || !RimocracyComp.DecisionActive(DecisionDef.StateIdeoligion));
