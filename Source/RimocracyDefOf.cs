@@ -8,8 +8,6 @@ namespace Rimocracy
     {
         public static DecisionDef Impeachment;
 
-        internal static HediffDef Enslaved = DefDatabase<HediffDef>.GetNamedSilentFail("Enslaved");
-
         public static JobDef Govern;
 
         public static NeedDef Rimocracy_Loyalty;
