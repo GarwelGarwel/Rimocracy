@@ -14,13 +14,6 @@
 			<li>WorkSpeedGlobal</li>
 			<li>SocialImpact</li>
 		</statFactors>
-		<skillNeedFactors>
-			<li Class="SkillNeed_BaseBonus">
-				<skill>Intellectual</skill>
-				<baseValue>0.9</baseValue>
-				<bonusPerLevel>0.01</bonusPerLevel>
-			</li>
-		</skillNeedFactors>
 		<capacityFactors>
 			<li>
 				<capacity>Consciousness</capacity>

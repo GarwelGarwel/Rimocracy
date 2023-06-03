@@ -49,8 +49,7 @@ namespace Rimocracy
             if (isSitting)
                 rotateToFace = TargetIndex.B;
             comp.ChangeGovernance(GovernanceImprovementSpeed / GenDate.TicksPerHour);
-            pawn.skills.Learn(SkillDefOf.Intellectual, 0.05f);
-            pawn.skills.Learn(SkillDefOf.Social, 0.05f);
+            pawn.skills.Learn(SkillDefOf.Social, 0.1f);
             pawn.GainComfortFromCellIfPossible(true);
         }
     }
