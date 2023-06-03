@@ -7,7 +7,8 @@ namespace Rimocracy
 {
     class JobDriver_Govern : JobDriver
     {
-        const int JobDuration = GenDate.TicksPerHour * 2;
+        public const float JobDurationHours = 2;
+        public const int JobDurationTicks = (int)(GenDate.TicksPerHour * JobDurationHours);
 
         bool isSitting = false;
         RimocracyComp comp = Utility.RimocracyComp;
@@ -17,6 +18,7 @@ namespace Rimocracy
         protected override IEnumerable<Toil> MakeNewToils()
         {
             this.FailOnDespawnedNullOrForbidden(TargetIndex.A);
+            AddFailCondition(() => !pawn.IsLeader());
             yield return Toils_Goto.GotoThing(TargetIndex.A, PathEndMode.InteractionCell);
             if (TargetThingA.def.building != null && TargetThingA.def.building.isSittable)
             {
@@ -27,15 +29,15 @@ namespace Rimocracy
             {
                 tickAction = Govern_TickAction,
                 defaultCompleteMode = ToilCompleteMode.Delay,
-                defaultDuration = JobDuration,
+                defaultDuration = JobDurationTicks,
                 activeSkill = () => SkillDefOf.Social
             };
-            governToil.FailOn(() => comp.Governance >= comp.GovernanceTarget);
-            governToil.FailOn(() => !pawn.IsLeader());
+            if (!job.playerForced)
+                governToil.AddEndCondition(() => comp.Governance >= comp.GovernanceTarget ? JobCondition.Succeeded : JobCondition.Ongoing);
             governToil.FailOnCannotTouch(TargetIndex.A, PathEndMode.InteractionCell);
             governToil.WithProgressBar(TargetIndex.A, () => comp.Governance / comp.GovernanceTarget);
             yield return governToil;
-            yield return Toils_General.Wait(2, TargetIndex.None);
+            yield return Toils_General.Wait(2);
         }
 
         public override string GetReport() => $"{base.GetReport()}\r\nImproving governance at {GovernanceImprovementSpeed.ToStringPercent()} per hour.";

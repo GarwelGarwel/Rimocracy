@@ -33,7 +33,11 @@ namespace Rimocracy
             {
                 // Current Leader
                 if (Widgets.ButtonInvisible(content.Label($"{leaderTitle}: {comp.Leader.NameFullColored}")))
+                {
+                    Close();
                     CameraJumper.TryJumpAndSelect(comp.Leader);
+                    return;
+                }
 
                 content.Gap();
                 content.Label($"Governance quality: {comp.Governance.ToStringPercent("F1")}. Target: {comp.GovernanceTarget.ToStringPercent()}.");
@@ -67,7 +71,11 @@ namespace Rimocracy
                 content.Label("Candidates:");
                 foreach (ElectionCampaign campaign in comp.Campaigns)
                     if (Widgets.ButtonInvisible(content.Label($"- {campaign.Candidate}, {campaign.FocusSkill?.LabelCap ?? "no"} focus", tooltip: campaign.Supporters.Count > 1 ? $"{(campaign.Supporters.Count - 1).ToStringCached()} core supporters" : null)))
+                    {
+                        Close();
                         CameraJumper.TryJumpAndSelect(campaign.Candidate);
+                        return;
+                    }
             }
 
             content.Gap();

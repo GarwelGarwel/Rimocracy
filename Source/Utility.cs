@@ -242,8 +242,7 @@ namespace Rimocracy
         public static string ColorizeByValue(this string text, float value, float lowValue = 0, float highValue = 0) =>
             text.ColorizeByValue(value, Color.red, Color.gray, Color.green, lowValue, highValue);
 
-        public static string ColorizeOpinion(this string text, float support) =>
-            text.ColorizeByValue(support, -0.5f, 0.5f);
+        public static string ColorizeOpinion(this string text, float support) => text.ColorizeByValue(support, -0.5f, 0.5f);
 
         public static string ColorizeOpinion(this float support) => support.ToStringWithSign("0").ColorizeOpinion(support);
 

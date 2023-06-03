@@ -1,5 +1,6 @@
 ﻿using RimWorld;
 using System.Collections.Generic;
+using System.Linq;
 using Verse;
 using Verse.AI;
 
@@ -32,13 +33,13 @@ namespace Rimocracy
             }
 
             CompAssignableToPawn compAssignableToPawn = t.TryGetComp<CompAssignableToPawn>();
-            if (compAssignableToPawn != null && !compAssignableToPawn.HasFreeSlot && !compAssignableToPawn.AssignedAnything(pawn))
+            if (compAssignableToPawn != null && !compAssignableToPawn.AssignedPawnsForReading.Contains(pawn))
             {
                 JobFailReason.Is($"{t.LabelNoParenthesisCap} is assigned to someone else");
                 return false;
             }
 
-            if (!forced && Utility.RimocracyComp.Governance >= (Utility.RimocracyComp.GovernanceTarget - Utility.GovernanceImprovementSpeed(pawn, t)))
+            if (!forced && Utility.RimocracyComp.Governance >= Utility.RimocracyComp.GovernanceTarget - Utility.GovernanceImprovementSpeed(pawn, t) * JobDriver_Govern.JobDurationHours)
             {
                 JobFailReason.Is("Governance is already high enough");
                 return false;
