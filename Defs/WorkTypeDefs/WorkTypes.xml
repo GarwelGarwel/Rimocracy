@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
 
-  <WorkTypeDef>
-    <defName>Governing</defName>
-    <labelShort>Govern</labelShort>
-    <pawnLabel>Leader</pawnLabel>
-    <gerundLabel>governing</gerundLabel>
-    <description>Increase governance quality as the nation's leader.</description>
-    <verb>Govern</verb>
-    <naturalPriority>150</naturalPriority>
-	<alwaysStartActive>true</alwaysStartActive>
-    <relevantSkills>
-      <li>Social</li>
-      <li>Intellectual</li>
-    </relevantSkills>
-	<disabledForSlaves>true</disabledForSlaves>
-    <workTags>
-      <li>Commoner</li>
-      <li>AllWork</li>
-    </workTags>
-  </WorkTypeDef>
+	<WorkTypeDef>
+		<defName>Governing</defName>
+		<labelShort>Govern</labelShort>
+		<pawnLabel>Leader</pawnLabel>
+		<gerundLabel>governing</gerundLabel>
+		<description>Increase governance quality as the nation's leader.</description>
+		<verb>Govern</verb>
+		<naturalPriority>150</naturalPriority>
+		<alwaysStartActive>true</alwaysStartActive>
+		<relevantSkills>
+			<li>Social</li>
+		</relevantSkills>
+		<disabledForSlaves>true</disabledForSlaves>
+		<workTags>
+			<li>Commoner</li>
+			<li>AllWork</li>
+		</workTags>
+	</WorkTypeDef>
+
 </Defs>
