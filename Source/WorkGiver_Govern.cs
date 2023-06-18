@@ -1,6 +1,5 @@
 ﻿using RimWorld;
 using System.Collections.Generic;
-using System.Linq;
 using Verse;
 using Verse.AI;
 
@@ -39,7 +38,7 @@ namespace Rimocracy
                 return false;
             }
 
-            if (!forced && Utility.RimocracyComp.Governance >= Utility.RimocracyComp.GovernanceTarget - Utility.GovernanceImprovementSpeed(pawn, t) * JobDriver_Govern.JobDurationHours)
+            if (!forced && Utility.RimocracyComp.Governance >= Utility.RimocracyComp.GovernanceTarget - Utility.GovernanceImprovementSpeed(pawn, t) * JobDriver_Govern.JobDurationHours / 2)
             {
                 JobFailReason.Is("Governance is already high enough");
                 return false;

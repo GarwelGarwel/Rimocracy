@@ -70,7 +70,7 @@ namespace Rimocracy
                 content.Gap();
                 content.Label("Candidates:");
                 foreach (ElectionCampaign campaign in comp.Campaigns)
-                    if (Widgets.ButtonInvisible(content.Label($"- {campaign.Candidate}, {campaign.FocusSkill?.LabelCap ?? "no"} focus", tooltip: campaign.Supporters.Count > 1 ? $"{(campaign.Supporters.Count - 1).ToStringCached()} core supporters" : null)))
+                    if (Widgets.ButtonInvisible(content.Label($"- {campaign.Candidate.NameShortColored}, {campaign.FocusSkill?.LabelCap ?? "no"} focus", tooltip: campaign.Supporters.Count > 1 ? $"{(campaign.Supporters.Count - 1).ToStringCached()} core supporters" : null)))
                     {
                         Close();
                         CameraJumper.TryJumpAndSelect(campaign.Candidate);
