@@ -19,6 +19,15 @@ namespace Rimocracy
         {
             this.FailOnDespawnedNullOrForbidden(TargetIndex.A);
             AddFailCondition(() => !pawn.IsLeader());
+            ThingComp_GoverningBench benchComp = TargetThingA?.TryGetComp<ThingComp_GoverningBench>();
+            if (benchComp == null)
+            {
+                if (TargetThingA?.def != null)
+                    Utility.Log($"Can't govern at {TargetThingA.def.defName}: it has no ThingComp_GoverningBench.", LogLevel.Error);
+                else Utility.Log($"Tried to govern from a nonexistent governing bench.", LogLevel.Error);
+                yield return null;
+            }
+            AddFailCondition(() => !benchComp.AllowGoverning);
             yield return Toils_Goto.GotoThing(TargetIndex.A, PathEndMode.InteractionCell);
             if (TargetThingA.def.building != null && TargetThingA.def.building.isSittable)
             {
