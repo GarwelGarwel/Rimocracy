@@ -12,7 +12,7 @@ namespace Rimocracy
         RimocracyComp comp = Utility.RimocracyComp;
         bool draggingBar;
 
-        public override Vector2 InitialSize => new Vector2(420, comp.IsCampaigning ? 320 : 280);
+        public override Vector2 InitialSize => new Vector2(420, comp.IsCampaigning ? 360 : 280);
 
         public override void DoWindowContents(Rect rect)
         {
