@@ -2,11 +2,56 @@
 
 <Defs>
 
+	<!-- Forms of Government -->
+	
+	<Rimocracy.DecisionDef Abstract="True" Name="BaseGovernmentFormDecision">
+		<category>GovernmentForms</category>
+		<enactment>NoApproval</enactment>
+		<tag>GovernmentForm</tag>
+	</Rimocracy.DecisionDef>
+	
+	<Rimocracy.DecisionDef ParentName="BaseGovernmentFormDecision">
+		<defName>Anarchy</defName>
+		<label>anarchy</label>
+		<description>The society has no formal power structure and can't make any decisions as a whole. Anarchy is often a transitional form of political system between democracy and autocracy.</description>
+		<displayRequirements>
+			<decision>GovernmentForm</decision>
+		</displayRequirements>
+		<tag Inherit="False"/>
+		<decisionsEnactment>None</decisionsEnactment>
+		<cancelDecision>GovernmentForm</cancelDecision>
+		<actionsNeedApproval>false</actionsNeedApproval>
+	</Rimocracy.DecisionDef>
+
+	<Rimocracy.DecisionDef ParentName="BaseGovernmentFormDecision">
+		<defName>Autocracy</defName>
+		<label>autocracy</label>
+		<description>One-man (or woman, or a humanoid) rule. Most decisions require support of the leader of the nation.</description>
+		<effectRequirements>
+			<decision>GovernmentForm</decision>
+			<inverted>true</inverted>
+		</effectRequirements>
+		<decisionsEnactment>Decree</decisionsEnactment>
+		<actionsNeedApproval>true</actionsNeedApproval>
+	</Rimocracy.DecisionDef>
+
+	<Rimocracy.DecisionDef ParentName="BaseGovernmentFormDecision">
+		<defName>DirectDemocracy</defName>
+		<label>direct democracy</label>
+		<description>Majority rule. More citizens have to support a decision to be taken than oppose it. The leader has no special influence on the laws.</description>
+		<effectRequirements>
+			<decision>GovernmentForm</decision>
+			<inverted>true</inverted>
+		</effectRequirements>
+		<decisionsEnactment>Referendum</decisionsEnactment>
+		<actionsNeedApproval>false</actionsNeedApproval>
+	</Rimocracy.DecisionDef>
+
 	<!-- Succession Laws -->
 	
 	<Rimocracy.DecisionDef Abstract="True" Name="BaseSuccessionDecision">
 		<category>SuccessionTypes</category>
-		<enactment>Law</enactment>
+		<!--enactment>Law</enactment-->
 		<tag>Succession</tag>
 		<durationDays>20</durationDays>
 		<governanceCost>0.25</governanceCost>
@@ -1660,7 +1705,7 @@
 		<label>state ideoligion</label>
 		<description>Only colonists that share the primary belief system have citizenship rights. This ideoligion will become more attractive, but disenfranchised colonists will be unhappy. Note: Canceling this decision later may be hard, especially if the state ideoligion opposes freedom of thought.</description>
 		<category>Ideology</category>
-		<enactment>Referendum</enactment>
+		<!--enactment>Referendum</enactment-->
 		<displayPriorityInCategory>10</displayPriorityInCategory>
 		<displayRequirements>
 			<all>
@@ -1807,7 +1852,7 @@
 		<label>abolish state ideoligion</label>
 		<description>All free, adult colonists shall have citizenship rights regardless of their ideoligion.</description>
 		<category>Ideology</category>
-		<enactment>Referendum</enactment>
+		<!--enactment>Referendum</enactment-->
 		<displayPriorityInCategory>10</displayPriorityInCategory>
 		<displayRequirements>
 			<modActive>Ideology</modActive>
@@ -1925,7 +1970,7 @@
 		<label>multiculturalism</label>
 		<description>Citizens' beliefs shall have no effect on their civil rights. Follower of any ideoligion can become the nation's political leader, but there will be no ideoligion leader. Followers of non-primary ideoligion will appreciate this equality.</description>
 		<category>Ideology</category>
-		<enactment>Referendum</enactment>
+		<!--enactment>Referendum</enactment-->
 		<displayPriorityInCategory>20</displayPriorityInCategory>
 		<displayRequirements>
 			<all>
@@ -2043,7 +2088,7 @@
 		<label>abolish multiculturalism</label>
 		<description>Only representatives of the primary ideoligion shall be allowed to lead the nation. The political leader will also become his or her ideoligion's leader.</description>
 		<category>Ideology</category>
-		<enactment>Referendum</enactment>
+		<!--enactment>Referendum</enactment-->
 		<displayPriorityInCategory>20</displayPriorityInCategory>
 		<displayRequirements>
 			<modActive>Ideology</modActive>
@@ -2145,6 +2190,7 @@
 		<label>social welfare</label>
 		<description>Spend 100 silver per colonist to raise their loyalty by 10%.</description>
 		<category>Misc</category>
+		<enactment>NoApproval</enactment>
 		<allCitizensReact>false</allCitizensReact>
 		<displayPriorityInCategory>50</displayPriorityInCategory>
 		<durationDays>3</durationDays>
@@ -2155,7 +2201,7 @@
 
 	<!-- Action Veto Power -->
 	
-	<Rimocracy.DecisionDef>
+	<!--Rimocracy.DecisionDef>
 		<defName>ActionVetoPower</defName>
 		<label>enable veto for actions</label>
 		<description>If the {LEADERTITLE} opposes a game action such as arresting or banishing pawns, they can stop it. Without veto power, such actions will be taken but at a cost of Governance.</description>
@@ -2231,6 +2277,6 @@
 		<actionsNeedApproval>false</actionsNeedApproval>
 		<governanceCost>0.20</governanceCost>
 		<cancelDecision>ActionVetoPower</cancelDecision>
-	</Rimocracy.DecisionDef>
+	</Rimocracy.DecisionDef-->
 
 </Defs>

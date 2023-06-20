@@ -83,7 +83,7 @@ namespace Rimocracy
                             content.Label($"Will {(def.governanceCost > 0 ? "reduce" : "increase")} Governance by {Math.Abs(def.GovernanceCost).ToStringPercent().ColorizeByValue(-def.governanceCost)}.");
                         if (!def.effectRequirements.IsTrivial)
                             content.Label($"Requirements:\n{def.effectRequirements.LabelAdjusted(true, target: comp.Leader)}");
-                        switch (def.enactment)
+                        switch (def.EnactmentRule)
                         {
                             case DecisionEnactmentRule.Decree:
                                 content.Label($"Requires {Utility.LeaderTitle}'s approval.");
@@ -96,13 +96,13 @@ namespace Rimocracy
                         }
 
                         DecisionVoteResults votingResult = def.GetVotingResults(Utility.Citizens.ToList());
-                        if (def.enactment == DecisionEnactmentRule.Decree && comp.HasLeader)
+                        if (def.EnactmentRule == DecisionEnactmentRule.Decree && comp.HasLeader)
                         {
                             PawnDecisionOpinion leaderOpinion = votingResult[comp.Leader];
                             content.Label($"{Utility.LeaderTitle.CapitalizeFirst()} {leaderOpinion.VoteStringColored} this decision.", tooltip: leaderOpinion.explanation);
                         }
 
-                        if ((def.allCitizensReact || def.enactment == DecisionEnactmentRule.Law || def.enactment == DecisionEnactmentRule.Referendum) && votingResult.Any(opinion => opinion.Vote != DecisionVote.Abstain))
+                        if ((def.allCitizensReact || def.EnactmentRule == DecisionEnactmentRule.Law || def.EnactmentRule == DecisionEnactmentRule.Referendum) && votingResult.Any(opinion => opinion.Vote != DecisionVote.Abstain))
                         {
                             content.Label($"Citizens' support: {votingResult.Yea.ToStringCached().Colorize(Color.green)} - {votingResult.Nay.ToStringCached().Colorize(Color.red)}");
                             foreach (PawnDecisionOpinion opinion in votingResult)

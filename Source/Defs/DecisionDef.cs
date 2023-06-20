@@ -10,10 +10,11 @@ namespace Rimocracy
 {
     public enum DecisionEnactmentRule
     { 
-        None = 0, 
-        Decree, 
-        Law, 
-        Referendum 
+        None = 0,
+        NoApproval,
+        Decree,
+        Law,
+        Referendum
     };
 
     public class DecisionDef : Def
@@ -46,6 +47,7 @@ namespace Rimocracy
         public SuccessionDef setSuccession;
         public TermDuration setTermDuration = TermDuration.Undefined;
         public bool impeachLeader;
+        public DecisionEnactmentRule? decisionsEnactment;
         public bool? actionsNeedApproval;
         public string cancelDecision;
         public float changeLoyalty;
@@ -94,10 +96,15 @@ namespace Rimocracy
 
         public DecisionVoteResults GetVotingResults() => GetVotingResults(Stakeholders);
 
+        public DecisionEnactmentRule EnactmentRule => enactment != DecisionEnactmentRule.None ? enactment : Utility.RimocracyComp.DecisionsEnactmentRule;
+
         public bool IsPassed(DecisionVoteResults votingResult)
         {
-            switch (enactment)
+            switch (EnactmentRule)
             {
+                case DecisionEnactmentRule.NoApproval:
+                    return true;
+
                 case DecisionEnactmentRule.Decree:
                     return Utility.RimocracyComp.HasLeader && votingResult[Utility.RimocracyComp.Leader].Vote == DecisionVote.Yea;
 
@@ -105,7 +112,7 @@ namespace Rimocracy
                 case DecisionEnactmentRule.Referendum:
                     return votingResult.MajoritySupport;
             }
-            return true;
+            return false;
         }
 
         public bool Activate(DecisionVoteResults votingResult, bool cheat = false)
@@ -152,6 +159,12 @@ namespace Rimocracy
                 Log($"Impeaching {Utility.RimocracyComp.Leader}.");
                 Utility.RimocracyComp.Leader.needs.mood.thoughts.memories.TryGainMemory(RimocracyDefOf.ImpeachedMemory);
                 Utility.RimocracyComp.Leader = null;
+            }
+
+            if (decisionsEnactment != null)
+            {
+                Log($"Setting Decisions Enactment to {decisionsEnactment} (current is {Utility.RimocracyComp.DecisionsEnactmentRule}).");
+                Utility.RimocracyComp.DecisionsEnactmentRule = (DecisionEnactmentRule)decisionsEnactment;
             }
 
             if (actionsNeedApproval != null)

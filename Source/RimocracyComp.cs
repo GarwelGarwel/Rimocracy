@@ -30,6 +30,7 @@ namespace Rimocracy
         int termExpiration = int.MaxValue;
         int electionTick = int.MaxValue;
         List<Decision> decisions = new List<Decision>();
+        DecisionEnactmentRule decisionsEnactmentRule = DecisionEnactmentRule.None;
         bool actionsNeedApproval;
         List<Pawn> protesters = new List<Pawn>();
 
@@ -160,6 +161,12 @@ namespace Rimocracy
 
         public bool ElectionCalled => ElectionTick != int.MaxValue;
 
+        public DecisionEnactmentRule DecisionsEnactmentRule
+        {
+            get => decisionsEnactmentRule;
+            set => decisionsEnactmentRule = value;
+        }
+
         public bool ActionsNeedApproval
         {
             get => actionsNeedApproval;
@@ -216,6 +223,7 @@ namespace Rimocracy
             Scribe_Values.Look(ref governanceTarget, "governanceTarget", 1);
             Scribe_Defs.Look(ref focusSkill, "focusSkill");
             Scribe_Collections.Look(ref decisions, "decisions", LookMode.Deep);
+            Scribe_Values.Look(ref decisionsEnactmentRule, "decisionsEnactmentRule", DecisionEnactmentRule.None);
             Scribe_Values.Look(ref actionsNeedApproval, "actionsNeedApproval");
             Scribe_Collections.Look(ref protesters, "protesters", LookMode.Reference);
         }
@@ -337,7 +345,7 @@ namespace Rimocracy
         public bool DecisionActive(string tag)
         {
             for (int i = 0; i < Decisions.Count; i++)
-                if (Decisions[i].Tag == tag)
+                if (Decisions[i].Tag == tag || Decisions[i].def.defName == tag)
                     return true;
             return false;
         }

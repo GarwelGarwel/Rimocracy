@@ -249,7 +249,7 @@
 					</value>
 				</li>
 				
-				<li Class="PatchOperationAdd">
+				<!--li Class="PatchOperationAdd">
 					<xpath>/Defs/Rimocracy.DecisionDef[defName="ActionVetoPower"]/considerations</xpath>
 					<value>
 						<li>
@@ -270,7 +270,7 @@
 							<trait>VTE_Snob</trait>
 						</li>
 					</value>
-				</li>
+				</li-->
 				
 			</operations>
 		</match>
