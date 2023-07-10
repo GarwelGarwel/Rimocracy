@@ -18,6 +18,6 @@ namespace Rimocracy
 
         public override string LabelInverted => GetLabel(!inAggroMentalState);
 
-        protected override bool IsSatisfiedInternal(Pawn pawn, Pawn target) => pawn.InAggroMentalState;
+        protected override bool IsSatisfiedInternal(Pawn pawn, Pawn target) => pawn.InAggroMentalState == inAggroMentalState;
     }
 }
