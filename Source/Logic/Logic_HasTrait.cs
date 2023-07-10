@@ -19,17 +19,17 @@ namespace Rimocracy
                     if (trait == null)
                         Utility.Log($"Trait {parts[0]} not found.", LogLevel.Warning);
                     if (parts.Length > 1)
-                        degree = int.Parse(parts[1]);
+                        int.TryParse(parts[1], out degree);
                 }
                 return trait;
             }
         }
 
-        string TraitLabel => Trait?.LabelCap ?? $"{SlateRef} (trait)";
+        string TraitLabel => Trait?.DataAtDegree(degree)?.LabelCap ?? $"{SlateRef} (unrecognized trait)";
 
-        public override string DefaultLabel => $"{{PAWN}} is {TraitLabel}{(degree != 0 ? $" of {Trait.DataAtDegree(degree)?.LabelCap}" : "")}";
+        public override string DefaultLabel => $"{{PAWN}} is {TraitLabel}";
 
-        public override string LabelInverted => $"{{PAWN}} is not {TraitLabel}{(degree != 0 ? $" of {Trait.DataAtDegree(degree)?.LabelCap}" : "")}";
+        public override string LabelInverted => $"{{PAWN}} is not {TraitLabel}";
 
         public override bool ValidFor(Pawn pawn = null, Pawn target = null) => Trait != null && pawn?.story?.traits != null;
 
