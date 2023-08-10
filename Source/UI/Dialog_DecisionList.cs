@@ -25,24 +25,27 @@ namespace Rimocracy
             doCloseX = true;
             closeOnClickedOutside = true;
             draggable = true;
-            UpdateAvailableDecisions();
         }
 
         void UpdateAvailableDecisions() => availableDecisions = DefDatabase<DecisionDef>.AllDefs.Where(def => def.IsDisplayable).ToList();
+
+        public override void PreOpen()
+        {
+            base.PreOpen();
+            UpdateAvailableDecisions();
+        }
 
         public override void DoWindowContents(Rect rect)
         {
             RimocracyComp comp = Utility.RimocracyComp;
             if (comp.IsUpdateTick)
-            {
                 UpdateAvailableDecisions();
-                viewRect = new Rect();
-            }
             if (viewRect.height < rect.height)
             {
                 viewRect.width = rect.width - GenUI.ScrollBarWidth - 4;
                 viewRect.height = 500 + availableDecisions.Count * 100;
             }
+            scrollPosition.y = Mathf.Clamp(scrollPosition.y, 0, viewRect.height - rect.height);
             Widgets.BeginScrollView(rect.AtZero(), ref scrollPosition, viewRect);
             Listing_Standard content = new Listing_Standard();
             content.Begin(viewRect);
