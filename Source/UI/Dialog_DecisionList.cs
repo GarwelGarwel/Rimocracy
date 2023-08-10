@@ -16,9 +16,11 @@ namespace Rimocracy
         Rect viewRect;
 
         DecisionDef decisionToShowDetails;
+        bool showOpinions;
         List<DecisionDef> availableDecisions;
 
         public Dialog_DecisionList()
+            : base()
         {
             doCloseX = true;
             closeOnClickedOutside = true;
@@ -81,6 +83,8 @@ namespace Rimocracy
                         content.Label(def.Description);
                         if (def.governanceCost != 0)
                             content.Label($"Will {(def.governanceCost > 0 ? "reduce" : "increase")} Governance by {Math.Abs(def.GovernanceCost).ToStringPercent().ColorizeByValue(-def.governanceCost)}.");
+                        if (comp.DecisionActive(def.defName))
+                            content.Label($"{def.LabelTitleCase} is currently active.".Colorize(Color.white));
                         if (!def.effectRequirements.IsTrivial)
                             content.Label($"Requirements:\n{def.effectRequirements.LabelAdjusted(true, target: comp.Leader)}");
                         switch (def.EnactmentRule)
@@ -91,7 +95,7 @@ namespace Rimocracy
 
                             case DecisionEnactmentRule.Law:
                             case DecisionEnactmentRule.Referendum:
-                                content.Label($"Requires approval of a majority of citizens.");
+                                content.Label($"Requires approval of the majority of citizens.");
                                 break;
                         }
 
@@ -104,26 +108,30 @@ namespace Rimocracy
 
                         if ((def.allCitizensReact || def.EnactmentRule == DecisionEnactmentRule.Law || def.EnactmentRule == DecisionEnactmentRule.Referendum) && votingResult.Any(opinion => opinion.Vote != DecisionVote.Abstain))
                         {
-                            content.Label($"Citizens' support: {votingResult.Yea.ToStringCached().Colorize(Color.green)} - {votingResult.Nay.ToStringCached().Colorize(Color.red)}");
-                            foreach (PawnDecisionOpinion opinion in votingResult)
-                                content.Label($"   {opinion.voter.NameShortColored}: {opinion.VoteStringColored}", tooltip: opinion.explanation);
+                            if (content.ButtonTextLabeledPct($"Citizens' support: {votingResult.Yea.ToStringCached().Colorize(Color.green)} - {votingResult.Nay.ToStringCached().Colorize(Color.red)}", showOpinions ? "Hide" : "Show", 0.80f))
+                                showOpinions = !showOpinions;
+                            if (showOpinions)
+                                foreach (PawnDecisionOpinion opinion in votingResult)
+                                    content.Label($"   {opinion.voter.NameShortColored}: {opinion.VoteStringColored}", tooltip: opinion.explanation);
                             if (def.loyaltyEffect != 0)
                                 content.Label($"Loyalty of citizens who support this decision will increase, and of those who oppose or tolerate it, decrease by up to {def.loyaltyEffect.ToStringPercent()}.");
                         }
 
                         // Display Activate button for valid decisions
-                        if (def.IsValid && def.IsPassed(votingResult))
-                        {
-                            if (content.ButtonText("Activate"))
+                        if (def.IsValid)
+                            if (def.IsPassed(votingResult))
                             {
-                                Utility.Log($"Activating {def.defName}.");
-                                if (def.Activate(votingResult))
-                                    Find.LetterStack.ReceiveLetter($"{def.LabelTitleCase} Decision Taken", def.description, LetterDefOf.NeutralEvent, null);
-                                else Messages.Message($"Could not take {def.LabelTitleCase} decision: requirements are not met.", MessageTypeDefOf.RejectInput, false);
-                                Close();
+                                if (content.ButtonText("Activate"))
+                                {
+                                    Utility.Log($"Activating {def.defName}.");
+                                    if (def.Activate(votingResult))
+                                        Find.LetterStack.ReceiveLetter($"{def.LabelTitleCase} Decision Taken", def.description, LetterDefOf.NeutralEvent);
+                                    else Messages.Message($"Could not take {def.LabelTitleCase} decision: requirements are not met.", MessageTypeDefOf.RejectInput, false);
+                                    Close();
+                                }
                             }
-                        }
-                        else content.Label("Requirements are not met.");
+                            else content.Label("The decision does not pass.".Colorize(Color.red));
+                        else content.Label("Requirements are not met.".Colorize(Color.red));
 
                         // Display devmode (cheat) Activate button
                         if (Prefs.DevMode && content.ButtonText("Activate (DevMode)"))
