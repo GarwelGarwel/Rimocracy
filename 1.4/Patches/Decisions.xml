@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<Patch>
+
+	<!-- SYR Individuality -->
+
+	<Operation Class="PatchOperationFindMod">
+		<mods>
+			<li>[SYR] Individuality</li>
+		</mods>
+		<match Class="PatchOperationAdd">
+			<xpath>/Defs/Rimocracy.DecisionDef[defName="SuccessionElection"]/considerations</xpath>
+			<value>
+				<li>
+					<label>silver tongue</label>
+					<value>5</value>
+					<trait>SYR_Haggler</trait>
+				</li>
+			</value>
+		</match>
+	</Operation>
+
+	<Operation Class="PatchOperationFindMod">
+		<mods>
+			<li>[SYR] Individuality</li>
+		</mods>
+		<match Class="PatchOperationAdd">
+			<xpath>/Defs/Rimocracy.DecisionDef[defName="SuccessionMartial"]/considerations</xpath>
+			<value>
+				<li>
+					<label>gun nut</label>
+					<value>10</value>
+					<trait>SYR_GunNut</trait>
+				</li>
+			</value>
+		</match>
+	</Operation>
+
+	<!-- Vanilla Traits Expanded -->
+
+	<Operation Class="PatchOperationFindMod">
+		<mods>
+			<li>Vanilla Traits Expanded</li>
+		</mods>
+		<match Class="PatchOperationSequence">
+			<operations>
+			
+				<li Class="PatchOperationAdd">
+					<xpath>/Defs/Rimocracy.DecisionDef[defName="SuccessionSeniority"]/considerations</xpath>
+					<value>
+						<li>
+							<label>rebel</label>
+							<value>-20</value>
+							<trait>VTE_Rebel</trait>
+						</li>
+						<li>
+							<label>submissive</label>
+							<value>10</value>
+							<trait>VTE_Submissive</trait>
+						</li>
+						<li>
+							<label>snob</label>
+							<value>5</value>
+							<trait>VTE_Snob</trait>
+							<age>
+								<greaterThan>50</greaterThan>
+							</age>
+						</li>
+					</value>
+				</li>
+				
+				<li Class="PatchOperationAdd">
+					<xpath>/Defs/Rimocracy.DecisionDef[defName="SuccessionNobility"]/considerations</xpath>
+					<value>
+						<li>
+							<label>rebel</label>
+							<value>-20</value>
+							<trait>VTE_Rebel</trait>
+						</li>
+						<li>
+							<label>submissive</label>
+							<value>10</value>
+							<trait>VTE_Submissive</trait>
+						</li>
+						<li>
+							<label>snob</label>
+							<value>10</value>
+							<trait>VTE_Snob</trait>
+							<titleSeniority>
+								<greaterOrEqual>0</greaterOrEqual>
+							</titleSeniority>
+						</li>
+					</value>
+				</li>
+				
+				<li Class="PatchOperationAdd">
+					<xpath>/Defs/Rimocracy.DecisionDef[defName="SuccessionMartial"]/considerations</xpath>
+					<value>
+						<li>
+							<label>coward</label>
+							<value>-15</value>
+							<trait>VTE_Coward</trait>
+						</li>
+						<li>
+							<label>brave</label>
+							<value>15</value>
+							<trait>VTE_Brave</trait>
+						</li>
+						<li>
+							<label>rebel</label>
+							<value>-10</value>
+							<trait>VTE_Rebel</trait>
+						</li>
+						<li>
+							<label>submissive</label>
+							<value>10</value>
+							<trait>VTE_Submissive</trait>
+						</li>
+						<li>
+							<label>martial artist</label>
+							<value>10</value>
+							<trait>VTE_MartialArtist</trait>
+						</li>
+					</value>
+				</li>
+				
+				<li Class="PatchOperationAdd">
+					<xpath>/Defs/Rimocracy.DecisionDef[defName="Impeachment"]/considerations</xpath>
+					<value>
+						<li>
+							<label>rebel</label>
+							<value>10</value>
+							<isLeader>false</isLeader>
+							<trait>VTE_Rebel</trait>
+						</li>
+						<li>
+							<label>submissive</label>
+							<value>-5</value>
+							<isLeader>false</isLeader>
+							<trait>VTE_Submissive</trait>
+						</li>
+						<li>
+							<label>snob</label>
+							<value>5</value>
+							<isLeader>false</isLeader>
+							<trait>VTE_Snob</trait>
+						</li>
+					</value>
+				</li>
+				
+				<li Class="PatchOperationAdd">
+					<xpath>/Defs/Rimocracy.DecisionDef[defName="Egalitarianism"]/considerations</xpath>
+					<value>
+						<li>
+							<label>snob</label>
+							<value>-20</value>
+							<trait>VTE_Snob</trait>
+						</li>
+					</value>
+				</li>
+				
+				<li Class="PatchOperationAdd">
+					<xpath>/Defs/Rimocracy.DecisionDef[defName="Meritocracy"]/considerations</xpath>
+					<value>
+						<li>
+							<label>snob</label>
+							<value>10</value>
+							<trait>VTE_Snob</trait>
+						</li>
+					</value>
+				</li>
+				
+				<li Class="PatchOperationAdd">
+					<xpath>/Defs/Rimocracy.DecisionDef[defName="Stability"]/considerations</xpath>
+					<value>
+						<li>
+							<label>rebel</label>
+							<value>-20</value>
+							<trait>VTE_Rebel</trait>
+						</li>
+						<li>
+							<label>submissive</label>
+							<value>10</value>
+							<trait>VTE_Submissive</trait>
+						</li>
+					</value>
+				</li>
+				
+				<li Class="PatchOperationAdd">
+					<xpath>/Defs/Rimocracy.DecisionDef[defName="Elitism"]/considerations</xpath>
+					<value>
+						<li>
+							<label>rebel</label>
+							<value>-20</value>
+							<isLeader>false</isLeader>
+							<trait>VTE_Rebel</trait>
+						</li>
+						<li>
+							<label>submissive</label>
+							<value>10</value>
+							<trait>VTE_Submissive</trait>
+						</li>
+						<li>
+							<label>snob</label>
+							<value>30</value>
+							<isLeader>true</isLeader>
+							<trait>VTE_Snob</trait>
+						</li>
+					</value>
+				</li>
+				
+				<li Class="PatchOperationAdd">
+					<xpath>/Defs/Rimocracy.DecisionDef[defName="CultOfPersonality"]/considerations</xpath>
+					<value>
+						<li>
+							<label>rebel</label>
+							<value>-20</value>
+							<isLeader>false</isLeader>
+							<trait>VTE_Rebel</trait>
+						</li>
+						<li>
+							<label>submissive</label>
+							<value>10</value>
+							<trait>VTE_Submissive</trait>
+						</li>
+						<li>
+							<label>snob</label>
+							<value>30</value>
+							<isLeader>true</isLeader>
+							<trait>VTE_Snob</trait>
+						</li>
+					</value>
+				</li>
+				
+				<li Class="PatchOperationAdd">
+					<xpath>/Defs/Rimocracy.DecisionDef[defName="StateOfEmergency"]/considerations</xpath>
+					<value>
+						<li>
+							<label>rebel</label>
+							<value>-20</value>
+							<isLeader>false</isLeader>
+							<trait>VTE_Rebel</trait>
+						</li>
+						<li>
+							<label>submissive</label>
+							<value>10</value>
+							<trait>VTE_Submissive</trait>
+						</li>
+					</value>
+				</li>
+				
+			</operations>
+		</match>
+	</Operation>
+
+</Patch>

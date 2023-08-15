@@ -20,27 +20,33 @@
 	</Rimocracy.DecisionCategoryDef>
 
 	<Rimocracy.DecisionCategoryDef>
+		<defName>PowerStructure</defName>
+		<label>power structure</label>
+		<displayOrder>40</displayOrder>
+	</Rimocracy.DecisionCategoryDef>
+
+	<Rimocracy.DecisionCategoryDef>
 		<defName>Democratic</defName>
 		<label>democratic reforms</label>
-		<displayOrder>40</displayOrder>
+		<displayOrder>140</displayOrder>
 	</Rimocracy.DecisionCategoryDef>
 
 	<Rimocracy.DecisionCategoryDef>
 		<defName>Authoritarian</defName>
 		<label>authoritarian reforms</label>
-		<displayOrder>50</displayOrder>
+		<displayOrder>150</displayOrder>
 	</Rimocracy.DecisionCategoryDef>
 
 	<Rimocracy.DecisionCategoryDef>
 		<defName>Ideology</defName>
 		<label>ideology</label>
-		<displayOrder>60</displayOrder>
+		<displayOrder>160</displayOrder>
 	</Rimocracy.DecisionCategoryDef>
 
 	<Rimocracy.DecisionCategoryDef>
 		<defName>Misc</defName>
 		<label>miscellaneous</label>
-		<displayOrder>100</displayOrder>
+		<displayOrder>1000</displayOrder>
 	</Rimocracy.DecisionCategoryDef>
 
 </Defs>

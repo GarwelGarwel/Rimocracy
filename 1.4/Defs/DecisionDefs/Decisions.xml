@@ -3,13 +3,13 @@
 <Defs>
 
 	<!-- Forms of Government -->
-	
+
 	<Rimocracy.DecisionDef Abstract="True" Name="BaseGovernmentFormDecision">
 		<category>GovernmentForms</category>
 		<enactment>NoApproval</enactment>
 		<tag>GovernmentForm</tag>
 	</Rimocracy.DecisionDef>
-	
+
 	<Rimocracy.DecisionDef ParentName="BaseGovernmentFormDecision">
 		<defName>Anarchy</defName>
 		<label>anarchy</label>
@@ -27,10 +27,10 @@
 		<defName>Autocracy</defName>
 		<label>autocracy</label>
 		<description>One-man (or woman, or a humanoid) rule. Most decisions require support of the leader of the nation.</description>
-		<effectRequirements>
+		<displayRequirements>
 			<decision>GovernmentForm</decision>
 			<inverted>true</inverted>
-		</effectRequirements>
+		</displayRequirements>
 		<decisionsEnactment>Decree</decisionsEnactment>
 		<actionsNeedApproval>true</actionsNeedApproval>
 	</Rimocracy.DecisionDef>
@@ -39,10 +39,10 @@
 		<defName>DirectDemocracy</defName>
 		<label>direct democracy</label>
 		<description>Majority rule. More citizens have to support a decision to be taken than oppose it. The leader has no special influence on the laws.</description>
-		<effectRequirements>
+		<displayRequirements>
 			<decision>GovernmentForm</decision>
 			<inverted>true</inverted>
-		</effectRequirements>
+		</displayRequirements>
 		<decisionsEnactment>Referendum</decisionsEnactment>
 		<actionsNeedApproval>false</actionsNeedApproval>
 	</Rimocracy.DecisionDef>
@@ -51,10 +51,9 @@
 	
 	<Rimocracy.DecisionDef Abstract="True" Name="BaseSuccessionDecision">
 		<category>SuccessionTypes</category>
-		<!--enactment>Law</enactment-->
 		<tag>Succession</tag>
 		<durationDays>20</durationDays>
-		<governanceCost>0.25</governanceCost>
+		<!--governanceCost>0.25</governanceCost-->
 		<loyaltyEffect>0.20</loyaltyEffect>
 	</Rimocracy.DecisionDef>
 	
@@ -591,7 +590,7 @@
 			<campaigning>false</campaigning>
 		</effectRequirements>
 		<durationTicks>1000000</durationTicks>
-		<governanceCost>0.20</governanceCost>
+		<!--governanceCost>0.20</governanceCost-->
 	</Rimocracy.DecisionDef>
 
 	<Rimocracy.DecisionDef ParentName="BaseTermDurationDecision">
@@ -777,6 +776,286 @@
 		<impeachLeader>true</impeachLeader>
 	</Rimocracy.DecisionDef>
 
+	<!-- Power Structure -->
+
+	<Rimocracy.DecisionDef>
+		<defName>Egalitarianism</defName>
+		<label>happiness for all</label>
+		<description>The goal of every government is happiness of its people. With this doctrine, the higher the median mood of your citizens, the slower the Governance decay.</description>
+		<category>PowerStructure</category>
+		<displayPriorityInCategory>20</displayPriorityInCategory>
+		<effectRequirements>
+			<any>
+				<inverted>true</inverted>
+				<list>
+					<li>
+						<decision>Elitism</decision>
+					</li>
+					<!--li>
+						<decision>CultOfPersonality</decision>
+					</li-->
+				</list>
+			</any>
+		</effectRequirements>
+		<considerations>
+			<li>
+				<label>the government should care about all citizens</label>
+				<value>50</value>
+				<isLeader>false</isLeader>
+			</li>
+			<li>
+				<label>individualist ideoligion</label>
+				<value>25</value>
+				<meme>Individualist</meme>
+			</li>
+			<li>
+				<label>collectivist ideoligion</label>
+				<value>-50</value>
+				<meme>Collectivist</meme>
+			</li>
+			<li>
+				<label>human primacy</label>
+				<value>25</value>
+				<meme>HumanPrimacy</meme>
+			</li>
+			<li>
+				<label>pain is virtue</label>
+				<value>-25</value>
+				<meme>PainIsVirtue</meme>
+			</li>
+			<li>
+				<label>guilty ideoligion</label>
+				<value>-25</value>
+				<meme>Guilty</meme>
+			</li>
+			<li>
+				<label>comfort ignored</label>
+				<value>-20</value>
+				<precept>Comfort_Ignored</precept>
+			</li>
+		</considerations>
+		<tag/>
+		<!--governanceCost>0.25</governanceCost-->
+	</Rimocracy.DecisionDef>
+
+	<Rimocracy.DecisionDef>
+		<defName>Egalitarianism_Cancel</defName>
+		<label>cancel "happiness for all"</label>
+		<description>These unthankful people don't know what's good for them.</description>
+		<category>PowerStructure</category>
+		<displayPriorityInCategory>20</displayPriorityInCategory>
+		<displayRequirements>
+			<decision>Egalitarianism</decision>
+		</displayRequirements>
+		<considerations>
+			<li>
+				<label>I wish the government cared more about my happiness</label>
+				<value>-50</value>
+				<isLeader>false</isLeader>
+			</li>
+			<li>
+				<label>individualist ideoligion</label>
+				<value>-25</value>
+				<meme>Individualist</meme>
+			</li>
+			<li>
+				<label>collectivist ideoligion</label>
+				<value>50</value>
+				<meme>Collectivist</meme>
+			</li>
+			<li>
+				<label>human primacy</label>
+				<value>-25</value>
+				<meme>HumanPrimacy</meme>
+			</li>
+			<li>
+				<label>pain is virtue</label>
+				<value>25</value>
+				<meme>PainIsVirtue</meme>
+			</li>
+			<li>
+				<label>25 ideoligion</label>
+				<value>10</value>
+				<meme>Guilty</meme>
+			</li>
+			<li>
+				<label>comfort ignored</label>
+				<value>20</value>
+				<precept>Comfort_Ignored</precept>
+			</li>
+		</considerations>
+		<governanceCost>0.15</governanceCost>
+		<cancelDecision>Egalitarianism</cancelDecision>
+	</Rimocracy.DecisionDef>
+
+	<Rimocracy.DecisionDef>
+		<defName>Elitism</defName>
+		<label>L'État, c'est moi</label>
+		<description>A happy {LEADERTITLE} is a productive {LEADERTITLE}. When the leader is in a good mood, he, or she, will improve governance better.</description>
+		<category>PowerStructure</category>
+		<displayPriorityInCategory>20</displayPriorityInCategory>
+		<effectRequirements>
+			<all>
+				<list>
+					<li>
+						<leaderExists>true</leaderExists>
+					</li>
+					<li>
+						<decision>Egalitarianism</decision>
+						<inverted>true</inverted>
+					</li>
+				</list>
+			</all>
+		</effectRequirements>
+		<considerations>
+			<li>
+				<label>I like it!</label>
+				<value>100</value>
+				<all>
+					<list>
+						<li>
+							<isLeader>true</isLeader>
+						</li>
+						<li>
+							<trait>Ascetic</trait>
+							<inverted>true</inverted>
+						</li>
+						<li>
+							<meme>PainIsVirtue</meme>
+							<inverted>true</inverted>
+						</li>
+						<li>
+							<precept>Comfort_Ignored</precept>
+							<inverted>true</inverted>
+						</li>
+					</list>
+				</all>
+			</li>
+			<li>
+				<label>greedy</label>
+				<value>20</value>
+				<isLeader>true</isLeader>
+				<trait>Greedy</trait>
+			</li>
+			<li>
+				<label>jealous</label>
+				<value>-20</value>
+				<isLeader>false</isLeader>
+				<trait>Jealous</trait>
+			</li>
+			<li>
+				<label>I don't care for {TARGET}'s happiness</label>
+				<isLeader>false</isLeader>
+				<opinionOfTarget>
+					<lessThan>0</lessThan>
+					<offset>
+						<points>
+							<li>(-100, -40)</li>
+							<li>(0, 0)</li>
+						</points>
+					</offset>
+				</opinionOfTarget>
+			</li>
+			<li>
+				<label>individualist ideoligion</label>
+				<value>-20</value>
+				<meme>Individualist</meme>
+			</li>
+			<li>
+				<label>collectivist ideoligion</label>
+				<value>20</value>
+				<meme>Collectivist</meme>
+			</li>
+			<li>
+				<label>pain is virtue</label>
+				<value>-10</value>
+				<meme>PainIsVirtue</meme>
+			</li>
+			<li>
+				<label>guilty ideoligion</label>
+				<value>-20</value>
+				<meme>Guilty</meme>
+			</li>
+			<li>
+				<label>comfort ignored</label>
+				<value>-10</value>
+				<precept>Comfort_Ignored</precept>
+			</li>
+		</considerations>
+		<tag/>
+		<governanceCost>0.25</governanceCost>
+	</Rimocracy.DecisionDef>
+
+	<Rimocracy.DecisionDef>
+		<defName>Elitism_Cancel</defName>
+		<label>cancel "l'État, c'est moi"</label>
+		<description>Elitism was a mistake, let us abolish it.</description>
+		<category>PowerStructure</category>
+		<displayPriorityInCategory>20</displayPriorityInCategory>
+		<displayRequirements>
+			<decision>Elitism</decision>
+		</displayRequirements>
+		<considerations>
+			<li>
+				<label>my interests</label>
+				<value>-100</value>
+				<isLeader>true</isLeader>
+			</li>
+			<li>
+				<label>greedy</label>
+				<value>-20</value>
+				<isLeader>true</isLeader>
+				<trait>Greedy</trait>
+			</li>
+			<li>
+				<label>jealous</label>
+				<value>20</value>
+				<isLeader>false</isLeader>
+				<trait>Jealous</trait>
+			</li>
+			<li>
+				<label>maybe someone will finally pay attention to me</label>
+				<isLeader>false</isLeader>
+				<opinionOfTarget>
+					<lessThan>0</lessThan>
+					<offset>
+						<points>
+							<li>(-100, 40)</li>
+							<li>(0, 0)</li>
+						</points>
+					</offset>
+				</opinionOfTarget>
+			</li>
+			<li>
+				<label>individualist ideoligion</label>
+				<value>-20</value>
+				<meme>Individualist</meme>
+			</li>
+			<li>
+				<label>collectivist ideoligion</label>
+				<value>20</value>
+				<meme>Collectivist</meme>
+			</li>
+			<li>
+				<label>pain is virtue</label>
+				<value>10</value>
+				<meme>PainIsVirtue</meme>
+			</li>
+			<li>
+				<label>guilty ideoligion</label>
+				<value>20</value>
+				<meme>Guilty</meme>
+			</li>
+			<li>
+				<label>comfort ignored</label>
+				<value>10</value>
+				<precept>Comfort_Ignored</precept>
+			</li>
+		</considerations>
+		<governanceCost>0.15</governanceCost>
+		<cancelDecision>Elitism</cancelDecision>
+	</Rimocracy.DecisionDef>
+
 	<!-- Populism -->
 
 	<Rimocracy.DecisionDef>
@@ -838,118 +1117,6 @@
 		</considerations>
 		<governanceCost>0.15</governanceCost>
 		<cancelDecision>Populism</cancelDecision>
-	</Rimocracy.DecisionDef>
-
-	<!-- Egalitarianism -->
-
-	<Rimocracy.DecisionDef>
-		<defName>Egalitarianism</defName>
-		<label>happiness for all</label>
-		<description>The goal of every government is happiness of its people. With this doctrine, the higher the median mood of your citizens, the slower the Governance decay.</description>
-		<category>Democratic</category>
-		<displayPriorityInCategory>20</displayPriorityInCategory>
-		<effectRequirements>
-			<any>
-				<inverted>true</inverted>
-				<list>
-					<li>
-						<decision>Elitism</decision>
-					</li>
-					<li>
-						<decision>CultOfPersonality</decision>
-					</li>
-				</list>
-			</any>
-		</effectRequirements>
-		<considerations>
-			<li>
-				<label>the government should care about all citizens</label>
-				<value>50</value>
-				<isLeader>false</isLeader>
-			</li>
-			<li>
-				<label>individualist ideoligion</label>
-				<value>25</value>
-				<meme>Individualist</meme>
-			</li>
-			<li>
-				<label>collectivist ideoligion</label>
-				<value>-50</value>
-				<meme>Collectivist</meme>
-			</li>
-			<li>
-				<label>human primacy</label>
-				<value>25</value>
-				<meme>HumanPrimacy</meme>
-			</li>
-			<li>
-				<label>pain is virtue</label>
-				<value>-25</value>
-				<meme>PainIsVirtue</meme>
-			</li>
-			<li>
-				<label>guilty ideoligion</label>
-				<value>-25</value>
-				<meme>Guilty</meme>
-			</li>
-			<li>
-				<label>comfort ignored</label>
-				<value>-20</value>
-				<precept>Comfort_Ignored</precept>
-			</li>
-		</considerations>
-		<tag/>
-		<governanceCost>0.25</governanceCost>
-	</Rimocracy.DecisionDef>
-
-	<Rimocracy.DecisionDef>
-		<defName>Egalitarianism_Cancel</defName>
-		<label>cancel "happiness for all"</label>
-		<description>These unthankful people don't know what's good for them.</description>
-		<category>Democratic</category>
-		<displayPriorityInCategory>20</displayPriorityInCategory>
-		<displayRequirements>
-			<decision>Egalitarianism</decision>
-		</displayRequirements>
-		<considerations>
-			<li>
-				<label>I wish the government cared more about my happiness</label>
-				<value>-50</value>
-				<isLeader>false</isLeader>
-			</li>
-			<li>
-				<label>individualist ideoligion</label>
-				<value>-25</value>
-				<meme>Individualist</meme>
-			</li>
-			<li>
-				<label>collectivist ideoligion</label>
-				<value>50</value>
-				<meme>Collectivist</meme>
-			</li>
-			<li>
-				<label>human primacy</label>
-				<value>-25</value>
-				<meme>HumanPrimacy</meme>
-			</li>
-			<li>
-				<label>pain is virtue</label>
-				<value>25</value>
-				<meme>PainIsVirtue</meme>
-			</li>
-			<li>
-				<label>25 ideoligion</label>
-				<value>10</value>
-				<meme>Guilty</meme>
-			</li>
-			<li>
-				<label>comfort ignored</label>
-				<value>20</value>
-				<precept>Comfort_Ignored</precept>
-			</li>
-		</considerations>
-		<governanceCost>0.15</governanceCost>
-		<cancelDecision>Egalitarianism</cancelDecision>
 	</Rimocracy.DecisionDef>
 
 	<!-- Meritocracy -->
@@ -1303,176 +1470,6 @@
 		</considerations>
 		<governanceCost>0.15</governanceCost>
 		<cancelDecision>Stability</cancelDecision>
-	</Rimocracy.DecisionDef>
-
-	<!-- Elitism -->
-
-	<Rimocracy.DecisionDef>
-		<defName>Elitism</defName>
-		<label>L'État, c'est moi</label>
-		<description>A happy {LEADERTITLE} is a productive {LEADERTITLE}. When the leader is in a good mood, he, or she, will improve governance better.</description>
-		<category>Authoritarian</category>
-		<displayPriorityInCategory>20</displayPriorityInCategory>
-		<effectRequirements>
-			<all>
-				<list>
-					<li>
-						<leaderExists>true</leaderExists>
-					</li>
-					<li>
-						<decision>Egalitarianism</decision>
-						<inverted>true</inverted>
-					</li>
-				</list>
-			</all>
-		</effectRequirements>
-		<considerations>
-			<li>
-				<label>I like it!</label>
-				<value>100</value>
-				<all>
-					<list>
-						<li>
-							<isLeader>true</isLeader>
-						</li>
-						<li>
-							<trait>Ascetic</trait>
-							<inverted>true</inverted>
-						</li>
-						<li>
-							<meme>PainIsVirtue</meme>
-							<inverted>true</inverted>
-						</li>
-						<li>
-							<precept>Comfort_Ignored</precept>
-							<inverted>true</inverted>
-						</li>
-					</list>
-				</all>
-			</li>
-			<li>
-				<label>greedy</label>
-				<value>20</value>
-				<isLeader>true</isLeader>
-				<trait>Greedy</trait>
-			</li>
-			<li>
-				<label>jealous</label>
-				<value>-20</value>
-				<isLeader>false</isLeader>
-				<trait>Jealous</trait>
-			</li>
-			<li>
-				<label>I don't care for {TARGET}'s happiness</label>
-				<isLeader>false</isLeader>
-				<opinionOfTarget>
-					<lessThan>0</lessThan>
-					<offset>
-						<points>
-							<li>(-100, -40)</li>
-							<li>(0, 0)</li>
-						</points>
-					</offset>
-				</opinionOfTarget>
-			</li>
-			<li>
-				<label>individualist ideoligion</label>
-				<value>-20</value>
-				<meme>Individualist</meme>
-			</li>
-			<li>
-				<label>collectivist ideoligion</label>
-				<value>20</value>
-				<meme>Collectivist</meme>
-			</li>
-			<li>
-				<label>pain is virtue</label>
-				<value>-10</value>
-				<meme>PainIsVirtue</meme>
-			</li>
-			<li>
-				<label>guilty ideoligion</label>
-				<value>-20</value>
-				<meme>Guilty</meme>
-			</li>
-			<li>
-				<label>comfort ignored</label>
-				<value>-10</value>
-				<precept>Comfort_Ignored</precept>
-			</li>
-		</considerations>
-		<tag/>
-		<governanceCost>0.25</governanceCost>
-	</Rimocracy.DecisionDef>
-
-	<Rimocracy.DecisionDef>
-		<defName>Elitism_Cancel</defName>
-		<label>cancel "l'État, c'est moi"</label>
-		<description>Elitism was a mistake, let us abolish it.</description>
-		<category>Authoritarian</category>
-		<displayPriorityInCategory>20</displayPriorityInCategory>
-		<displayRequirements>
-			<decision>Elitism</decision>
-		</displayRequirements>
-		<considerations>
-			<li>
-				<label>my interests</label>
-				<value>-100</value>
-				<isLeader>true</isLeader>
-			</li>
-			<li>
-				<label>greedy</label>
-				<value>-20</value>
-				<isLeader>true</isLeader>
-				<trait>Greedy</trait>
-			</li>
-			<li>
-				<label>jealous</label>
-				<value>20</value>
-				<isLeader>false</isLeader>
-				<trait>Jealous</trait>
-			</li>
-			<li>
-				<label>maybe someone will finally pay attention to me</label>
-				<isLeader>false</isLeader>
-				<opinionOfTarget>
-					<lessThan>0</lessThan>
-					<offset>
-						<points>
-							<li>(-100, 40)</li>
-							<li>(0, 0)</li>
-						</points>
-					</offset>
-				</opinionOfTarget>
-			</li>
-			<li>
-				<label>individualist ideoligion</label>
-				<value>-20</value>
-				<meme>Individualist</meme>
-			</li>
-			<li>
-				<label>collectivist ideoligion</label>
-				<value>20</value>
-				<meme>Collectivist</meme>
-			</li>
-			<li>
-				<label>pain is virtue</label>
-				<value>10</value>
-				<meme>PainIsVirtue</meme>
-			</li>
-			<li>
-				<label>guilty ideoligion</label>
-				<value>20</value>
-				<meme>Guilty</meme>
-			</li>
-			<li>
-				<label>comfort ignored</label>
-				<value>10</value>
-				<precept>Comfort_Ignored</precept>
-			</li>
-		</considerations>
-		<governanceCost>0.15</governanceCost>
-		<cancelDecision>Elitism</cancelDecision>
 	</Rimocracy.DecisionDef>
 
 	<!-- Cult of Personality -->
