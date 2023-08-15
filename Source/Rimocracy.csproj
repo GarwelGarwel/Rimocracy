@@ -143,6 +143,7 @@
     <Compile Include="ThingComps\CompProperties_AffectedByGovernance.cs" />
     <Compile Include="ElectionCampaign.cs" />
     <Compile Include="JobDriver_Govern.cs" />
+    <Compile Include="UI\MainButtonWorker_Politics.cs" />
     <Compile Include="UI\MainTabWindow_Politics.cs" />
     <Compile Include="RecordWorker_TimeAsLeader.cs" />
     <Compile Include="Succession\SuccessionWorker.cs" />
