@@ -78,22 +78,24 @@ namespace Rimocracy
 
         #region ARREST
 
-        public static void Arrest_Prefix(JobDriver_TakeToBed __instance)
+        public static void Arrest_Prefix(JobDriver_TakeToBed __instance, ref DecisionVoteResults __state)
         {
             if (!__instance.job.def.makeTargetPrisoner || !__instance.pawn.IsColonist || __instance.job.targetA.Pawn.IsPrisonerOfColony)
                 return;
             Pawn target = __instance.job.targetA.Pawn;
             Log($"Arrest_Prefix for {target} (from {target.Faction}) by {__instance.pawn.Faction}");
-            if (Vetoed(RimocracyDefOf.Arrest, target))
+            if (Vetoed(RimocracyDefOf.Arrest, out __state, target))
                 __instance.EndJobWith(JobCondition.Incompletable);
         }
 
-        public static void Arrest_Postfix(Pawn_GuestTracker __instance, Faction by, Pawn ___pawn)
+        public static void Arrest_Postfix(Pawn_GuestTracker __instance, Faction by, Pawn ___pawn, DecisionVoteResults __state)
         {
             if (!PoliticsEnabled || !__instance.IsPrisoner || !by.IsPlayer)
                 return;
             Log($"Arrest_Postfix for {___pawn} (from {___pawn.Faction}) by {by}");
-            RimocracyDefOf.Arrest.Activate(___pawn);
+            if (__state != null)
+                RimocracyDefOf.Arrest.Activate(__state);
+            else RimocracyDefOf.Arrest.Activate(___pawn);
         }
 
         #endregion ARREST
