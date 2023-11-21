@@ -17,6 +17,14 @@
 				<roomStat>GovernEfficiencyFactor</roomStat>
 				<customLabel>Room impressiveness</customLabel>
 			</li>
+			<li Class="StatPart_Quality">
+				<factorAwful>0.80</factorAwful>
+				<factorPoor>0.90</factorPoor>
+				<factorGood>1.05</factorGood>
+				<factorExcellent>1.10</factorExcellent>
+				<factorMasterwork>1.15</factorMasterwork>
+				<factorLegendary>1.20</factorLegendary>
+			</li>
 		</parts>
 		<displayPriorityInCategory>1000</displayPriorityInCategory>
 	</StatDef>

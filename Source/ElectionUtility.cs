@@ -60,7 +60,7 @@ namespace Rimocracy
             // Adding a random factor of -5 to +5
             weight += Rand.Range(-Settings.RandomVoteWeightRadius, Settings.RandomVoteWeightRadius);
 
-            Log($"{voter} vote weight for {candidate}: {weight:N0}.");
+            Log($"{voter}: vote weight for {candidate}: {weight:N0}.");
             return weight;
         }
     }

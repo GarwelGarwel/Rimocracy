@@ -169,8 +169,9 @@ namespace Rimocracy
             if (changeLoyalty != 0)
             {
                 Log($"Changing list pawns' loyalty by {changeLoyalty.ToStringPercent()}.");
-                foreach (Pawn pawn in Citizens)
-                    pawn.ChangeLoyalty(changeLoyalty);
+                List<Pawn> citizens = Citizens.ToList();
+                for (int i = 0; i < citizens.Count; i++)
+                    citizens[i].ChangeLoyalty(changeLoyalty);
             }
 
             foreach (PawnDecisionOpinion opinion in votingResult)
@@ -201,8 +202,11 @@ namespace Rimocracy
         public void Cancel()
         {
             if (loyaltyEffect != 0)
-                foreach (Pawn pawn in Citizens)
-                    pawn.GetLoyalty().RecalculatePersistentEffects();
+            {
+                List<Pawn> citizens = Citizens.ToList();
+                for (int i = 0; i < citizens.Count; i++)
+                    citizens[i].GetLoyalty().RecalculatePersistentEffects();
+            }
         }
     }
 }

@@ -8,7 +8,7 @@ Rimocracy introduces the concept of Governance Quality (or simply Governance). I
 - Governance directly affects work speed and other related stats. Governance of 0% makes your colonists work slower and reduces their negotiation powers by 25% while 100% Governance increases these values by the same percentage. It is always better to have high Governance.
 - When your leader is elected/appointed, a Focus Skill is semi-randomly selected based on his/her abilities. This skill receives a bigger boost. For instance, Intellectual focus skill will improve research speed. The boost ranges from nothing for zero Governance to 50% for maximum Governance. So if you have 100% governance and Intellectual focus skill, your research speed will be increased by 125% (because of Global Work Speed bonus) x 150% (because of the Focus Skill) = 187.5%.
 - However, Governance always tends to deteriorate, or decay. The rate of decay is higher for colonies with more citizens and at higher Governance level. For instance, if you only have three citizens and 50% of Governance, it will decay at 1.8% per day, but if you have 15 citizens and 100% Governance, you will lose 10.9% of it every day. In fact, it's a bit more complex than that (see below on Loyalty).
-- To improve Governance, your leader needs to do Govern job. It is done at a Research Station, a throne (if you own Royalty DLC), or the Management Desk from the Colony Manager mod. The effectiveness of governing is affected by the workstation (thrones are better than research stations, for isntance), leader's Intellectual and Social stats and other factors, most importantly the impressiveness of the room. So better give them a good place to govern from.
+- To improve Governance, your leader needs to do Govern job. It is done at a Research Station, a throne (if you own Royalty DLC), or the Management Desk from the Colony Manager mod. The effectiveness of governing is affected by the workstation (thrones are better than research stations, for isntance), leader's Social skill and other factors, most importantly the impressiveness of the room. So better give them a good place to govern from.
 - When your leader changes (see more about it below), your Governance is partially reset to the mid-point between its old value and 50%. So, if you had 70% Governance, your new leader will inherit only 60%.
 
 ## Leaders and Succession
@@ -65,26 +65,27 @@ Seriously disloyal citizens may start protesting. Protests are effectively certa
 
 Loyalty also has a passive effect: loyal citizens cause less Governance decay than disloyal ones. A completely disloyal colonist counts as three 100% loyal colonists for these calculations, and a protester as four.
 
-## Required & Supported Mods
+## Compatibility
 
-- **Harmony 2.0**
+RimWorld 1.4 (also legacy support for RimWorld 1.3)
+
+- **Harmony 2.0** (required)
 - Colony Manager
 - Individuality
 - Primitive Workbenches
 - Rumor Has It (Continued)
-- Simple Slavery
 - Thrones plus
 - Vanilla Traits Expanded
 
 ## FAQ
 
-**Q:** Nothing works, and the Politics tab says I don't have enough citizens.
+**Q:** Politics tab says I don't have enough citizens.
 
 **A:** If you've just run the mod for the first time in this save, wait a few seconds to let it start. Also note that not every colonist counts as a "citizen", but only free (i.e. not imprisoned by other factions, nor your prisoners, nor slaves from Simple Slavery) and of legal age, i.e. 16+. Colonists in cryptosleep also temporarily waive their citizen rights.
 
-**Q:** My Goverance is falling. How do I increase it?
+**Q:** My Governance is falling. How do I increase it?
 
-**A:** You need a Research Desk, a throne or a Management Desk. Preferably, put it into an impressive room. You also need a leader of your colony and he/she must have Governing enabled in Work Tab. I recommend to enable this work type for everyone: only the leader can use it anyway, so there is no problem if other colonists also have it. If your leader is too busy with other things, you can manually order them to "prioritize governing".
+**A:** You need a Research Desk, a throne or a Management Desk (from Colony Manager). Preferably, put it into an impressive room. You also need a leader of your colony and he/she must have Governing enabled in Work Tab. I recommend to enable this work type for everyone: only the leader can use it anyway, so there is no problem if other colonists also have it. If your leader is too busy with other things, you can manually order them to "prioritize governing".
 
 **Q:** How can I change the focus skill?
 

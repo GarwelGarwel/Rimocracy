@@ -37,7 +37,7 @@ Detailed readme: https://github.com/GarwelGarwel/Rimocracy/blob/master/README.md
 
 The source code, latest release and more information will always be available here: https://github.com/GarwelGarwel/Rimocracy
 
-Issue reports and pull requests are welcome.
+Issue reports (with logs!) and pull requests are welcome.
 
 This mod is distributed under MIT License.</description>
 	<modDependencies>
@@ -58,5 +58,6 @@ This mod is distributed under MIT License.</description>
 		<li>syrchalis.individuality</li>
 		<li>Mlie.RFRumorHasIt</li>
 		<li>VanillaExpanded.VanillaTraitsExpanded</li>
+		<li>VanillaExpanded.VFECore</li>
 	</loadAfter>
 </ModMetaData>

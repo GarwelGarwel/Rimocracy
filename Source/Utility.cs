@@ -44,21 +44,19 @@ namespace Rimocracy
                     if (comp != null)
                         return comp;
                 }
+                Log($"Could not find RimocracyComp among {Find.World.components.Count} world components.", LogLevel.Error);
                 return null;
             }
         }
 
         public static bool PoliticsEnabled => RimocracyComp != null && RimocracyComp.IsEnabled;
 
-        public static bool IsSimpleSlaveryInstalled => RimocracyDefOf.Enslaved != null;
-
         public static bool IsFreeAdultColonist(this Pawn pawn) =>
             pawn != null
             && !pawn.Dead
             && pawn.IsFreeNonSlaveColonist
             && pawn.HomeFaction.IsPlayer
-            && pawn.ageTracker.AgeBiologicalYears >= Settings.CitizenshipAge
-            && (!IsSimpleSlaveryInstalled || !pawn.health.hediffSet.hediffs.Any(hediff => hediff.def == RimocracyDefOf.Enslaved));
+            && pawn.ageTracker.AgeBiologicalYears >= Settings.CitizenshipAge;
 
         public static bool IsCitizen(this Pawn pawn) =>
             pawn.IsFreeAdultColonist() && (!ModsConfig.IdeologyActive || pawn?.Ideo == NationPrimaryIdeo || !RimocracyComp.DecisionActive(DecisionDef.StateIdeoligion));
@@ -220,7 +218,7 @@ namespace Rimocracy
                 return 0;
             if (pawn == target)
                 return 100;
-            return pawn.needs.mood.thoughts.TotalOpinionOffset(target);
+            return Mathf.Clamp(pawn.needs.mood.thoughts.TotalOpinionOffset(target), -100, 100);
         }
 
         public static float MedianCitizensOpinion(this Pawn pawn) =>
@@ -244,8 +242,7 @@ namespace Rimocracy
         public static string ColorizeByValue(this string text, float value, float lowValue = 0, float highValue = 0) =>
             text.ColorizeByValue(value, Color.red, Color.gray, Color.green, lowValue, highValue);
 
-        public static string ColorizeOpinion(this string text, float support) =>
-            text.ColorizeByValue(support, -0.5f, 0.5f);
+        public static string ColorizeOpinion(this string text, float support) => text.ColorizeByValue(support, -0.5f, 0.5f);
 
         public static string ColorizeOpinion(this float support) => support.ToStringWithSign("0").ColorizeOpinion(support);
 

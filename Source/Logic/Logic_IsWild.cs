@@ -18,6 +18,6 @@ namespace Rimocracy
 
         public override string LabelInverted => GetLabel(!isWild);
 
-        protected override bool IsSatisfiedInternal(Pawn pawn, Pawn target) => pawn.IsWildMan();
+        protected override bool IsSatisfiedInternal(Pawn pawn, Pawn target) => pawn.IsWildMan() == isWild;
     }
 }
