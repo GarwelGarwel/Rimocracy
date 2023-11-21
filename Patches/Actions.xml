@@ -108,7 +108,7 @@
 				</li>
 				
 				<li Class="PatchOperationAdd">
-					<xpath>/Defs/Rimocracy.PoliticalActionDef[defName="Execution"]/considerations/li[label="killing an innocent"]/all</xpath>
+					<xpath>/Defs/Rimocracy.PoliticalActionDef[defName="Execution"]/considerations/li[label="killing an innocent"]/all/list</xpath>
 					<value>
 						<li>
 							<trait>VTE_Desensitized</trait>
@@ -121,16 +121,18 @@
 					<xpath>/Defs/Rimocracy.PoliticalActionDef[defName="Execution"]/considerations/li[label="opinion of {TARGET}"]</xpath>
 					<value>
 						<all>
-							<li>
-								<trait>VTE_Desensitized</trait>
-								<inverted>true</inverted>
-							</li>
+							<list>
+								<li>
+									<trait>VTE_Desensitized</trait>
+									<inverted>true</inverted>
+								</li>
+							</list>
 						</all>
 					</value>
 				</li>
 				
 				<li Class="PatchOperationAdd">
-					<xpath>/Defs/Rimocracy.PoliticalActionDef[defName="Execution"]/considerations/li[label="{TARGET} is a fellow colonist"]/all</xpath>
+					<xpath>/Defs/Rimocracy.PoliticalActionDef[defName="Execution"]/considerations/li[label="{TARGET} is a fellow colonist"]/all/list</xpath>
 					<value>
 						<li>
 							<trait>VTE_Desensitized</trait>
@@ -197,7 +199,7 @@
 				</li>
 				
 				<li Class="PatchOperationAdd">
-					<xpath>/Defs/Rimocracy.PoliticalActionDef[defName="Banishment"]/considerations/li[label="banishment is cruel"]/all</xpath>
+					<xpath>/Defs/Rimocracy.PoliticalActionDef[defName="Banishment"]/considerations/li[label="banishment is cruel"]/any/list</xpath>
 					<value>
 						<li>
 							<trait>VTE_Desensitized</trait>
@@ -210,10 +212,12 @@
 					<xpath>/Defs/Rimocracy.PoliticalActionDef[defName="Banishment"]/considerations/li[label="opinion of {TARGET}"]</xpath>
 					<value>
 						<all>
-							<li>
-								<trait>VTE_Desensitized</trait>
-								<inverted>true</inverted>
-							</li>
+							<list>
+								<li>
+									<trait>VTE_Desensitized</trait>
+									<inverted>true</inverted>
+								</li>
+							</list>
 						</all>
 					</value>
 				</li>
