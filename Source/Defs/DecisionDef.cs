@@ -83,7 +83,14 @@ namespace Rimocracy
         /// <summary>
         /// Returns expiration tick or MaxValue if only tag is set
         /// </summary>
-        public int Expiration => Duration != 0 ? Find.TickManager.TicksAbs + Duration : (tag == null ? 0 : int.MaxValue);
+        public int Expiration
+        {
+            get
+            {
+                int duration = Duration;
+                return (Duration != 0) ? Find.TickManager.TicksAbs + duration : tag == null ? 0 : int.MaxValue;
+            }
+        }
 
         public List<Pawn> Stakeholders =>
             allCitizensReact || enactment == DecisionEnactmentRule.Law || enactment == DecisionEnactmentRule.Referendum
