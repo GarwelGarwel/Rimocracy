@@ -253,9 +253,9 @@ namespace Rimocracy
             if (!IsUpdateTick)
                 return;
 
-            if (CitizensCount < Settings.MinPopulation || (!HasLeader && !Citizens.Any(pawn => pawn.CanBeLeader())))
+            if (Faction.OfPlayer.def.techLevel < Settings.MinTechLevel || CitizensCount < Settings.MinPopulation || (!HasLeader && !Citizens.Any(pawn => pawn.CanBeLeader())))
             {
-                // If there are too few citizens or no potential leaders, politics is disabled
+                // If the tech level is too low, there are too few citizens or no potential leaders, politics is disabled
                 if (IsEnabled)
                 {
                     IsEnabled = false;

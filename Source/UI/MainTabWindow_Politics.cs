@@ -19,7 +19,9 @@ namespace Rimocracy
             // Politics disabled
             if (!comp.IsEnabled)
             {
-                Widgets.Label(rect, $"You need at least {Settings.MinPopulation.ToStringCached()} free, adult colonists{(ModsConfig.IdeologyActive && Utility.RimocracyComp.DecisionActive(DecisionDef.StateIdeoligion) ? $" following {Utility.NationPrimaryIdeo?.name ?? "your primary ideoligion"}" : "")} and a potential leader for politics.");
+                if (Faction.OfPlayer.def.techLevel < Settings.MinTechLevel)
+                    Widgets.Label(rect, $"Your faction's tech level needs to be {Settings.MinTechLevel.ToStringHuman().CapitalizeFirst()} or higher for politics. Currently it is {Faction.OfPlayer.def.techLevel.ToStringHuman().CapitalizeFirst()}.");
+                else Widgets.Label(rect, $"You need at least {Settings.MinPopulation.ToStringCached()} free, adult colonists{(ModsConfig.IdeologyActive && Utility.RimocracyComp.DecisionActive(DecisionDef.StateIdeoligion) ? $" following {Utility.NationPrimaryIdeo?.name ?? "your primary ideoligion"}" : "")} and a potential leader for politics.");
                 return;
             }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RimWorld;
+using System;
 using UnityEngine;
 using Verse;
 
@@ -31,6 +32,13 @@ namespace Rimocracy
             Listing_Standard content = new Listing_Standard();
             content.ColumnWidth = rect.width - 20;
             content.Begin(viewRect);
+
+            TechLevel curTechLevel = TechLevel.Undefined;
+            FactionDef playerFaction = Faction.OfPlayerSilentFail?.def;
+            if (playerFaction != null)
+                curTechLevel = playerFaction.techLevel;
+            content.Label($"Min tech level for politics: {MinTechLevel.ToStringHuman().CapitalizeFirst()}{(curTechLevel != TechLevel.Undefined ? $" (current level: {curTechLevel.ToStringHuman().CapitalizeFirst()})" : "")}", tooltip: "Most mod effects are disabled unless player's faction is at this tech level or higher.");
+            MinTechLevel = (TechLevel)content.Slider((int)MinTechLevel, (int)TechLevel.Animal, (int)TechLevel.Archotech);
 
             content.Label($"Min population for politics: {MinPopulation.ToStringCached()}", tooltip: "Most mod effects are disabled if you have fewer citizens than this number.");
             MinPopulation = (int)content.Slider(MinPopulation, 2, 20);
