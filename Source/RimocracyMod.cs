@@ -33,29 +33,26 @@ namespace Rimocracy
             content.ColumnWidth = rect.width - 20;
             content.Begin(viewRect);
 
-            TechLevel curTechLevel = TechLevel.Undefined;
-            FactionDef playerFaction = Faction.OfPlayerSilentFail?.def;
-            if (playerFaction != null)
-                curTechLevel = playerFaction.techLevel;
-            content.Label($"Min tech level for politics: {MinTechLevel.ToStringHuman().CapitalizeFirst()}{(curTechLevel != TechLevel.Undefined ? $" (current level: {curTechLevel.ToStringHuman().CapitalizeFirst()})" : "")}", tooltip: "Most mod effects are disabled unless player's faction is at this tech level or higher.");
+            TechLevel curTechLevel = Faction.OfPlayerSilentFail?.def != null ? Faction.OfPlayerSilentFail.def.techLevel : TechLevel.Undefined;
+            content.Label($"Min tech level for politics: {MinTechLevel.ToStringHuman().CapitalizeFirst().Colorize(Color.yellow)}{(curTechLevel != TechLevel.Undefined ? $" (current level: {curTechLevel.ToStringHuman().CapitalizeFirst().Colorize(Color.yellow)})" : "")}", tooltip: "Most mod effects are disabled unless player's faction is at this tech level or higher.");
             MinTechLevel = (TechLevel)content.Slider((int)MinTechLevel, (int)TechLevel.Animal, (int)TechLevel.Archotech);
 
-            content.Label($"Min population for politics: {MinPopulation.ToStringCached()}", tooltip: "Most mod effects are disabled if you have fewer citizens than this number.");
+            content.Label($"Min population for politics: {MinPopulation.ToStringCached().Colorize(Color.yellow)}", tooltip: "Most mod effects are disabled if you have fewer citizens than this number.");
             MinPopulation = (int)content.Slider(MinPopulation, 2, 20);
 
-            content.Label($"Citizenship age: {CitizenshipAge.ToStringCached()}", tooltip: "Biological age for a colonist to have citizenship rights.");
+            content.Label($"Citizenship age: {CitizenshipAge.ToStringCached().Colorize(Color.yellow)}", tooltip: "Biological age for a colonist to have citizenship rights.");
             CitizenshipAge = (int)content.Slider(CitizenshipAge, 0, 18);
 
-            content.Label($"Governance decay speed: {GovernanceDecaySpeed.ToStringPercent()}", tooltip: "Relative speed of governance deterioration over time.");
+            content.Label($"Governance decay speed: {GovernanceDecaySpeed.ToStringPercent().Colorize(Color.yellow)}", tooltip: "Relative speed of governance deterioration over time.");
             GovernanceDecaySpeed = (float)Math.Round(content.Slider(GovernanceDecaySpeed, 0, 2), 2);
 
-            content.Label($"Min Population for campaigning: {MinPopulationForCampaigning.ToStringCached()}", tooltip: "Min number of voters to have elections between only two candidates, who actively seek supporters.");
+            content.Label($"Min Population for campaigning: {MinPopulationForCampaigning.ToStringCached().Colorize(Color.yellow)}", tooltip: "Min number of voters to have elections between only two candidates, who actively seek supporters.");
             MinPopulationForCampaigning = (int)content.Slider(MinPopulationForCampaigning, MinPopulation, 20);
 
-            content.Label($"Campaign duration: {CampaignDurationDays} days", tooltip: "How many days a campaign lasts (also applies to the delay before the first election).");
+            content.Label($"Campaign duration: {CampaignDurationDays.ToString().Colorize(Color.yellow)} days", tooltip: "How many days a campaign lasts (also applies to the delay before the first election).");
             CampaignDurationDays = (float)Math.Round(content.Slider(CampaignDurationDays, 0, 15), 1);
 
-            content.Label($"Governance cost factor: {GovernanceCostFactor.ToStringPercent()}", tooltip: "Adjust the Governance cost of decisions.");
+            content.Label($"Governance cost factor: {GovernanceCostFactor.ToStringPercent().Colorize(Color.yellow)}", tooltip: "Adjust the Governance cost of decisions.");
             GovernanceCostFactor = (float)Math.Round(content.Slider(GovernanceCostFactor, 0, 2), 2);
 
             content.CheckboxLabeled("Loyalty enabled", ref LoyaltyEnabled, $"Pawns have a Loyalty need that affects their reaction to decisions and may cause protests. {(LoyaltyEnabled ? "Note: If you uncheck this but then change your mind, list pawns' loyalties will be reset to 50%.".Colorize(Color.red) : "")}");
