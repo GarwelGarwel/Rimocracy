@@ -52,11 +52,7 @@
 		<requirements>
 			<succession>Nobility</succession>
 			<techLevel>
-				<any>
-					<li>Medieval</li>
-					<li>Industrial</li>
-					<li>Spacer</li>
-				</any>
+				<higherOrEqual>Medieval</higherOrEqual>
 			</techLevel>
 		</requirements>
 	</Rimocracy.LeaderTitleDef>
@@ -107,10 +103,7 @@
 		<requirements>
 			<succession>Martial</succession>
 			<techLevel>
-				<any>
-					<li>Industrial</li>
-					<li>Spacer</li>
-				</any>
+				<higherOrEqual>Industrial</higherOrEqual>
 			</techLevel>
 		</requirements>
 	</Rimocracy.LeaderTitleDef>
@@ -133,11 +126,7 @@
 		<requirements>
 			<succession>Seniority</succession>
 			<techLevel>
-				<any>
-					<li>Medieval</li>
-					<li>Industrial</li>
-					<li>Spacer</li>
-				</any>
+				<higherOrEqual>Medieval</higherOrEqual>
 			</techLevel>
 		</requirements>
 	</Rimocracy.LeaderTitleDef>
@@ -179,11 +168,7 @@
 							<lessThan>12</lessThan>
 						</population>
 						<techLevel>
-							<any>
-								<li>Medieval</li>
-								<li>Industrial</li>
-								<li>Spacer</li>
-							</any>
+							<higherOrEqual>Medieval</higherOrEqual>
 						</techLevel>
 					</li>
 					<li>
@@ -205,10 +190,7 @@
 				<lessOrEqual>15</lessOrEqual>
 			</population>
 			<techLevel>
-				<any>
-					<li>Industrial</li>
-					<li>Spacer</li>
-				</any>
+				<higherOrEqual>Industrial</higherOrEqual>
 			</techLevel>
 		</requirements>
 	</Rimocracy.LeaderTitleDef>
@@ -225,10 +207,7 @@
 							<greaterOrEqual>12</greaterOrEqual>
 						</population>
 						<techLevel>
-							<any>
-								<li>Industrial</li>
-								<li>Spacer</li>
-							</any>
+							<higherOrEqual>Industrial</higherOrEqual>
 						</techLevel>
 					</li>
 					<li>
@@ -246,10 +225,7 @@
 		<requirements>
 			<succession>Seniority</succession>
 			<techLevel>
-				<any>
-					<li>Industrial</li>
-					<li>Spacer</li>
-				</any>
+				<higherOrEqual>Industrial</higherOrEqual>
 			</techLevel>
 		</requirements>
 	</Rimocracy.LeaderTitleDef>
