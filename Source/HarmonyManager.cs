@@ -105,7 +105,7 @@ namespace Rimocracy
             Pawn target = __instance.job.targetA.Pawn;
             Log($"Execution_Prefix for {target}");
             if (Vetoed(RimocracyDefOf.Execution, target))
-                target.guest.interactionMode = PrisonerInteractionModeDefOf.NoInteraction;
+                target.guest.SetNoInteraction();
         }
 
         public static void Execution_Postfix(Pawn executioner, Pawn victim)
@@ -125,7 +125,7 @@ namespace Rimocracy
             Pawn target = __instance.job.targetA.Pawn;
             Log($"Release_Prefix for {target}");
             if (Vetoed(RimocracyDefOf.Release, target))
-                target.guest.interactionMode = PrisonerInteractionModeDefOf.NoInteraction;
+                target.guest.SetNoInteraction();
         }
 
         public static void Release_Postfix(Pawn p)
