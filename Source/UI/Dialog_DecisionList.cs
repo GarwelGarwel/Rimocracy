@@ -118,7 +118,7 @@ namespace Rimocracy
                             {
                                 Utility.Log($"Activating {def.defName}.");
                                 if (def.Activate(votingResult))
-                                    Find.LetterStack.ReceiveLetter($"{def.LabelTitleCase} Decision Taken", def.description, LetterDefOf.NeutralEvent, null);
+                                    Find.LetterStack.ReceiveLetter($"{def.LabelTitleCase} Decision Taken", def.description, LetterDefOf.NeutralEvent);
                                 else Messages.Message($"Could not take {def.LabelTitleCase} decision: requirements are not met.", MessageTypeDefOf.RejectInput, false);
                                 Close();
                             }

@@ -161,6 +161,8 @@ namespace Rimocracy
 
         public static bool RoleRequirementsMetPotentially(Pawn pawn, Precept_Role role)
         {
+            if (role?.def?.roleRequirements == null)
+                return false;
             for (int i = 0; i < role.def.roleRequirements.Count; i++)
                 if (!(role.def.roleRequirements[i] is RoleRequirement_Leader) && !role.def.roleRequirements[i].Met(pawn, role))
                     return false;
