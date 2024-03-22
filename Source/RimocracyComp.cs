@@ -245,7 +245,7 @@ namespace Rimocracy
                     Log($"Governance: {Governance.ToStringPercent()}");
                     Log($"Governance decay: {GovernanceDecayPerDay.ToStringPercent()}/day");
                     Log($"Focus skill: {FocusSkill}");
-                    Log($"Decisions: {Decisions.Select(decision => decision?.Tag).ToCommaList()}");
+                    Log($"Decisions: {Decisions.Select(decision => decision?.def?.defName).ToCommaList()}");
                     Log($"Protesters: {Protesters.Select(pawn => pawn.Name.ToStringShort).ToCommaList()}");
                 }
             }

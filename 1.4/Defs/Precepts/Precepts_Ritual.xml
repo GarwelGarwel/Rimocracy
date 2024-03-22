@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+	<PreceptDef ParentName="SpeechPreceptBase">
+		<defName>Rimocracy_DecisionAnnouncement</defName>
+		<label>decision announcement</label>
+		<description>{SPEAKER_labelShort} announces the {DECISION} decision and proposes to adopt it.
+\nIf all goes well, the decision will become effective immediately after the end of the announcement. Loyalty of supporters of the decision will increase and loyalty of its oppnents decrease.
+\nIf the {SPEAKER_labelShort} has second thoughts or the announcement fails, the decision won't be taken, Governance and citizens' moods will decrease.
+\nThe outcome depends on Governance Quality, leader's support for the decision, number and loyalty of participants and {SPEAKER_labelShort}'s social abilities.</description>
+		<classic>true</classic>
+		<enabledForNPCFactions>false</enabledForNPCFactions>
+		<ritualPatternBase>ThroneSpeech</ritualPatternBase>
+		<iconPath>Things/Mote/SpeechSymbols/Speech</iconPath>
+		<ignoreNameUniqueness>true</ignoreNameUniqueness>
+		<usesIdeoVisualEffects>false</usesIdeoVisualEffects>
+	</PreceptDef>
+
+</Defs>

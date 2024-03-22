@@ -67,7 +67,6 @@ namespace Rimocracy
                     $"{LeaderTitle} {Utility.RimocracyComp.Leader.NameShortColored} vetoed {politicalAction.label}{(target != null ? $" of {target.NameShortColored}" : "")} (support: {opinions[Utility.RimocracyComp.Leader].support.ToStringWithSign("0")}).",
                     new LookTargets(target),
                     MessageTypeDefOf.NegativeEvent);
-
                 return true;
             }
             Log($"Action {politicalAction.defName} was approved or leader's approval is not required.");
@@ -84,6 +83,8 @@ namespace Rimocracy
                 return;
             Pawn target = __instance.job.targetA.Pawn;
             Log($"Arrest_Prefix for {target} (from {target.Faction}) by {__instance.pawn.Faction}");
+            if (target.InMentalState)
+                Log($"{target} is in {target.MentalState.def.defName} mental state.");
             if (Vetoed(RimocracyDefOf.Arrest, out __state, target))
                 __instance.EndJobWith(JobCondition.Incompletable);
         }
@@ -95,7 +96,11 @@ namespace Rimocracy
             Log($"Arrest_Postfix for {___pawn} (from {___pawn.Faction}) by {by}");
             if (__state != null)
                 RimocracyDefOf.Arrest.Activate(__state);
-            else RimocracyDefOf.Arrest.Activate(___pawn);
+            else
+            {
+                Log($"Arrest_Postfix: DecisionVoteResults (__state) is null for arresting {___pawn}.", LogLevel.Warning);
+                RimocracyDefOf.Arrest.Activate(___pawn);
+            }
         }
 
         #endregion ARREST

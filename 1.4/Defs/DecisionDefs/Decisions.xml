@@ -2,6 +2,22 @@
 
 <Defs>
 
+	<!-- TEST -->
+
+	<Rimocracy.DecisionDef>
+		<defName>TestDecision</defName>
+		<label>sample decision</label>
+		<description>This is just a dummy decision for testing the new decision system.</description>
+		<considerations>
+			<li>
+				<label>good idea</label>
+				<value>1</value>
+			</li>
+		</considerations>
+		<category>Misc</category>
+		<loyaltyEffect>0</loyaltyEffect>
+	</Rimocracy.DecisionDef>
+
 	<!-- Forms of Government -->
 
 	<Rimocracy.DecisionDef Abstract="True" Name="BaseGovernmentFormDecision">

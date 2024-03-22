@@ -191,6 +191,12 @@ namespace Rimocracy
             return comp != null && !comp.PowerOn;
         }
 
+        public static Building GetRandomValidGoverningBench(this Map map)
+        {
+            ThingComp_GoverningBench governingBench;
+            return map.listerBuildings.allBuildingsColonist.Where(thing => (governingBench = thing.TryGetComp<ThingComp_GoverningBench>()) != null && governingBench.AllowGoverning && !thing.IsPowerStarved()).RandomElement();
+        }
+
         public static float GovernanceImprovementSpeed(Pawn pawn, Thing worktable) =>
             pawn.GetStatValue(RimocracyDefOf.GovernEfficiency) * worktable.GetStatValue(RimocracyDefOf.GovernEfficiencyFactor);
 

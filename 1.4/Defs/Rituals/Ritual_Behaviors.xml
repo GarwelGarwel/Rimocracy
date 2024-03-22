@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+	<RitualBehaviorDef>
+		<defName>Rimocracy_DecisionDebate</defName>
+		<workerClass>RitualBehaviorWorker_Speech</workerClass><!-- change this to custom worker class? -->
+		<durationTicks>5000</durationTicks>
+		<letterTitle>Decision debate</letterTitle>
+		<letterText>{SPEAKER_labelShort} proposes to adopt the {DECISION} decision.
+\nIf all goes well, the decision will become effective immediately after the end of the debate. Loyalty of supporters of the decision will increase and loyalty of its oppnents decrease.
+\тIf the debate goes poorly, the decision won't be taken, Governance and citizens' moods will decrease.
+\тThe outcome depends on Governance Quality, support for the decision, number and loyalty of participants and {SPEAKER_labelShort}'s social abilities.</letterText>
+		<roles>
+			<li Class="RitualRoleOrganizer"><!-- change this to custom role? -->
+				<label>leader</label>
+				<id>speaker</id>
+				<maxCount>1</maxCount>
+				<required>true</required>
+				<allowChild>false</allowChild>
+			</li>
+		</roles>
+		<stages>
+			<li Class="Rimocracy.RitualStage_GoverningBenchSpeech">
+				<defaultDuty>SpectateSocial</defaultDuty>
+				<spectatorsRequired>true</spectatorsRequired>
+				<endTriggers>
+					<li Class="StageEndTrigger_DurationPercentage">
+						<percentage>1.0</percentage>
+					</li>
+				</endTriggers>
+				<roleBehaviors>
+					<li>
+						<roleId>speaker</roleId>
+						<dutyDef>GiveSpeech</dutyDef><!-- check -->
+					</li>
+				</roleBehaviors>
+				<visualEffectDef>Speech</visualEffectDef>
+			</li>
+		</stages>
+	</RitualBehaviorDef>
+
+	<RitualBehaviorDef>
+		<defName>Rimocracy_DecisionAnnouncement</defName>
+		<workerClass>RitualBehaviorWorker_Speech</workerClass><!-- change this to custom worker class? -->
+		<durationTicks>5000</durationTicks>
+		<letterTitle>Decision announcement</letterTitle>
+		<letterText>{SPEAKER_labelShort} announces the {DECISION} decision and proposes to adopt it.
+\nIf all goes well, the decision will become effective immediately after the end of the announcement. Loyalty of supporters of the decision will increase and loyalty of its oppnents decrease.
+\nIf the {SPEAKER_labelShort} has second thoughts or the announcement fails, the decision won't be taken, Governance and citizens' moods will decrease.
+\nThe outcome depends on Governance Quality, leader's support for the decision, number and loyalty of participants and {SPEAKER_labelShort}'s social abilities.</letterText>
+		<roles>
+			<li Class="RitualRoleOrganizer"><!-- change this to custom role? -->
+				<label>leader</label>
+				<id>speaker</id>
+				<maxCount>1</maxCount>
+				<required>true</required>
+				<allowChild>false</allowChild>
+			</li>
+		</roles>
+		<stages>
+			<li Class="Rimocracy.RitualStage_GoverningBenchSpeech">
+				<defaultDuty>Spectate</defaultDuty><!-- check -->
+				<spectatorsRequired>true</spectatorsRequired>
+				<endTriggers>
+					<li Class="StageEndTrigger_DurationPercentage">
+						<percentage>1.0</percentage>
+					</li>
+				</endTriggers>
+				<roleBehaviors>
+					<li>
+						<roleId>speaker</roleId>
+						<dutyDef>GiveSpeech</dutyDef><!-- check -->
+					</li>
+				</roleBehaviors>
+				<visualEffectDef>Speech</visualEffectDef>
+			</li>
+		</stages>
+	</RitualBehaviorDef>
+
+</Defs>

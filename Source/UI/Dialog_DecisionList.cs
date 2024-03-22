@@ -40,6 +40,7 @@ namespace Rimocracy
             RimocracyComp comp = Utility.RimocracyComp;
             if (comp.IsUpdateTick)
                 UpdateAvailableDecisions();
+            List<Pawn> citizens = Utility.Citizens.ToList();
             if (viewRect.height < rect.height)
             {
                 viewRect.width = rect.width - GenUI.ScrollBarWidth - 4;
@@ -102,7 +103,7 @@ namespace Rimocracy
                                 break;
                         }
 
-                        DecisionVoteResults votingResult = def.GetVotingResults(Utility.Citizens.ToList());
+                        DecisionVoteResults votingResult = def.GetVotingResults(citizens);
                         if (def.EnactmentRule == DecisionEnactmentRule.Decree && comp.HasLeader)
                         {
                             PawnDecisionOpinion leaderOpinion = votingResult[comp.Leader];
@@ -122,9 +123,17 @@ namespace Rimocracy
 
                         // Display Activate button for valid decisions
                         if (def.IsValid)
-                            if (def.IsPassed(votingResult))
+                            if (def.IsPassed(votingResult) || Prefs.DevMode)
                             {
-                                if (content.ButtonText("Activate"))
+                                if (content.ButtonText("Start ritual"))
+                                {
+                                    Close();
+                                    RitualUtility.ShowDecisionRitualDialog(def);
+                                    //Find.WindowStack.Add(new Dialog_BeginRitual($"Take {def.LabelTitleCase} Decision", "Decision adoption", null, comp.Leader.Map.GetRandomAllowedGoverningBench(), comp.Leader.Map, null, comp.Leader, null));
+                                    Utility.Log($"Decision adoption complete.");
+                                }
+                                // Legacy activation (TODO: remove after ritual is implemented)
+                                if (content.ButtonText("Activate (old)"))
                                 {
                                     Utility.Log($"Activating {def.defName}.");
                                     if (def.Activate(votingResult))

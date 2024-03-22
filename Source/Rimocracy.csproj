@@ -104,6 +104,9 @@
     <Compile Include="Logic\Logic_TitleSeniority.cs" />
     <Compile Include="Need_Loyalty.cs" />
     <Compile Include="RecordWorker_TimeProtesting.cs" />
+    <Compile Include="Rituals\LordJob_Ritual_Decision.cs" />
+    <Compile Include="Rituals\RitualStage_GoverningBenchSpeech.cs" />
+    <Compile Include="Rituals\RitualUtility.cs" />
     <Compile Include="UI\Dialog_PoliticalAction.cs" />
     <Compile Include="GoodwillSituationWorker_Multiculturalism.cs" />
     <Compile Include="HarmonyManager.cs" />

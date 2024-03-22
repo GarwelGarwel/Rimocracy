@@ -19,6 +19,8 @@ namespace Rimocracy
         public static PoliticalActionDef SettlementAttack;
         public static PoliticalActionDef Trade;
 
+        public static PreceptDef Rimocracy_DecisionAnnouncement;
+
         public static RecordDef TimesElected;
         public static RecordDef VotersSwayed;
         public static RecordDef SupportersRecruited;
