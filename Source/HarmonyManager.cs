@@ -234,8 +234,8 @@ namespace Rimocracy
             SuccessionDef newSuccession = Utility.RimocracyComp.GetRandomSuccessionDef(newIdeo);
             if (newSuccession != Utility.RimocracyComp.SuccessionType)
             {
-                Log($"SuccessionDef type changed from {Utility.RimocracyComp.SuccessionType.LabelCap} to {newSuccession.LabelCap}.");
-                Find.LetterStack.ReceiveLetter("SuccessionDef type changed", $"SuccessionDef type changed to {newSuccession.LabelCap} due to change of primary ideoligion.\n\n{newSuccession.description}", LetterDefOf.NeutralEvent);
+                Log($"Succession type changed from {Utility.RimocracyComp.SuccessionType.LabelCap} to {newSuccession.LabelCap}.");
+                Find.LetterStack.ReceiveLetter("Succession type changed", $"Succession type changed to {newSuccession.LabelCap} due to change of primary ideoligion.\n\n{newSuccession.description}", LetterDefOf.NeutralEvent);
                 Utility.RimocracyComp.SuccessionType = newSuccession;
             }
         }
