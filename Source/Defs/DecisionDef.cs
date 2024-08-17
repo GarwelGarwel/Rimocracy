@@ -142,7 +142,7 @@ namespace Rimocracy
 
             if (setSuccession != null)
             {
-                Log($"Setting SuccessionDef to {setSuccession}.");
+                Log($"Setting succession to {setSuccession}.");
                 Utility.RimocracyComp.SuccessionType = setSuccession;
             }
 
