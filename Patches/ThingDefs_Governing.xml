@@ -243,6 +243,107 @@
 		</value>
 	</Operation>
 
+	<!-- MOD: COLONY MANAGER REDUX -->
+
+	<Operation Class="PatchOperationAdd">
+		<success>Always</success>
+		<xpath>/Defs/ThingDef[defName="CM_BasicManagerStation"]/statBases</xpath>
+		<value>
+			<GovernEfficiencyFactor>1.05</GovernEfficiencyFactor>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationSequence">
+		<success>Always</success>
+		<operations>
+			<li Class="PatchOperationTest">
+				<xpath>/Defs/ThingDef[defName="CM_BasicManagerStation"]/comps</xpath>
+				<success>Invert</success>
+			</li>
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/ThingDef[defName="CM_BasicManagerStation"]</xpath>
+				<value>
+					<comps/>
+				</value>
+			</li>
+		</operations>
+	</Operation>
+	<Operation Class="PatchOperationAdd">
+		<success>Always</success>
+		<xpath>/Defs/ThingDef[defName="CM_BasicManagerStation"]/comps</xpath>
+		<value>
+			<li>
+				<compClass>Rimocracy.ThingComp_GoverningBench</compClass>
+			</li>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<success>Always</success>
+		<xpath>/Defs/ThingDef[defName="CM_ManagerStation"]/statBases</xpath>
+		<value>
+			<GovernEfficiencyFactor>1.15</GovernEfficiencyFactor>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationSequence">
+		<success>Always</success>
+		<operations>
+			<li Class="PatchOperationTest">
+				<xpath>/Defs/ThingDef[defName="CM_ManagerStation"]/comps</xpath>
+				<success>Invert</success>
+			</li>
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/ThingDef[defName="CM_ManagerStation"]</xpath>
+				<value>
+					<comps/>
+				</value>
+			</li>
+		</operations>
+	</Operation>
+	<Operation Class="PatchOperationAdd">
+		<success>Always</success>
+		<xpath>/Defs/ThingDef[defName="CM_ManagerStation"]/comps</xpath>
+		<value>
+			<li>
+				<compClass>Rimocracy.ThingComp_GoverningBench</compClass>
+			</li>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<success>Always</success>
+		<xpath>/Defs/ThingDef[defName="CM_AIManager"]/statBases</xpath>
+		<value>
+			<GovernEfficiencyFactor>1.25</GovernEfficiencyFactor>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationSequence">
+		<success>Always</success>
+		<operations>
+			<li Class="PatchOperationTest">
+				<xpath>/Defs/ThingDef[defName="CM_AIManager"]/comps</xpath>
+				<success>Invert</success>
+			</li>
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/ThingDef[defName="CM_AIManager"]</xpath>
+				<value>
+					<comps/>
+				</value>
+			</li>
+		</operations>
+	</Operation>
+	<Operation Class="PatchOperationAdd">
+		<success>Always</success>
+		<xpath>/Defs/ThingDef[defName="CM_AIManager"]/comps</xpath>
+		<value>
+			<li>
+				<compClass>Rimocracy.ThingComp_GoverningBench</compClass>
+			</li>
+		</value>
+	</Operation>
+
 	<!-- MOD: THRONES PLUS -->
 
 	<Operation Class="PatchOperationAdd">
