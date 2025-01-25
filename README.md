@@ -1,5 +1,5 @@
 # Rimocracy
-RimWorld mod to add politics to the game
+RimWorld mod to add politics to the game (2025 TM)
 
 ## Governance
 
