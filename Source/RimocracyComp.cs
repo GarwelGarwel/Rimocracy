@@ -390,6 +390,18 @@ namespace Rimocracy
 
         void ChooseLeader()
         {
+            if (!SuccessionType.HasPotentialCandidates)
+            {
+                Log($"There are no potential leaders for {SuccessionType}. Changing succession type.");
+                SuccessionDef newSuccession = GetRandomSuccessionDef(NationPrimaryIdeo);
+                if (newSuccession != null)
+                {
+                    Log($"Succession type changed from {SuccessionType} to {newSuccession}.");
+                    Find.LetterStack.ReceiveLetter("Succession type changed", $"Succession type has changed to {newSuccession.LabelCap}, because there were no eligible candidates for {SuccessionType.LabelCap} succession.\n\n{newSuccession.description}", LetterDefOf.NeutralEvent);
+                    SuccessionType = newSuccession;
+                }
+            }
+
             Pawn oldLeader = Leader;
             Leader = SuccessionWorker.ChooseLeader();
 
