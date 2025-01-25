@@ -43,11 +43,16 @@ namespace Rimocracy
 
         public float GetWeight(Ideo ideo)
         {
+            if (!HasPotentialCandidates)
+                return 0;
             float res = weight;
             if (!memes.NullOrEmpty() && ideo != null)
                 foreach (StatModifier meme in memes.Where(meme => ideo.memes.Exists(m => m.defName == meme.name)))
                     meme.TransformValue(ref res);
+            Utility.Log($"{defName} weight: {res:F1}");
             return res;
         }
+
+        public bool HasPotentialCandidates => Worker?.Candidates?.Any() == true;
     }
 }

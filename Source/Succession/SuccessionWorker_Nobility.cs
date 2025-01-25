@@ -8,7 +8,7 @@ namespace Rimocracy
         public override bool IsValid => !Candidates.EnumerableNullOrEmpty();
 
         public override bool CanBeCandidate(Pawn pawn) =>
-            base.CanBeCandidate(pawn) && pawn.royalty != null && !pawn.royalty.AllTitlesForReading.NullOrEmpty();
+            base.CanBeCandidate(pawn) && pawn.royalty != null && pawn.royalty.AllTitlesInEffectForReading.Any();
 
         public override Pawn ChooseLeader() => Candidates.MaxByWithFallback(pawn => GetExtendedSeniority(pawn.royalty.MostSeniorTitle));
 
