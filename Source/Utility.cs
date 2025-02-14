@@ -49,7 +49,7 @@ namespace Rimocracy
             }
         }
 
-        public static bool PoliticsEnabled => RimocracyComp != null && RimocracyComp.IsEnabled;
+        public static bool PoliticsEnabled => RimocracyComp?.IsEnabled ?? false;
 
         public static bool IsFreeAdultColonist(this Pawn pawn) =>
             pawn != null
