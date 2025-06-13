@@ -36,7 +36,7 @@ namespace Rimocracy
             }
             Toil governToil = new Toil
             {
-                tickAction = Govern_TickAction,
+                tickIntervalAction = Govern_TickIntervalAction,
                 defaultCompleteMode = ToilCompleteMode.Delay,
                 defaultDuration = JobDurationTicks,
                 activeSkill = () => SkillDefOf.Social
@@ -53,13 +53,13 @@ namespace Rimocracy
 
         float GovernanceImprovementSpeed => Utility.GovernanceImprovementSpeed(pawn, TargetA.Thing);
 
-        void Govern_TickAction()
+        void Govern_TickIntervalAction(int delta)
         {
             if (isSitting)
                 rotateToFace = TargetIndex.B;
-            comp.ChangeGovernance(GovernanceImprovementSpeed / GenDate.TicksPerHour);
-            pawn.skills.Learn(SkillDefOf.Social, 0.1f);
-            pawn.GainComfortFromCellIfPossible(true);
+            comp.ChangeGovernance(delta * GovernanceImprovementSpeed / GenDate.TicksPerHour);
+            pawn.skills.Learn(SkillDefOf.Social, delta * 0.1f);
+            pawn.GainComfortFromCellIfPossible(delta, true);
         }
     }
 }

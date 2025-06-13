@@ -49,7 +49,7 @@ namespace Rimocracy
             }
         }
 
-        public static bool PoliticsEnabled => RimocracyComp != null && RimocracyComp.IsEnabled;
+        public static bool PoliticsEnabled => RimocracyComp?.IsEnabled ?? false;
 
         public static bool IsFreeAdultColonist(this Pawn pawn) =>
             pawn != null
@@ -62,11 +62,11 @@ namespace Rimocracy
             pawn.IsFreeAdultColonist() && (!ModsConfig.IdeologyActive || pawn?.Ideo == NationPrimaryIdeo || !RimocracyComp.DecisionActive(DecisionDef.StateIdeoligion));
 
         public static IEnumerable<Pawn> Citizens =>
-            PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonists_NoCryptosleep.Where(p => p.IsCitizen());
+            PawnsFinder.AllMapsCaravansAndTravellingTransporters_Alive_FreeColonists_NoCryptosleep.Where(p => p.IsCitizen());
 
         public static int CitizensCount => Citizens.Count();
 
-        public static int Population => PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonistsAndPrisoners_NoCryptosleep.Count();
+        public static int Population => PawnsFinder.AllMapsCaravansAndTravellingTransporters_Alive_FreeColonistsAndPrisoners_NoCryptosleep.Count();
 
         public static float CitizenGovernanceWeight(Pawn pawn)
         {
@@ -101,7 +101,7 @@ namespace Rimocracy
         public static float TotalNutrition => Find.Maps.Where(map => map.IsPlayerHome).Sum(map => map.resourceCounter.TotalHumanEdibleNutrition);
 
         public static float FoodConsumptionPerDay =>
-            PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonistsAndPrisoners_NoCryptosleep
+            PawnsFinder.AllMapsCaravansAndTravellingTransporters_Alive_FreeColonistsAndPrisoners_NoCryptosleep
             .Sum(pawn => pawn.needs.food.FoodFallPerTick) * GenDate.TicksPerDay;
 
         public static int GetTotalSilver() => Find.Maps.Where(map => map.IsPlayerHome).Sum(map => map.resourceCounter.Silver);

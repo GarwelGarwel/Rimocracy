@@ -22,11 +22,20 @@ namespace Rimocracy
             harmony = new Harmony("Garwel.Rimocracy");
             Type type = typeof(HarmonyManager);
 
-            void Patch(string methodToPatch, string prefix = null, string postfix = null) =>
-                harmony.Patch(
-                    AccessTools.Method(methodToPatch),
-                    prefix != null ? new HarmonyMethod(type.GetMethod(prefix)) : null,
-                    postfix != null ? new HarmonyMethod(type.GetMethod(postfix)) : null);
+            void Patch(string methodToPatch, string prefix = null, string postfix = null, Type[] parameters = null)
+            {
+                try
+                {
+                    harmony.Patch(
+                        AccessTools.Method(methodToPatch, parameters),
+                        prefix != null ? new HarmonyMethod(type.GetMethod(prefix)) : null,
+                        postfix != null ? new HarmonyMethod(type.GetMethod(postfix)) : null);
+                }
+                catch (Exception ex)
+                {
+                    Log($"Failed to patch {methodToPatch} with prefix {prefix} and postfix {postfix}: {ex.Message}\n{ex.StackTrace}", LogLevel.Error);
+                }
+            }
 
             Log($"Applying Harmony patches...");
 
@@ -37,7 +46,7 @@ namespace Rimocracy
             Patch("RimWorld.ExecutionUtility:DoExecutionByCut", postfix: "Execution_Postfix");
             Patch("Verse.AI.JobDriver_ReleasePrisoner:MakeNewToils", prefix: "Release_Prefix");
             Patch("RimWorld.GenGuest:PrisonerRelease", postfix: "Release_Postfix");
-            Patch("RimWorld.PawnBanishUtility:Banish", "Banishment_Prefix", "Banishment_Postfix");
+            Patch("RimWorld.PawnBanishUtility:Banish", "Banishment_Prefix", "Banishment_Postfix", new Type[] { typeof(Pawn), typeof(PlanetTile), typeof(bool) });
             Patch("RimWorld.Planet.SettlementUtility:Attack", "SettlementAttack_Prefix", "SettlementAttack_Postfix");
             Patch("RimWorld.Dialog_Trade:PostOpen", postfix: "Trade_Prefix");
             Patch("RimWorld.Faction:Notify_PlayerTraded", postfix: "Trade_Postfix");

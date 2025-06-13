@@ -193,9 +193,8 @@ namespace Rimocracy
 
         public int UpdatedTermExpiration() => TermDuration == TermDuration.Indefinite ? int.MaxValue : (Find.TickManager.TicksAbs + TermDurationTicks);
 
-        public override void FinalizeInit()
+        public override void FinalizeInit(bool fromLoad)
         {
-            base.FinalizeInit();
             if (Decisions == null)
                 Decisions = new List<Decision>();
             else Decisions.RemoveAll(d => d.def == null);
