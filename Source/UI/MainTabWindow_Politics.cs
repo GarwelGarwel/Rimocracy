@@ -52,7 +52,7 @@ namespace Rimocracy
                 if (comp.FocusSkill != null)
                     content.Label($"Focus skill: {comp.FocusSkill.LabelCap}.");
 
-                if (comp.TermDuration != TermDuration.Indefinite)
+                if (comp.TermDuration != TermDuration.Indefinite && comp.SuccessionType != null)
                     content.Label($"Next {comp.SuccessionType.noun} in {(comp.TermExpiration - Find.TickManager.TicksAbs).ToStringTicksToPeriod(false)}.", tooltip: Utility.DateFullStringWithHourAtHome(comp.TermExpiration));
             }
             // Next election

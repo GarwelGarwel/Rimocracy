@@ -43,7 +43,7 @@ namespace Rimocracy
 
         public float GetWeight(Ideo ideo)
         {
-            if (!HasPotentialCandidates)
+            if (!HasPotentialLeaders)
                 return 0;
             float res = weight;
             if (!memes.NullOrEmpty() && ideo != null)
@@ -53,6 +53,6 @@ namespace Rimocracy
             return res;
         }
 
-        public bool HasPotentialCandidates => Worker?.Candidates?.Any() == true;
+        public bool HasPotentialLeaders => Worker?.Candidates?.Any() == true;
     }
 }

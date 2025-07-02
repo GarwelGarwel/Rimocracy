@@ -77,16 +77,11 @@ namespace Rimocracy
 
         public SuccessionDef SuccessionType
         {
-            get
-            {
-                if (successionType == null)
-                    successionType = GetRandomSuccessionDef(NationPrimaryIdeo);
-                return successionType;
-            }
+            get => successionType;
             set => successionType = value;
         }
 
-        public SuccessionWorker SuccessionWorker => SuccessionType.Worker;
+        public SuccessionWorker SuccessionWorker => SuccessionType?.Worker;
 
         public List<ElectionCampaign> Campaigns
         {
@@ -189,7 +184,7 @@ namespace Rimocracy
         { }
 
         public SuccessionDef GetRandomSuccessionDef(Ideo ideo) =>
-            DefDatabase<SuccessionDef>.AllDefs.Where(def => def.Worker.IsValid).RandomElementByWeight(def => def.GetWeight(ideo));
+            DefDatabase<SuccessionDef>.AllDefs.Where(def => def.Worker.IsValid).RandomElementByWeightWithFallback(def => def.GetWeight(ideo));
 
         public int UpdatedTermExpiration() => TermDuration == TermDuration.Indefinite ? int.MaxValue : (Find.TickManager.TicksAbs + TermDurationTicks);
 
@@ -219,31 +214,30 @@ namespace Rimocracy
             Scribe_Collections.Look(ref protesters, "protesters", LookMode.Reference);
         }
 
-        public override void WorldComponentTick()
+        public void LogDataOnce()
         {
-            if (justLoaded)
-            {
-                justLoaded = false;
-                if (Settings.DebugLogging || Prefs.LogVerbose)
-                {
-                    Log($"Politics: {(IsEnabled ? "enabled" : "disabled")}");
-                    Log($"Leader: {(HasLeader ? Leader.Name.ToStringShort : "none")}");
-                    Log($"Succession: {SuccessionType.defName} @ {TermExpiration} (in {(TermExpiration - Find.TickManager.TicksAbs).ToStringTicksToPeriod(false, true)})");
-                    Log($"Election tick: {ElectionTick} (in {(ElectionTick - Find.TickManager.TicksAbs).ToStringTicksToPeriod(false, true)})");
-                    Log($"Term duration: {TermDuration}");
-                    if (IsCampaigning)
-                        Log($"Campaigns:\r\n{Campaigns.Select(campaign => $"- {campaign}").ToLineList()}");
-                    Log($"Governance: {Governance.ToStringPercent()}");
-                    Log($"Governance decay: {GovernanceDecayPerDay.ToStringPercent()}/day");
-                    Log($"Focus skill: {FocusSkill}");
-                    Log($"Decisions: {Decisions.Select(decision => decision?.Tag).ToCommaList()}");
-                    Log($"Protesters: {Protesters.Select(pawn => pawn.Name.ToStringShort).ToCommaList()}");
-                }
-            }
-
-            if (!IsUpdateTick)
+            if (!justLoaded)
                 return;
+            justLoaded = false;
+            if (Settings.DebugLogging || Prefs.LogVerbose)
+            {
+                Log($"Politics: {(IsEnabled ? "enabled" : "disabled")}");
+                Log($"Leader: {(HasLeader ? Leader.Name.ToStringShort : "none")}");
+                Log($"Succession: {SuccessionType?.defName} @ {TermExpiration} (in {(TermExpiration - GenTicks.TicksAbs).ToStringTicksToPeriod(false, true)})");
+                Log($"Election tick: {ElectionTick} (in {(ElectionTick - GenTicks.TicksAbs).ToStringTicksToPeriod(false, true)})");
+                Log($"Term duration: {TermDuration}");
+                if (IsCampaigning)
+                    Log($"Campaigns:\r\n{Campaigns.Select(campaign => $"- {campaign}").ToLineList()}");
+                Log($"Governance: {Governance.ToStringPercent()}");
+                Log($"Governance decay: {GovernanceDecayPerDay.ToStringPercent()}/day");
+                Log($"Focus skill: {FocusSkill}");
+                Log($"Decisions: {Decisions.Select(decision => decision?.Tag).ToCommaList()}");
+                Log($"Protesters: {Protesters.Select(pawn => pawn.Name.ToStringShort).ToCommaList()}");
+            }
+        }
 
+        public bool CheckValidity()
+        {
             if (CitizensCount < Settings.MinPopulation || (!HasLeader && !Citizens.Any(pawn => pawn.CanBeLeader())))
             {
                 // If there are too few citizens or no potential leaders, politics is disabled
@@ -255,9 +249,26 @@ namespace Rimocracy
                     ElectionTick = int.MaxValue;
                     Protesters.Clear();
                 }
-                return;
             }
-            IsEnabled = true;
+            else
+            {
+                if (SuccessionType == null)
+                    SuccessionType = GetRandomSuccessionDef(NationPrimaryIdeo);
+                IsEnabled = SuccessionType != null;
+            }
+            return IsEnabled;
+        }
+
+        public override void WorldComponentTick()
+        {
+            LogDataOnce();
+
+            if (!IsUpdateTick)
+                return;
+
+            if (!CheckValidity())
+                return;
+
             int ticks = Find.TickManager.TicksAbs;
 
             if ((!ModsConfig.IdeologyActive || DecisionActive(DecisionDef.Multiculturalism)) && LeaderTitleDef == null)
@@ -389,7 +400,7 @@ namespace Rimocracy
 
         void ChooseLeader()
         {
-            if (!SuccessionType.HasPotentialCandidates)
+            if (!SuccessionType.HasPotentialLeaders)
             {
                 Log($"There are no potential leaders for {SuccessionType}. Changing succession type.");
                 SuccessionDef newSuccession = GetRandomSuccessionDef(NationPrimaryIdeo);
