@@ -241,7 +241,12 @@ namespace Rimocracy
             if (Utility.RimocracyComp == null || Utility.RimocracyComp.DecisionActive(DecisionDef.Multiculturalism))
                 return;
             SuccessionDef newSuccession = Utility.RimocracyComp.GetRandomSuccessionDef(newIdeo);
-            if (newSuccession != Utility.RimocracyComp.SuccessionType)
+            if (newSuccession == null)
+            {
+                Log("No valid succession type found. Politics will be disabled.");
+                return;
+            }
+            if (newSuccession != Utility.RimocracyComp.SuccessionType && newSuccession != null)
             {
                 Log($"Succession type changed from {Utility.RimocracyComp.SuccessionType.LabelCap} to {newSuccession.LabelCap}.");
                 Find.LetterStack.ReceiveLetter("Succession type changed", $"Succession type changed to {newSuccession.LabelCap} due to change of primary ideoligion.\n\n{newSuccession.description}", LetterDefOf.NeutralEvent);
