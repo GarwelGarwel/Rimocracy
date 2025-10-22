@@ -102,7 +102,7 @@ namespace Rimocracy
 
         public static float FoodConsumptionPerDay =>
             PawnsFinder.AllMapsCaravansAndTravellingTransporters_Alive_FreeColonistsAndPrisoners_NoCryptosleep
-            .Sum(pawn => pawn.needs.food.FoodFallPerTick) * GenDate.TicksPerDay;
+            .Sum(pawn => (pawn?.needs?.food != null ? pawn.needs.food.FoodFallPerTick : 0)) * GenDate.TicksPerDay;
 
         public static int GetTotalSilver() => Find.Maps.Where(map => map.IsPlayerHome).Sum(map => map.resourceCounter.Silver);
 
