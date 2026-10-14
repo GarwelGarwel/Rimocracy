@@ -75,7 +75,7 @@ namespace Rimocracy
                 if (pawn != Candidate)
                 {
                     float defectionChance = 1 - ElectionUtility.VoteWeight(pawn, candidate) / 100;
-                    if (!pawn.IsCitizen() || Rand.Chance(defectionChance) || Utility.RimocracyComp.CampaigningCandidates.MaxBy(p => ElectionUtility.VoteWeight(pawn, p)) != candidate)
+                    if (!pawn.IsCitizen() || Rand.Chance(defectionChance) || GenCollection.MaxBy(Utility.RimocracyComp.CampaigningCandidates, p => ElectionUtility.VoteWeight(pawn, p)) != candidate)
                     {
                         Log($"{pawn} is no longer a core supporter for {candidate}. Their defection chance was {defectionChance:P1}.");
                         defectors.Add(pawn);
